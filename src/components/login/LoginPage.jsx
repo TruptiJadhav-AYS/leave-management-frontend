@@ -21,57 +21,51 @@ import {
 //   password: "password123",
 // };
 const users = [
-  { email: "pratiksha@gmail.com", password: "Prt@123", role:"Admin"},
-  { email: "pratik@gmail.com", password: "Phhjj@123", role:"Manager" },
-  { email: "pruthvi@gmail.com", password: "Pwwrt@123", role:"Employee" },
+  { email: "pratiksha@gmail.com", password: "Prt@123", role: "Admin" },
+  { email: "pratik@gmail.com", password: "Phhjj@123", role: "Manager" },
+  { email: "pruthvi@gmail.com", password: "Pwwrt@123", role: "Employee" },
 ];
 
 function LoginPage(props) {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [emailError, setEmailError] = useState("");
-    const [passwordError, setPasswordError] = useState("");
-    const navigate= useNavigate();
-  
-    const handleEmailChange = (event) => {
-      setEmail(event.target.value);
-      setEmailError("");
-    };
-  
-    const handlePasswordChange = (event) => {
-      setPassword(event.target.value);
-      setPasswordError("");
-    };
-  
-    const handleSubmit = (event) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const navigate = useNavigate();
 
-        setEmailError("");
-        setPasswordError("");
-        if (!email) {
-          setEmailError("Email is required");
-        }
-      
-        if (!password) {
-          setPasswordError("Password is required");
-        }
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+    setEmailError("");
+  };
 
-        const userByEmail = users.find(user => user.email === email);
-      
-        if (!userByEmail) {
-          setEmailError("Email does not exist");
-          return; 
-        }
-      
-        if (userByEmail.password !== password) {
-          setPasswordError("Incorrect password");
-          return;
-        }
-      
-        navigate("/Employee")
-        props.setRouteStatus(true)
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+    setPasswordError("");
+  };
 
-        console.log( userByEmail);
-      };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setEmailError("");
+    setPasswordError("");
+    const userByEmail = users.find((user) => user.email === email);
+
+    if (!email) {
+      setEmailError("Please enter email");
+    } else if (!userByEmail) {
+      setPasswordError("Invalid Email or Password");
+      return;
+    }
+
+    if (!password) {
+      setPasswordError("Please enter a password");
+    } else if (userByEmail.password !== password) {
+      setPasswordError("Invalid email or password");
+    } else {
+      navigate("/Employee");
+      console.log("Login successful", userByEmail);
+      props.setRouteStatus(true);
+    }
+  };
 
   return (
     <Paper

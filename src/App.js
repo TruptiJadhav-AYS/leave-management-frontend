@@ -26,7 +26,7 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<LoginPage setRouteStatus={setRouteStatus}/>} />
-          {routeStatus && (<Route path="/Employee" element={<Display/>} />)}
+          {routeStatus && (<Route path="/Employee/*" element={<Display/>} />)}
         </Routes>
       </div>
     </ThemeProvider>
