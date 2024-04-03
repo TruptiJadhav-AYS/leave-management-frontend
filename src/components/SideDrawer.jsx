@@ -23,10 +23,11 @@ export default function SideDrawer() {
           (text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton
-              onClick={index === 0 ? () => Navigate('/Dashboard') : 
-              index=== 1 ? ()=> Navigate('/LeaveRequest') : 
-              index===2 ? ()=> Navigate('/History'):
-              ()=>Navigate('/Holidays')
+              onClick={index === 0 ? () => Navigate('/Employee/Dashboard') : 
+              index=== 1 ? ()=> Navigate('/Employee/LeaveRequest') : 
+              index===2 ? ()=> Navigate('/Employee/History'):
+              index===3 ? ()=> Navigate('/Employee/Holidays'):
+              ()=>Navigate('/Employee/Employees')
             }
               >
                 <ListItemIcon>
