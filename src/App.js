@@ -3,6 +3,7 @@ import { colors, createTheme, ThemeProvider } from "@mui/material";
 import Display from "./components/Display";
 import { Route, Routes } from "react-router-dom";
 import LoginPage from "./components/login/LoginPage";
+import { useState } from "react";
 
 const myTheme = createTheme({
   satus: {
@@ -19,14 +20,14 @@ const myTheme = createTheme({
 });
 
 function App() {
+  const [routeStatus, setRouteStatus]=useState(false);
   return (
     <ThemeProvider theme={myTheme}>
       <div className="App">
         <Routes>
-          <Route path="/" element={<LoginPage />} />
-          <Route path="/Employee" element={<Display/>} />
+          <Route path="/" element={<LoginPage setRouteStatus={setRouteStatus}/>} />
+          {routeStatus && (<Route path="/Employee" element={<Display/>} />)}
         </Routes>
-        {/* <Display /> */}
       </div>
     </ThemeProvider>
   );

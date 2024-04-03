@@ -26,7 +26,7 @@ const users = [
   { email: "pruthvi@gmail.com", password: "Pwwrt@123", role:"Employee" },
 ];
 
-function LoginPage() {
+function LoginPage(props) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [emailError, setEmailError] = useState("");
@@ -44,43 +44,33 @@ function LoginPage() {
     };
   
     const handleSubmit = (event) => {
-        event.preventDefault();
-      
-        // Reset error states
+
         setEmailError("");
         setPasswordError("");
-      
-        // Check for empty fields first
         if (!email) {
           setEmailError("Email is required");
-        //   return; // Stop further execution
         }
       
         if (!password) {
           setPasswordError("Password is required");
-          return; // Stop further execution
         }
-      
-        // Attempt to find the user by email
+
         const userByEmail = users.find(user => user.email === email);
       
-        // If no user is found by email, set an email error
         if (!userByEmail) {
           setEmailError("Email does not exist");
-          return; // Stop further execution
+          return; 
         }
       
-        // If user is found but password does not match, set a password error
         if (userByEmail.password !== password) {
           setPasswordError("Incorrect password");
-          return; // Stop further execution
+          return;
         }
       
-        // If both email and password are correct
         navigate("/Employee")
+        props.setRouteStatus(true)
 
-        console.log("Login successful", userByEmail);
-        // Proceed with login success logic here
+        console.log( userByEmail);
       };
 
   return (
