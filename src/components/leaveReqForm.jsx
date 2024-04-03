@@ -33,13 +33,13 @@ function LeaveReqForm() {
   const leaveReqObj = yup.object({
     fromDate: yup
       .date()
-      .min(minDate, "Select valid date")
-      .required("Select date"),
+      .min(minDate, "Please Select a valid date")
+      .required("Please select a date"),
     toDate: yup
       .date()
-      .min(yup.ref("fromDate"), "Select valid date")
-      .required("Select date"),
-    leaveType: yup.string().required("Select leave type"),
+      .min(yup.ref("fromDate"), "Please Select a valid date")
+      .required("Please select a date"),
+    leaveType: yup.string().required("Please Select a leave type"),
     reason: yup.string(),
   });
 
@@ -53,7 +53,7 @@ function LeaveReqForm() {
     validationSchema: leaveReqObj,
     onSubmit: (values) => {
       console.log(values);
-      Navigate("/Dashboard");
+      Navigate("/Employee/Dashboard");
     },
   });
 
