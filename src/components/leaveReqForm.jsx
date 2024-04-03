@@ -62,16 +62,20 @@ function LeaveReqForm() {
   return (
     <Grid
       container
-      justifyContent={"center"}
+      display={"flex"}
+      justifyContent="center"
+      alignItems={"center"}
       width="100%"
-      mt="20vh"
+      sx={{minHeight:"100%"}}
+      mt="13vh"
     >
-      <Grid xs={12} sm={8}>
+      <Grid item xs={12} sm={8}>
       <Card
         elevation={1}
         pt="5%"
         sx={{
           textAlign: "left",
+          width:"100%"
         }}
       >
         <CardContent component={"form"} onSubmit={formik.handleSubmit}>
@@ -79,14 +83,15 @@ function LeaveReqForm() {
             Apply Leave
           </Typography>
 
-          <Stack
+          <Grid
+            container
             direction={"row"}
             spacing={1.5}
             mb={1}
             justifyContent={"space-between"}
             pt="5px"
           >
-            <Stack width="50%">
+            <Grid item xs={12} sm={6}>
               <Typography fontSize={"13px"}>FROM DATE</Typography>
               <InputBase
                 onChange={formik.handleChange}
@@ -104,6 +109,7 @@ function LeaveReqForm() {
                       : "2px solid rgba(204, 204, 204, 0.5)",
                   borderRadius: "4px",
                   p: "4px",
+                  width:"100%"
                 }}
               />
               {formik.touched.fromDate && Error.fromDate && (
@@ -111,9 +117,9 @@ function LeaveReqForm() {
                   {Error.fromDate}
                 </Typography>
               )}
-            </Stack>
+            </Grid>
 
-            <Stack width="50%">
+            <Grid item xs={12} sm={6}>
               <Typography fontSize={"13px"}>TO DATE</Typography>
               <InputBase
                 min={minDate}
@@ -132,6 +138,7 @@ function LeaveReqForm() {
                       : "2px solid rgba(204, 204, 204, 0.5)",
                   borderRadius: "4px",
                   p: "4px",
+                  width:"100%"
                 }}
               />
 
@@ -140,11 +147,13 @@ function LeaveReqForm() {
                   {Error.toDate}
                 </Typography>
               )}
-            </Stack>
+            </Grid>
 
-          </Stack>
+          </Grid>
 
-          <Stack width="50%">
+          <Grid container>
+          <Grid item xs={12} sm={6}>
+            <Stack width="100%">
             <Typography fontSize={"13px"}>LEAVE TYPE</Typography>
             <Select
               value={formik.values.leaveType}
@@ -175,7 +184,9 @@ function LeaveReqForm() {
                 {Error.leaveType}
               </Typography>
             )}
-          </Stack>
+            </Stack>
+          </Grid>
+          </Grid>
 
           <Stack width="100%">
             <Typography fontSize={"13px"}>REASON</Typography>

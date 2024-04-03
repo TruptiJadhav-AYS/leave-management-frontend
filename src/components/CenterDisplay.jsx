@@ -7,6 +7,7 @@ export default function CenterDisplay(){
     return(
         <Routes>
             <Route path="/" />
+            <Route path="/Dashboard" />
             <Route path="/LeaveRequest" element={<LeaveReqForm/>}/>
             <Route path="/History" />
             <Route path="/Holidays" element={<Holidays/>}/>

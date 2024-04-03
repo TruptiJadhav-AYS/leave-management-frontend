@@ -17,25 +17,30 @@ const annualLeaves=[
 
 export default function Holidays(){
     return(
-        <Grid sx={{width : "100%" , height:"100vh" , pt:"10vh"}} justifyContent={"center"} >
+        <Grid
+        container
+        justifyContent={"center"}
+        >
+        <Grid sx={{width : "100%" , height:"100vh" , pt:"10vh"}}  xs={12} sm={8}>
             <List  sx={{overflow:"auto",width :"100%"}}>
-            <ListItem sx={{pt:"20px",backgroundColor:"#fafafa"}}>
-                <Typography color="primary.main" width="30%" fontWeight={350} textAlign={"center"}>DATE</Typography>
+            {/* <ListItem sx={{pt:"20px",backgroundColor:"#fafafa",borderRadius:"10px",m:"3px"}}>
+                <Typography color="primary.main" width="30%" fontWeight={350} textAlign={"center"}>DAY AND DATE</Typography>
                 <Typography color="primary.main" width="40%" fontWeight={350} textAlign={"center"}>DAY</Typography>
                 <Typography color="primary.main" width="30%" fontWeight={350} textAlign={"center"}>OCCASION</Typography>
-            </ListItem>
-            <Divider/>
+            </ListItem> */}
+            {/* <Divider/> */}
             {annualLeaves.map((holiday,index) => (
                 <>
-                <ListItem key={holiday.date} sx={{backgroundColor: "#fafafa" ,py:"12px"}}>
-                    <Typography width="30%" textAlign={"center"}>{holiday.date}</Typography>
-                    <Typography width="40%" textAlign={"center"}>{holiday.day}</Typography>
-                    <Typography width="30%" textAlign={"center"}>{holiday.occasion}</Typography>
+                <ListItem key={index} sx={{backgroundColor: "#fafafa" ,py:"12px",borderRadius:"10px",m:"3px"}}>
+                    <Typography width="40%" textAlign={"center"}>{holiday.date}<br/>{holiday.day}</Typography>
+                    {/* <Typography width="40%" textAlign={"center"}>{holiday.day}</Typography> */}
+                    <Typography width="50%" textAlign={"center"}>{holiday.occasion}</Typography>
                 </ListItem>
-                <Divider/>
+                {/* <Divider/> */}
                 </>
             ))}
             </List>
+        </Grid>
         </Grid>
     )
 }
