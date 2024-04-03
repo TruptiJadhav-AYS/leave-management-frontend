@@ -67,7 +67,9 @@ export default function EmployeeList() {
         </List>
         <Button variant="contained"
           onClick={() => {
-            Navigate("/Employees/NewRegistration");
+
+            Navigate("/Employee/Employees/NewRegistration");
+
           }}
         >
           Add New Employee

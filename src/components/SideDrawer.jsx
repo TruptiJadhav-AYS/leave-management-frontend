@@ -30,11 +30,12 @@ export default function SideDrawer() {
           (text, index) => (
             <ListItem key={text} disablePadding onClick={()=>onSelect(index)} sx={{backgroundColor : selectedItem===index ? "#E0E0E0" : "white"}}>
               <ListItemButton
-              onClick={index === 0 ? () => {Navigate('/Dashboard')}: 
-              index=== 1 ? ()=> {Navigate('/LeaveRequest')}: 
-              index===2 ? ()=> {Navigate('/History')}:
-              index===3 ? ()=>{Navigate('/Holidays')} :
-              ()=>{Navigate('/Employees')}
+              onClick={index === 0 ? () => Navigate('/Employee/Dashboard') : 
+              index=== 1 ? ()=> Navigate('/Employee/LeaveRequest') : 
+              index===2 ? ()=> Navigate('/Employee/History'):
+              index===3 ? ()=> Navigate('/Employee/Holidays'):
+              ()=>Navigate('/Employee/Employees')
+
             }
               >
                 <ListItemIcon>
