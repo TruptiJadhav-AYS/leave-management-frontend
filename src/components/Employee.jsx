@@ -24,7 +24,7 @@ export default function EmployeeList() {
           <ListItem sx={{ pt: "20px", backgroundColor: "#fafafa" }}>
             <Typography
               color="primary.main"
-              width="30%"
+              width="40%"
               fontWeight={350}
               textAlign={"center"}
             >
@@ -32,7 +32,7 @@ export default function EmployeeList() {
             </Typography>
             <Typography
               color="primary.main"
-              width="40%"
+              width="30%"
               fontWeight={350}
               textAlign={"center"}
             >

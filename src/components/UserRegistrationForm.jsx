@@ -86,8 +86,7 @@ import {
       onSubmit: (values) => {
         console.log("New Employee Added Successfully.");
         console.log(values);
-        navigate("/Employees")
-  
+        navigate("/Employee/Employees")
       },
     });
   
