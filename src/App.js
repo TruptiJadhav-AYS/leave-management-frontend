@@ -11,7 +11,7 @@ const myTheme=createTheme({
   },
   satus:{
     danger:colors.red[700]
-
+  },
   palette: {
     primary: {
       main: colors.blue[800],
