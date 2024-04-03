@@ -61,20 +61,16 @@ function LeaveReqForm() {
 
   return (
     <Grid
-      display={"flex"}
+      container
       justifyContent={"center"}
-      alignItems={"center"}
       width="100%"
-      pt="20vh"
+      mt="20vh"
     >
+      <Grid xs={12} sm={8}>
       <Card
         elevation={1}
         pt="5%"
         sx={{
-          minHeight: 420,
-          minWidth: 180,
-          maxWidth: 440,
-          maxHeight: 620,
           textAlign: "left",
         }}
       >
@@ -83,38 +79,6 @@ function LeaveReqForm() {
             Apply Leave
           </Typography>
 
-          <Stack width="100%">
-            <Typography fontSize={"13px"}>LEAVE TYPE</Typography>
-            <Select
-              value={formik.values.leaveType}
-              name="leaveType"
-              size="small"
-              labelId="leave-type-label"
-              onClick={() => {
-                handleClick("leave-type");
-              }}
-              onChange={formik.handleChange}
-              sx={{
-                "& fieldset": {
-                  borderColor: "rgba(204, 204, 204, 0.5)",
-                  borderWidth: "2px",
-                },
-              }}
-              MenuProps={{
-                disableHover: true,
-              }}
-            >
-              <MenuItem value="Full day">Full Day</MenuItem>
-              <MenuItem value="Half day">Half Day</MenuItem>
-            </Select>
-
-            {formik.touched.leaveType && Error.leaveType && (
-              <Typography variant="caption" color="error">
-                {Error.leaveType}
-              </Typography>
-            )}
-          </Stack>
-
           <Stack
             direction={"row"}
             spacing={1.5}
@@ -122,7 +86,7 @@ function LeaveReqForm() {
             justifyContent={"space-between"}
             pt="5px"
           >
-            <Stack>
+            <Stack width="50%">
               <Typography fontSize={"13px"}>FROM DATE</Typography>
               <InputBase
                 onChange={formik.handleChange}
@@ -149,7 +113,7 @@ function LeaveReqForm() {
               )}
             </Stack>
 
-            <Stack>
+            <Stack width="50%">
               <Typography fontSize={"13px"}>TO DATE</Typography>
               <InputBase
                 min={minDate}
@@ -178,16 +142,39 @@ function LeaveReqForm() {
               )}
             </Stack>
 
-            {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DemoContainer components={['DateRangePicker']}>
-                <DateRangePicker localeText={{ start: 'From-date', end: 'To-date' }} size="small"  
-                slotProps={{
-                    textField: {
-                        required: true,
-                    },
-                }}/>
-            </DemoContainer>
-        </LocalizationProvider> */}
+          </Stack>
+
+          <Stack width="50%">
+            <Typography fontSize={"13px"}>LEAVE TYPE</Typography>
+            <Select
+              value={formik.values.leaveType}
+              name="leaveType"
+              size="small"
+              labelId="leave-type-label"
+              onClick={() => {
+                handleClick("leave-type");
+              }}
+              onChange={formik.handleChange}
+              sx={{
+                "& fieldset": {
+                  borderColor: "rgba(204, 204, 204, 0.5)",
+                  borderWidth: "2px",
+                },
+              }}
+              MenuProps={{
+                disableHover: true,
+              }}
+            >
+              <MenuItem value="Half day">Half Day</MenuItem>
+              <MenuItem value="Full day">Full Day</MenuItem>
+              <MenuItem value="Work From Home">Work From Home</MenuItem>
+            </Select>
+
+            {formik.touched.leaveType && Error.leaveType && (
+              <Typography variant="caption" color="error">
+                {Error.leaveType}
+              </Typography>
+            )}
           </Stack>
 
           <Stack width="100%">
@@ -220,6 +207,7 @@ function LeaveReqForm() {
           </Button>
         </CardContent>
       </Card>
+      </Grid>
     </Grid>
   );
 }

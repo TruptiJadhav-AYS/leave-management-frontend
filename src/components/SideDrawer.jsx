@@ -25,8 +25,9 @@ export default function SideDrawer() {
               <ListItemButton
               onClick={index === 0 ? () => Navigate('/Dashboard') : 
               index=== 1 ? ()=> Navigate('/LeaveRequest') : 
-              index===2 ? ()=> Navigate('/History'):
-              ()=>Navigate('/Holidays')
+              index===2 ? ()=> Navigate('/History') :
+              index===3 ? ()=>Navigate('/Holidays') :
+              ()=>{Navigate('/Employees')}
             }
               >
                 <ListItemIcon>

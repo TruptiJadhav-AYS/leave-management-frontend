@@ -3,6 +3,9 @@ import { colors, createTheme,ThemeProvider } from "@mui/material";
 import Display from './components/Display';
 
 const myTheme=createTheme({
+  typography: {
+    fontFamily:"Open Sans"
+  },
   satus:{
     danger:colors.red[700]
   },
