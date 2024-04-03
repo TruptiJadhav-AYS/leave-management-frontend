@@ -66,7 +66,7 @@ function LeaveReqForm() {
       width="100%"
       mt="20vh"
     >
-      <Grid xs={12} sm={8}>
+      <Grid item xs={12} sm={8}>
       <Card
         elevation={1}
         pt="5%"
