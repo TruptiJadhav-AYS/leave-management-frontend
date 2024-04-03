@@ -21,23 +21,14 @@ export default function Holidays(){
         container
         justifyContent={"center"}
         >
-        <Grid sx={{width : "100%" , height:"100vh" , pt:"10vh"}}  xs={12} sm={8}>
+        <Grid sx={{ height:"100vh" , pt:"10vh"}}  xs={12} sm={6}>
             <List  sx={{overflow:"auto",width :"100%"}}>
-            {/* <ListItem sx={{pt:"20px",backgroundColor:"#fafafa",borderRadius:"10px",m:"3px"}}>
-                <Typography color="primary.main" width="30%" fontWeight={350} textAlign={"center"}>DAY AND DATE</Typography>
-                <Typography color="primary.main" width="40%" fontWeight={350} textAlign={"center"}>DAY</Typography>
-                <Typography color="primary.main" width="30%" fontWeight={350} textAlign={"center"}>OCCASION</Typography>
-            </ListItem> */}
-            {/* <Divider/> */}
+
             {annualLeaves.map((holiday,index) => (
-                <>
                 <ListItem key={index} sx={{backgroundColor: "#fafafa" ,py:"12px",borderRadius:"10px",m:"3px"}}>
                     <Typography width="40%" textAlign={"center"}>{holiday.date}<br/>{holiday.day}</Typography>
-                    {/* <Typography width="40%" textAlign={"center"}>{holiday.day}</Typography> */}
                     <Typography width="50%" textAlign={"center"}>{holiday.occasion}</Typography>
                 </ListItem>
-                {/* <Divider/> */}
-                </>
             ))}
             </List>
         </Grid>
