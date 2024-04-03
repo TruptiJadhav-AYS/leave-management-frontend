@@ -26,7 +26,7 @@ export default function SideDrawer() {
       <Toolbar />
       <Divider />
       <List>
-        {["Dashboard", "Leave Request", "History", "Holidays","Employees"].map(
+        {["Dashboard", "Leave Request", "History", "Holidays", "Employees"].map(
           (text, index) => (
             <ListItem key={text} disablePadding onClick={()=>onSelect(index)} sx={{backgroundColor : selectedItem===index ? "#E0E0E0 " : "white"}}>
               <ListItemButton
@@ -46,9 +46,9 @@ export default function SideDrawer() {
                     <HistoryIcon />
                   ) : index === 3 ? (
                     <EventIcon />
-                  ): 
-                    <People/>
-                  }
+                  ) : (
+                    <People />
+                  )}
                 </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItemButton>
@@ -57,5 +57,5 @@ export default function SideDrawer() {
         )}
       </List>
     </div>
-  )
+  );
 }
