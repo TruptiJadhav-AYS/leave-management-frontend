@@ -33,13 +33,13 @@ function LeaveReqForm() {
   const leaveReqObj = yup.object({
     fromDate: yup
       .date()
-      .min(minDate, "Select valid date")
-      .required("Select date"),
+      .min(minDate, "Please Select a valid date")
+      .required("Please select a date"),
     toDate: yup
       .date()
-      .min(yup.ref("fromDate"), "Select valid date")
-      .required("Select date"),
-    leaveType: yup.string().required("Select leave type"),
+      .min(yup.ref("fromDate"), "Please Select a valid date")
+      .required("Please select a date"),
+    leaveType: yup.string().required("Please Select a leave type"),
     reason: yup.string(),
   });
 
@@ -61,21 +61,21 @@ function LeaveReqForm() {
 
   return (
     <Grid
+      container
       display={"flex"}
-      justifyContent={"center"}
+      justifyContent="center"
       alignItems={"center"}
       width="100%"
-      pt="20vh"
+      sx={{minHeight:"100%"}}
+      mt="13vh"
     >
+      <Grid item xs={12} sm={8}>
       <Card
         elevation={1}
         pt="5%"
         sx={{
-          minHeight: 420,
-          minWidth: 180,
-          maxWidth: 440,
-          maxHeight: 620,
           textAlign: "left",
+          width:"100%"
         }}
       >
         <CardContent component={"form"} onSubmit={formik.handleSubmit}>
@@ -83,7 +83,77 @@ function LeaveReqForm() {
             Apply Leave
           </Typography>
 
-          <Stack width="100%">
+          <Grid
+            container
+            direction={"row"}
+            spacing={1.5}
+            mb={1}
+            justifyContent={"space-between"}
+            pt="5px"
+          >
+            <Grid item xs={12} sm={6}>
+              <Typography fontSize={"13px"}>FROM DATE</Typography>
+              <InputBase
+                onChange={formik.handleChange}
+                value={formik.values.fromDate}
+                type="date"
+                name="fromDate"
+                lable="From Date"
+                onClick={() => {
+                  handleClick("from-date");
+                }}
+                sx={{
+                  border:
+                    clickedId === "from-date"
+                      ? "2px solid blue"
+                      : "2px solid rgba(204, 204, 204, 0.5)",
+                  borderRadius: "4px",
+                  p: "4px",
+                  width:"100%"
+                }}
+              />
+              {formik.touched.fromDate && Error.fromDate && (
+                <Typography variant="caption" color="error">
+                  {Error.fromDate}
+                </Typography>
+              )}
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <Typography fontSize={"13px"}>TO DATE</Typography>
+              <InputBase
+                min={minDate}
+                value={formik.values.toDate}
+                onChange={formik.handleChange}
+                type="date"
+                name="toDate"
+                lable="To Date"
+                onClick={() => {
+                  handleClick("to-date");
+                }}
+                sx={{
+                  border:
+                    clickedId === "to-date"
+                      ? "2px solid blue"
+                      : "2px solid rgba(204, 204, 204, 0.5)",
+                  borderRadius: "4px",
+                  p: "4px",
+                  width:"100%"
+                }}
+              />
+
+              {formik.touched.toDate && Error.toDate && (
+                <Typography variant="caption" color="error">
+                  {Error.toDate}
+                </Typography>
+              )}
+            </Grid>
+
+          </Grid>
+
+          <Grid container>
+          <Grid item xs={12} sm={6}>
+            <Stack width="100%">
             <Typography fontSize={"13px"}>LEAVE TYPE</Typography>
             <Select
               value={formik.values.leaveType}
@@ -104,8 +174,9 @@ function LeaveReqForm() {
                 disableHover: true,
               }}
             >
-              <MenuItem value="Full day">Full Day</MenuItem>
               <MenuItem value="Half day">Half Day</MenuItem>
+              <MenuItem value="Full day">Full Day</MenuItem>
+              <MenuItem value="Work From Home">Work From Home</MenuItem>
             </Select>
 
             {formik.touched.leaveType && Error.leaveType && (
@@ -113,82 +184,9 @@ function LeaveReqForm() {
                 {Error.leaveType}
               </Typography>
             )}
-          </Stack>
-
-          <Stack
-            direction={"row"}
-            spacing={1.5}
-            mb={1}
-            justifyContent={"space-between"}
-            pt="5px"
-          >
-            <Stack>
-              <Typography fontSize={"13px"}>FROM DATE</Typography>
-              <InputBase
-                onChange={formik.handleChange}
-                value={formik.values.fromDate}
-                type="date"
-                name="fromDate"
-                lable="From Date"
-                onClick={() => {
-                  handleClick("from-date");
-                }}
-                sx={{
-                  border:
-                    clickedId === "from-date"
-                      ? "2px solid blue"
-                      : "2px solid rgba(204, 204, 204, 0.5)",
-                  borderRadius: "4px",
-                  p: "4px",
-                }}
-              />
-              {formik.touched.fromDate && Error.fromDate && (
-                <Typography variant="caption" color="error">
-                  {Error.fromDate}
-                </Typography>
-              )}
             </Stack>
-
-            <Stack>
-              <Typography fontSize={"13px"}>TO DATE</Typography>
-              <InputBase
-                min={minDate}
-                value={formik.values.toDate}
-                onChange={formik.handleChange}
-                type="date"
-                name="toDate"
-                lable="To Date"
-                onClick={() => {
-                  handleClick("to-date");
-                }}
-                sx={{
-                  border:
-                    clickedId === "to-date"
-                      ? "2px solid blue"
-                      : "2px solid rgba(204, 204, 204, 0.5)",
-                  borderRadius: "4px",
-                  p: "4px",
-                }}
-              />
-
-              {formik.touched.toDate && Error.toDate && (
-                <Typography variant="caption" color="error">
-                  {Error.toDate}
-                </Typography>
-              )}
-            </Stack>
-
-            {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DemoContainer components={['DateRangePicker']}>
-                <DateRangePicker localeText={{ start: 'From-date', end: 'To-date' }} size="small"  
-                slotProps={{
-                    textField: {
-                        required: true,
-                    },
-                }}/>
-            </DemoContainer>
-        </LocalizationProvider> */}
-          </Stack>
+          </Grid>
+          </Grid>
 
           <Stack width="100%">
             <Typography fontSize={"13px"}>REASON</Typography>
@@ -220,6 +218,7 @@ function LeaveReqForm() {
           </Button>
         </CardContent>
       </Card>
+      </Grid>
     </Grid>
   );
 }

@@ -1,7 +1,5 @@
-import {Grid,List } from '@mui/material'
+import {Grid,List,Typography } from '@mui/material'
 import ListItem from '@mui/material/ListItem';
-import Divider from '@mui/material/Divider';
-import ListItemText from '@mui/material/ListItemText';
 
 const annualLeaves=[
     {date:"01/01/2024",day:"Monday",occasion:"New Yaar"},
@@ -18,17 +16,20 @@ const annualLeaves=[
 
 export default function Holidays(){
     return(
-        <Grid display={"flex"} justifyContent={"center"} alignItems={"center"} width="100%" pt="20vh">
-            <List>
-                {annualLeaves.map(
-                    (date,day,occasion,index)=>(
-                        <ListItem key={index}>
-                           
-                        </ListItem>
-                    )
-                )}
-                
+        <Grid
+        container
+        justifyContent={"center"}
+        >
+        <Grid sx={{ height:"100vh" , pt:"10vh"}}  xs={12} sm={6}>
+            <List  sx={{overflow:"auto",width :"100%"}}>
+            {annualLeaves.map((holiday,index) => (
+                <ListItem key={index} sx={{backgroundColor: "#E0E0E0" ,py:"12px",borderRadius:"10px",m:"3px"}}>
+                    <Typography width="40%" textAlign={"center"}>{holiday.date}<br/>{holiday.day}</Typography>
+                    <Typography width="50%" textAlign={"center"}>{holiday.occasion}</Typography>
+                </ListItem>
+            ))}
             </List>
+        </Grid>
         </Grid>
     )
 }

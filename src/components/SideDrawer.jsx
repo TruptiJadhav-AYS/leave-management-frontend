@@ -11,17 +11,24 @@ import EventIcon from "@mui/icons-material/Event";
 import ListItemIcon from "@mui/material/ListItemIcon"
 import Toolbar from "@mui/material/Toolbar"
 import { useNavigate } from "react-router-dom"
+import { useState } from "react";
 
 export default function SideDrawer() {
   let Navigate=useNavigate()
+  let [selectedItem,setSelectedItem]=useState() 
+
+  function onSelect(index){
+    setSelectedItem(index)
+  }
+
   return (
     <div>
       <Toolbar />
       <Divider />
       <List>
-        {["Dashboard", "Leave Request", "History", "Holidays","Employees"].map(
+        {["Dashboard", "Leave Request", "History", "Holidays", "Employees"].map(
           (text, index) => (
-            <ListItem key={text} disablePadding>
+            <ListItem key={text} disablePadding onClick={()=>onSelect(index)} sx={{backgroundColor : selectedItem===index ? "#E0E0E0" : "white"}}>
               <ListItemButton
               onClick={index === 0 ? () => Navigate('/Employee/Dashboard') : 
               index=== 1 ? ()=> Navigate('/Employee/LeaveRequest') : 
@@ -39,9 +46,9 @@ export default function SideDrawer() {
                     <HistoryIcon />
                   ) : index === 3 ? (
                     <EventIcon />
-                  ): 
-                    <People/>
-                  }
+                  ) : (
+                    <People />
+                  )}
                 </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItemButton>
@@ -50,5 +57,5 @@ export default function SideDrawer() {
         )}
       </List>
     </div>
-  )
+  );
 }

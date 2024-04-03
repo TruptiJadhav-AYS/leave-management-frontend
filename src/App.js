@@ -6,6 +6,9 @@ import LoginPage from "./components/login/LoginPage";
 import { useState } from "react";
 
 const myTheme = createTheme({
+  typography: {
+    fontFamily:"Open Sans"
+  },
   satus: {
     danger: colors.red[700],
   },

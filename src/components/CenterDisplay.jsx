@@ -1,18 +1,20 @@
 import LeaveReqForm from "./leaveReqForm"
-// import {Grid} from '@mui/material'
 import {Routes,Route} from "react-router-dom"
 import Holidays from "./Holidays"
 // import LoginPage from "./login/LoginPage"
+import EmployeeList from "./Employee"
+import UserRegistrationForm from "./UserRegistrationForm"
 
 export default function CenterDisplay(){
     return(
-        <Routes>
-            {/* <Route path="/" element={<LoginPage />} /> */}
-            <Route path="/Employee/Dashboard" />
-            <Route path="/Employee/LeaveRequest" element={<LeaveReqForm/>}/>
-            <Route path="/Employee/History" />
-            <Route path="/Employee/Holidays" element={<Holidays/>}/>
-            <Route path="/Employee/Employees" />
+        <Routes >
+            {/* <Route path="/"  /> */}
+            <Route path="/Dashboard" />
+            <Route path="/LeaveRequest" element={<LeaveReqForm/>}/>
+            <Route path="/History" />
+            <Route path="/Holidays" element={<Holidays/>}/>
+            <Route path="/Employees" element={<EmployeeList/>}/>
+            <Route path="/Employees/NewRegistration" element={<UserRegistrationForm/>}/>
         </Routes>
     )
 }
