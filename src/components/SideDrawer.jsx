@@ -24,6 +24,8 @@ export default function SideDrawer() {
   let selectedItem;
   if(selected!=="Employee"){
     selectedItem=selected
+  }if(selected==="NewRegistration" || selected==="Employees"){
+    selectedItem="Employees"
   }else{
     selectedItem="Dashboard"
   }
