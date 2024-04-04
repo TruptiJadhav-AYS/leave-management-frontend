@@ -11,14 +11,19 @@ import EventIcon from "@mui/icons-material/Event";
 import ListItemIcon from "@mui/material/ListItemIcon"
 import Toolbar from "@mui/material/Toolbar"
 import { useNavigate } from "react-router-dom"
-import { useState } from "react";
+import {useLocation} from 'react-router-dom'
+
 
 export default function SideDrawer() {
   let Navigate=useNavigate()
-  let [selectedItem,setSelectedItem]=useState() 
+  let path=useLocation().pathname
+  let selected=path.substring(path.lastIndexOf('/') + 1)
+  let selectedItem;
 
-  function onSelect(index){
-    setSelectedItem(index)
+  if(selected){
+    selectedItem=selected
+  }else{
+    selectedItem="Dashboard"
   }
 
   return (
@@ -26,15 +31,17 @@ export default function SideDrawer() {
       <Toolbar />
       <Divider />
       <List>
-        {["Dashboard", "Leave Request", "History", "Holidays","Employees"].map(
+        {["Dashboard", "Leave Request", "History", "Holidays", "Employees"].map(
           (text, index) => (
-            <ListItem key={text} disablePadding onClick={()=>onSelect(index)} sx={{backgroundColor : selectedItem===index ? "whitesmoke" : "white"}}>
+
+            <ListItem key={text} disablePadding sx={{backgroundColor : text.split(" ").join("")===selectedItem ? "#E0E0E0" : "white"}}>
               <ListItemButton
-              onClick={index === 0 ? () => {Navigate('/Dashboard')}: 
-              index=== 1 ? ()=> {Navigate('/LeaveRequest')}: 
-              index===2 ? ()=> {Navigate('/History')}:
-              index===3 ? ()=>{Navigate('/Holidays')} :
-              ()=>{Navigate('/Employees')}
+              onClick={index === 0 ? () => Navigate('/Employee/Dashboard') : 
+              index=== 1 ? ()=> Navigate('/Employee/LeaveRequest') : 
+              index===2 ? ()=> Navigate('/Employee/History'):
+              index===3 ? ()=> Navigate('/Employee/Holidays'):
+              ()=>Navigate('/Employee/Employees')
+
             }
               >
                 <ListItemIcon>
@@ -46,9 +53,9 @@ export default function SideDrawer() {
                     <HistoryIcon />
                   ) : index === 3 ? (
                     <EventIcon />
-                  ): 
-                    <People/>
-                  }
+                  ) : (
+                    <People />
+                  )}
                 </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItemButton>
@@ -57,5 +64,5 @@ export default function SideDrawer() {
         )}
       </List>
     </div>
-  )
+  );
 }
