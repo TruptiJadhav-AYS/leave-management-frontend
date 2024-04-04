@@ -1,6 +1,5 @@
 import {Grid,List,Typography } from '@mui/material'
 import ListItem from '@mui/material/ListItem';
-import Divider from '@mui/material/Divider';
 
 const annualLeaves=[
     {date:"01/01/2024",day:"Monday",occasion:"New Yaar"},
@@ -21,10 +20,10 @@ export default function Holidays(){
         container
         justifyContent={"center"}
         >
-        <Grid sx={{ height:"100vh" , pt:"10vh"}}  xs={12} sm={6}>
+        <Grid item sx={{ height:"100vh" , pt:"10vh"}}  xs={12} sm={6}>
             <List  sx={{overflow:"auto",width :"100%"}}>
             {annualLeaves.map((holiday,index) => (
-                <ListItem key={index} sx={{backgroundColor: "#fafafa" ,py:"12px",borderRadius:"10px",m:"3px"}}>
+                <ListItem key={index} sx={{backgroundColor: "#E0E0E0" ,py:"12px",borderRadius:"10px",m:"3px"}}>
                     <Typography width="40%" textAlign={"center"}>{holiday.date}<br/>{holiday.day}</Typography>
                     <Typography width="50%" textAlign={"center"}>{holiday.occasion}</Typography>
                 </ListItem>

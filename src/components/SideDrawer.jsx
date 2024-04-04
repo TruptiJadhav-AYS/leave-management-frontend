@@ -11,16 +11,14 @@ import EventIcon from "@mui/icons-material/Event";
 import ListItemIcon from "@mui/material/ListItemIcon"
 import Toolbar from "@mui/material/Toolbar"
 import { useNavigate } from "react-router-dom"
-import {useLocation} from 'react-router-dom'
-
+import { useLocation } from "react-router-dom";
 
 export default function SideDrawer() {
   let Navigate=useNavigate()
   let path=useLocation().pathname
-  let selected=path.substring(path.lastIndexOf('/') + 1)
+  let selected=path.substring(path.lastIndexOf("/")+1)
   let selectedItem;
-
-  if(selected){
+  if(selected!=="Employee"){
     selectedItem=selected
   }else{
     selectedItem="Dashboard"
@@ -34,9 +32,11 @@ export default function SideDrawer() {
         {["Dashboard", "Leave Request", "History", "Holidays", "Employees"].map(
           (text, index) => (
 
-            <ListItem key={text} disablePadding sx={{backgroundColor : text.split(" ").join("")===selectedItem ? "#E0E0E0" : "white"}}>
+
+            <ListItem key={text} disablePadding sx={{backgroundColor : selectedItem===text.split(" ").join("") ? "#E0E0E0" : "white"}}>
+
               <ListItemButton
-              onClick={index === 0 ? () => Navigate('/Employee/Dashboard') : 
+              onClick={index === 0 ? () => Navigate('/Employee') : 
               index=== 1 ? ()=> Navigate('/Employee/LeaveRequest') : 
               index===2 ? ()=> Navigate('/Employee/History'):
               index===3 ? ()=> Navigate('/Employee/Holidays'):
