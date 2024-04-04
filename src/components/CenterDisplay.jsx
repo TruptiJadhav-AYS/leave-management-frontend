@@ -10,7 +10,6 @@ import Dashboard from "./Dashboard"
 export default function CenterDisplay(){
     return(
         <Routes >
-            {/* <Route path="/" /> */}
             <Route path="/" element={<Dashboard/>}/>
             <Route path="/LeaveRequest" element={<LeaveReqForm/>}/>
             <Route path="/History" />

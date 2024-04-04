@@ -70,13 +70,13 @@ function LeaveReqForm() {
       sx={{minHeight:"100%"}}
       mt="13vh"
     >
-      <Grid item xs={12} sm={8}>
+
       <Card
         elevation={1}
         pt="5%"
         sx={{
           textAlign: "left",
-          width:"100%"
+          width:"80%"
         }}
       >
         <CardContent component={"form"} onSubmit={formik.handleSubmit}>
@@ -220,7 +220,6 @@ function LeaveReqForm() {
         </CardContent>
       </Card>
       </Grid>
-    </Grid>
   );
 }
 
