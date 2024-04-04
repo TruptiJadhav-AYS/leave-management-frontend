@@ -71,4 +71,5 @@ export default function SideDrawer() {
       </List>
     </div>
   );
+  }
 }

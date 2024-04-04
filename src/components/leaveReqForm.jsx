@@ -103,6 +103,7 @@ function LeaveReqForm() {
                 onClick={() => {
                   handleClick("from-date");
                 }}
+                onBlur={formik.handleBlur}
                 sx={{
                   border:
                     clickedId === "from-date"
@@ -132,6 +133,7 @@ function LeaveReqForm() {
                 onClick={() => {
                   handleClick("to-date");
                 }}
+                onBlur={formik.handleBlur}
                 sx={{
                   border:
                     clickedId === "to-date"
@@ -164,7 +166,9 @@ function LeaveReqForm() {
               onClick={() => {
                 handleClick("leave-type");
               }}
+              onBlur={formik.handleBlur}
               onChange={formik.handleChange}
+              
               sx={{
                 "& fieldset": {
                   borderColor: "rgba(204, 204, 204, 0.5)",
