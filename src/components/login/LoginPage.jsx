@@ -1,9 +1,6 @@
 import { Paper, Grid } from "@mui/material";
 import backgroundImage from "./bg_loginpage.jpg";
 import React, { useState } from "react";
-// import { useFormik } from "formik";
-// import * as Yup from "yup";
-// import backgroundImage from "./bg_loginpage.jpg";
 import { useNavigate } from "react-router-dom";
 import logoImage from "./ays_logo.jpg";
 import {
@@ -16,10 +13,7 @@ import {
   Link,
 } from "@mui/material";
 
-// const validCredentials = {
-//   email: "user@example.com",
-//   password: "password123",
-// };
+
 const users = [
   { email: "pratiksha@gmail.com", password: "Prt@123", role: "Admin" },
   { email: "pratik@gmail.com", password: "Phhjj@123", role: "Manager" },
@@ -75,7 +69,6 @@ function LoginPage(props) {
         minHeight: "100vh",
       }}
     >
-      {/* <Grid container > */}
       <Grid container pl={2}>
         <Grid
           item
@@ -148,7 +141,7 @@ function LoginPage(props) {
             </Grid>
             <Grid container gap={2} mt={2}>
               <Grid item xs={12}>
-                <Link sx={{ cursor: "pointer" }}>Forget password?</Link>
+                <Link sx={{ cursor: "pointer" }} >Forget password?</Link>
               </Grid>
               <Grid item xs={12}>
                 <Button
@@ -165,7 +158,6 @@ function LoginPage(props) {
           </CardContent>
         </Card>
       </Container>
-      {/* </Grid> */}
     </Paper>
   );
 }
