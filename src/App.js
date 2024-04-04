@@ -5,12 +5,12 @@ import { Route, Routes } from "react-router-dom";
 import LoginPage from "./components/login/LoginPage";
 import { useState } from "react";
 
-const myTheme = createTheme({
+const myTheme=createTheme({
   typography: {
     fontFamily:"Open Sans"
   },
-  satus: {
-    danger: colors.red[700],
+  satus:{
+    danger:colors.red[700]
   },
   palette: {
     primary: {

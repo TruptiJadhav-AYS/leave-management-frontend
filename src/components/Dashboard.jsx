@@ -1,20 +1,16 @@
 import {
     Grid,
-    Box,
     Typography,
     Card,
     CardContent,
-    List,
-    ListItem,
+    
   } from "@mui/material";
   
   export default function Dashboard() {
     return (
-      // <Box sx={{ justifyContent: "center", alignItems: "center", pt: "10vh", width:"100%" , textAlign:"center"}}>
       <Grid
         container
         height={"100vh"}
-        //   bgcolor={"red"}
         justifyContent="center"
         alignItems={"center"}
         width="100%"
@@ -27,45 +23,48 @@ import {
           </Typography>
         </Grid>
         <Grid container spacing={2} p={2}>
-          <Grid item xs={6} sm={6} md={6} lg={6}>
-            <Card elevation={8} height={"20vh"}>
+          <Grid item xs={12} sm={6} md={6} lg={6}>
+            <Card elevation={8}>
               <CardContent>
                 <Typography fontWeight={"bold"} fontSize={"20px"}>
                   Remaining Leaves
                 </Typography>
               </CardContent>
+              <CardContent>Annual Leaves</CardContent>
+              <CardContent>Earned Leaves</CardContent>
+              <CardContent>Total Leaves</CardContent>
+
+              {/* <CardContent>hello</CardContent>
               <CardContent>hello</CardContent>
-              <CardContent>hello</CardContent>
-              <CardContent>hello</CardContent>
-              <CardContent>hello</CardContent>
+              <CardContent>hello</CardContent> */}
             </Card>
           </Grid>
-          <Grid item xs={6} sm={6} md={6} lg={6}>
-            <Card elevation={8} height={"20vh"}>
+          <Grid item xs={12} sm={6} md={6} lg={6}>
+            <Card elevation={8} >
               <CardContent>
                 <Typography fontWeight={"bold"} fontSize={"20px"}>
                   Pending Requests
                 </Typography>
               </CardContent>
+              {/* <CardContent>hello</CardContent>
               <CardContent>hello</CardContent>
               <CardContent>hello</CardContent>
-              <CardContent>hello</CardContent>
-              <CardContent>hello</CardContent>
+              <CardContent>hello</CardContent> */}
             </Card>
           </Grid>
         </Grid>
         <Grid container spacing={2} p={2}>
-          <Grid item xs={6} sm={6} md={6} lg={6}>
+          <Grid item xs={12} sm={6} md={6} lg={6}>
             <Card elevation={8} height={"20vh"}>
               <CardContent>
                 <Typography fontWeight={"bold"} fontSize={"20px"}>
                   Upcoming Holidays
                 </Typography>
               </CardContent>
+              {/* <CardContent>hello</CardContent>
               <CardContent>hello</CardContent>
               <CardContent>hello</CardContent>
-              <CardContent>hello</CardContent>
-              <CardContent>hello</CardContent>
+              <CardContent>hello</CardContent> */}
   
             </Card>
           </Grid>
