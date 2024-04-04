@@ -39,7 +39,9 @@ export default function SideDrawer() {
         {["Dashboard", "Leave Request", "History", "Holidays", "Employees"].map(
           (text, index) => (
 
+
             <ListItem key={text} disablePadding sx={{backgroundColor : selectedItem===text.split(" ").join("") ? "#E0E0E0" : "white"}}>
+
               <ListItemButton
               onClick={index === 0 ? () => Navigate('/Employee') : 
               index=== 1 ? ()=> Navigate('/Employee/LeaveRequest') : 
