@@ -19,14 +19,14 @@ export default function EmployeeList() {
     { Name: "Abhinandan Ambekar", Role: "Employee", Gender: "Male" },
   ];
   return (
-    <Box sx={{ justifyContent: "center", alignItems: "center", pt: "10vh", width:"100%" , textAlign:"center"}}>  
+    <Box sx={{ justifyContent: "center", alignItems: "center", px:"10%", pt: "14vh", width:"100%" , textAlign:"center"}}>  
         <List sx={{ overflow: "auto", width: "100%"}}>
           <ListItem sx={{ pt: "20px", backgroundColor: "#fafafa" }}>
             <Typography
               color="primary.main"
               width="40%"
               fontWeight={350}
-              textAlign={"center"}
+              pl={2}
             >
               NAME
             </Typography>
@@ -34,7 +34,7 @@ export default function EmployeeList() {
               color="primary.main"
               width="30%"
               fontWeight={350}
-              textAlign={"center"}
+              pl={0.9}
             >
               GENDER
             </Typography>
@@ -42,7 +42,7 @@ export default function EmployeeList() {
               color="primary.main"
               width="30%"
               fontWeight={350}
-              textAlign={"center"}
+              pl={1.7}
             >
               ROLE
             </Typography>
@@ -53,13 +53,13 @@ export default function EmployeeList() {
               key={index} 
               sx={{ backgroundColor: "#fafafa", py: "12px" }}
             >
-              <Typography width="40%" textAlign={"left"}>
+              <Typography width="40%" pl={1} textAlign={"left"}>
                 {employee.Name}
               </Typography>
-              <Typography width="30%" textAlign={"left"}>
+              <Typography width="30%" pl={1} textAlign={"left"}>
                 {employee.Gender}
               </Typography>
-              <Typography width="30%" textAlign={"left"}>
+              <Typography width="30%" pl={1} textAlign={"left"}>
                 {employee.Role}
               </Typography>
             </ListItem>
@@ -67,7 +67,7 @@ export default function EmployeeList() {
         </List>
         <Button variant="contained"
           onClick={() => {
-
+            
             Navigate("/Employee/Employees/NewRegistration");
 
           }}

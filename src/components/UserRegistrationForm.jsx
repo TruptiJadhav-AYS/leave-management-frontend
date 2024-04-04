@@ -1,5 +1,4 @@
 import {
-
     Button,
     CardContent,
     Grid,
@@ -132,6 +131,7 @@ import {
                     }}
                     onClick={() => handleClick("Name")}
                     onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
                     value={formik.values.Name}
                   />
                   {formik.touched.Name && errors.Name && (
@@ -159,6 +159,7 @@ import {
                       borderRadius: 1,
                     }}
                     onClick={() => handleClick("Role")}
+                    onBlur={formik.handleBlur}
                   >
                     <MenuItem value="Manager">Manager</MenuItem>
                     <MenuItem value="Employee">Employee</MenuItem>
@@ -191,6 +192,7 @@ import {
                       borderRadius: 1,
                     }}
                     onClick={() => handleClick("Email")}
+                    onBlur={formik.handleBlur}
                   />
                   {formik.touched.Email && errors.Email && (
                     <Typography variant="caption" color="error">
@@ -219,6 +221,7 @@ import {
                       borderRadius: 1,
                     }}
                     onClick={() => handleClick("PhoneNo")}
+                    onBlur={formik.handleBlur}
                   />
                   {formik.touched.PhoneNo && errors.PhoneNo && (
                     <Typography variant="caption" color="error">
@@ -254,6 +257,7 @@ import {
                       borderRadius: 1,
                     }}
                     onClick={() => handleClick("DateOfBirth")}
+                    onBlur={formik.handleBlur}
                   />
                   {formik.touched.DateOfBirth && errors.DateOfBirth && (
                     <Typography variant="caption" color="error">
@@ -279,6 +283,7 @@ import {
                       borderRadius: 1,
                     }}
                     onClick={() => handleClick("Gender")}
+                    onBlur={formik.handleBlur}
                   >
                     <MenuItem value="Male">Male</MenuItem>
                     <MenuItem value="Female">Female</MenuItem>
@@ -312,6 +317,7 @@ import {
                       borderRadius: 1,
                     }}
                     onClick={() => handleClick("DepartmentID")}
+                    onBlur={formik.handleBlur}
                   />
                   {formik.touched.DepartmentID && errors.DepartmentID && (
                     <Typography variant="caption" color="error">
@@ -338,6 +344,7 @@ import {
                       borderRadius: 1,
                     }}
                     onClick={() => handleClick("ManagerID")}
+                    onBlur={formik.handleBlur}
                   />
                   {formik.touched.ManagerID && errors.ManagerID && (
                     <Typography variant="caption" color="error">
