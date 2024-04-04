@@ -53,7 +53,8 @@ function LeaveReqForm() {
     validationSchema: leaveReqObj,
     onSubmit: (values) => {
       console.log(values);
-      Navigate("/Employee/Dashboard");
+      Navigate("/Employee");
+      alert("Leave request sent successfully!!")
     },
   });
 
@@ -219,7 +220,6 @@ function LeaveReqForm() {
         </CardContent>
       </Card>
       </Grid>
-
   );
 }
 

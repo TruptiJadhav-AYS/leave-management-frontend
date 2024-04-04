@@ -88,11 +88,13 @@ export default function Display() {
         </Drawer>
         <Drawer
           variant="permanent"
+          
           sx={{
             display: { xs: "none", sm: "block" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
+              
             },
           }}
           open
