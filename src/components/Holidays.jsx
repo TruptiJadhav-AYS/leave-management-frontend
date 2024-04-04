@@ -20,8 +20,8 @@ export default function Holidays(){
         container
         justifyContent={"center"}
         >
-        <Grid sx={{ height:"100vh" , pt:"10vh"}}  xs={12} sm={8}>
-            <List  sx={{width :"100%"}}>
+        <Grid item sx={{ height:"100vh" , pt:"10vh"}}  xs={12} sm={6}>
+            <List  sx={{overflow:"auto",width :"100%"}}>
             {annualLeaves.map((holiday,index) => (
                 <ListItem key={index} sx={{backgroundColor: "#E0E0E0" ,py:"12px",borderRadius:"10px",m:"3px"}}>
                     <Typography width="40%" textAlign={"center"}>{holiday.date}<br/>{holiday.day}</Typography>

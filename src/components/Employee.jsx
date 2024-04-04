@@ -12,8 +12,6 @@ export default function EmployeeList() {
     { Name: "Pruthviraj Suryawanshi", Role: "Employee", Gender: "Male" },
     { Name: "Pratiksha Nimbalkar", Role: "Employee", Gender: "Female" },
     { Name: "Trupti Jadhav", Role: "Employee", Gender: "Female" },
-    { Name: "Shital Theware", Role: "Employee", Gender: "Female" },
-    { Name: "Shruti", Role: "Employee", Gender: "Female" },
     { Name: "Ketan Rathod", Role: "Manager", Gender: "Male" },
     { Name: "Yogesh Patel", Role: "Admin", Gender: "Male" },
     { Name: "Nupur Tyagi", Role: "Employee", Gender: "Female" },
@@ -21,9 +19,7 @@ export default function EmployeeList() {
     { Name: "Abhinandan Ambekar", Role: "Employee", Gender: "Male" },
   ];
   return (
-    <Box sx={{ justifyContent: "center", alignItems: "center", pt: "10vh", width:"100%" , textAlign:"center"}}>
-
-      
+    <Box sx={{ justifyContent: "center", alignItems: "center", pt: "10vh", width:"100%" , textAlign:"center"}}>  
         <List sx={{ overflow: "auto", width: "100%"}}>
           <ListItem sx={{ pt: "20px", backgroundColor: "#fafafa" }}>
             <Typography
