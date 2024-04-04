@@ -1,8 +1,9 @@
 import { Paper, Grid } from "@mui/material";
-import backgroundImage from "./bg_loginpage.jpg";
+import backgroundImage from "../assets/bg_loginpage.jpg";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import logoImage from "./ays_logo.jpg";
+import logoImage from "../assets/ays_logo.jpg";
+
 import {
   TextField,
   Button,
@@ -13,11 +14,10 @@ import {
   Link,
 } from "@mui/material";
 
-
 const users = [
-  { email: "pratiksha@gmail.com", password: "Prt@123", role: "Admin" },
-  { email: "pratik@gmail.com", password: "Phhjj@123", role: "Manager" },
-  { email: "pruthvi@gmail.com", password: "Pwwrt@123", role: "Employee" },
+  { email: "pratiksha@gmail.com", password: "123" },
+  { email: "pratik@gmail.com", password: "1234" },
+  { email: "pruthvi@gmail.com", password: "12345" },
 ];
 
 function LoginPage(props) {
@@ -45,19 +45,19 @@ function LoginPage(props) {
 
     if (!email) {
       setEmailError("Please enter email");
+    }
+    if (!password) {
+      setPasswordError("Please enter a password");
     } else if (!userByEmail) {
       setPasswordError("Invalid Email or Password");
       return;
-    }
-
-    if (!password) {
-      setPasswordError("Please enter a password");
     } else if (userByEmail.password !== password) {
       setPasswordError("Invalid email or password");
     } else {
       navigate("/Employee");
       console.log("Login successful", userByEmail);
-      props.setRouteStatus(true);
+      props.onSignInClick(true);
+      props.onSignIn(email)
     }
   };
 
@@ -76,7 +76,6 @@ function LoginPage(props) {
           sm={1.5}
           md={1.1}
           lg={0.9}
-          // sx={{ backgroundColor: "red" }}
           mt={2}
         >
           <img
@@ -96,7 +95,6 @@ function LoginPage(props) {
           sm={3.5}
           md={2}
           lg={2}
-          // sx={{ backgroundColor: "yellow" }}
           mt={2}
         >
           <Typography fontSize={30} fontWeight={"bold"} color={"darkblue"}>
@@ -109,52 +107,59 @@ function LoginPage(props) {
       </Grid>
       <Container maxWidth="xs" sx={{ pt: "4vh" }}>
         <Card elevation={8}>
-          <CardContent spacing={2} component={"form"} onSubmit={handleSubmit}>
-            <Typography variant="h6" align="center" mb={2} fontWeight={"bold"}>
-              Login
-            </Typography>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  id="email"
-                  name="email"
-                  label="Email"
-                  type="email"
-                  onChange={handleEmailChange}
-                  error={Boolean(emailError)}
-                  helperText={emailError}
-                />
+          <CardContent spacing={2}>
+            <form onSubmit={handleSubmit}>
+              <Typography
+                variant="h6"
+                align="center"
+                mb={2}
+                fontWeight={"bold"}
+              >
+                Login
+              </Typography>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    id="email"
+                    name="email"
+                    label="Email"
+                    type="email"
+                    onChange={handleEmailChange}
+                    error={Boolean(emailError)}
+                    helperText={emailError}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    id="password"
+                    name="password"
+                    label="Password"
+                    type="password"
+                    onChange={handlePasswordChange}
+                    error={Boolean(passwordError)}
+                    helperText={passwordError}
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  id="password"
-                  name="password"
-                  label="Password"
-                  type="password"
-                  onChange={handlePasswordChange}
-                  error={Boolean(passwordError)}
-                  helperText={passwordError}
-                />
+              <Grid container gap={2} mt={2}>
+                <Grid item xs={12}>
+                  <Link sx={{ cursor: "pointer" }}>Forget password?</Link>
+                </Grid>
+                <Grid item xs={12}>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    sx={{ textTransform: "none", borderRadius: "100px" }}
+                  >
+                    Sign In
+                  </Button>
+                </Grid>
               </Grid>
-            </Grid>
-            <Grid container gap={2} mt={2}>
-              <Grid item xs={12}>
-                <Link sx={{ cursor: "pointer" }} >Forget password?</Link>
-              </Grid>
-              <Grid item xs={12}>
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  sx={{ textTransform: "none", borderRadius: "100px" }}
-                >
-                  Sign In
-                </Button>
-              </Grid>
-            </Grid>
+            </form>
           </CardContent>
         </Card>
       </Container>

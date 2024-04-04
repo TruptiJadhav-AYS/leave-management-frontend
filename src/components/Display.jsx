@@ -11,11 +11,25 @@ import SideDrawer from "./SideDrawer";
 import { useState } from "react";
 import CenterDisplay from "./CenterDisplay";
 
+
+const employee=[
+  {name:"Pratiksha",email:"pratiksha@gmail.com",role:"Admin"},
+  {name:"Trupti",email:"pratik@gmail.com",role:"Manager"},
+  {name:"Pruthvi",email:"pruthvi@gmail.com",role:"Employee"}
+]
+
 const drawerWidth = 240;
 
-export default function Display() {
+export default function Display({logedInUser}) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+
+  const findRoleOfUser=()=>{
+    let emp=employee.find((employee)=> employee.email===logedInUser)
+    return emp.role
+  }
+
+  let role=findRoleOfUser()
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -99,10 +113,10 @@ export default function Display() {
           }}
           open
         >
-          <SideDrawer/>
+          <SideDrawer  role={role}/>
         </Drawer>
       </Box>
-      <CenterDisplay/>
+      <CenterDisplay role={role}/>
     </Box>
   );
 }

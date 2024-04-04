@@ -6,7 +6,7 @@ import {
     
   } from "@mui/material";
   
-  export default function Dashboard() {
+  export default function Dashboard({role}) {
     return (
       <Grid
         container
@@ -22,38 +22,22 @@ import {
             Welcome, User name!!
           </Typography>
         </Grid>
+
         <Grid container spacing={2} p={2}>
+
           <Grid item xs={12} sm={6} md={6} lg={6}>
             <Card elevation={8}>
               <CardContent>
                 <Typography fontWeight={"bold"} fontSize={"20px"}>
-                  Remaining Leaves
+                  Leave Balance
                 </Typography>
               </CardContent>
               <CardContent>Annual Leaves</CardContent>
               <CardContent>Earned Leaves</CardContent>
               <CardContent>Total Leaves</CardContent>
-
-              {/* <CardContent>hello</CardContent>
-              <CardContent>hello</CardContent>
-              <CardContent>hello</CardContent> */}
             </Card>
           </Grid>
-          <Grid item xs={12} sm={6} md={6} lg={6}>
-            <Card elevation={8} >
-              <CardContent>
-                <Typography fontWeight={"bold"} fontSize={"20px"}>
-                  Pending Requests
-                </Typography>
-              </CardContent>
-              {/* <CardContent>hello</CardContent>
-              <CardContent>hello</CardContent>
-              <CardContent>hello</CardContent>
-              <CardContent>hello</CardContent> */}
-            </Card>
-          </Grid>
-        </Grid>
-        <Grid container spacing={2} p={2}>
+          
           <Grid item xs={12} sm={6} md={6} lg={6}>
             <Card elevation={8} height={"20vh"}>
               <CardContent>
@@ -61,20 +45,27 @@ import {
                   Upcoming Holidays
                 </Typography>
               </CardContent>
-              {/* <CardContent>hello</CardContent>
-              <CardContent>hello</CardContent>
-              <CardContent>hello</CardContent>
-              <CardContent>hello</CardContent> */}
-  
             </Card>
           </Grid>
-          {/* <Grid item xs={6} sm={6} md={6} lg={6}>
-            <Card elevation={8} height={"20vh"}>
-              <CardContent>hello</CardContent>
-            </Card>
-          </Grid> */}
         </Grid>
-      </Grid>
+        
+
+        <Grid container spacing={2} p={2}>
+          {role==="Admin" || role==="Manager" ?
+          <Grid item xs={12} sm={6} md={6} lg={6}>
+            <Card elevation={8}>
+              <CardContent>
+                <Typography fontWeight={"bold"} fontSize={"20px"}>
+                  Pending Requests
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid> 
+          : <></>}
+          </Grid>
+        
+        </Grid>
+      
     );
   }
   

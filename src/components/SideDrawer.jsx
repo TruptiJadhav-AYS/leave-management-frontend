@@ -13,32 +13,32 @@ import Toolbar from "@mui/material/Toolbar"
 import { useNavigate } from "react-router-dom"
 import { useLocation } from "react-router-dom";
 
-export default function SideDrawer() {
+export default function SideDrawer({role}) {
   let Navigate=useNavigate()
   let path=useLocation().pathname
   let selected=path.substring(path.lastIndexOf('/') + 1)
   let selectedItem;
+  let sideDrawerList
 
-  if(selected){
-  let selected=path.substring(path.lastIndexOf("/")+1)
-  let selectedItem;
   if(selected!=="Employee"){
     selectedItem=selected
-  }if(selected==="NewRegistration" || selected==="Employees"){
-    selectedItem="Employees"
   }else{
     selectedItem="Dashboard"
   }
 
+  if(role==="Admin" || role==="Manager"){
+    sideDrawerList= ["Dashboard", "Leave Request", "History", "Holidays", "Employees"] 
+  }else{
+    sideDrawerList= ["Dashboard", "Leave Request", "History", "Holidays"] 
+  }
+  
   return (
     <div>
       <Toolbar />
       <Divider />
       <List>
-        {["Dashboard", "Leave Request", "History", "Holidays", "Employees"].map(
+        {sideDrawerList.map(
           (text, index) => (
-
-
             <ListItem key={text} disablePadding sx={{backgroundColor : selectedItem===text.split(" ").join("") ? "#E0E0E0" : "white"}}>
 
               <ListItemButton
@@ -72,4 +72,4 @@ export default function SideDrawer() {
     </div>
   );
   }
-}
+

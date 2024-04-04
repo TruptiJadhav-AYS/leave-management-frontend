@@ -109,7 +109,8 @@ import {
             width:"80%"
           }}     
         >
-          <CardContent component={"form"}  onSubmit={formik.handleSubmit}>
+          <CardContent >
+            <form onSubmit={formik.handleSubmit}>
             <Typography color={"primary"} variant="h5">Onboard Employee</Typography>
             <br />
   
@@ -360,6 +361,7 @@ import {
                 Submit
               </Button>
               </Grid>
+              </form>
           </CardContent>
         </Card>
       </Grid>
