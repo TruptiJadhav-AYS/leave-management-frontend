@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid, Typography, Card, CardContent, Divider } from "@mui/material";
 import UseReponsive from "../hooks/UseResponsive";
-import { Gauge } from '@mui/x-charts';
+// import { Gauge } from '@mui/x-charts';
 
 export default function Dashboard({ role }) {
   let responsive = UseReponsive();
@@ -12,7 +12,7 @@ export default function Dashboard({ role }) {
       height={"92vh"}
       width="100%"
       sx={{ minHeight: "92vh" }}
-      pt={"9vh"}
+      pt={"14vh"}
       mx={3}
     >
       <Typography
