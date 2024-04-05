@@ -18,7 +18,7 @@ export default function Dashboard({ role }) {
       container
       height={"100vh"} // Changed to 100vh
       width="100%"
-      sx={{ minHeight: "90vh", paddingTop: "12vh" }} // Changed to 100vh
+      sx={{ minHeight: "90vh",pt:1 }} // Changed to 100vh
       mx={2}
       // gap={-2}
     >

@@ -9,6 +9,8 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import AddIcon from '@mui/icons-material/Add';
+
 const columns = [
   { id: "Name", label: "Name", minWidth: 180 },
   { id: "Email", label: "Email", minWidth: 170 },
@@ -169,14 +171,14 @@ export default function EmployeeList() {
   };
 
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden", mt: "13vh" }}>
+    <Paper sx={{ width: "100%", overflow: "hidden",py:2}}>
       <Button
         variant="contained"
         onClick={() => {
           Navigate("/Employee/Employees/NewRegistration");
         }}
       >
-        Add Employee
+        Employee<AddIcon/>
       </Button>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
