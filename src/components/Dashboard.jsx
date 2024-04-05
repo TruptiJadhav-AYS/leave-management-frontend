@@ -1,3 +1,5 @@
+
+
 import React from "react";
 import { Grid, Typography, Card, CardContent, Divider } from "@mui/material";
 import UseReponsive from "../hooks/UseResponsive";
@@ -16,9 +18,9 @@ export default function Dashboard({ role }) {
       container
       height={"100vh"} // Changed to 100vh
       width="100%"
-      sx={{ minHeight: "92vh" }}
-      pt={"9vh"}
-      mx={3}
+      sx={{ minHeight: "90vh", paddingTop: "12vh" }} // Changed to 100vh
+      mx={2}
+      // gap={-2}
     >
       <Typography
         fontSize={"22px"}
