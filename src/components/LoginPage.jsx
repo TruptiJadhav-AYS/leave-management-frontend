@@ -26,7 +26,7 @@ function LoginPage(props) {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate();
-
+  
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
     setEmailError("");
@@ -57,7 +57,7 @@ function LoginPage(props) {
       navigate("/Employee");
       console.log("Login successful", userByEmail);
       props.onSignInClick(true);
-      props.onSignIn(email)
+      props.onSignIn(email);
     }
   };
 
@@ -70,14 +70,7 @@ function LoginPage(props) {
       }}
     >
       <Grid container pl={2}>
-        <Grid
-          item
-          xs={3.1}
-          sm={1.5}
-          md={1.1}
-          lg={0.9}
-          mt={2}
-        >
+        <Grid item xs={3.1} sm={1.5} md={1.1} lg={0.9} mt={2}>
           <img
             src={logoImage}
             alt="Logo"
@@ -89,18 +82,11 @@ function LoginPage(props) {
             }}
           />
         </Grid>
-        <Grid
-          item
-          xs={7}
-          sm={3.5}
-          md={2}
-          lg={2}
-          mt={2}
-        >
-          <Typography fontSize={30} fontWeight={"bold"} color={"darkblue"}>
+        <Grid item xs={7} sm={3.5} md={2} lg={2} mt={2} textAlign={"left"}>
+          <Typography fontSize={30} fontWeight={"bold"}  color={"darkblue"}>
             AYS
           </Typography>
-          <Typography fontSize={20} fontWeight={"bold"}>
+          <Typography fontSize={20} fontWeight={"bold"} >
             Software Solution
           </Typography>
         </Grid>
@@ -114,6 +100,7 @@ function LoginPage(props) {
                 align="center"
                 mb={2}
                 fontWeight={"bold"}
+                color={"primary"}
               >
                 Login
               </Typography>
@@ -144,8 +131,8 @@ function LoginPage(props) {
                 </Grid>
               </Grid>
               <Grid container gap={2} mt={2}>
-                <Grid item xs={12}>
-                  <Link sx={{ cursor: "pointer" }}>Forget password?</Link>
+                <Grid item xs={12} textAlign={"left"}>
+                  <Button disableRipple sx={{"&:hover" :{backgroundColor:"transparent"} ,cursor: "pointer" ,textTransform: "none"}}>Forget password?</Button>
                 </Grid>
                 <Grid item xs={12}>
                   <Button

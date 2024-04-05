@@ -54,12 +54,12 @@ function LeaveReqForm() {
     onSubmit: (values) => {
       console.log(values);
       Navigate("/Employee");
-      alert("Leave request sent successfully!!")
+      alert("Leave request sent successfully!!");
     },
   });
 
   const Error = formik.errors;
-  
+
   return (
     <Grid
       container
@@ -67,16 +67,15 @@ function LeaveReqForm() {
       justifyContent="center"
       alignItems={"center"}
       width="100%"
-      sx={{minHeight:"100%"}}
+      sx={{ minHeight: "100%" }}
       mt="14vh"
     >
-
       <Card
         elevation={1}
         pt="5%"
         sx={{
           textAlign: "left",
-          width:"80%"
+          width: "80%",
         }}
       >
         <CardContent component={"form"} onSubmit={formik.handleSubmit}>
@@ -111,7 +110,7 @@ function LeaveReqForm() {
                       : "2px solid rgba(204, 204, 204, 0.5)",
                   borderRadius: "4px",
                   p: "4px",
-                  width:"100%"
+                  width: "100%",
                 }}
               />
               {formik.touched.fromDate && Error.fromDate && (
@@ -141,7 +140,7 @@ function LeaveReqForm() {
                       : "2px solid rgba(204, 204, 204, 0.5)",
                   borderRadius: "4px",
                   p: "4px",
-                  width:"100%"
+                  width: "100%",
                 }}
               />
 
@@ -151,46 +150,44 @@ function LeaveReqForm() {
                 </Typography>
               )}
             </Grid>
-
           </Grid>
 
           <Grid container>
-          <Grid item xs={12} sm={6}>
-            <Stack width="100%">
-            <Typography fontSize={"13px"}>LEAVE TYPE</Typography>
-            <Select
-              value={formik.values.leaveType}
-              name="leaveType"
-              size="small"
-              labelId="leave-type-label"
-              onClick={() => {
-                handleClick("leave-type");
-              }}
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              
-              sx={{
-                "& fieldset": {
-                  borderColor: "rgba(204, 204, 204, 0.5)",
-                  borderWidth: "2px",
-                },
-              }}
-              MenuProps={{
-                disableHover: true,
-              }}
-            >
-              <MenuItem value="Half day">Half Day</MenuItem>
-              <MenuItem value="Full day">Full Day</MenuItem>
-              <MenuItem value="Work From Home">Work From Home</MenuItem>
-            </Select>
+            <Grid item xs={12} sm={6}>
+              <Stack width="100%">
+                <Typography fontSize={"13px"}>LEAVE TYPE</Typography>
+                <Select
+                  value={formik.values.leaveType}
+                  name="leaveType"
+                  size="small"
+                  labelId="leave-type-label"
+                  onClick={() => {
+                    handleClick("leave-type");
+                  }}
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  sx={{
+                    "& fieldset": {
+                      borderColor: "rgba(204, 204, 204, 0.5)",
+                      borderWidth: "2px",
+                    },
+                  }}
+                  MenuProps={{
+                    disableHover: true,
+                  }}
+                >
+                  <MenuItem value="Half day">Half Day</MenuItem>
+                  <MenuItem value="Full day">Full Day</MenuItem>
+                  <MenuItem value="Work From Home">Work From Home</MenuItem>
+                </Select>
 
-            {formik.touched.leaveType && Error.leaveType && (
-              <Typography variant="caption" color="error">
-                {Error.leaveType}
-              </Typography>
-            )}
-            </Stack>
-          </Grid>
+                {formik.touched.leaveType && Error.leaveType && (
+                  <Typography variant="caption" color="error">
+                    {Error.leaveType}
+                  </Typography>
+                )}
+              </Stack>
+            </Grid>
           </Grid>
 
           <Stack width="100%">
@@ -223,7 +220,7 @@ function LeaveReqForm() {
           </Button>
         </CardContent>
       </Card>
-      </Grid>
+    </Grid>
   );
 }
 

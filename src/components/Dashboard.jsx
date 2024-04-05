@@ -1,71 +1,105 @@
-import {
-    Grid,
-    Typography,
-    Card,
-    CardContent,
-    
-  } from "@mui/material";
-  
-  export default function Dashboard({role}) {
-    return (
-      <Grid
-        container
-        height={"100vh"}
-        justifyContent="center"
-        alignItems={"center"}
-        width="100%"
-        sx={{ minHeight: "100vh" }}
-        pt={7.9}
+import React from "react";
+import { Grid, Typography, Card, CardContent, Divider } from "@mui/material";
+import UseReponsive from "../hooks/UseResponsive";
+import { Gauge } from '@mui/x-charts';
+
+export default function Dashboard({ role }) {
+  let responsive = UseReponsive();
+
+  return (
+    <Grid
+      container
+      height={"92vh"}
+      width="100%"
+      sx={{ minHeight: "92vh" }}
+      pt={"9vh"}
+      mx={3}
+    >
+      <Typography
+        fontSize={"22px"}
+        textAlign={"left"}
+        color={"primary"}
+        p={"1%"}
+        width="95%"
       >
-        <Grid item xs={12} sm={8} pt={1.5}>
-          <Typography fontSize={"25px"} color={"primary"}>
-            Welcome, User name!!
-          </Typography>
-        </Grid>
+        Welcome Rajesh !!!
+      </Typography>
 
-        <Grid container spacing={2} p={2}>
-
-          <Grid item xs={12} sm={6} md={6} lg={6}>
-            <Card elevation={8}>
+      <Grid height={"96%"} width="100%" textAlign={"left"}>
+        <Grid
+          container
+          spacing={3}
+          display={"flex"}
+          minHeight={"50%"}
+          pb="2vh"
+          height={"100%"}
+        >
+          <Grid item xs={12} sm={6} md={4} lg={4}>
+            <Card
+              sx={{
+                height: responsive.isMobile
+                  ? "250px"
+                  : responsive.isTablet
+                  ? "100%"
+                  : responsive.isLaptop
+                  ? "70%"
+                  : "70%",
+              }}
+            >
               <CardContent>
-                <Typography fontWeight={"bold"} fontSize={"20px"}>
+                <Typography fontWeight={"bold"} fontSize={"16px"}>
                   Leave Balance
                 </Typography>
               </CardContent>
-              <CardContent>Annual Leaves</CardContent>
-              <CardContent>Earned Leaves</CardContent>
-              <CardContent>Total Leaves</CardContent>
+              <Divider />
             </Card>
           </Grid>
-          
-          <Grid item xs={12} sm={6} md={6} lg={6}>
-            <Card elevation={8} height={"20vh"}>
+
+          <Grid item xs={12} sm={6} md={4} lg={4}>
+            <Card
+              sx={{
+                height: responsive.isMobile
+                  ? "250px"
+                  : responsive.isTablet
+                  ? "100%"
+                  : responsive.isLaptop
+                  ? "70%"
+                  : "70%",
+              }}
+            >
               <CardContent>
-                <Typography fontWeight={"bold"} fontSize={"20px"}>
+                <Typography fontWeight={"bold"} fontSize={"16px"}>
                   Upcoming Holidays
                 </Typography>
               </CardContent>
+              <Divider />
             </Card>
           </Grid>
-        </Grid>
-        
 
-        <Grid container spacing={2} p={2}>
-          {role==="Admin" || role==="Manager" ?
-          <Grid item xs={12} sm={6} md={6} lg={6}>
-            <Card elevation={8}>
-              <CardContent>
-                <Typography fontWeight={"bold"} fontSize={"20px"}>
-                  Pending Requests
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid> 
-          : <></>}
-          </Grid>
-        
+          {role === "Admin" || role === "Manager" ? (
+            <Grid item xs={12} sm={6} md={4} lg={4}>
+              <Card
+                sx={{
+                  height: responsive.isMobile
+                    ? "250px"
+                    : responsive.isTablet
+                    ? "100%"
+                    : responsive.isLaptop
+                    ? "70%"
+                    : "70%",
+                }}
+              >
+                <CardContent>
+                  <Typography fontWeight={"bold"} fontSize={"16px"}>
+                    Pending Requests
+                  </Typography>
+                </CardContent>
+                <Divider />
+              </Card>
+            </Grid>
+          ) : null}
         </Grid>
-      
-    );
-  }
-  
+      </Grid>
+    </Grid>
+  );
+}

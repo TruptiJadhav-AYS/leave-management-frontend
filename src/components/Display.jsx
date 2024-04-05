@@ -12,24 +12,13 @@ import { useState } from "react";
 import CenterDisplay from "./CenterDisplay";
 
 
-const employee=[
-  {name:"Pratiksha",email:"pratiksha@gmail.com",role:"Admin"},
-  {name:"Trupti",email:"pratik@gmail.com",role:"Manager"},
-  {name:"Pruthvi",email:"pruthvi@gmail.com",role:"Employee"}
-]
+
 
 const drawerWidth = 240;
 
-export default function Display({logedInUser}) {
+export default function Display({logedInUser,role}) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
-
-  const findRoleOfUser=()=>{
-    let emp=employee.find((employee)=> employee.email===logedInUser)
-    return emp.role
-  }
-
-  let role=findRoleOfUser()
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -54,7 +43,7 @@ export default function Display({logedInUser}) {
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
-          backgroundColor: "secondary.light",
+          backgroundColor: "primary",
         }}
       >
         <Stack direction={"row"} m={1.5} justifyContent={"space-between"} >
@@ -71,7 +60,7 @@ export default function Display({logedInUser}) {
         </Stack>
           <Stack direction={"row"} spacing={2}>
             <Typography variant="h6" noWrap component="div">
-              User Name
+              Rajesh Yadav
             </Typography>
             <Avatar></Avatar>
           </Stack>
