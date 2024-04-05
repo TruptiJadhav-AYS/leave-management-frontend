@@ -202,10 +202,10 @@ export default function UserRegistrationForm() {
                 <Stack width={"100%"}>
                   <Typography variant="body2"> PHONE NO</Typography>
                   <InputBase
-                    type="number"
+                    type="tel"
+                    pattern="[0-9]*"
+                    maxLength={10}
                     name="PhoneNo"
-                    pattern="[0-9]{10}"
-                    inputMode="numeric"
                     placeholder=" Phone Number"
                     onChange={formik.handleChange}
                     value={formik.values.PhoneNo}
@@ -218,7 +218,7 @@ export default function UserRegistrationForm() {
                       borderRadius: 1,
                     }}
                     onClick={() => handleClick("PhoneNo")}
-                    onBlur={formik.handleBlur}
+                    onBlur={formik.handleBlur}           
                   />
                   {formik.touched.PhoneNo && errors.PhoneNo && (
                     <Typography variant="caption" color="error">
@@ -300,7 +300,8 @@ export default function UserRegistrationForm() {
                 <Stack width={"100%"}>
                   <Typography variant="body2"> Department ID </Typography>
                   <InputBase
-                    type="number"
+                    type="tel"
+                    pattern="[0-9]*"
                     name="DepartmentID"
                     placeholder=" DepartmentID"
                     onChange={formik.handleChange}
@@ -327,7 +328,8 @@ export default function UserRegistrationForm() {
                 <Stack width={"100%"}>
                   <Typography variant="body2"> Manager ID</Typography>
                   <InputBase
-                    type="number"
+                    type="tel"
+                    pattern="[0-9]*"
                     placeholder=" ManagerID"
                     name="ManagerID"
                     onChange={formik.handleChange}
