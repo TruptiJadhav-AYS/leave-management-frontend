@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid,Typography,Card} from '@mui/material';
+import { Grid,Typography,Paper} from '@mui/material';
 import newYear from "../assets/newyear.jpg"
 import republicDay from "../assets/republicday.jpg";
 import holi from "../assets/holi.jpg";
@@ -34,17 +34,18 @@ export default function Holidays() {
 
           {annualLeaves.map((holiday, index) => (
           <Grid item key={index} xs={6} sm={6} md={4} lg={3}>
-          <Card key={index} sx={{ marginBottom: 2 }} >
+          <Paper key={index} elevation={3} sx={{p:"10px"}}>
             <Typography  sx={{ fontWeight: 'bold',fontSize:"18px"}}>{holiday.occasion}</Typography>
             <img
               style={{ borderRadius: '50%' }}
+              alt={holiday.occasion}
               src={holiday.img}
               width={"50px"}
               heigh={"50px"}
               />
               <Typography>{holiday.date}</Typography>
               <Typography sx={{ mb: 1 }}>{holiday.day}</Typography>
-          </Card>
+          </Paper>
           </Grid>
           ))}
 
