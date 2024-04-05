@@ -12,7 +12,6 @@ export default function Dashboard({ role }) {
       height={"92vh"}
       width="100%"
       sx={{ minHeight: "92vh" }}
-      pt={"9vh"}
       mx={3}
     >
       <Typography

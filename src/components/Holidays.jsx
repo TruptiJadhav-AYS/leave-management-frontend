@@ -1,43 +1,53 @@
 import React from 'react';
-import { Grid, List, Typography } from '@mui/material';
-import ListItem from '@mui/material/ListItem';
+import { Grid,Typography,Card} from '@mui/material';
+import newYear from "../assets/newyear.jpg"
+import republicDay from "../assets/republicday.jpg";
+import holi from "../assets/holi.jpg";
+import eid from "../assets/eid.jpg";
+import gudhipadwa from "../assets/gudhipadwa.jpg"
+import laborDay from "../assets/laborday.jpg";
+import independanceDay from "../assets/independance.jpg";
+import ganeshChaturthi from "../assets/ganeshchaturthi.jpg";
+import gandhiJayanti from "../assets/gandhijayanti.jpg";
+import dusshera from "../assets/dusshera.jpg";
+import diwali from "../assets/diwali.png";
+import christmas from "../assets/christmas.jpg";
 
 const annualLeaves = [
-  { date: '01/01/2024', day: 'Monday', occasion: 'New Year' },
-  { date: '26/01/2024', day: 'Friday', occasion: 'Republic Day' },
-  { date: '25/03/2024', day: 'Monday', occasion: 'Holi' },
-  { date: '01/05/2024', day: 'Wednesday', occasion: 'May Day' },
-  { date: '15/08/2024', day: 'Thursday', occasion: 'Independence Day' },
-  { date: '07/09/2024', day: 'Saturday', occasion: 'Ganesh Chaturthi' },
-  { date: '02/10/2024', day: 'Wednesday', occasion: 'Mahatma Gandhi Jayanti' },
-  { date: '12/10/2024', day: 'Saturday', occasion: 'Dussehra' },
-  { date: '01/11/2024', day: 'Friday', occasion: 'Diwali' },
-  { date: '25/12/2024', day: 'Wednesday', occasion: 'Christmas Day' },
+  { date: '01/01/2024', day: 'Monday', occasion: 'New Year', img: newYear },
+  { date: '26/01/2024', day: 'Friday', occasion: 'Republic Day', img: republicDay },
+  { date: '25/03/2024', day: 'Monday', occasion: 'Holi', img: holi },
+  { date:"09/04/2024" ,day: "Tuesday", occasion: "Gudhi padwa",img:gudhipadwa},
+  { date:"11/04/2024", day:"Thursday", occasion:"Eid",img:eid},
+  { date: '01/05/2024', day: 'Wednesday', occasion: 'Labour Day', img: laborDay },
+  { date: '15/08/2024', day: 'Thursday', occasion: 'Independence Day', img: independanceDay },
+  { date: '07/09/2024', day: 'Saturday', occasion: 'Ganesh Chaturthi', img: ganeshChaturthi },
+  { date: '02/10/2024', day: 'Wednesday', occasion: 'Gandhi Jayanti', img: gandhiJayanti },
+  { date: '12/10/2024', day: 'Saturday', occasion: 'Dussehra', img: dusshera },
+  { date: '01/11/2024', day: 'Friday', occasion: 'Diwali', img: diwali },
+  { date: '25/12/2024', day: 'Wednesday', occasion: 'Christmas Day', img: christmas },
 ];
 
 export default function Holidays() {
   return (
-    <Grid container justifyContent="center" mt="15vh">
-      <Grid item xs={12} md={8}>
-        <List sx={{ width: '100%', borderRadius: 4, bgcolor: 'whitesmoke', padding: 2 }}>
-          {annualLeaves.map((holiday, index) => (
-            <ListItem
-              key={index}
-              sx={{
-                borderBottom: '1px solid #e0e0e0',
-                '&:last-child': {
-                  borderBottom: 'none',
-                },
-              }}
-            >
-              <Typography sx={{ width: '25%', fontWeight: 'bold' }}>{holiday.date}</Typography>
-              <Typography sx={{ width: '25%' }}>{holiday.day}</Typography>
-              <Typography sx={{ width: '50%' }}>{holiday.occasion}</Typography>
-            </ListItem>
-          ))}
-        </List>
+    <Grid container spacing={2} py={2} px={2}>
 
-      </Grid>
+          {annualLeaves.map((holiday, index) => (
+          <Grid item key={index} xs={6} sm={6} md={4} lg={3}>
+          <Card key={index} sx={{ marginBottom: 2 }} >
+            <Typography  sx={{ fontWeight: 'bold',fontSize:"18px"}}>{holiday.occasion}</Typography>
+            <img
+              style={{ borderRadius: '50%' }}
+              src={holiday.img}
+              width={"50px"}
+              heigh={"50px"}
+              />
+              <Typography>{holiday.date}</Typography>
+              <Typography sx={{ mb: 1 }}>{holiday.day}</Typography>
+          </Card>
+          </Grid>
+          ))}
+
     </Grid>
   );
 }

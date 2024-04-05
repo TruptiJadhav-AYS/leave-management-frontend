@@ -11,7 +11,7 @@ export default function CenterDisplay({ role }) {
   return (
     <Routes>
       <Route path="/" element={<Dashboard role={role} />} />
-      <Route path="/LeaveRequest" element={<LeaveReqForm />} />
+      <Route path="/ApplyLeave" element={<LeaveReqForm />} />
       <Route path="/History" element={<History />} />
       <Route path="/Holidays" element={<Holidays />} />
       <Route path="/Employees" element={<EmployeeList />} />

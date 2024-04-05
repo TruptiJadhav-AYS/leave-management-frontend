@@ -25,7 +25,6 @@ export default function EmployeeList() {
         justifyContent: "center",
         alignItems: "center",
         px: "10%",
-        pt: "14vh",
         width: "100%",
         textAlign: "center",
       }}

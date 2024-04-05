@@ -6,13 +6,10 @@ import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Typography from "@mui/material/Typography";
-import { Avatar,Stack } from "@mui/material";
+import { Avatar,Stack ,Toolbar,Grid} from "@mui/material";
 import SideDrawer from "./SideDrawer";
 import { useState } from "react";
 import CenterDisplay from "./CenterDisplay";
-
-
-
 
 const drawerWidth = 240;
 
@@ -66,7 +63,6 @@ export default function Display({logedInUser,role}) {
           </Stack>
         </Stack>
     </AppBar>
-      
       <Box
         component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
@@ -105,7 +101,10 @@ export default function Display({logedInUser,role}) {
           <SideDrawer  role={role}/>
         </Drawer>
       </Box>
+      <Grid container direction={"row"}>
+      <Toolbar/>
       <CenterDisplay role={role}/>
+      </Grid>
     </Box>
   );
 }

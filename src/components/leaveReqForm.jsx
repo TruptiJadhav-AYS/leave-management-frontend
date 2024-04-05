@@ -68,7 +68,6 @@ function LeaveReqForm() {
       alignItems={"center"}
       width="100%"
       sx={{ minHeight: "100%" }}
-      mt="14vh"
     >
       <Card
         elevation={1}

@@ -95,10 +95,9 @@ export default function UserRegistrationForm() {
   console.log(formik.values);
 
   return (
-    <Grid container justifyContent={"center"} width="100%" mt="14vh">
+    <Grid container justifyContent={"center"} width="100%" pt={3}>
       <Card
         elevation={1}
-        pt="3%"
         sx={{
           textAlign: "left",
           width: "80%",

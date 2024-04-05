@@ -31,14 +31,13 @@ export default function SideDrawer({ role }) {
   if (role === "Admin") {
     sideDrawerList = [
       "Dashboard",
-      "Leave Request",
+      "Apply Leave",
       "History",
       "Holidays",
       "Employees",
     ];
   } else  {
-    sideDrawerList = ["Dashboard", "Leave Request", "History", "Holidays"];
-    console.log(role,"ghfrhfrjfb")
+    sideDrawerList = ["Dashboard", "Apply Leave", "History", "Holidays"];
   }
 
   return (
@@ -79,7 +78,7 @@ export default function SideDrawer({ role }) {
                 index === 0
                   ? () => Navigate("/Employee")
                   : index === 1
-                  ? () => Navigate("/Employee/LeaveRequest")
+                  ? () => Navigate("/Employee/ApplyLeave")
                   : index === 2
                   ? () => Navigate("/Employee/History")
                   : index === 3
