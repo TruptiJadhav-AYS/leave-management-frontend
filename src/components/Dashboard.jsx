@@ -1,5 +1,3 @@
-
-
 import React from "react";
 import { Grid, Typography, Card, CardContent, Divider } from "@mui/material";
 import UseReponsive from "../hooks/UseResponsive";
@@ -16,30 +14,28 @@ export default function Dashboard({ role }) {
   return (
     <Grid
       container
-      height={"100vh"} // Changed to 100vh
       width="100%"
-      sx={{ minHeight: "90vh",pt:1 }} // Changed to 100vh
-      mx={2}
-      // gap={-2}
+      mx={1}
+      mt={1}
     >
       <Typography
         fontSize={"22px"}
         textAlign={"left"}
         color={"primary"}
         width="95%"
-        // bgcolor={"red"}
         height={"5vh"}
       >
         Welcome Rajesh !!!
       </Typography>
-      <Grid container spacing={3} height={"18vh"} > {/* Adjusted height */}
-        <Grid item xs={12} sm={4} md={4} lg={4}>
+      
+      <Grid  width="100%">
+      <Grid container spacing={1} height={"18vh"} >
+  
+        <Grid item xs={4} sm={4} md={4} lg={4}>
           <Card
             sx={{
-              height: "80%", // Adjusted to 100%
+              height: "80%",
               display: "flex",
-              // bgcolor:"yellow",
-              
               flexDirection: "column",
               justifyContent: "center",
               alignItems: "center",
@@ -61,13 +57,13 @@ export default function Dashboard({ role }) {
                 }}
                 text={({ value, valueMax }) => `${value} / ${valueMax}`}
               />
-            {/* </CardContent>
+              {/* </CardContent>
             <CardContent> */}
               <Typography>Earned Leave</Typography>
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={12} sm={4} md={4} lg={4}>
+        <Grid item xs={4} sm={4} md={4} lg={4}>
           <Card
             sx={{
               height: "80%", // Adjusted to 100%
@@ -93,13 +89,13 @@ export default function Dashboard({ role }) {
                 }}
                 text={({ value, valueMax }) => `${value} / ${valueMax}`}
               />
-            {/* </CardContent>
+              {/* </CardContent>
             <CardContent> */}
               <Typography>Annual Leave</Typography>
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={12} sm={4} md={4} lg={4}>
+        <Grid item xs={4} sm={4} md={4} lg={4}>
           <Card
             sx={{
               height: "80%", // Adjusted to 100%
@@ -125,25 +121,30 @@ export default function Dashboard({ role }) {
                 }}
                 text={({ value, valueMax }) => `${value} / ${valueMax}`}
               />
-            {/* </CardContent>
+              {/* </CardContent>
             <CardContent> */}
               <Typography>Total Leave</Typography>
             </CardContent>
           </Card>
         </Grid>
       </Grid>
-      <Grid container spacing={3} pt={2} height={"50%"} sx={{mt:responsive.isMobile ? "420px" : "0px"}} > {/* Adjusted height */}
-        <Grid item xs={12} sm={6} md={6} lg={6} >
-          <Card
-          >
+      <Grid
+        container
+        spacing={3}
+        pt={2}
+        height={"50%"}
+        sx={{ mt: responsive.isMobile ? "30px" : "0px" }}
+      >
+        <Grid item xs={12} sm={6} md={6} lg={6}>
+          <Card>
             <CardContent>
               <Typography fontWeight={"bold"} fontSize={"16px"}>
                 Upcoming Holidays
               </Typography>
             </CardContent>
             <Divider />
-            <CardContent>
-            <List
+
+              <List
                 sx={{
                   width: "100%",
                   maxWidth: 360,
@@ -243,27 +244,124 @@ export default function Dashboard({ role }) {
                   />
                 </ListItem>
               </List>
-            </CardContent>
-          </Card>
-        </Grid>
 
+          </Card>
+
+        </Grid >
         {role === "Admin" || role === "Manager" ? (
           <Grid item xs={12} sm={6} md={6} lg={6}>
             <Card
-              // sx={{
-              //   height: "100%", // Adjusted to 100%
-              // }}
+            // sx={{
+            //   height: "100%", // Adjusted to 100%
+            // }}
             >
               <CardContent>
                 <Typography fontWeight={"bold"} fontSize={"16px"}>
                   Pending Requests
                 </Typography>
               </CardContent>
-              <Divider />
+              <Divider/>
+              <List>
+              <ListItem alignItems="flex-start">
+                  <ListItemAvatar>
+                    <Avatar
+                      alt="Remy Sharp"
+                      src="/static/images/avatar/1.jpg"
+                    />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary="Trupti Jadhav"
+                    secondary={
+                      <React.Fragment>
+                        <Typography
+                          sx={{ display: "inline" }}
+                          component="span"
+                          variant="body1"
+                          color="text.primary"
+                        >
+                          From: 20-04-2024
+                          To: 22-04-2024
+                        </Typography>
+                      </React.Fragment>
+                    }
+                  />
+                </ListItem>
+                <ListItem alignItems="flex-start">
+                  <ListItemAvatar>
+                    <Avatar
+                      alt="Remy Sharp"
+                      src="/static/images/avatar/1.jpg"
+                    />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary="Pratiksha Nimbalakar"
+                    secondary={
+                      <React.Fragment>
+                        <Typography
+                          sx={{ display: "inline" }}
+                          component="span"
+                          variant="body1"
+                          color="text.primary"
+                        >
+                          From: 21-04-2024
+                          To: 25-02-2024
+                        </Typography>
+                      </React.Fragment>
+                    }
+                  />
+                </ListItem>
+                <ListItem alignItems="flex-start">
+                  <ListItemAvatar>
+                    <Avatar
+                      alt="Remy Sharp"
+                      src="/static/images/avatar/1.jpg"
+                    />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary="Pruthviraj Suryavanshi"
+                    secondary={
+                      <React.Fragment>
+                        <Typography
+                          sx={{ display: "inline" }}
+                          component="span"
+                          variant="body1"
+                          color="text.primary"
+                        >
+                          From: 23-04-2024 To: 27-04-2023
+                        </Typography>
+                      </React.Fragment>
+                    }
+                  />
+                </ListItem>
+                <ListItem alignItems="flex-start">
+                  <ListItemAvatar>
+                    <Avatar
+                      alt="Remy Sharp"
+                      src="/static/images/avatar/1.jpg"
+                    />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary="Shital Theware"
+                    secondary={
+                      <React.Fragment>
+                        <Typography
+                          sx={{ display: "inline" }}
+                          component="span"
+                          variant="body1"
+                          color="text.primary"
+                        >
+                          From: 20-04-2024 To: 29-04-2024
+                        </Typography>
+                      </React.Fragment>
+                    }
+                  />
+                </ListItem>
+                </List>
               {/* Content of pending requests */}
             </Card>
           </Grid>
         ) : null}
+      </Grid>
       </Grid>
     </Grid>
   );
