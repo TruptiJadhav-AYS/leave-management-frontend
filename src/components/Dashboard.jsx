@@ -7,9 +7,21 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import ListItem from "@mui/material/ListItem";
+import { useState, useEffect } from 'react';
 
 export default function Dashboard({ role }) {
   const responsive = UseReponsive();
+  const [initialAnimation, setInitialAnimation] = useState(true);
+
+useEffect(() => {
+  // Set initialAnimation to false after a short delay (adjust as needed)
+  const animationTimeout = setTimeout(() => {
+    setInitialAnimation(false);
+  }, 500); // Adjust delay as needed
+
+  return () => clearTimeout(animationTimeout);
+}, []);
+
 
   return (
     <Grid
@@ -82,9 +94,13 @@ export default function Dashboard({ role }) {
                 startAngle={-110}
                 endAngle={110}
                 sx={{
+                  [`& .${gaugeClasses.indicator}`]: {
+                    transform: `rotate(${initialAnimation ? '360deg' : '0deg'})`, // Rotate initially if initialAnimation is true
+                    transition: 'transform 0.5s ease-out', // Transition rotation
+                  },
                   [`& .${gaugeClasses.valueText}`]: {
                     fontSize: 13,
-                    transform: "translate(0px, 0px)",
+                    transform: `translate(0px, 0px)`, // You can still apply transformations to the text separately if needed
                   },
                 }}
                 text={({ value, valueMax }) => `${value} / ${valueMax}`}
