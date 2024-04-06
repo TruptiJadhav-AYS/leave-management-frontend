@@ -12,10 +12,12 @@ import {
 import { useState } from "react";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
+import UseReponsive from "../hooks/UseResponsive";
 
 function LeaveReqForm() {
   let Navigate = useNavigate();
   let [clickedId, setClickedId] = useState("");
+  let responsive=UseReponsive();
 
   function handleClick(id) {
     setClickedId(id);
@@ -61,21 +63,17 @@ function LeaveReqForm() {
   const Error = formik.errors;
 
   return (
-    <Grid
-      container
-      display={"flex"}
-      justifyContent="center"
-      alignItems={"center"}
-      width="100%"
-      sx={{ minHeight: "100%" }}
-    >
+    <Grid container justifyContent={"center"} width="100%" pt={3}>
+      
       <Card
         elevation={1}
         pt="5%"
         sx={{
+          minHeight: "auto",
           textAlign: "left",
-          width: "80%",
+          width : (responsive.isDesktop || responsive.isLaptop || responsive.isTa) ? "80%" : "100%",
         }}
+        
       >
         <CardContent component={"form"} onSubmit={formik.handleSubmit}>
           <Typography mb={4} variant="h5" color={"primary"}>

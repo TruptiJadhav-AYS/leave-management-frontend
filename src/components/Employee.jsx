@@ -175,6 +175,7 @@ export default function EmployeeList() {
       
       <Button
         variant="contained"
+        sx={{borderRadius:"50px"}}
         onClick={() => {
           Navigate("/Employee/Employees/NewRegistration");
         }}

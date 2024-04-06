@@ -11,11 +11,12 @@ import {
 import Card from "@mui/material/Card";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import UseReponsive from "../hooks/UseResponsive";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
 export default function UserRegistrationForm() {
+  const responsive=UseReponsive()
   const [clickedBtnID, setClickedBtnID] = useState("");
   function handleClick(id) {
     setClickedBtnID(id);
@@ -100,7 +101,7 @@ export default function UserRegistrationForm() {
         elevation={1}
         sx={{
           textAlign: "left",
-          width: "80%",
+          width : (responsive.isDesktop || responsive.isLaptop || responsive.isTa) ? "80%" : "100%",
         }}
       >
         <CardContent>
@@ -218,7 +219,7 @@ export default function UserRegistrationForm() {
                       borderRadius: 1,
                     }}
                     onClick={() => handleClick("PhoneNo")}
-                    onBlur={formik.handleBlur}           
+                    onBlur={formik.handleBlur}
                   />
                   {formik.touched.PhoneNo && errors.PhoneNo && (
                     <Typography variant="caption" color="error">

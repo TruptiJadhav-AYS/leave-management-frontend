@@ -38,7 +38,7 @@ export default function Holidays() {
 
           {annualLeaves.map((holiday, index) => (
           <Grid item key={index} xs={6} sm={6} md={4} lg={3}>
-          <Paper key={index} elevation={3} sx={{p:"10px"}}>
+          <Paper key={index} elevation={2} sx={{p:"10px"}}>
             <Typography  sx={{ fontWeight: 'bold',fontSize:"18px",height: responsive.isMobile ? "50px" : "25px"}}>{holiday.occasion}</Typography>
             <img
               style={{ borderRadius: '50%' }}
