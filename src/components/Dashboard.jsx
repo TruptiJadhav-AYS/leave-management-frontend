@@ -28,7 +28,6 @@ export default function Dashboard({ role }) {
     createData('Trupti', "10-04-2024", "10-04-2024", "Half Day", "Doctor appointment"),
     createData('Pruthvi', "10-04-2024", "10-04-2024", "Half Day", "Doctor appointment"),
     createData('Prerana', "10-04-2024", "10-04-2024", "Half Day", "Doctor appointment"),
-    createData('Shital', "10-04-2024", "10-04-2024", "Half Day", "Doctor appointment"),
   ];
   
   const handleAccept = (name) => {
