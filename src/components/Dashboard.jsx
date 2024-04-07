@@ -15,29 +15,30 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-function createData(name, fromDate, toDate, leaveType, reason,status) {
-  return {name, fromDate, toDate, leaveType, reason,status};
-}
 
-const rows = [
-  createData('Pratiksha', "10-04-2024", "10-04-2024", "Half Day", "Doctor appointment"),
-  createData('Trupti', "10-04-2024", "10-04-2024", "Half Day", "Doctor appointment"),
-  createData('Pruthvi', "10-04-2024", "10-04-2024", "Half Day", "Doctor appointment"),
-  createData('Prerana', "10-04-2024", "10-04-2024", "Half Day", "Doctor appointment"),
-];
-
-const handleAccept = (name) => {
-  console.log("Accepted", name);
-  // Here, you would typically update the status of the request in your application's state or backend
-};
-
-const handleReject = (name) => {
-  console.log("Rejected", name);
-  // Similarly, update the status accordingly
-};
 
 export default function Dashboard({ role }) {
   const responsive = UseReponsive();
+  function createData(name, fromDate, toDate, leaveType, reason,status) {
+    return {name, fromDate, toDate, leaveType, reason,status};
+  }
+  
+  const rows = [
+    createData('Pratiksha', "10-04-2024", "10-04-2024", "Half Day", "Doctor appointment"),
+    createData('Trupti', "10-04-2024", "10-04-2024", "Half Day", "Doctor appointment"),
+    createData('Pruthvi', "10-04-2024", "10-04-2024", "Half Day", "Doctor appointment"),
+    createData('Prerana', "10-04-2024", "10-04-2024", "Half Day", "Doctor appointment"),
+  ];
+  
+  const handleAccept = (name) => {
+    console.log("Accepted", name);
+    // Here, you would typically update the status of the request in your application's state or backend
+  };
+  
+  const handleReject = (name) => {
+    console.log("Rejected", name);
+    // Similarly, update the status accordingly
+  };
 
   return (
     <Grid container width="100%" p={1}>
