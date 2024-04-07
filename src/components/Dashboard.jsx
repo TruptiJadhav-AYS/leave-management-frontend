@@ -32,12 +32,12 @@ export default function Dashboard({ role }) {
   
   const handleAccept = (name) => {
     console.log("Accepted", name);
-    // Here, you would typically update the status of the request in your application's state or backend
+    
   };
   
   const handleReject = (name) => {
     console.log("Rejected", name);
-    // Similarly, update the status accordingly
+    
   };
 
   return (
@@ -320,7 +320,7 @@ export default function Dashboard({ role }) {
         </TableBody>
       </Table>
     </TableContainer>
-                {/* Content of pending requests */}
+                
               </Card>
             </Grid>
           ) : (
