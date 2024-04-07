@@ -14,13 +14,19 @@ import Toolbar from "@mui/material/Toolbar";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import logoImage from "../assets/ays_logo.jpg";
+import UseReponsive from "../hooks/UseResponsive";
 
-export default function SideDrawer({ role }) {
+export default function SideDrawer({ role,handleDrawerClose }) {
   let Navigate = useNavigate();
   let path = useLocation().pathname;
   let selected = path.substring(path.lastIndexOf("/") + 1);
   let selectedItem;
   let sideDrawerList;
+
+  let responsive =UseReponsive()
+  function onMobile(){
+    return responsive.isMobile && handleDrawerClose()
+  }
 
   if (selected !== "Employee") {
     selectedItem = selected;
@@ -76,14 +82,14 @@ export default function SideDrawer({ role }) {
             <ListItemButton
               onClick={
                 index === 0
-                  ? () => Navigate("/Employee")
+                  ? () =>{ Navigate("/Employee");onMobile()}
                   : index === 1
-                  ? () => Navigate("/Employee/ApplyLeave")
+                  ? () => {Navigate("/Employee/ApplyLeave");onMobile()}
                   : index === 2
-                  ? () => Navigate("/Employee/History")
+                  ? () => {Navigate("/Employee/History");onMobile()}
                   : index === 3
-                  ? () => Navigate("/Employee/Holidays")
-                  : () => Navigate("/Employee/Employees")
+                  ? () => {Navigate("/Employee/Holidays");onMobile()}
+                  : () => {Navigate("/Employee/Employees");onMobile()}
               }
             >
               <ListItemIcon>

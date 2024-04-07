@@ -3,19 +3,119 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Drawer from "@mui/material/Drawer";
-import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import Typography from "@mui/material/Typography";
 import { Avatar,Stack ,Toolbar,Grid} from "@mui/material";
 import SideDrawer from "./SideDrawer";
 import { useState } from "react";
 import CenterDisplay from "./CenterDisplay";
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Tooltip from '@mui/material/Tooltip';
+import Logout from '@mui/icons-material/Logout';
+import MyProfile from "./MyProfile";
+import { useNavigate } from "react-router-dom";
+import UseReponsive from "../hooks/UseResponsive";
+
+function AccountMenu({onMyProfileClick}) {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [logoutClick,setLogoutClick] = useState(false)
+  const open = Boolean(anchorEl);
+
+  let Navigate=useNavigate()
+
+  const onLogoutClick=()=>{
+    // window.confirm("Do you want to logout?")
+    setLogoutClick(true);
+  }
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+    onMyProfileClick(false)
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+      <Box>
+        <Tooltip title="Account settings">
+          <IconButton
+            onClick={handleClick}
+            size="small"
+            sx={{ ml: 2 }}
+          >
+            <Avatar sx={{ width: 32, height: 32 }}>R</Avatar>
+          </IconButton>
+        </Tooltip>
+      {anchorEl ?
+      <Menu
+        anchorEl={anchorEl}
+        id="account-menu"
+        open={open}
+        onClose={handleClose}
+        onClick={handleClose}
+        PaperProps={{
+          elevation: 0,
+          sx: {
+            overflow: 'visible',
+            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+            mt: 1.5,
+            '& .MuiAvatar-root': {
+              width: 32,
+              height: 32,
+              ml: -0.5,
+              mr: 1,
+            },
+            '&::before': {
+              content: '""',
+              display: 'block',
+              position: 'absolute',
+              top: 0,
+              right: 14,
+              width: 10,
+              height: 10,
+              bgcolor: 'background.paper',
+              transform: 'translateY(-50%) rotate(45deg)',
+              zIndex: 0,
+            },
+          },
+        }}
+        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+      >
+        <MenuItem onClick={()=>onMyProfileClick(true)} >
+          <Avatar /> My Profile
+        </MenuItem>
+        <MenuItem onClick={()=>onLogoutClick()}>
+          <ListItemIcon>
+            <Logout fontSize="small" />
+          </ListItemIcon>
+          Logout
+        </MenuItem>
+      </Menu> 
+      : 
+      logoutClick &&
+      Navigate("/")}
+    </Box>
+  );
+}
 
 const drawerWidth = 240;
 
 export default function Display({logedInUser,role}) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+  const [myProfileClick,setMyProfileClick]=useState(false);
+  const responsive=UseReponsive()
+
+  console.log(responsive)
+
+  function onMyProfileClick(value){
+    setMyProfileClick(value)
+  }
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -33,7 +133,7 @@ export default function Display({logedInUser,role}) {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex",bgcolor:"whitesmoke"}}>
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -55,16 +155,19 @@ export default function Display({logedInUser,role}) {
           <MenuIcon />
         </IconButton>
         </Stack>
-          <Stack direction={"row"} spacing={2}>
+          <Stack direction={"row"} spacing={2} height={"100%"} alignItems={"center"}>
+            {responsive.isDesktop || responsive.isLaptop || responsive.isTablet ?
             <Typography variant="h6" noWrap component="div">
-              Rajesh Yadav
+              Pratiksha Nimbalakar
             </Typography>
-            <Avatar></Avatar>
+            :<></>
+            }
+            <AccountMenu onMyProfileClick={onMyProfileClick}/>
           </Stack>
         </Stack>
     </AppBar>
       <Box
-        component="nav"
+        // component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
       >
         <Drawer
@@ -83,7 +186,7 @@ export default function Display({logedInUser,role}) {
             },
           }}
         >
-          <SideDrawer/>
+          <SideDrawer role={role} handleDrawerClose={handleDrawerClose}/>
         </Drawer>
         <Drawer
           variant="permanent"
@@ -93,7 +196,6 @@ export default function Display({logedInUser,role}) {
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
-              
             },
           }}
           open
@@ -103,7 +205,10 @@ export default function Display({logedInUser,role}) {
       </Box>
       <Grid container direction={"row"}>
       <Toolbar/>
+      {myProfileClick && <MyProfile/>}
+      <Box bgcolor={"whitesmoke"} sx={{width:"100%",height:"89.7vh"}}>
       <CenterDisplay role={role}/>
+      </Box>
       </Grid>
     </Box>
   );

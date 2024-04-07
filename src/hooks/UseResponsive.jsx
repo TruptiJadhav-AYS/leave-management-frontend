@@ -8,7 +8,7 @@ export default function UseReponsive() {
     isMobile: useMediaQuery(theme.breakpoints.down("sm")),
     isTablet: useMediaQuery(theme.breakpoints.between("sm", "md")),
     isLaptop: useMediaQuery(theme.breakpoints.between("md", "lg")),
-    isDekstop: useMediaQuery(theme.breakpoints.down("lg")),
+    isDesktop: useMediaQuery(theme.breakpoints.up("md")),
   };
 
   return responsive;

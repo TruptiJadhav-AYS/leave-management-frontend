@@ -9,7 +9,7 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 
 const columns = [
-  { id: "Start_Date", label: "Start Date", minWidth: 80 },
+  { id: "Start_Date", label: "Start Date", minWidth: 80, ml:"500px"},
   { id: "End_Date", label: "End Date", minWidth: 80 },
   {
     id: "leave_type",
