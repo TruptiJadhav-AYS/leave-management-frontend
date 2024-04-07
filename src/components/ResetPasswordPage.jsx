@@ -13,54 +13,42 @@ import {
   CardContent,
 } from "@mui/material";
 
-const users = [
-  { email: "pratiksha@gmail.com", password: "123" },
-  { email: "pratik@gmail.com", password: "1234" },
-  { email: "pruthvi@gmail.com", password: "12345" },
-];
-
-function LoginPage(props) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [emailError, setEmailError] = useState("");
+function ResetPasswordPage(props) {
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const navigate = useNavigate();
-  
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-    setEmailError("");
-  };
 
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
+  const handleNewPasswordChange = (event) => {
+    setNewPassword(event.target.value);
     setPasswordError("");
   };
-  const handleForgetClick=()=>{
-    navigate("/ForgetPassword")
-  }
 
-  const handleSubmit = (event) => {
+  const handleConfirmPasswordChange = (event) => {
+    setConfirmPassword(event.target.value);
+    setConfirmPasswordError("");
+  };
+
+  const handleResetPassword = (event) => {
     event.preventDefault();
-    setEmailError("");
     setPasswordError("");
-    const userByEmail = users.find((user) => user.email === email);
-
-    if (!email) {
-      setEmailError("Please enter email");
-    }
-    if (!password) {
-      setPasswordError("Please enter a password");
-    } else if (!userByEmail) {
-      setPasswordError("Invalid Email or Password");
+    setConfirmPasswordError("");
+    if(!newPassword){
+        setPasswordError("Please enter Password");
       return;
-    } else if (userByEmail.password !== password) {
-      setPasswordError("Invalid email or password");
-    } else {
-      navigate("/Employee");
-      console.log("Login successful", userByEmail);
-      props.onSignInClick(true);
-      props.onSignIn(email);
     }
+    else if(!confirmPassword){
+        setConfirmPasswordError("Please enter Password");
+      return;
+    }
+    else if (newPassword !== confirmPassword) {
+      setConfirmPasswordError("Passwords do not match");
+      return;
+    }
+    // console.log("New Password:", newPassword);
+
+    navigate("/");
   };
 
   return (
@@ -85,10 +73,10 @@ function LoginPage(props) {
           />
         </Grid>
         <Grid item xs={7} sm={3.5} md={2} lg={2} mt={2} textAlign={"left"}>
-          <Typography fontSize={30} fontWeight={"bold"}  color={"darkblue"}>
+          <Typography fontSize={30} fontWeight={"bold"} color={"darkblue"}>
             AYS
           </Typography>
-          <Typography fontSize={20} fontWeight={"bold"} >
+          <Typography fontSize={20} fontWeight={"bold"}>
             Software Solution
           </Typography>
         </Grid>
@@ -96,7 +84,7 @@ function LoginPage(props) {
       <Container maxWidth="xs" sx={{ pt: "4vh" }}>
         <Card elevation={8}>
           <CardContent spacing={2}>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleResetPassword}>
               <Typography
                 variant="h6"
                 align="center"
@@ -104,38 +92,37 @@ function LoginPage(props) {
                 fontWeight={"bold"}
                 color={"primary"}
               >
-                Login
+                Reset Password
               </Typography>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
-                    id="email"
-                    name="email"
-                    label="Email"
-                    type="email"
-                    onChange={handleEmailChange}
-                    error={Boolean(emailError)}
-                    helperText={emailError}
+                    id="newPassword"
+                    name="newPassword"
+                    label="New Password"
+                    type="password"
+                    value={newPassword}
+                    onChange={handleNewPasswordChange}
+                    error={Boolean(passwordError)}
+                    helperText={passwordError}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
-                    id="password"
-                    name="password"
-                    label="Password"
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    label="Confirm Password"
                     type="password"
-                    onChange={handlePasswordChange}
-                    error={Boolean(passwordError)}
-                    helperText={passwordError}
+                    value={confirmPassword}
+                    onChange={handleConfirmPasswordChange}
+                    error={Boolean(confirmPasswordError)}
+                    helperText={confirmPasswordError}
                   />
                 </Grid>
               </Grid>
               <Grid container gap={2} mt={2}>
-                <Grid item xs={12} textAlign={"left"}>
-                  <Button disableRipple sx={{"&:hover" :{backgroundColor:"transparent"} ,cursor: "pointer" ,textTransform: "none"}} onClick={handleForgetClick}>Forget password?</Button>
-                </Grid>
                 <Grid item xs={12}>
                   <Button
                     type="submit"
@@ -144,7 +131,7 @@ function LoginPage(props) {
                     color="primary"
                     sx={{ textTransform: "none", borderRadius: "100px" }}
                   >
-                    Sign In
+                    Reset Password
                   </Button>
                 </Grid>
               </Grid>
@@ -155,4 +142,5 @@ function LoginPage(props) {
     </Paper>
   );
 }
-export default LoginPage;
+
+export default ResetPasswordPage;

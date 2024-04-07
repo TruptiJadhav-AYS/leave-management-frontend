@@ -4,6 +4,8 @@ import Display from "./components/Display";
 import { Route, Routes } from "react-router-dom";
 import LoginPage from "./components/LoginPage";
 import { useState } from "react";
+import ForgetPasswordPage from "./components/forgetPasswordPage";
+import ResetPasswordPage from "./components/ResetPasswordPage";
 
 const myTheme = createTheme({
   satus: {
@@ -55,7 +57,15 @@ function App() {
             element={
               <LoginPage onSignIn={onSignIn} onSignInClick={onSignInClick} />
             }
+            // element={
+            //   <ForgetPasswordPage onSignIn={onSignIn} onSignInClick={onSignInClick}/>
+            // }
+            // element={
+            //   <ResetPasswordPage/>
+            // }
           />
+          <Route path="/ForgetPassword" element={<ForgetPasswordPage onSignIn={onSignIn} onSignInClick={onSignInClick}/>}/>
+          <Route path="/ResetPassword" element={<ResetPasswordPage/>}/>
           {routeStatus && (
             <Route
               path="/Employee/*"

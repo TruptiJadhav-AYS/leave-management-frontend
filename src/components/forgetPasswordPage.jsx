@@ -13,51 +13,37 @@ import {
   CardContent,
 } from "@mui/material";
 
-const users = [
-  { email: "pratiksha@gmail.com", password: "123" },
-  { email: "pratik@gmail.com", password: "1234" },
-  { email: "pruthvi@gmail.com", password: "12345" },
-];
-
-function LoginPage(props) {
+function ForgetPasswordPage(props) {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
+  const [otpError, setOtpError] = useState("");
+  const [showOTPField, setShowOTPField] = useState(false);
+  const [otp, setOTP] = useState("");
   const navigate = useNavigate();
-  
+
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
     setEmailError("");
   };
 
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-    setPasswordError("");
+  const handleGetOTP = () => {
+    setShowOTPField(true);
   };
-  const handleForgetClick=()=>{
-    navigate("/ForgetPassword")
-  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
     setEmailError("");
-    setPasswordError("");
-    const userByEmail = users.find((user) => user.email === email);
-
     if (!email) {
       setEmailError("Please enter email");
-    }
-    if (!password) {
-      setPasswordError("Please enter a password");
-    } else if (!userByEmail) {
-      setPasswordError("Invalid Email or Password");
-      return;
-    } else if (userByEmail.password !== password) {
-      setPasswordError("Invalid email or password");
+    } else if (!showOTPField) {
+      handleGetOTP();
+    } else if (otp === "") {
+        setOtpError("Required"); 
+      }
+    else if (otp !== "123456") { 
+      setOtpError("Invalid OTP"); 
     } else {
-      navigate("/Employee");
-      console.log("Login successful", userByEmail);
+      navigate("/ResetPassword");
       props.onSignInClick(true);
       props.onSignIn(email);
     }
@@ -85,10 +71,10 @@ function LoginPage(props) {
           />
         </Grid>
         <Grid item xs={7} sm={3.5} md={2} lg={2} mt={2} textAlign={"left"}>
-          <Typography fontSize={30} fontWeight={"bold"}  color={"darkblue"}>
+          <Typography fontSize={30} fontWeight={"bold"} color={"darkblue"}>
             AYS
           </Typography>
-          <Typography fontSize={20} fontWeight={"bold"} >
+          <Typography fontSize={20} fontWeight={"bold"}>
             Software Solution
           </Typography>
         </Grid>
@@ -104,7 +90,7 @@ function LoginPage(props) {
                 fontWeight={"bold"}
                 color={"primary"}
               >
-                Login
+                Forget Password
               </Typography>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
@@ -119,23 +105,23 @@ function LoginPage(props) {
                     helperText={emailError}
                   />
                 </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    id="password"
-                    name="password"
-                    label="Password"
-                    type="password"
-                    onChange={handlePasswordChange}
-                    error={Boolean(passwordError)}
-                    helperText={passwordError}
-                  />
-                </Grid>
+                {showOTPField && (
+                  <Grid item xs={12}>
+                    <TextField
+                      fullWidth
+                      id="otp"
+                      name="otp"
+                      label="OTP"
+                      type="text"
+                      value={otp}
+                      onChange={(e) => setOTP(e.target.value)}
+                      error={Boolean(otpError)}
+                      helperText={otpError}
+                    />
+                  </Grid>
+                )}
               </Grid>
               <Grid container gap={2} mt={2}>
-                <Grid item xs={12} textAlign={"left"}>
-                  <Button disableRipple sx={{"&:hover" :{backgroundColor:"transparent"} ,cursor: "pointer" ,textTransform: "none"}} onClick={handleForgetClick}>Forget password?</Button>
-                </Grid>
                 <Grid item xs={12}>
                   <Button
                     type="submit"
@@ -144,7 +130,7 @@ function LoginPage(props) {
                     color="primary"
                     sx={{ textTransform: "none", borderRadius: "100px" }}
                   >
-                    Sign In
+                    {showOTPField ? "Submit" : "Get OTP"}
                   </Button>
                 </Grid>
               </Grid>
@@ -155,4 +141,5 @@ function LoginPage(props) {
     </Paper>
   );
 }
-export default LoginPage;
+
+export default ForgetPasswordPage;
