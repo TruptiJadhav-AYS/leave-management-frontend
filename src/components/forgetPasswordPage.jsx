@@ -40,7 +40,7 @@ function ForgetPasswordPage(props) {
     } else if (otp === "") {
         setOtpError("Required"); 
       }
-    else if (otp !== "123456") { 
+    else if (otp !== "1234") { 
       setOtpError("Invalid OTP"); 
     } else {
       navigate("/ResetPassword");
