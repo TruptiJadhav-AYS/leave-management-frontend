@@ -90,7 +90,7 @@ function AccountMenu({ role }) {
             <Avatar style={{ width: "70px", height: "70px" }} src={Profile}/>
             <Typography fontWeight={"bold"} mt={1}>
               {role === "Admin"
-                ? "Pratiksha Nimbalakar"
+                ? "Pratiksha Nimbalkar"
                 : role === "Manager"
                 ? "Trupti Jadhav"
                 : " Pruthviraj Suryavanshi"}
@@ -141,7 +141,7 @@ export default function Display({ logedInUser, role }) {
 
   const responsive = UseReponsive();
 
-  console.log(role);
+  // console.log(role);
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -192,7 +192,7 @@ export default function Display({ logedInUser, role }) {
             responsive.isTablet ? (
               <Typography variant="h6" noWrap component="div">
                 {role === "Admin"
-                  ? "Pratiksha Nimbalakar"
+                  ? "Pratiksha Nimbalkar"
                   : role === "Manager"
                   ? "Trupti Jadhav"
                   : " Pruthviraj Suryavanshi"}

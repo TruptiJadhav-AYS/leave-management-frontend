@@ -190,7 +190,6 @@ export default function Dashboard({ role }) {
                   <ListItem alignItems="flex-start">
                     <ListItemAvatar>
                       <Avatar
-                          
                         src="/static/images/avatar/1.jpg"
                       />
                     </ListItemAvatar>
@@ -213,7 +212,6 @@ export default function Dashboard({ role }) {
                   <ListItem alignItems="flex-start">
                     <ListItemAvatar>
                       <Avatar
-                          
                         src="/static/images/avatar/1.jpg"
                       />
                     </ListItemAvatar>
@@ -256,7 +254,6 @@ export default function Dashboard({ role }) {
                   <ListItem alignItems="flex-start">
                     <ListItemAvatar>
                       <Avatar
-                          
                         src="/static/images/avatar/1.jpg"
                       />
                     </ListItemAvatar>
@@ -279,7 +276,6 @@ export default function Dashboard({ role }) {
                   <ListItem alignItems="flex-start">
                     <ListItemAvatar>
                       <Avatar
-                          
                         src="/static/images/avatar/1.jpg"
                       />
                     </ListItemAvatar>
@@ -302,7 +298,6 @@ export default function Dashboard({ role }) {
                   <ListItem alignItems="flex-start">
                     <ListItemAvatar>
                       <Avatar
-                          
                         src="/static/images/avatar/1.jpg"
                       />
                     </ListItemAvatar>
@@ -451,8 +446,6 @@ export default function Dashboard({ role }) {
                 </Grid>
                 </CardContent>
               </Card>
-
-              
               <Grid mt={1}>
               <LeavePolicy/>
               </Grid>

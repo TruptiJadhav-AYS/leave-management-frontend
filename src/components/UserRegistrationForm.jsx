@@ -71,16 +71,6 @@ export default function UserRegistrationForm() {
 
       Gender: Yup.string().required("Gender is required."),
 
-      // Password: Yup.string()
-      //   .min(8, "Password should atleast Contain 8 or above characters")
-      //   .matches(/[a-z]/, "Password must contain a lowercase letter")
-      //   .matches(/[A-Z]/, "Password must contain an uppercase letter")
-      //   .matches(
-      //     /[!@#$%^&*()_+-]+/,
-      //     "Password must contain a special character"
-      //   )
-      //   .required("Password is required."),
-
       managerID: Yup.number().required("Manager ID is required."),
     }),
     onSubmit: (values) => {
@@ -93,7 +83,7 @@ export default function UserRegistrationForm() {
 
   const errors = formik.errors;
 
-  console.log(formik.values);
+  // console.log(formik.values);
 
   return (
     <Grid container justifyContent={"center"} width="100%" pt={3}>
@@ -111,7 +101,7 @@ export default function UserRegistrationForm() {
             </Typography>
             <br />
 
-            <Grid container spacing={1}>
+            <Grid container spacing={1} height={"15vh"} >
               <Grid item xs={12} sm={6} md={6} lg={6}>
                 <Stack width={"100%"}>
                   <Typography variant="body2"> NAME</Typography>
@@ -176,7 +166,7 @@ export default function UserRegistrationForm() {
               </Grid>
             </Grid>
             <br />
-            <Grid container spacing={1}>
+            <Grid container spacing={1} height={"15vh"} >
               <Grid item xs={12} sm={6} md={6} lg={6}>
                 <Stack width={"100%"}>
                   <Typography variant="body2"> EMAIL </Typography>
@@ -236,7 +226,7 @@ export default function UserRegistrationForm() {
             </Grid>
             <br />
 
-            <Grid container spacing={1}>
+            <Grid container spacing={1} height={"15vh"} >
               <Grid
                 item
                 xs={12}
@@ -306,7 +296,7 @@ export default function UserRegistrationForm() {
             </Grid>
             <br />
 
-            <Grid container spacing={1}>
+            <Grid container spacing={1} height={"15vh"} pb={"10px"}>
               <Grid item xs={12} sm={6} md={6} lg={6}>
                 <Stack width={"100%"}>
                   <Typography variant="body2"> Department ID </Typography>
