@@ -1,15 +1,13 @@
 import * as React from "react";
 import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
-import { Button, Divider } from "@mui/material";
+import { Box, Button, InputBase } from "@mui/material";
+import {TableBody, TableCell, TableContainer,TableHead, TablePagination, TableRow, Table} from "@mui/material"
 import { useNavigate } from "react-router-dom";
-import AddIcon from "@mui/icons-material/Add";
+import AddIcon from '@mui/icons-material/Add';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import SearchIcon from '@mui/icons-material/Search'
+import { useState, useMemo } from "react";
 
 const columns = [
   { id: "Name", label: "Name", minWidth: 180 },
@@ -73,6 +71,7 @@ const rows = [
     Email: "ketan@gmail.com",
     Role: "Manager",
     Gender: "Male",
+    ManagerId: 1,
     DepartmentId: 1,
   },
   {
@@ -80,6 +79,8 @@ const rows = [
     Email: "yogesh@gmail.com",
     Role: "Admin",
     Gender: "Male",
+    ManagerId: 1,
+    DepartmentId: 1,
   },
   {
     Name: "Nupur Tyagi",
@@ -157,8 +158,30 @@ const rows = [
 
 export default function EmployeeList() {
   const Navigate = useNavigate();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(8);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [sortedBy, setSortedBy] = useState(null); // Track sorted column
+  const [sortOrder, setSortOrder] = useState('asc'); // Track sort order
+
+  const sortedRows = useMemo(() => {
+    // Sort rows based on sortedBy and sortOrder
+    return rows.slice().sort((a, b) => {
+      const valueA = a[sortedBy];
+      const valueB = b[sortedBy];
+
+      if (typeof valueA === 'string') {
+        return sortOrder === 'asc' ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+      } else {
+        return sortOrder === 'asc' ? valueA - valueB : valueB - valueA;
+      }
+    });
+  }, [rows, sortedBy, sortOrder]);
+
+  const handleSortClick = (columnId) => {
+    const isAscending = (sortedBy === columnId && sortOrder === 'asc');
+    setSortedBy(columnId);
+    setSortOrder(isAscending ? 'desc' : 'asc');
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -170,36 +193,55 @@ export default function EmployeeList() {
   };
 
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden"}}> 
-      <Button
-        variant="contained"
-        sx={{borderRadius:"50px",my:"1.5%"}}
-        onClick={() => {
-          Navigate("/Employee/Employees/NewRegistration");
-        }}
-      >
-        Employee
-        <AddIcon />
-      </Button>
-      <Divider/>
-      <TableContainer sx={{ maxHeight: "70vh",scrollbarWidth:"thin" }} >
-        <Table stickyHeader aria-label="sticky table" >
+    <Paper sx={{ width: "100%", overflow: "hidden", py: 2, minHeight:"100%" }}>
+      <Box display={"flex"} justifyContent={"space-between"} marginX={2}>
+        <Box sx={{ display:"flex" , justifyContent:"space-between", width: "50%", border: "1px solid black", borderRadius: "20px", mr:"1" }}>
+          <InputBase
+            sx={{ width: "90%" }}
+            placeholder="   Search for User..."
+          />
+          <SearchIcon sx={{ mt: "1%" }} />
+        </Box>
+
+        <Button
+          variant="contained"
+          sx={{ borderRadius: "50px" }}
+          onClick={() => {
+            Navigate("/Employee/Employees/NewRegistration");
+          }}
+        >
+          Employee
+          <AddIcon />
+        </Button>
+      </Box>
+
+      <TableContainer sx={{ maxHeight: "70%" }}>
+        <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
               {columns.map((column) => (
                 <TableCell
                   key={column.id}
                   align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                  sx={{ color: "primary.main" }}
+                  sx={{ color: "primary.main", minWidth:column.minWidth }}
+                  onClick={() => handleSortClick(column.id)}
                 >
-                  {column.label}
+                  {sortedBy === column.id ? (
+                    sortOrder === 'asc' ? (
+                      <>{column.label} <ArrowUpwardIcon /></>
+                    ) : (
+                      <>{column.label} <ArrowDownwardIcon /></>
+                    )
+                  ) : (
+                    column.label
+                  )}
+
                 </TableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows
+            {sortedRows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
@@ -222,7 +264,7 @@ export default function EmployeeList() {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[8, 10, 20]}
+        rowsPerPageOptions={[5, 10, 20, 100]}
         component="div"
         count={rows.length}
         rowsPerPage={rowsPerPage}
@@ -233,85 +275,3 @@ export default function EmployeeList() {
     </Paper>
   );
 }
-
-// import { Box, Button } from "@mui/material";
-// import { useNavigate } from "react-router-dom";
-// import { List } from "@mui/material";
-// import ListItem from "@mui/material/ListItem";
-// import Typography from "@mui/material/Typography";
-// import Divider from "@mui/material/Divider";
-// import AddIcon from "@mui/icons-material/Add"
-
-// export default function EmployeeList() {
-//   let Navigate = useNavigate();
-
-//   const employeeList = [
-//     { Name: "Pruthviraj Suryawanshi", Role: "Employee", Gender: "Male" },
-//     { Name: "Pratiksha Nimbalkar", Role: "Employee", Gender: "Female" },
-//     { Name: "Trupti Jadhav", Role: "Employee", Gender: "Female" },
-//     { Name: "Ketan Rathod", Role: "      Manager", Gender: "Male" },
-//     { Name: "Yogesh Patel", Role: "Admin", Gender: "Male" },
-//     { Name: "Nupur Tyagi", Role: "Employee", Gender: "Female" },
-//     { Name: "Mehvish Shaikh", Role: "Employee", Gender: "Female" },
-//     { Name: "Abhinandan Ambekar", Role: "Employee", Gender: "Male" },
-//   ];
-//   return (
-//     <Box
-//       sx={{
-//         justifyContent: "center",
-//         alignItems: "center",
-//         px: "10%",
-//         pt: "14vh",
-//         width: "100%",
-//         textAlign: "center",
-//       }}
-//     >
-//       <List sx={{ overflow: "auto", width: "100%" }}>
-//         <ListItem sx={{ pt: "20px", backgroundColor: "#fafafa" }}>
-//           <Typography color="primary.main" width="40%" fontWeight={350} pl={2}>
-//             NAME
-//           </Typography>
-//           <Typography
-//             color="primary.main"
-//             width="30%"
-//             fontWeight={350}
-//             pl={0.9}
-//           >
-//             GENDER
-//           </Typography>
-//           <Typography
-//             color="primary.main"
-//             width="30%"
-//             fontWeight={350}
-//             pl={1.7}
-//           >
-//             ROLE
-//           </Typography>
-//         </ListItem>
-//         <Divider />
-//         {employeeList.map((employee, index) => (
-//           <ListItem key={index} sx={{ backgroundColor: "#fafafa", py: "12px" }}>
-//             <Typography width="40%" pl={1} textAlign={"left"}>
-//               {employee.Name}
-//             </Typography>
-//             <Typography width="30%" pl={1} textAlign={"left"}>
-//               {employee.Gender}
-//             </Typography>
-//             <Typography width="30%" pl={1} textAlign={"left"}>
-//               {employee.Role}
-//             </Typography>
-//           </ListItem>
-//         ))}
-//       </List>
-//       <Button
-//         variant="contained"
-//         onClick={() => {
-//           Navigate("/Employee/Employees/NewRegistration");
-//         }}
-//       >
-//         Employee
-//         <AddIcon/>
-//       </Button>
-//     </Box>
-//   );
-// }

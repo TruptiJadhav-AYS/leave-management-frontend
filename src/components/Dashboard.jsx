@@ -1,66 +1,41 @@
 import React from "react";
-import {
-  Grid,
-  Typography,
-  Card,
-  CardContent,
-  Divider,
-  Button,
-  Box,
-  List,
-  ListItemText,
-  ListItemAvatar,
-  Avatar,
-  ListItem,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-} from "@mui/material";
-import MailIcon from '@mui/icons-material/Mail';
-import CallIcon from '@mui/icons-material/Call';
+import { Grid, Typography, Card, CardContent, Divider,Button } from "@mui/material";
 import UseReponsive from "../hooks/UseResponsive";
 import { Gauge, gaugeClasses } from "@mui/x-charts";
-import profile from "../assets/profile.jpg"
-import LeavePolicy from "./LeavePolicy";
+import List from "@mui/material/List";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import Avatar from "@mui/material/Avatar";
+import ListItem from "@mui/material/ListItem";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+
+
 
 export default function Dashboard({ role }) {
   const responsive = UseReponsive();
-  function createData(name, fromDate, toDate, leaveType, reason, status) {
-    return { name, fromDate, toDate, leaveType, reason, status };
+  function createData(name, fromDate, toDate, leaveType, reason,status) {
+    return {name, fromDate, toDate, leaveType, reason,status};
   }
 
   const rows = [
-    createData(
-      "Pratiksha",
-      "10-04-2024",
-      "12-04-2024",
-      "Full Day",
-      "Family function"
-    ),
-    createData("Trupti", "10-04-2024", "10-04-2024", "Half Day", ""),
-    createData("Pruthvi", "10-04-2024", "14-04-2024", "Full Day", "Vacation"),
-    createData(
-      "Prerana",
-      "10-04-2024",
-      "10-04-2024",
-      "Half Day",
-      "Doctor appointment"
-    ),
-    createData("Riya", "8-04-2024", "13-04-2024", "Half Day", "Exams"),
+    createData('Pratiksha', "10-04-2024", "10-04-2024", "Half Day", "Doctor appointment"),
+    createData('Trupti', "10-04-2024", "10-04-2024", "Half Day", "Doctor appointment"),
+    createData('Pruthvi', "10-04-2024", "10-04-2024", "Half Day", "Doctor appointment"),
+    createData('Prerana', "10-04-2024", "10-04-2024", "Half Day", "Doctor appointment"),
   ];
 
   const handleAccept = (name) => {
     console.log("Accepted", name);
-    // Here, you would typically update the status of the request in your application's state or backend
   };
 
   const handleReject = (name) => {
     console.log("Rejected", name);
-    // Similarly, update the status accordingly
   };
 
   return (
