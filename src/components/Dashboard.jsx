@@ -1,20 +1,31 @@
 import React from "react";
-import { Grid, Typography, Card, CardContent, Divider,Button } from "@mui/material";
+import {
+  Grid,
+  Typography,
+  Card,
+  CardContent,
+  Divider,
+  Button,
+  Box,
+  List,
+  ListItemText,
+  ListItemAvatar,
+  Avatar,
+  ListItem,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from "@mui/material";
+import MailIcon from '@mui/icons-material/Mail';
+import CallIcon from '@mui/icons-material/Call';
 import UseReponsive from "../hooks/UseResponsive";
 import { Gauge, gaugeClasses } from "@mui/x-charts";
-import List from "@mui/material/List";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
-import ListItem from "@mui/material/ListItem";
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-
+import profile from "../assets/profile.jpg"
+import LeavePolicy from "./LeavePolicy";
 
 
 export default function Dashboard({ role }) {
@@ -27,6 +38,8 @@ export default function Dashboard({ role }) {
     createData('Pratiksha', "10-04-2024", "10-04-2024", "Half Day", "Doctor appointment"),
     createData('Trupti', "10-04-2024", "10-04-2024", "Half Day", "Doctor appointment"),
     createData('Pruthvi', "10-04-2024", "10-04-2024", "Half Day", "Doctor appointment"),
+    createData('Prerana', "10-04-2024", "10-04-2024", "Half Day", "Doctor appointment"),
+    createData('Prerana', "10-04-2024", "10-04-2024", "Half Day", "Doctor appointment"),
     createData('Prerana', "10-04-2024", "10-04-2024", "Half Day", "Doctor appointment"),
   ];
 

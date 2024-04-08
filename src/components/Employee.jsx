@@ -23,8 +23,8 @@ const columns = [
     minWidth: 80,
   },
   {
-    id: "managerID",
-    label: "managerID",
+    id: "ManagerId",
+    label: "ManagerId",
     minWidth: 80,
     align: "right",
   },
@@ -37,8 +37,8 @@ const columns = [
   },
 ];
 
-// function createData(name, email, gender, role, ManagerId) {
-//   return { name, email, gender, role, ManagerId };
+// function createData(name, email, gender, role, managerId) {
+//   return { name, email, gender, role, managerId };
 // }
 
 const rows = [
@@ -47,7 +47,7 @@ const rows = [
     Email: "pruthvi@gmail.com",
     Role: "Employee",
     Gender: "Male",
-    managerID: 1,
+    ManagerId: 1,
     DepartmentId: 1,
   },
   {
@@ -55,7 +55,7 @@ const rows = [
     Email: "pratiksha@gmail.com",
     Role: "Employee",
     Gender: "Female",
-    managerID: 1,
+    ManagerId: 1,
     DepartmentId: 1,
   },
   {
@@ -63,7 +63,7 @@ const rows = [
     Email: "trupti@gmail.com",
     Role: "Employee",
     Gender: "Female",
-    managerID: 1,
+    ManagerId: 1,
     DepartmentId: 1,
   },
   {
@@ -87,7 +87,7 @@ const rows = [
     Email: "nupur@gmail.com",
     Role: "Employee",
     Gender: "Female",
-    managerID: 2,
+    ManagerId: 2,
     DepartmentId: 2,
   },
   {
@@ -95,7 +95,7 @@ const rows = [
     Email: "mehvish@gmail.com",
     Role: "Employee",
     Gender: "Female",
-    managerID: 2,
+    ManagerId: 2,
     DepartmentId: 2,
   },
   {
@@ -103,7 +103,7 @@ const rows = [
     Email: "abhi@gmail.com",
     Role: "Employee",
     Gender: "Male",
-    managerID: 2,
+    ManagerId: 2,
     DepartmentId: 1,
   },
   {
@@ -111,7 +111,7 @@ const rows = [
     Email: "shruti@gmail.com",
     Role: "Employee",
     Gender: "Female",
-    managerID: 2,
+    ManagerId: 2,
     DepartmentId: 3,
   },
   {
@@ -119,7 +119,7 @@ const rows = [
     Email: "prerana@gmail.com",
     Role: "Employee",
     Gender: "Female",
-    managerID: 2,
+    ManagerId: 2,
     DepartmentId: 1,
   },
   {
@@ -127,7 +127,7 @@ const rows = [
     Email: "abhi123@gmail.com",
     Role: "Employee",
     Gender: "Male",
-    managerID: 2,
+    ManagerId: 2,
     DepartmentId: 3,
   },
   {
@@ -135,7 +135,7 @@ const rows = [
     Email: "shital@gmail.com",
     Role: "Employee",
     Gender: "Female",
-    managerID: 2,
+    ManagerId: 2,
     DepartmentId: 3,
   },
 
