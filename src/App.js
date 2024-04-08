@@ -29,6 +29,8 @@ const employee=[
 
 function App() {
   const [routeStatus, setRouteStatus] = useState(false);
+  const [forgetRouteStatus, setForgetRouteStatus]=useState(false)
+  const [resetRouteStatus, setResetRouteStatus]=useState(false)
   const [logedInUser, setLogedInUser] = useState("");
 
   const findRoleOfUser=()=>{
@@ -48,6 +50,14 @@ function App() {
     setRouteStatus(flag);
   }
 
+  function onSubmitClick(flag) {
+    setForgetRouteStatus(flag);
+  }
+
+  function onResetClick(flag) {
+    setResetRouteStatus(flag);
+  }
+
   return (
     <ThemeProvider theme={myTheme}>
       <div className="App">
@@ -55,12 +65,12 @@ function App() {
           <Route
             path="/"
             element={
-              <LoginPage onSignIn={onSignIn} onSignInClick={onSignInClick} />
+              <LoginPage onSignIn={onSignIn} onSignInClick={onSignInClick} onSubmitClick={onSubmitClick}/>
             }
             
           />
-          <Route path="/ForgetPassword" element={<ForgetPasswordPage onSignIn={onSignIn} onSignInClick={onSignInClick}/>}/>
-          <Route path="/ResetPassword" element={<ResetPasswordPage/>}/>
+          {forgetRouteStatus && <Route path="/ForgetPassword" element={<ForgetPasswordPage onSignIn={onSignIn} onSignInClick={onSignInClick} onResetClick={onResetClick}/>}/>}
+          {resetRouteStatus && <Route path="/ResetPassword" element={<ResetPasswordPage/>}/>}
           {routeStatus && (
             <Route
               path="/Employee/*"

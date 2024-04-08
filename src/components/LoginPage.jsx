@@ -37,6 +37,7 @@ function LoginPage(props) {
   };
   const handleForgetClick=()=>{
     navigate("/ForgetPassword")
+    props.onSubmitClick(true)
   }
 
   const handleSubmit = (event) => {

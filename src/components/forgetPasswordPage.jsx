@@ -38,15 +38,14 @@ function ForgetPasswordPage(props) {
     } else if (!showOTPField) {
       handleGetOTP();
     } else if (otp === "") {
-        setOtpError("Required"); 
-      }
-    else if (otp !== "123456") { 
-      setOtpError("Invalid OTP"); 
-    } else {
-      navigate("/ResetPassword");
-      props.onSignInClick(true);
-      props.onSignIn(email);
+      setOtpError("Required");
+    } else if (otp !== "1234") {
+      setOtpError("Invalid OTP");
     }
+    props.onResetClick(true);
+    navigate("/ResetPassword");
+    props.onSignInClick(true);
+    props.onSignIn(email);
   };
 
   return (
@@ -105,21 +104,35 @@ function ForgetPasswordPage(props) {
                     helperText={emailError}
                   />
                 </Grid>
-                {showOTPField && (
+                <Grid container gap={2} mt={2}>
                   <Grid item xs={12}>
-                    <TextField
-                      fullWidth
-                      id="otp"
-                      name="otp"
-                      label="OTP"
-                      type="text"
-                      value={otp}
-                      onChange={(e) => setOTP(e.target.value)}
-                      error={Boolean(otpError)}
-                      helperText={otpError}
-                    />
+                    <Button
+                      // type="submit"
+                      // fullWidth
+                      // onClick={}
+                      variant="contained"
+                      color="primary"
+                      sx={{ textTransform: "none", borderRadius: "100px" }}
+                    >
+                      Get OTP
+                    </Button>
                   </Grid>
-                )}
+                </Grid>
+                {/* {showOTPField && ( */}
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    id="otp"
+                    name="otp"
+                    label="OTP"
+                    type="text"
+                    value={otp}
+                    onChange={(e) => setOTP(e.target.value)}
+                    error={Boolean(otpError)}
+                    helperText={otpError}
+                  />
+                </Grid>
+                {/* )} */}
               </Grid>
               <Grid container gap={2} mt={2}>
                 <Grid item xs={12}>
@@ -130,7 +143,7 @@ function ForgetPasswordPage(props) {
                     color="primary"
                     sx={{ textTransform: "none", borderRadius: "100px" }}
                   >
-                    {showOTPField ? "Submit" : "Get OTP"}
+                    Submit
                   </Button>
                 </Grid>
               </Grid>
