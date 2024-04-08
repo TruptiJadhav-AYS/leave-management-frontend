@@ -389,7 +389,7 @@ export default function Dashboard({ role }) {
                               color="success"
                               size="small"
                               onClick={() => handleAccept(row.name)}
-                              sx={{width:"80px"}}
+                              sx={{width:"60px",height:"30px",textTransform:"none"}}
                             >
                               Accept
                             </Button>
@@ -398,7 +398,7 @@ export default function Dashboard({ role }) {
                               color="error"
                               size="small"
                               onClick={() => handleReject(row.name)}
-                              sx={{width:"80px"}}
+                              sx={{width:"60px",height:"30px",textTransform:"none"}}
                             >
                               Reject
                             </Button>
