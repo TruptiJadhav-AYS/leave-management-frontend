@@ -45,10 +45,10 @@ function ResetPasswordPage(props) {
     else if (newPassword !== confirmPassword) {
       setConfirmPasswordError("Passwords do not match");
       return;
-    }
+    }else{
     // console.log("New Password:", newPassword);
 
-    navigate("/");
+    navigate("/");}
   };
 
   return (

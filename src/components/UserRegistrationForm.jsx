@@ -16,7 +16,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 
 export default function UserRegistrationForm() {
-  const responsive=UseReponsive()
+  const responsive = UseReponsive();
   const [clickedBtnID, setClickedBtnID] = useState("");
   function handleClick(id) {
     setClickedBtnID(id);
@@ -40,7 +40,7 @@ export default function UserRegistrationForm() {
       DateOfBirth: "",
       DepartmentID: "",
       Gender: "",
-      ManagerID: "",
+      managerID: "",
     },
 
     validationSchema: Yup.object({
@@ -81,7 +81,7 @@ export default function UserRegistrationForm() {
       //   )
       //   .required("Password is required."),
 
-      ManagerID: Yup.number().required("Manager ID is required."),
+      managerID: Yup.number().required("Manager ID is required."),
     }),
     onSubmit: (values) => {
       console.log("New Employee Added Successfully.");
@@ -101,7 +101,7 @@ export default function UserRegistrationForm() {
         elevation={1}
         sx={{
           textAlign: "left",
-          width : (responsive.isDesktop || responsive.isLaptop || responsive.isTa) ? "80%" : "100%",
+          width : (responsive.isDesktop || responsive.isLaptop || responsive.isTa) ? "70%" : "100%",
         }}
       >
         <CardContent>
@@ -123,7 +123,7 @@ export default function UserRegistrationForm() {
                       border:
                         clickedBtnID === "Name"
                           ? "2px solid blue"
-                          : "1px solid black",
+                          : "2px solid  rgba(204, 204, 204, 0.5)",
                       height: "40px",
                       borderRadius: 1,
                     }}
@@ -148,18 +148,23 @@ export default function UserRegistrationForm() {
                     name="Role"
                     onChange={formik.handleChange}
                     value={formik.values.Role}
-                    sx={{
-                      border:
-                        clickedBtnID === "Role"
-                          ? "1px solid blue"
-                          : "1px solid black",
+                    sx={{  
+                      "& fieldset": {
+                        borderColor: "rgba(204, 204, 204, 0.5)",
+                        borderWidth: "2px",
+                      },
+                      "&:hover": {
+                        "&& fieldset": {
+                          border: "2px solid rgba(204, 204, 204, 0.5)"
+                        }
+                      },
                       height: "40px",
                       borderRadius: 1,
                     }}
                     onClick={() => handleClick("Role")}
                     onBlur={formik.handleBlur}
                   >
-                    <MenuItem value="Manager">Manager</MenuItem>
+                    <MenuItem value="      Manager"> Manager</MenuItem>
                     <MenuItem value="Employee">Employee</MenuItem>
                   </Select>
                   {formik.touched.Role && errors.Role && (
@@ -185,7 +190,7 @@ export default function UserRegistrationForm() {
                       border:
                         clickedBtnID === "Email"
                           ? "2px solid blue"
-                          : "1px solid black",
+                          : "2px solid  rgba(204, 204, 204, 0.5)",
                       height: "40px",
                       borderRadius: 1,
                     }}
@@ -214,7 +219,7 @@ export default function UserRegistrationForm() {
                       border:
                         clickedBtnID === "PhoneNo"
                           ? "2px solid blue"
-                          : "1px solid black",
+                          : "2px solid  rgba(204, 204, 204, 0.5)",
                       height: "40px",
                       borderRadius: 1,
                     }}
@@ -250,7 +255,7 @@ export default function UserRegistrationForm() {
                       border:
                         clickedBtnID === "DateOfBirth"
                           ? "2px solid blue"
-                          : "1px solid black",
+                          : "2px solid  rgba(204, 204, 204, 0.5)",
                       height: "40px",
                       borderRadius: 1,
                     }}
@@ -273,10 +278,15 @@ export default function UserRegistrationForm() {
                     onChange={formik.handleChange}
                     value={formik.values.Gender}
                     sx={{
-                      border:
-                        clickedBtnID === "Gender"
-                          ? "1px solid blue"
-                          : "1px solid black",
+                      "& fieldset": {
+                        borderColor: "rgba(204, 204, 204, 0.5)",
+                        borderWidth: "2px",
+                      },
+                      "&:hover": {
+                        "&& fieldset": {
+                          border: "2px solid rgba(204, 204, 204, 0.5)"
+                        }
+                      },
                       height: "40px",
                       borderRadius: 1,
                     }}
@@ -311,7 +321,7 @@ export default function UserRegistrationForm() {
                       border:
                         clickedBtnID === "DepartmentID"
                           ? "2px solid blue"
-                          : "1px solid black",
+                          : "2px solid  rgba(204, 204, 204, 0.5)",
                       height: "40px",
                       borderRadius: 1,
                     }}
@@ -327,39 +337,42 @@ export default function UserRegistrationForm() {
               </Grid>
               <Grid item xs={12} sm={6} md={6} lg={6}>
                 <Stack width={"100%"}>
-                  <Typography variant="body2"> Manager ID</Typography>
+                  <Typography variant="body2">Manager ID</Typography>
                   <InputBase
                     type="tel"
                     pattern="[0-9]*"
-                    placeholder=" ManagerID"
-                    name="ManagerID"
+                    placeholder="managerID"
+                    name="managerID"
                     onChange={formik.handleChange}
-                    value={formik.values.ManagerID}
+                    value={formik.values.managerID}
                     sx={{
                       border:
-                        clickedBtnID === "ManagerID"
+                        clickedBtnID === "managerID"
                           ? "2px solid blue"
-                          : "1px solid black",
+                          : "2px solid  rgba(204, 204, 204, 0.5)",
                       height: "40px",
                       borderRadius: 1,
                     }}
-                    onClick={() => handleClick("ManagerID")}
+                    onClick={() => handleClick("managerID")}
                     onBlur={formik.handleBlur}
                   />
-                  {formik.touched.ManagerID && errors.ManagerID && (
+                  {formik.touched.managerID && errors.managerID && (
                     <Typography variant="caption" color="error">
-                      {errors.ManagerID}
+                      {errors.managerID}
                     </Typography>
                   )}
                 </Stack>
               </Grid>
             </Grid>
             <br />
-            <Grid container alignItems={"center"} justifyContent={"center"}>
-              <Button type="submit" variant="contained">
-                Submit
-              </Button>
-            </Grid>
+
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{ textTransform: "none", my: 2 }}
+            >
+              Onboard Employee
+            </Button>
           </form>
         </CardContent>
       </Card>

@@ -38,9 +38,14 @@ function ForgetPasswordPage(props) {
     } else if (!showOTPField) {
       handleGetOTP();
     } else if (otp === "") {
-      setOtpError("Required");
-    } else if (otp !== "1234") {
-      setOtpError("Invalid OTP");
+        setOtpError("Required"); 
+      }
+    else if (otp !== "1234") { 
+      setOtpError("Invalid OTP"); 
+    } else {
+      navigate("/ResetPassword");
+      props.onSignInClick(true);
+      props.onSignIn(email);
     }
     props.onResetClick(true);
     navigate("/ResetPassword");

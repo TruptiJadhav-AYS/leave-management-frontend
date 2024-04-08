@@ -16,7 +16,7 @@ import UseReponsive from '../hooks/UseResponsive';
 
 const annualLeaves = [
   { date: '01/01/2024', day: 'Monday', occasion: 'New Year', img: newYear },
-  { date: '26/01/2024', day: 'Friday', occasion: 'Republic Day', img: republicDay },
+  { date: '26/01/2024', day: 'Friday', occasion: 'Republic Day', img: republicDay},
   { date: '25/03/2024', day: 'Monday', occasion: 'Holi', img: holi },
   { date:"09/04/2024" ,day: "Tuesday", occasion: "Gudhi padwa",img:gudhipadwa},
   { date:"11/04/2024", day:"Thursday", occasion:"Eid",img:eid},
@@ -30,7 +30,6 @@ const annualLeaves = [
 ];
 
 export default function Holidays() {
-
   let responsive=UseReponsive()
 
   return (

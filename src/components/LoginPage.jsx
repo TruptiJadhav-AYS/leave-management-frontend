@@ -15,7 +15,7 @@ import {
 
 const users = [
   { email: "pratiksha@gmail.com", password: "123" },
-  { email: "pratik@gmail.com", password: "1234" },
+  { email: "trupti@gmail.com", password: "1234" },
   { email: "pruthvi@gmail.com", password: "12345" },
 ];
 
