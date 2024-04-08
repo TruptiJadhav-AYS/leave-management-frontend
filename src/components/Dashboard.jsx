@@ -463,7 +463,6 @@ export default function Dashboard({ role }) {
 
               
               <Grid mt={1}>
-              
               <LeavePolicy/>
               </Grid>
             </Grid>

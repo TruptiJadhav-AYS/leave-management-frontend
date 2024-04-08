@@ -101,10 +101,7 @@ export default function UserRegistrationForm() {
         elevation={1}
         sx={{
           textAlign: "left",
-          width:
-            responsive.isDesktop || responsive.isLaptop || responsive.isTa
-              ? "70%"
-              : "100%",
+          width : (responsive.isDesktop || responsive.isLaptop || responsive.isTa) ? "70%" : "100%",
         }}
       >
         <CardContent>
@@ -151,15 +148,15 @@ export default function UserRegistrationForm() {
                     name="Role"
                     onChange={formik.handleChange}
                     value={formik.values.Role}
-                    sx={{
+                    sx={{  
                       "& fieldset": {
                         borderColor: "rgba(204, 204, 204, 0.5)",
                         borderWidth: "2px",
                       },
                       "&:hover": {
                         "&& fieldset": {
-                          border: "2px solid rgba(204, 204, 204, 0.5)",
-                        },
+                          border: "2px solid rgba(204, 204, 204, 0.5)"
+                        }
                       },
                       height: "40px",
                       borderRadius: 1,
@@ -287,8 +284,8 @@ export default function UserRegistrationForm() {
                       },
                       "&:hover": {
                         "&& fieldset": {
-                          border: "2px solid rgba(204, 204, 204, 0.5)",
-                        },
+                          border: "2px solid rgba(204, 204, 204, 0.5)"
+                        }
                       },
                       height: "40px",
                       borderRadius: 1,
