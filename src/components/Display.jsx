@@ -47,7 +47,7 @@ function AccountMenu({onMyProfileClick}) {
             size="small"
             sx={{ ml: 2 }}
           >
-            <Avatar sx={{ width: 32, height: 32 }}>R</Avatar>
+            <Avatar sx={{ width: 32, height: 32 }}></Avatar>
           </IconButton>
         </Tooltip>
       {anchorEl ?
@@ -111,7 +111,7 @@ export default function Display({logedInUser,role}) {
   const [myProfileClick,setMyProfileClick]=useState(false);
   const responsive=UseReponsive()
 
-  console.log(responsive)
+  console.log(role)
 
   function onMyProfileClick(value){
     setMyProfileClick(value)
@@ -133,7 +133,7 @@ export default function Display({logedInUser,role}) {
   };
 
   return (
-    <Box sx={{ display: "flex",bgcolor:"whitesmoke"}}>
+    <Box sx={{ display: "flex",bgcolor:"whitesmoke",height:"100vh"}}>
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -158,7 +158,7 @@ export default function Display({logedInUser,role}) {
           <Stack direction={"row"} spacing={2} height={"100%"} alignItems={"center"}>
             {responsive.isDesktop || responsive.isLaptop || responsive.isTablet ?
             <Typography variant="h6" noWrap component="div">
-              Pratiksha Nimbalakar
+              {role==="Admin" ? 'Pratiksha Nimbalakar' : role==="Manager" ? "Trupti Jadhav" : " Pruthviraj Suryavanshi"}
             </Typography>
             :<></>
             }

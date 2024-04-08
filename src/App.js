@@ -21,7 +21,7 @@ const myTheme = createTheme({
 
 const employee=[
   {name:"Pratiksha",email:"pratiksha@gmail.com",role:"Admin"},
-  {name:"Trupti",email:"pratik@gmail.com",role:"Manager"},
+  {name:"Trupti",email:"trupti@gmail.com",role:"Manager"},
   {name:"Pruthvi",email:"pruthvi@gmail.com",role:"Employee"}
 ] 
 
@@ -69,3 +69,4 @@ function App() {
 }
 
 export default App;
+

@@ -9,7 +9,7 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import AddIcon from '@mui/icons-material/Add';
+import AddIcon from "@mui/icons-material/Add";
 
 const columns = [
   { id: "Name", label: "Name", minWidth: 180 },
@@ -18,7 +18,6 @@ const columns = [
     id: "Role",
     label: "Role",
     minWidth: 130,
-
   },
   {
     id: "Gender",
@@ -26,8 +25,8 @@ const columns = [
     minWidth: 80,
   },
   {
-    id: "ManagerId",
-    label: "ManagerId",
+    id: "managerID",
+    label: "managerID",
     minWidth: 80,
     align: "right",
   },
@@ -40,8 +39,8 @@ const columns = [
   },
 ];
 
-// function createData(name, email, gender, role, managerId) {
-//   return { name, email, gender, role, managerId };
+// function createData(name, email, gender, role,managerID) {
+//   return { name, email, gender, role,managerID };
 // }
 
 const rows = [
@@ -50,7 +49,7 @@ const rows = [
     Email: "pruthvi@gmail.com",
     Role: "Employee",
     Gender: "Male",
-    ManagerId: 1,
+    managerID: 1,
     DepartmentId: 1,
   },
   {
@@ -58,7 +57,7 @@ const rows = [
     Email: "pratiksha@gmail.com",
     Role: "Employee",
     Gender: "Female",
-    ManagerId: 1,
+    managerID: 1,
     DepartmentId: 1,
   },
   {
@@ -66,7 +65,7 @@ const rows = [
     Email: "trupti@gmail.com",
     Role: "Employee",
     Gender: "Female",
-    ManagerId: 1,
+    managerID: 1,
     DepartmentId: 1,
   },
   {
@@ -87,7 +86,7 @@ const rows = [
     Email: "nupur@gmail.com",
     Role: "Employee",
     Gender: "Female",
-    ManagerId: 2,
+    managerID: 2,
     DepartmentId: 2,
   },
   {
@@ -95,7 +94,7 @@ const rows = [
     Email: "mehvish@gmail.com",
     Role: "Employee",
     Gender: "Female",
-    ManagerId: 2,
+    managerID: 2,
     DepartmentId: 2,
   },
   {
@@ -103,7 +102,7 @@ const rows = [
     Email: "abhi@gmail.com",
     Role: "Employee",
     Gender: "Male",
-    ManagerId: 2,
+    managerID: 2,
     DepartmentId: 1,
   },
   {
@@ -111,7 +110,7 @@ const rows = [
     Email: "shruti@gmail.com",
     Role: "Employee",
     Gender: "Female",
-    ManagerId: 2,
+    managerID: 2,
     DepartmentId: 3,
   },
   {
@@ -119,7 +118,7 @@ const rows = [
     Email: "prerana@gmail.com",
     Role: "Employee",
     Gender: "Female",
-    ManagerId: 2,
+    managerID: 2,
     DepartmentId: 1,
   },
   {
@@ -127,7 +126,7 @@ const rows = [
     Email: "abhi123@gmail.com",
     Role: "Employee",
     Gender: "Male",
-    ManagerId: 2,
+    managerID: 2,
     DepartmentId: 3,
   },
   {
@@ -135,7 +134,7 @@ const rows = [
     Email: "shital@gmail.com",
     Role: "Employee",
     Gender: "Female",
-    ManagerId: 2,
+    managerID: 2,
     DepartmentId: 3,
   },
 
@@ -171,16 +170,16 @@ export default function EmployeeList() {
   };
 
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden",py:2}}>
-      
+    <Paper sx={{ width: "100%", overflow: "hidden", py: 2 }}>
       <Button
         variant="contained"
-        sx={{borderRadius:"50px"}}
+        sx={{ borderRadius: "50px" }}
         onClick={() => {
           Navigate("/Employee/Employees/NewRegistration");
         }}
       >
-        Employee<AddIcon/>
+        Employee
+        <AddIcon />
       </Button>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
@@ -234,46 +233,6 @@ export default function EmployeeList() {
   );
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // import { Box, Button } from "@mui/material";
 // import { useNavigate } from "react-router-dom";
 // import { List } from "@mui/material";
@@ -289,7 +248,7 @@ export default function EmployeeList() {
 //     { Name: "Pruthviraj Suryawanshi", Role: "Employee", Gender: "Male" },
 //     { Name: "Pratiksha Nimbalkar", Role: "Employee", Gender: "Female" },
 //     { Name: "Trupti Jadhav", Role: "Employee", Gender: "Female" },
-//     { Name: "Ketan Rathod", Role: "Manager", Gender: "Male" },
+//     { Name: "Ketan Rathod", Role: "      Manager", Gender: "Male" },
 //     { Name: "Yogesh Patel", Role: "Admin", Gender: "Male" },
 //     { Name: "Nupur Tyagi", Role: "Employee", Gender: "Female" },
 //     { Name: "Mehvish Shaikh", Role: "Employee", Gender: "Female" },
