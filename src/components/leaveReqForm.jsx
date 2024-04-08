@@ -8,16 +8,19 @@ import {
   Card,
   CardContent,
   Grid,
+  Alert
 } from "@mui/material";
 import { useState } from "react";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import UseReponsive from "../hooks/UseResponsive";
+import CheckIcon from "@mui/icons-material/Check"
 
 function LeaveReqForm() {
   let Navigate = useNavigate();
   let [clickedId, setClickedId] = useState("");
   let responsive=UseReponsive();
+  let [submitSuccess,setSubmitSuccess]=useState(false)
 
   function handleClick(id) {
     setClickedId(id);
@@ -54,26 +57,21 @@ function LeaveReqForm() {
     },
     validationSchema: leaveReqObj,
     onSubmit: (values) => {
-      console.log(values);
+      setSubmitSuccess(true);
+      setTimeout(()=>{
       Navigate("/Employee");
-      alert("Leave request sent successfully!!");
+      },1000)
     },
   });
 
   const Error = formik.errors;
 
   return (
-    <Grid container justifyContent={"center"} width="100%" pt={3} >
-      
+    <Grid container justifyContent={"center"} width="100%" pt={3}>
+      <Stack sx={{textAlign: "left", width : (responsive.isDesktop || responsive.isLaptop || responsive.isTa) ? "70%" : "100%"}}>
       <Card
         elevation={1}
         pt="5%"
-        sx={{
-          minHeight: "auto",
-          textAlign: "left",
-          width : (responsive.isDesktop || responsive.isLaptop || responsive.isTa) ? "70%" : "100%",
-        }}
-        
       >
         
         <CardContent component={"form"} onSubmit={formik.handleSubmit}>
@@ -217,13 +215,20 @@ function LeaveReqForm() {
 
           <br />
 
-          <Button type="submit" variant="contained" color="primary" sx={{textTransform:"none",my:2}} >
+          <Button type="submit" variant="contained" color="primary" sx={{textTransform:"none",}} >
             Apply Leave
           </Button>
   
         </CardContent>
         
       </Card>
+      {submitSuccess && 
+          (
+          <Alert  icon={<CheckIcon fontSize="inherit" />} sx={{height:"50px",mt:"10px"}}  severity="success">
+            You have applied for leave successfully.
+          </Alert>
+          )}
+          </Stack>
     </Grid>
   );
 }
