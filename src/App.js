@@ -57,12 +57,7 @@ function App() {
             element={
               <LoginPage onSignIn={onSignIn} onSignInClick={onSignInClick} />
             }
-            // element={
-            //   <ForgetPasswordPage onSignIn={onSignIn} onSignInClick={onSignInClick}/>
-            // }
-            // element={
-            //   <ResetPasswordPage/>
-            // }
+            
           />
           <Route path="/ForgetPassword" element={<ForgetPasswordPage onSignIn={onSignIn} onSignInClick={onSignInClick}/>}/>
           <Route path="/ResetPassword" element={<ResetPasswordPage/>}/>
