@@ -7,7 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { Button } from "@mui/material";
+import { Button, Divider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
 
@@ -40,8 +40,8 @@ const columns = [
   },
 ];
 
-// function createData(name, email, gender, role, managerId) {
-//   return { name, email, gender, role, managerId };
+// function createData(name, email, gender, role, ManagerId) {
+//   return { name, email, gender, role, ManagerId };
 // }
 
 const rows = [
@@ -159,7 +159,7 @@ const rows = [
 export default function EmployeeList() {
   const Navigate = useNavigate();
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(7);
+  const [rowsPerPage, setRowsPerPage] = React.useState(8);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -171,19 +171,19 @@ export default function EmployeeList() {
   };
 
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden",py:2}}>
-      
+    <Paper sx={{ width: "100%", overflow: "hidden"}}> 
       <Button
         variant="contained"
-        sx={{borderRadius:"50px"}}
+        sx={{borderRadius:"50px",my:"1.5%"}}
         onClick={() => {
           Navigate("/Employee/Employees/NewRegistration");
         }}
       >
         Employee<AddIcon/>
       </Button>
-      <TableContainer sx={{ maxHeight: 440 }}>
-        <Table stickyHeader aria-label="sticky table">
+      <Divider/>
+      <TableContainer sx={{ maxHeight: "70vh",scrollbarWidth:"thin" }} >
+        <Table stickyHeader aria-label="sticky table" >
           <TableHead>
             <TableRow>
               {columns.map((column) => (
@@ -222,7 +222,7 @@ export default function EmployeeList() {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[7, 10, 20]}
+        rowsPerPageOptions={[8, 10, 20]}
         component="div"
         count={rows.length}
         rowsPerPage={rowsPerPage}

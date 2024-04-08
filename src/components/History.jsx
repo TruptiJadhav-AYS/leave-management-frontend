@@ -39,14 +39,14 @@ const rows = [
   },
   {
     Start_Date: "12/03/2024",
-    End_Date: "14/05/2024",
+    End_Date: "14/03/2024",
     leave_type:"Full Day",
     reason:"Family function",
-    status: "Rejected",
+    status: "Accepted",
   },
   {
     Start_Date: "12/03/2024",
-    End_Date: "14/05/2024",
+    End_Date: "14/03/2024",
     leave_type:"Full Day",
     reason:"Scheduled exams",
     status: "Accepted",
@@ -133,7 +133,7 @@ const rows = [
     End_Date: "-",
     leave_type:"Half Day",
     reason:"Parent-teacher meeting",
-    status: "Accepted",
+    status: "Rejected",
   },
   {
     Start_Date: "25/09/2023",
@@ -146,7 +146,7 @@ const rows = [
 
 export default function History() {
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(7);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -158,8 +158,8 @@ export default function History() {
   };
 
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden",py:2}}>
-      <TableContainer sx={{ maxHeight: 440 }}>
+    <Paper sx={{ width: "100%", overflow: "hidden",pt:1}}>
+      <TableContainer sx={{ height: "80vh" ,scrollbarWidth:"thin"}}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -205,7 +205,7 @@ export default function History() {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[7, 10, 20]}
+        rowsPerPageOptions={[10,15,20]}
         component="div"
         count={rows.length}
         rowsPerPage={rowsPerPage}

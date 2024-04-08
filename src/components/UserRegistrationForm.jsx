@@ -101,7 +101,7 @@ export default function UserRegistrationForm() {
         elevation={1}
         sx={{
           textAlign: "left",
-          width : (responsive.isDesktop || responsive.isLaptop || responsive.isTa) ? "80%" : "100%",
+          width : (responsive.isDesktop || responsive.isLaptop || responsive.isTa) ? "70%" : "100%",
         }}
       >
         <CardContent>
@@ -123,7 +123,7 @@ export default function UserRegistrationForm() {
                       border:
                         clickedBtnID === "Name"
                           ? "2px solid blue"
-                          : "1px solid black",
+                          : "2px solid  rgba(204, 204, 204, 0.5)",
                       height: "40px",
                       borderRadius: 1,
                     }}
@@ -148,11 +148,16 @@ export default function UserRegistrationForm() {
                     name="Role"
                     onChange={formik.handleChange}
                     value={formik.values.Role}
-                    sx={{
-                      border:
-                        clickedBtnID === "Role"
-                          ? "1px solid blue"
-                          : "1px solid black",
+                    sx={{  
+                      "& fieldset": {
+                        borderColor: "rgba(204, 204, 204, 0.5)",
+                        borderWidth: "2px",
+                      },
+                      "&:hover": {
+                        "&& fieldset": {
+                          border: "2px solid rgba(204, 204, 204, 0.5)"
+                        }
+                      },
                       height: "40px",
                       borderRadius: 1,
                     }}
@@ -185,7 +190,7 @@ export default function UserRegistrationForm() {
                       border:
                         clickedBtnID === "Email"
                           ? "2px solid blue"
-                          : "1px solid black",
+                          : "2px solid  rgba(204, 204, 204, 0.5)",
                       height: "40px",
                       borderRadius: 1,
                     }}
@@ -214,7 +219,7 @@ export default function UserRegistrationForm() {
                       border:
                         clickedBtnID === "PhoneNo"
                           ? "2px solid blue"
-                          : "1px solid black",
+                          : "2px solid  rgba(204, 204, 204, 0.5)",
                       height: "40px",
                       borderRadius: 1,
                     }}
@@ -250,7 +255,7 @@ export default function UserRegistrationForm() {
                       border:
                         clickedBtnID === "DateOfBirth"
                           ? "2px solid blue"
-                          : "1px solid black",
+                          : "2px solid  rgba(204, 204, 204, 0.5)",
                       height: "40px",
                       borderRadius: 1,
                     }}
@@ -273,10 +278,15 @@ export default function UserRegistrationForm() {
                     onChange={formik.handleChange}
                     value={formik.values.Gender}
                     sx={{
-                      border:
-                        clickedBtnID === "Gender"
-                          ? "1px solid blue"
-                          : "1px solid black",
+                      "& fieldset": {
+                        borderColor: "rgba(204, 204, 204, 0.5)",
+                        borderWidth: "2px",
+                      },
+                      "&:hover": {
+                        "&& fieldset": {
+                          border: "2px solid rgba(204, 204, 204, 0.5)"
+                        }
+                      },
                       height: "40px",
                       borderRadius: 1,
                     }}
@@ -311,7 +321,7 @@ export default function UserRegistrationForm() {
                       border:
                         clickedBtnID === "DepartmentID"
                           ? "2px solid blue"
-                          : "1px solid black",
+                          : "2px solid  rgba(204, 204, 204, 0.5)",
                       height: "40px",
                       borderRadius: 1,
                     }}
@@ -339,7 +349,7 @@ export default function UserRegistrationForm() {
                       border:
                         clickedBtnID === "ManagerID"
                           ? "2px solid blue"
-                          : "1px solid black",
+                          : "2px solid  rgba(204, 204, 204, 0.5)",
                       height: "40px",
                       borderRadius: 1,
                     }}
@@ -355,11 +365,11 @@ export default function UserRegistrationForm() {
               </Grid>
             </Grid>
             <br />
-            <Grid container alignItems={"center"} justifyContent={"center"}>
-              <Button type="submit" variant="contained">
-                Submit
-              </Button>
-            </Grid>
+
+            <Button type="submit" variant="contained" sx={{textTransform:"none",my:2}}>
+              Onboard Employee
+            </Button>
+
           </form>
         </CardContent>
       </Card>

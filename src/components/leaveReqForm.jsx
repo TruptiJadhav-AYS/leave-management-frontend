@@ -63,7 +63,7 @@ function LeaveReqForm() {
   const Error = formik.errors;
 
   return (
-    <Grid container justifyContent={"center"} width="100%" pt={3}>
+    <Grid container justifyContent={"center"} width="100%" pt={3} >
       
       <Card
         elevation={1}
@@ -71,20 +71,23 @@ function LeaveReqForm() {
         sx={{
           minHeight: "auto",
           textAlign: "left",
-          width : (responsive.isDesktop || responsive.isLaptop || responsive.isTa) ? "80%" : "100%",
+          width : (responsive.isDesktop || responsive.isLaptop || responsive.isTa) ? "70%" : "100%",
         }}
         
       >
+        
         <CardContent component={"form"} onSubmit={formik.handleSubmit}>
-          <Typography mb={4} variant="h5" color={"primary"}>
+        
+          <Typography mb={2} variant="h5" color={"primary"}>
             Apply Leave
           </Typography>
 
           <Grid
             container
             direction={"row"}
-            spacing={1.5}
+            columnSpacing={1.5}
             mb={1}
+            py={1.4}
             justifyContent={"space-between"}
             pt="5px"
           >
@@ -149,7 +152,7 @@ function LeaveReqForm() {
             </Grid>
           </Grid>
 
-          <Grid container>
+          <Grid container pb={2}>
             <Grid item xs={12} sm={6}>
               <Stack width="100%">
                 <Typography fontSize={"13px"}>LEAVE TYPE</Typography>
@@ -168,9 +171,11 @@ function LeaveReqForm() {
                       borderColor: "rgba(204, 204, 204, 0.5)",
                       borderWidth: "2px",
                     },
-                  }}
-                  MenuProps={{
-                    disableHover: true,
+                    "&:hover": {
+                      "&& fieldset": {
+                        border: "2px solid rgba(204, 204, 204, 0.5)"
+                      }
+                    },
                   }}
                 >
                   <MenuItem value="Half day">Half Day</MenuItem>
@@ -201,7 +206,7 @@ function LeaveReqForm() {
                 p: "5px",
               }}
               multiline
-              rows={4}
+              rows={5}
               placeholder="Reason for leave"
               onClick={() => {
                 handleClick("reason");
@@ -212,10 +217,12 @@ function LeaveReqForm() {
 
           <br />
 
-          <Button type="submit" variant="contained" color="primary">
-            Submit
+          <Button type="submit" variant="contained" color="primary" sx={{textTransform:"none",my:2}} >
+            Apply Leave
           </Button>
+  
         </CardContent>
+        
       </Card>
     </Grid>
   );
