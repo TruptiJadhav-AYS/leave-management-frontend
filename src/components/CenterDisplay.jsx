@@ -4,7 +4,7 @@ import Holidays from "./Holidays";
 import History from "./History";
 
 import EmployeeList from "./Employee";
-import UserRegistrationForm from "./UserRegistrationForm";
+import EmployeeRegistrationForm from "./EmployeeRegistrationForm";
 import Dashboard from "./Dashboard";
 
 export default function CenterDisplay({ role }) {
@@ -17,7 +17,7 @@ export default function CenterDisplay({ role }) {
       <Route path="/Employees" element={<EmployeeList />} />
       <Route
         path="/Employees/NewRegistration"
-        element={<UserRegistrationForm />}
+        element={<EmployeeRegistrationForm />}
       />
     </Routes>
   );

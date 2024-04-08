@@ -85,10 +85,11 @@ function AccountMenu({ role }) {
             display={"flex"}
             flexDirection={"column"}
             alignItems={"center"}
-            p={3}
+            px={7}
+            py={1.5}
           >
-            <Avatar style={{ width: "70px", height: "70px" }} src={Profile}/>
-            <Typography fontWeight={"bold"} mt={1}>
+            <Avatar style={{ width: "60px", height: "60px" }} src={Profile}/>
+            <Typography fontWeight={"bold"} mt={1} >
               {role === "Admin"
                 ? "Pratiksha Nimbalakar"
                 : role === "Manager"
