@@ -53,7 +53,7 @@ export default function Dashboard({ role }) {
 
   return (
     <Grid container width="100%" px={1} pt={2}>
-      <Grid width="100%" height={"100%"}>
+      <Grid width="100%" height={"100%"} columnSpacing={1}>
         <Grid container spacing={1} height={"17vh"}>
           <Grid item xs={4} sm={4} md={4} lg={4}>
             <Card
@@ -153,7 +153,7 @@ export default function Dashboard({ role }) {
         <Grid
           container
           pt={2}
-          sx={{ height: "69vh", mt: responsive.isMobile ? "10px" : "0px" }}
+          sx={{ height: "69vh", mt: responsive.isMobile ? "45px" : "0px" }}
           rowSpacing={responsive.isMobile ? 1 : 3}
           columnSpacing={1}
         >
@@ -380,15 +380,16 @@ export default function Dashboard({ role }) {
                           </TableCell>
                           <TableCell align="right">{row.fromDate}</TableCell>
                           <TableCell align="right">{row.toDate}</TableCell>
-                          <TableCell align="right">{row.leaveType}</TableCell>
+                          <TableCell align="center">{row.leaveType}</TableCell>
                           <TableCell align="right">{row.reason}</TableCell>
                           <TableCell align="right">
+                            <Grid display={"flex"} gap={1} flexDirection={"row"}>
                             <Button
                               variant="contained"
                               color="success"
                               size="small"
                               onClick={() => handleAccept(row.name)}
-                              sx={{ marginRight: 1 }}
+                              sx={{width:"80px"}}
                             >
                               Accept
                             </Button>
@@ -397,9 +398,11 @@ export default function Dashboard({ role }) {
                               color="error"
                               size="small"
                               onClick={() => handleReject(row.name)}
+                              sx={{width:"80px"}}
                             >
                               Reject
                             </Button>
+                            </Grid>
                           </TableCell>
                         </TableRow>
                       ))}

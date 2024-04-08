@@ -26,13 +26,13 @@ const columns = [
     id: "ManagerId",
     label: "ManagerId",
     minWidth: 80,
-    align: "right",
+    align: "center",
   },
   {
     id: "DepartmentId",
     label: "DepartmentId",
     minWidth: 80,
-    align: "right",
+    align: "center",
     // format: (value) => value.toFixed(2),
   },
 ];
@@ -215,8 +215,8 @@ export default function EmployeeList() {
         </Button>
       </Box>
 
-      <TableContainer sx={{ maxHeight: "70%" }}>
-        <Table stickyHeader aria-label="sticky table">
+      <TableContainer sx={{ height: "70vh",overflow:"auto" ,scrollbarWidth:"thin"}}>
+        <Table stickyHeader>
           <TableHead>
             <TableRow>
               {columns.map((column) => (
