@@ -7,7 +7,7 @@ import {
   Typography,
   MenuItem,
   Select,
-  Alert
+  Alert,
 } from "@mui/material";
 import Card from "@mui/material/Card";
 import { useState } from "react";
@@ -25,30 +25,38 @@ export default function EmployeeRegistrationForm() {
   function handleClick(id) {
     setClickedBtnID(id);
   }
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight:220,
+        width: 250,
+      },
+    },
+  };
 
   const navigate = useNavigate();
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const today = new Date();
-  const eighteenYearsAgo = new Date(
-    today.getFullYear() - 18,
-    today.getMonth(),
-    today.getDate()
-  );
+  // const today = new Date();
+  // const eighteenYearsAgo = new Date(
+  //   today.getFullYear() - 18,
+  //   today.getMonth(),
+  //   today.getDate()
+  // );
 
   const formik = useFormik({
     initialValues: {
       Name: "",
       // Role: "",
       Email: "",
-      PhoneNo: "",
-      DateOfBirth: "",
+      Contact: "",
+      // DateOfBirth: "",
       Department: "",
       Gender: "",
-      manager: "",
+      Manager: "",
     },
 
-    validationSchema: Yup.object({
-      Name: Yup.string().required("Name is Mandatory."),
+      validationSchema: Yup.object({
+      Name: Yup.string().required("Name is mandatory."),
 
       // Role: Yup.string().required("Role is required."),
 
@@ -57,21 +65,21 @@ export default function EmployeeRegistrationForm() {
         .matches(emailRegex, "Invalid email format")
         .required("Email is required."),
 
-      PhoneNo: Yup.number()
-        .test("len", "PhoneNo should contain only 10 characters.", (value) => {
+        Contact: Yup.number()
+        .test("len", "Contact no should contain only 10 characters.", (value) => {
           if (value === undefined || value === null) {
             return true;
           }
           return String(value).length === 10;
         })
-        .required("PhoneNo is required."),
+        .required("Contact no is required."),
 
-      DateOfBirth: Yup.date()
-        .min("1950-01-01", "Birthdate should be after 1950-01-01")
-        .max(eighteenYearsAgo, `Birthdate should be before ${eighteenYearsAgo.getDate()}-${eighteenYearsAgo.getMonth()}-${eighteenYearsAgo.getFullYear()}`)
-        .required("Date of birth is required."),
+      // DateOfBirth: Yup.date()
+      //   .min("1950-01-01", "Birthdate should be after 1950-01-01")
+      //   .max(eighteenYearsAgo, `Birthdate should be before ${eighteenYearsAgo.getDate()}-${eighteenYearsAgo.getMonth()}-${eighteenYearsAgo.getFullYear()}`)
+      //   .required("Date of birth is required."),
 
-      Department: Yup.number().required("Department is mandatory."),
+      Department: Yup.string().required("Department is mandatory."),
 
       Gender: Yup.string().required("Gender is required."),
 
@@ -85,7 +93,7 @@ export default function EmployeeRegistrationForm() {
       //   )
       //   .required("Password is required."),
 
-      manager: Yup.string().required("Manager is required."),
+      Manager: Yup.string().required("Manager is required."),
     }),
     onSubmit: (values) => {
       console.log(values)
@@ -104,7 +112,7 @@ export default function EmployeeRegistrationForm() {
     <Grid container justifyContent={"center"} width="100%" pt={3}>
       <Stack  sx={{
           textAlign: "left",
-          width : (responsive.isDesktop || responsive.isLaptop || responsive.isTa) ? "70%" : "100%",
+          width : (responsive.isDesktop || responsive.isLaptop || responsive.isTablet) ? "70%" : "100%",
         }}>
       <Card
         elevation={1}
@@ -115,8 +123,8 @@ export default function EmployeeRegistrationForm() {
               Onboard Employee
             </Typography>
 
-            <Grid container height={"10vh"} spacing={1}>
-              <Grid item xs={12} sm={6} md={6} lg={6}>
+            <Grid container spacing={1}>
+              <Grid item xs={12} sm={6} md={6} lg={6} height={responsive.isMobile ? "14vh" : "11vh"}>
                 <Stack width={"100%"}>
                   <Typography variant="body2"> NAME</Typography>
                   <InputBase
@@ -143,7 +151,7 @@ export default function EmployeeRegistrationForm() {
                   )}
                 </Stack>
               </Grid>
-              <Grid item xs={12} sm={6} md={6} lg={6}>
+              <Grid item xs={12} sm={6} md={6} lg={6} height={responsive.isMobile ? "11vh" : "11vh"}>
                 <Stack width={"100%"}>
                   <Typography variant="body2"> GENDER </Typography>
                   <Select
@@ -215,8 +223,8 @@ export default function EmployeeRegistrationForm() {
               */}
             </Grid>
             <br />
-            <Grid container height={"10vh"} spacing={1}>
-              <Grid item xs={12} sm={6} md={6} lg={6}>
+            <Grid container spacing={1}>
+              <Grid item xs={12} sm={6} md={6} lg={6}  height={responsive.isMobile ? "14vh" : "8vh"}> 
                 <Stack width={"100%"}>
                   <Typography variant="body2"> EMAIL </Typography>
                   <InputBase
@@ -243,31 +251,31 @@ export default function EmployeeRegistrationForm() {
                   )}
                 </Stack>
               </Grid>
-              <Grid item xs={12} sm={6} md={6} lg={6}>
+              <Grid item xs={12} sm={6} md={6} lg={6}  height={responsive.isMobile ? "7vh" : "8vh"}>
                 <Stack width={"100%"}>
-                  <Typography variant="body2"> PHONE NO</Typography>
+                  <Typography variant="body2"> Contact NO</Typography>
                   <InputBase
                     type="tel"
                     pattern="[0-9]*"
                     maxLength={10}
-                    name="PhoneNo"
+                    name="Contact"
                     placeholder=" Phone Number"
                     onChange={formik.handleChange}
-                    value={formik.values.PhoneNo}
+                    value={formik.values.Contact}
                     sx={{
                       border:
-                        clickedBtnID === "PhoneNo"
+                        clickedBtnID === "Contact"
                           ? "2px solid blue"
                           : "2px solid  rgba(204, 204, 204, 0.5)",
                       height: "40px",
                       borderRadius: 1,
                     }}
-                    onClick={() => handleClick("PhoneNo")}
+                    onClick={() => handleClick("Contact")}
                     onBlur={formik.handleBlur}
                   />
-                  {formik.touched.PhoneNo && errors.PhoneNo && (
+                  {formik.touched.Contact && errors.Contact && (
                     <Typography variant="caption" color="error">
-                      {errors.PhoneNo}
+                      {errors.Contact}
                     </Typography>
                   )}
                 </Stack>
@@ -313,28 +321,37 @@ export default function EmployeeRegistrationForm() {
             <br />
 
             <Grid container height={"10vh"} spacing={1}>
-              <Grid item xs={12} sm={6} md={6} lg={6}>
+              <Grid item xs={12} sm={6} md={6} lg={6} height={responsive.isMobile ? "14vh" : "11vh"}>
                 <Stack width={"100%"}>
                   <Typography variant="body2"> DEPARTMENT</Typography>
-                  <InputBase
-                    type="tel"
-                    pattern="[0-9]*"
+                  <Select
+                    size="small"
                     name="Department"
-                    placeholder=" Department"
                     onChange={formik.handleChange}
-                    required
+                    value={formik.values.Department}
                     sx={{
-                      border:
-                        clickedBtnID === "Department"
-                          ? "2px solid blue"
-                          : "2px solid  rgba(204, 204, 204, 0.5)",
+                      "& fieldset": {
+                        borderColor: "rgba(204, 204, 204, 0.5)",
+                        borderWidth: "2px",
+                      },
+                      "&:hover": {
+                        "&& fieldset": {
+                          border: "2px solid rgba(204, 204, 204, 0.5)"
+                        }
+                      },
                       height: "40px",
                       borderRadius: 1,
-                      px:0.5
                     }}
                     onClick={() => handleClick("Department")}
                     onBlur={formik.handleBlur}
-                  />
+                  >
+                    <MenuItem value="Human Resource">Human Resource</MenuItem>
+                    <MenuItem value="Support">Support</MenuItem>
+                    <MenuItem value="Developement">Developement</MenuItem>
+                    <MenuItem value="Finance">Finance</MenuItem>
+
+                  </Select>
+
                   {formik.touched.Department && errors.Department && (
                     <Typography variant="caption" color="error">
                       {errors.Department}
@@ -342,12 +359,11 @@ export default function EmployeeRegistrationForm() {
                   )}
                 </Stack>
               </Grid>
-              <Grid item xs={12} sm={6} md={6} lg={6}>
+
+              <Grid item xs={12} sm={6} md={6} lg={6} height={responsive.isMobile ? "10vh" : "11vh"}>
                 <Stack width={"100%"}>
                   <Typography variant="body2">MANAGER</Typography>
-                  <InputBase
-                    type="tel"
-                    // pattern="[0-9]*"
+                  {/* <InputBase
                     placeholder="Manager"
                     name="manager"
                     onChange={formik.handleChange}
@@ -363,10 +379,39 @@ export default function EmployeeRegistrationForm() {
                     }}
                     onClick={() => handleClick("manager")}
                     onBlur={formik.handleBlur}
-                  />
-                  {formik.touched.manager && errors.manager && (
+                  /> */}
+
+                  <Select
+                  size="small"
+                  name="Manager"
+                  onChange={formik.handleChange}
+                  value={formik.values.Manager}
+                  sx={{
+                    "& fieldset": {
+                      borderColor: "rgba(204, 204, 204, 0.5)",
+                      borderWidth: "2px",
+                    },
+                    "&:hover": {
+                      "&& fieldset": {
+                        border: "2px solid rgba(204, 204, 204, 0.5)"
+                      }
+                    },
+                    height: "40px",
+                    borderRadius: 1,
+                  }}
+                  MenuProps={MenuProps}
+                  >    
+                    <MenuItem value="Pratiksha Nimbalkar">Pratiksha Nimbalkar</MenuItem>
+                    <MenuItem value="Pruthviraj Suryavanshi">Pruthviraj Suryavanshi</MenuItem>
+                    <MenuItem value="Pratik Deshmukh">Pratik Deshmukh</MenuItem>
+                    <MenuItem value="Prarana Divekar">Prarana Divekar</MenuItem>
+                    <MenuItem value="Abhinandan Ambekar">Abhinandan Ambekar</MenuItem>
+                    <MenuItem value="Trupti Jadhav">Trupti Jadhav</MenuItem>
+                  </Select>
+
+                  {formik.touched.Manager && errors.Manager && (
                     <Typography variant="caption" color="error">
-                      {errors.manager}
+                      {errors.Manager}
                     </Typography>
                   )}
                 </Stack>
@@ -377,7 +422,7 @@ export default function EmployeeRegistrationForm() {
             <Button
               type="submit"
               variant="contained"
-              sx={{ textTransform: "none",mt:2}}
+              sx={{ textTransform: "none",mt:responsive.isMobile ? 12 : 2}}
             >
               Onboard Employee
             </Button>

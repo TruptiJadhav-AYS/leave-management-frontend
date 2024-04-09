@@ -52,7 +52,7 @@ export default function LeavePolicy() {
       >
         <DialogTitle id="scroll-dialog-title">Leave Policy</DialogTitle>
         <Divider/>
-        <DialogContent >
+        <DialogContent sx={{scrollbarWidth:"thin"}}>
           <DialogContentText
             id="scroll-dialog-description"
             ref={descriptionElementRef}

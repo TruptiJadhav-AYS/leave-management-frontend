@@ -91,7 +91,7 @@ function AccountMenu({ role }) {
             <Avatar style={{ width: "60px", height: "60px" }} src={Profile}/>
             <Typography fontWeight={"bold"} mt={1} >
               {role === "Admin"
-                ? "Pratiksha Nimbalakar"
+                ? "Pratiksha Nimbalkar"
                 : role === "Manager"
                 ? "Trupti Jadhav"
                 : " Pruthviraj Suryavanshi"}
@@ -193,7 +193,7 @@ export default function Display({ logedInUser, role }) {
             responsive.isTablet ? (
               <Typography variant="h6" noWrap component="div">
                 {role === "Admin"
-                  ? "Pratiksha Nimbalakar"
+                  ? "Pratiksha Nimbalkar"
                   : role === "Manager"
                   ? "Trupti Jadhav"
                   : " Pruthviraj Suryavanshi"}

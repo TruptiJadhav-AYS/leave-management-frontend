@@ -36,7 +36,7 @@ export default function Holidays() {
   let responsive=UseReponsive()
 
   return (
-    <Grid container spacing={2} px={2}>
+    <Grid container spacing={2} pt={2} px={2}>
 
           {annualLeaves.map((holiday, index) => (
           <Grid item key={index} xs={6} sm={6} md={4} lg={3}>
@@ -55,7 +55,7 @@ export default function Holidays() {
           </Grid>
           ))}
         <Box width={"100%"} display={"flex"} justifyContent={"right"}>
-        <IconButton color="primary" sx={{width:"40px",height:"40px",mt:1}}>
+        <IconButton color="primary" sx={{width:"40px",height:"40px",mt:0.5}}>
           <AddCircleIcon sx={{width:"40px",height:"40px"}}/>
         </IconButton>
         </Box>
