@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid,Typography,Paper} from '@mui/material';
+import { Grid,Typography,Paper, Box, IconButton} from '@mui/material';
 import newYear from "../assets/newyear.jpg"
 import republicDay from "../assets/republicday.jpg";
 import holi from "../assets/holi.jpg";
@@ -13,6 +13,8 @@ import dusshera from "../assets/dusshera.jpg";
 import diwali from "../assets/diwali.png";
 import christmas from "../assets/christmas.jpg";
 import UseReponsive from '../hooks/UseResponsive';
+import EditIcon from '@mui/icons-material/Edit';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 const annualLeaves = [
   { date: '01/01/2024', day: 'Monday', occasion: 'New Year', img: newYear },
@@ -33,7 +35,7 @@ export default function Holidays() {
   let responsive=UseReponsive()
 
   return (
-    <Grid container spacing={2} py={2} px={2}>
+    <Grid container spacing={2} px={2}>
 
           {annualLeaves.map((holiday, index) => (
           <Grid item key={index} xs={6} sm={6} md={4} lg={3}>
@@ -51,7 +53,11 @@ export default function Holidays() {
           </Paper>
           </Grid>
           ))}
-
+        <Box width={"100%"} display={"flex"} justifyContent={"right"}>
+        <IconButton color="primary" sx={{width:"40px",height:"40px",mt:1}}>
+          <AddCircleIcon sx={{width:"40px",height:"40px"}}/>
+        </IconButton>
+        </Box>
     </Grid>
   );
 }

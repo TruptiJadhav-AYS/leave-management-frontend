@@ -85,11 +85,11 @@ function LeaveReqForm() {
             direction={"row"}
             columnSpacing={1.5}
             mb={1}
-            py={1.4}
+            height={"13vh"}
             justifyContent={"space-between"}
             pt="5px"
           >
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={6} >
               <Typography fontSize={"13px"}>FROM DATE</Typography>
               <InputBase
                 onChange={formik.handleChange}
@@ -150,7 +150,7 @@ function LeaveReqForm() {
             </Grid>
           </Grid>
 
-          <Grid container pb={2}>
+          <Grid container height={"13vh"} pb={2}>
             <Grid item xs={12} sm={6}>
               <Stack width="100%">
                 <Typography fontSize={"13px"}>LEAVE TYPE</Typography>
@@ -176,7 +176,8 @@ function LeaveReqForm() {
                     },
                   }}
                 >
-                  <MenuItem value="Half day">Half Day</MenuItem>
+                  <MenuItem value="Half day (First half)">Half Day (First half)</MenuItem>
+                  <MenuItem  value="Half day (Second half)">Half Day (Second half)</MenuItem>
                   <MenuItem value="Full day">Full Day</MenuItem>
                   <MenuItem value="Work From Home">Work From Home</MenuItem>
                 </Select>
@@ -201,10 +202,10 @@ function LeaveReqForm() {
                     ? "2px solid blue"
                     : "2px solid  rgba(204, 204, 204, 0.5)",
                 borderRadius: "4px",
-                p: "5px",
+                // p: "5px",
               }}
               multiline
-              rows={5}
+              rows={3}
               placeholder="Reason for leave"
               onClick={() => {
                 handleClick("reason");

@@ -1,12 +1,21 @@
 import * as React from "react";
 import Paper from "@mui/material/Paper";
-import { Box, Button, InputBase } from "@mui/material";
-import {TableBody, TableCell, TableContainer,TableHead, TablePagination, TableRow, Table} from "@mui/material"
+import { Box, Button, Divider, InputBase, Typography } from "@mui/material";
+import {
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow,
+  Table,
+  Stack
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import AddIcon from '@mui/icons-material/Add';
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import SearchIcon from '@mui/icons-material/Search'
+import AddIcon from "@mui/icons-material/Add";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import SearchIcon from "@mui/icons-material/Search";
 import { useState, useMemo } from "react";
 
 const columns = [
@@ -23,8 +32,8 @@ const columns = [
     minWidth: 80,
   },
   {
-    id: "ManagerId",
-    label: "ManagerId",
+    id: "manager",
+    label: "manager",
     minWidth: 80,
     align: "center",
   },
@@ -33,12 +42,11 @@ const columns = [
     label: "DepartmentId",
     minWidth: 80,
     align: "center",
-    // format: (value) => value.toFixed(2),
   },
 ];
 
-// function createData(name, email, gender, role, managerId) {
-//   return { name, email, gender, role, managerId };
+// function createData(name, email, gender, role, manager) {
+//   return { name, email, gender, role, manager };
 // }
 
 const rows = [
@@ -47,7 +55,7 @@ const rows = [
     Email: "pruthvi@gmail.com",
     Role: "Employee",
     Gender: "Male",
-    ManagerId: 1,
+    manager: 1,
     DepartmentId: 1,
   },
   {
@@ -55,7 +63,7 @@ const rows = [
     Email: "pratiksha@gmail.com",
     Role: "Employee",
     Gender: "Female",
-    ManagerId: 1,
+    manager: 1,
     DepartmentId: 1,
   },
   {
@@ -63,7 +71,7 @@ const rows = [
     Email: "trupti@gmail.com",
     Role: "Employee",
     Gender: "Female",
-    ManagerId: 1,
+    manager: 1,
     DepartmentId: 1,
   },
   {
@@ -71,7 +79,7 @@ const rows = [
     Email: "ketan@gmail.com",
     Role: "Manager",
     Gender: "Male",
-    ManagerId: 1,
+    manager: 1,
     DepartmentId: 1,
   },
   {
@@ -79,7 +87,7 @@ const rows = [
     Email: "yogesh@gmail.com",
     Role: "Admin",
     Gender: "Male",
-    ManagerId: 1,
+    manager: 1,
     DepartmentId: 1,
   },
   {
@@ -87,7 +95,7 @@ const rows = [
     Email: "nupur@gmail.com",
     Role: "Employee",
     Gender: "Female",
-    ManagerId: 2,
+    manager: 2,
     DepartmentId: 2,
   },
   {
@@ -95,7 +103,7 @@ const rows = [
     Email: "mehvish@gmail.com",
     Role: "Employee",
     Gender: "Female",
-    ManagerId: 2,
+    manager: 2,
     DepartmentId: 2,
   },
   {
@@ -103,7 +111,7 @@ const rows = [
     Email: "abhi@gmail.com",
     Role: "Employee",
     Gender: "Male",
-    ManagerId: 2,
+    manager: 2,
     DepartmentId: 1,
   },
   {
@@ -111,7 +119,7 @@ const rows = [
     Email: "shruti@gmail.com",
     Role: "Employee",
     Gender: "Female",
-    ManagerId: 2,
+    manager: 2,
     DepartmentId: 3,
   },
   {
@@ -119,7 +127,7 @@ const rows = [
     Email: "prerana@gmail.com",
     Role: "Employee",
     Gender: "Female",
-    ManagerId: 2,
+    manager: 2,
     DepartmentId: 1,
   },
   {
@@ -127,7 +135,7 @@ const rows = [
     Email: "abhi123@gmail.com",
     Role: "Employee",
     Gender: "Male",
-    ManagerId: 2,
+    manager: 2,
     DepartmentId: 3,
   },
   {
@@ -135,7 +143,7 @@ const rows = [
     Email: "shital@gmail.com",
     Role: "Employee",
     Gender: "Female",
-    ManagerId: 2,
+    manager: 2,
     DepartmentId: 3,
   },
   //   createData('India', 'IN', 1324171354, 3287263),
@@ -159,26 +167,28 @@ export default function EmployeeList() {
   const Navigate = useNavigate();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [sortedBy, setSortedBy] = useState(null); 
-  const [sortOrder, setSortOrder] = useState('asc'); 
+  const [sortedBy, setSortedBy] = useState("Name"); // Track sorted column
+  const [sortOrder, setSortOrder] = useState("asc"); // Track sort order
 
   const sortedRows = useMemo(() => {
     return rows.slice().sort((a, b) => {
       const valueA = a[sortedBy];
       const valueB = b[sortedBy];
 
-      if (typeof valueA === 'string') {
-        return sortOrder === 'asc' ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+      if (typeof valueA === "string") {
+        return sortOrder === "asc"
+          ? valueA.localeCompare(valueB)
+          : valueB.localeCompare(valueA);
       } else {
-        return sortOrder === 'asc' ? valueA - valueB : valueB - valueA;
+        return sortOrder === "asc" ? valueA - valueB : valueB - valueA;
       }
     });
-  }, [rows, sortedBy, sortOrder]);
+  }, [sortedBy, sortOrder]);
 
   const handleSortClick = (columnId) => {
-    const isAscending = (sortedBy === columnId && sortOrder === 'asc');
+    const isAscending = sortedBy === columnId && sortOrder === "asc";
     setSortedBy(columnId);
-    setSortOrder(isAscending ? 'desc' : 'asc');
+    setSortOrder(isAscending ? "desc" : "asc");
   };
 
   const handleChangePage = (event, newPage) => {
@@ -191,21 +201,23 @@ export default function EmployeeList() {
   };
 
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden", py: 2, minHeight:"100%" }}>
-      <Box display={"flex"} justifyContent={"space-between"} marginX={2}>
-      <Box
+    <Paper sx={{ width: "100%", overflow: "hidden", pb: 1, minHeight: "100%" }}>
+      <Box display={"flex"} justifyContent={"space-between"} m={1} mx={1}>
+        <Box
           sx={{
             display: "flex",
             justifyContent: "space-between",
-            alignItems: "center",
             width: "50%",
-            border: "1px solid black",
+            border: "2px solid rgba(204, 204, 204, 0.5)",
             borderRadius: "20px",
-            mr: 1,
+            mr: "1",
           }}
         >
-          <InputBase sx={{ ml: 1, flex: 1 }} placeholder="Search for User..." />
-          <SearchIcon sx={{ mr: 2 }} />
+          <InputBase
+            sx={{ width: "90%", pl: 2 }}
+            placeholder="Search for User..."
+          />
+          <SearchIcon sx={{ my: "1%", mr: 1.5 }} />
         </Box>
 
         <Button
@@ -219,8 +231,10 @@ export default function EmployeeList() {
           <AddIcon />
         </Button>
       </Box>
-
-      <TableContainer sx={{ height: "70vh",overflow:"auto" ,scrollbarWidth:"thin"}}>
+      <Divider />
+      <TableContainer
+        sx={{ height: "69vh", overflow: "auto", scrollbarWidth: "thin" }}
+      >
         <Table stickyHeader>
           <TableHead>
             <TableRow>
@@ -228,19 +242,33 @@ export default function EmployeeList() {
                 <TableCell
                   key={column.id}
                   align={column.align}
-                  sx={{ color: "primary.main", minWidth:column.minWidth }}
-                  onClick={() => handleSortClick(column.id)}
+                  sx={{ color: "primary.main", minWidth: column.minWidth }}
                 >
-                  {sortedBy === column.id ? (
-                    sortOrder === 'asc' ? (
-                      <>{column.label} <ArrowUpwardIcon /></>
-                    ) : (
-                      <>{column.label} <ArrowDownwardIcon /></>
-                    )
-                  ) : (
-                    column.label
-                  )}
-
+                  <Stack direction={"row"} alignItems={"center"}>
+                  <Typography fontWeight={550}fontSize={"16px"}>
+                  {column.label}
+                  </Typography>
+                  {column.label === "Name" ? (
+                    <Button
+                      size="small"
+                      onClick={
+                        column.id === "Name"
+                          ? () => handleSortClick(column.id)
+                          : undefined
+                      }
+                    >
+                      {sortOrder === "asc" ? (
+                        <>
+                          <ArrowUpwardIcon />
+                        </>
+                      ) : (
+                        <>
+                          <ArrowDownwardIcon />
+                        </>
+                      )}
+                    </Button>
+                  ) : null}
+                  </Stack>
                 </TableCell>
               ))}
             </TableRow>
