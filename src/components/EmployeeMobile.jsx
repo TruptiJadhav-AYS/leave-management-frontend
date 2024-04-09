@@ -6,6 +6,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
 const contacts = [
   {
+    id:1,
     Profile: require("../assets/gudhipadwa.jpg"),
     Name: "Pruthviraj Suryawanshi",
     Email: "pruthvi@gmail.com",
@@ -14,6 +15,7 @@ const contacts = [
     DepartmentId: 1,
   },
   {
+    id:2,
     Profile: require("../assets/christmas.jpg"),
     Name: "Pratiksha Nimbalkar",
     Email: "pratiksha@gmail.com",
@@ -22,6 +24,7 @@ const contacts = [
     DepartmentId: 1,
   },
   {
+    id:3,
     Profile: require("../assets/diwali.png"),
     Name: "Trupti Jadhav",
     Email: "trupti@gmail.com",
@@ -30,6 +33,7 @@ const contacts = [
     DepartmentId: 1,
   },
   {
+    id:4,
     Profile: require("../assets/profile.jpg"),
     Name: "Ketan Rathod",
     Email: "ketan@gmail.com",
@@ -38,6 +42,7 @@ const contacts = [
     DepartmentId: 1,
   },
   {
+    id:5,
     Profile: require("../assets/republicday.jpg"),
     Name: "Yogesh Patel",
     Email: "yogesh@gmail.com",
@@ -46,6 +51,7 @@ const contacts = [
     DepartmentId: 1,
   },
   {
+    id:6,
     Profile: require("../assets/holi.jpg"),
     Name: "Nupur Tyagi",
     Email: "nupur@gmail.com",
@@ -54,6 +60,7 @@ const contacts = [
     DepartmentId: 2,
   },
   {
+    id:7,
     Profile: require("../assets/newyear.jpg"),
     Name: "Mehvish Shaikh",
     Email: "mehvish@gmail.com",
@@ -62,6 +69,7 @@ const contacts = [
     DepartmentId: 2,
   },
   {
+    id:8,
     Profile: require("../assets/ganeshchaturthi.jpg"),
     Name: "Abhinandan Ambekar",
     Email: "abhi@gmail.com",
@@ -70,6 +78,7 @@ const contacts = [
     DepartmentId: 1,
   },
   {
+    id:9,
     Profile: require("../assets/laborday.jpg"),
     Name: "Shruti Bagde",
     Email: "shruti@gmail.com",
@@ -78,6 +87,7 @@ const contacts = [
     DepartmentId: 3,
   },
   {
+    id:10,
     Profile: require("../assets/gandhijayanti.jpg"),
     Name: "Prerana Divekar",
     Email: "prerana@gmail.com",
@@ -93,6 +103,7 @@ export default function ContactsList() {
     for (let i = 0; i < contacts.length; i++) {
       if (contacts[i].Name === Name) {
         console.log(contacts[i]);
+        return  Navigate(`/Employee/Employees/ContactDetails/${contacts[i].id}`);
       }
     }
   }
@@ -135,7 +146,7 @@ export default function ContactsList() {
 
         <Grid item sx={{ width: "100%",height: 'calc(100vh - 14%)', overflowY: 'auto', mx:1 }}>
           {contacts.map((contact) => (
-            <Card sx={{ mb: 1,  borderRadius:2}} elevation={3} key={contact.Email}>
+            <Card sx={{ mb: 1,  borderRadius:2}} elevation={3} key={contact.id}>
               <Button onClick={() => handleClick(contact.Name)} fullWidth>
                 <ListItem alignItems="flex-start">
                   <Grid container spacing={2}>
