@@ -32,6 +32,7 @@ const annualLeaves = [
 ];
 
 export default function Holidays() {
+
   let responsive=UseReponsive()
 
   return (

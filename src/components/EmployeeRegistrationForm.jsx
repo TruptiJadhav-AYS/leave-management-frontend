@@ -98,7 +98,7 @@ export default function EmployeeRegistrationForm() {
 
   const errors = formik.errors;
 
-  // console.log(formik.values);
+  console.log(formik.values);
 
   return (
     <Grid container justifyContent={"center"} width="100%" pt={3}>

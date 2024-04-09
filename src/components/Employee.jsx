@@ -146,6 +146,7 @@ const rows = [
     manager: 2,
     DepartmentId: 3,
   },
+
   //   createData('India', 'IN', 1324171354, 3287263),
   //   createData('China', 'CN', 1403500365, 9596961),
   //   createData('Italy', 'IT', 60483973, 301340),
@@ -171,6 +172,7 @@ export default function EmployeeList() {
   const [sortOrder, setSortOrder] = useState("asc"); // Track sort order
 
   const sortedRows = useMemo(() => {
+    // Sort rows based on sortedBy and sortOrder
     return rows.slice().sort((a, b) => {
       const valueA = a[sortedBy];
       const valueB = b[sortedBy];
