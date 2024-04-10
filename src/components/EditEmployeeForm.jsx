@@ -44,10 +44,12 @@ export default function EditEmployeeForm() {
   }
 
   function handleSubmit(){
-    setTimeout(()=>{
-      navigate("/Employee/Employees");
-    },1000)
-  }
+    setOnBoardSuccess(true)
+    setTimeout(() => {
+      navigate("/Employee/Projects")
+    }, 1000);
+    
+}
 
 
   return (
@@ -60,7 +62,7 @@ export default function EditEmployeeForm() {
         elevation={1}
       >
         <CardContent>
-          <form onSubmit={handleSubmit}>
+          <form>
             <Typography color={"primary"} variant="h5" mb={2}>
               Edit Employee Details
             </Typography>
@@ -245,14 +247,15 @@ export default function EditEmployeeForm() {
 
             <Box>
               <Button
-                type="submit"
+                // type="submit"
                 variant="contained"
                 sx={{ textTransform: "none",mt:2}}
+                onClick={handleSubmit}
               >
                 Submit
               </Button>
               <Button
-                type="submit"
+                // type="submit"
                 variant="contained"
                 sx={{ textTransform: "none",mt:2,ml:1}}
                 onClick={onAddInventoryClick}

@@ -150,7 +150,7 @@ export default function ProjectOnboardForm() {
                   sm={6}
                   height={responsive.isMobile ? "17vh" : "11vh"}
                 >
-                  <Typography fontSize={"13px"}>START DATE</Typography>
+                  <Typography variant="body2">Start Date</Typography>
                   <InputBase
                     onChange={formik.handleChange}
                     value={formik.values.fromDate}
@@ -184,7 +184,7 @@ export default function ProjectOnboardForm() {
                   sm={6}
                   height={responsive.isMobile ? "17vh" : "15vh"}
                 >
-                  <Typography fontSize={"13px"}>END DATE</Typography>
+                  <Typography variant="body2">End Date</Typography>
                   <InputBase
                     value={formik.values.toDate}
                     onChange={formik.handleChange}
@@ -258,6 +258,18 @@ export default function ProjectOnboardForm() {
               </Grid>
 
               <br />
+              <Button
+                variant="outlined"
+                onClick={() => {
+                  // Handle adding inventory
+                }}
+                sx={{
+                  mr: 2,
+                  mt: responsive.isMobile ? 12 : 2,
+                }}
+              >
+                Add Employee
+              </Button>
               <Button
                 type="submit"
                 variant="contained"

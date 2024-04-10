@@ -316,7 +316,7 @@ export default function EmployeeList() {
                             sx: {
                               overflow: "visible",
                               filter:
-                                "drop-shadow(0px 1px 4px rgba(0,0,0,0.2))",
+                                "drop-shadow(0px 0px 1px rgba(0,0,0,0.2))",
                               mt: 1.5,
                               "& .MuiAvatar-root": {
                                 width: 32,
