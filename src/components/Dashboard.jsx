@@ -14,9 +14,9 @@ export default function Dashboard({ role }) {
   const responsive = UseReponsive();
 
   return (
-    <Grid container width="100%" px={1}>
-      <Grid width="100%" height={"100%"}>
-        <Grid xs={12} width="100%" >
+    <Grid container width="100%" px={1} height="89.5vh">
+      <Grid container width="100%" >
+        <Grid item xs={12}  >
           {responsive.isMobile ? (
             <LeaveBalanceMobile />
           ) : (
@@ -28,7 +28,7 @@ export default function Dashboard({ role }) {
           <UpcomingHolidaysMobile/>
         )}
 
-        <Grid container sx={{ my: 1 }} columnSpacing={1}>
+        <Grid container columnSpacing={1}>
           {(role === "Admin" || role === "Manager") && (responsive.isDesktop||responsive.isLaptop||responsive.isTablet) ? (
             <Grid item sm={9} md={9} lg={9}>
               <PendingReq />
@@ -66,7 +66,7 @@ export default function Dashboard({ role }) {
               textAlign="left"
             >
               <ApproverCard />
-              <Grid mt={1}>
+              <Grid container>
                 <LeavePolicy />
               </Grid>
             </Grid>

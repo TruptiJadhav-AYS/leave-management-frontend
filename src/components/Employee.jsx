@@ -214,8 +214,8 @@ export default function EmployeeList() {
   };
 
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden", pb: 1, minHeight: "100%" }}>
-      <Box display={"flex"} justifyContent={"space-between"} m={1} mx={1}>
+    <Paper sx={{ width: "100%", overflow: "hidden",  minHeight: "100%", height:"100%" }}>
+      <Box display={"flex"} justifyContent={"space-between"}  mx={1}>
         <Box
           sx={{
             display: "flex",
@@ -246,7 +246,7 @@ export default function EmployeeList() {
       </Box>
       <Divider />
       <TableContainer
-        sx={{ height: "69vh", overflow: "auto", scrollbarWidth: "thin" }}
+        sx={{ height: "64vh", overflow: "auto", scrollbarWidth: "thin" }}
       >
         <Table stickyHeader>
           <TableHead>

@@ -165,6 +165,7 @@ export default function Display({ logedInUser, role }) {
       <AppBar
         position="fixed"
         sx={{
+          // height: {sm:"9vh"},
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
           backgroundColor: "primary",
@@ -242,8 +243,9 @@ export default function Display({ logedInUser, role }) {
         </Drawer>
       </Box>
       <Grid container direction={"row"}>
-        <Toolbar />
-        <Box bgcolor={"#f5f5f5"} sx={{ width: "100%", height: "89.7vh" }}>
+        {/* <Toolbar sx={{height:0}}/> */}
+        <Box bgcolor={"#f5f5f5"} sx={{ width: "100%"}}>
+          <Box sx={{height:66,backgroundColor:'red'}}>lsdkjf;vdjflkjdc</Box>
           <CenterDisplay role={role} />
         </Box>
       </Grid>
