@@ -12,7 +12,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 const contacts = [
   {
     id: 1,
-    Profile: require("../assets/gudhipadwa.jpg"),
+    Profile: require("../assets/profile1.webp"),
     Name: "Pruthvi Suryawanshi",
     Email: "pruthvi@gmail.com",
     Gender: "Male",
@@ -21,7 +21,7 @@ const contacts = [
   },
   {
     id: 2,
-    Profile: require("../assets/christmas.jpg"),
+    Profile: require("../assets/profile.webp"),
     Name: "Pratiksha Nimbalkar",
     Email: "pratiksha@gmail.com",
     Gender: "Female",
@@ -30,7 +30,7 @@ const contacts = [
   },
   {
     id: 3,
-    Profile: require("../assets/diwali.png"),
+    Profile: require("../assets/profile4.jpeg"),
     Name: "Trupti Jadhav",
     Email: "trupti@gmail.com",
     Gender: "Female",
@@ -39,8 +39,8 @@ const contacts = [
   },
   {
     id: 4,
-    Profile: require("../assets/profile.jpg"),
-    Name: "Ketan Rathod",
+    Profile: require("../assets/profile3.jpeg"),
+    Name: "Sakshi Rathod",
     Email: "ketan@gmail.com",
     Gender: "Male",
     manager: 1,
@@ -48,8 +48,8 @@ const contacts = [
   },
   {
     id: 5,
-    Profile: require("../assets/republicday.jpg"),
-    Name: "Yogesh Patel",
+    Profile: require("../assets/profile6.webp"),
+    Name: "Abhishek Patil",
     Email: "yogesh@gmail.com",
     Gender: "Male",
     manager: 1,
@@ -57,8 +57,8 @@ const contacts = [
   },
   {
     id: 6,
-    Profile: require("../assets/holi.jpg"),
-    Name: "Nupur Tyagi",
+    Profile: require("../assets/profile5.jpg"),
+    Name: "Sanjay Tyagi",
     Email: "nupur@gmail.com",
     Gender: "Female",
     manager: 2,
@@ -66,7 +66,7 @@ const contacts = [
   },
   {
     id: 7,
-    Profile: require("../assets/newyear.jpg"),
+    Profile: require("../assets/profile7.webp"),
     Name: "Mehvish Shaikh",
     Email: "mehvish@gmail.com",
     Gender: "Female",
@@ -75,7 +75,7 @@ const contacts = [
   },
   {
     id: 8,
-    Profile: require("../assets/ganeshchaturthi.jpg"),
+    Profile: require("../assets/profile6.webp"),
     Name: "Abhinandan Ambekar",
     Email: "abhi@gmail.com",
     Gender: "Male",
@@ -84,7 +84,7 @@ const contacts = [
   },
   {
     id: 9,
-    Profile: require("../assets/laborday.jpg"),
+    Profile: require("../assets/profile2.webp"),
     Name: "Shruti Bagde",
     Email: "shruti@gmail.com",
     Gender: "Female",
@@ -93,8 +93,8 @@ const contacts = [
   },
   {
     id: 10,
-    Profile: require("../assets/gandhijayanti.jpg"),
-    Name: "Prerana Divekar",
+    Profile: require("../assets/profile8.jpg"),
+    Name: "Pratk Divekar",
     Email: "prerana@gmail.com",
     Gender: "Female",
     manager: 2,

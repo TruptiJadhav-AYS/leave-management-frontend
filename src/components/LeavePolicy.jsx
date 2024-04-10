@@ -41,8 +41,8 @@ export default function LeavePolicy() {
             <Divider/>
 
             <Box p={1.6}>
-            <Typography  bgcolor={"#f5f5f5"} p={"1.5%"} mb={1} borderRadius={"5px"} onClick={handleClickOpen('paper')}>What about leave policy ?</Typography>
-            <Typography  bgcolor={"#f5f5f5"} p={"1.5%"} borderRadius={"5px"}>About</Typography>
+            <Typography  bgcolor={"#f5f5f5"} p={"1.5%"} mb={1} borderRadius={"5px"} onClick={handleClickOpen('paper')} sx={{cursor:"pointer"}}>What about leave policy ?</Typography>
+            <Typography  bgcolor={"#f5f5f5"} p={"1.5%"} borderRadius={"5px"} sx={{cursor:"pointer"}}>About</Typography>
             </Box>
 
         </Card> 
@@ -52,7 +52,7 @@ export default function LeavePolicy() {
       >
         <DialogTitle id="scroll-dialog-title">Leave Policy</DialogTitle>
         <Divider/>
-        <DialogContent >
+        <DialogContent sx={{scrollbarWidth:"thin"}}>
           <DialogContentText
             id="scroll-dialog-description"
             ref={descriptionElementRef}
@@ -60,20 +60,20 @@ export default function LeavePolicy() {
           >
             <Typography textAlign={"justify"}>
               1. Annual Leave:
-                Full-time employees: [X] days of paid annual leave per calendar year.
+                Full-time employees: 1- days of paid annual leave per calendar year.
                 Part-time employees: Entitlement prorated based on contracted hours.
                 Request and approval: Through company's leave management system.
-                Carryover: Unused annual leave up to [Y] days allowed; excess forfeited.
+                Carryover: Unused annual leave up to 10 days allowed; excess forfeited.
                 <br/>
               2. Sick Leave:
-                Full-time employees: [Z] days of paid sick leave per calendar year.
+                Full-time employees: 10 days of paid sick leave per calendar year.
                 Usage: For personal illness, injury, medical appointments, or caring for ill family members.
                 Part-time employees: Entitlement prorated based on contracted hours.
                 Notification: Employees must inform supervisor or HR department promptly.
-                Certification: Doctor's certificate may be required for sick leave exceeding [X] consecutive days.
+                Certification: Doctor's certificate may be required for sick leave exceeding 10 consecutive days.
                 <br/>
               3. Bereavement Leave: 
-                Entitlement: [X] days of paid bereavement leave for the death of an immediate family member.
+                Entitlement: 5 days of paid bereavement leave for the death of an immediate family member.
                 Additional leave: Unpaid leave may be granted for other relatives or close relationships, at management's discretion.
               <br/>  
               4. Public Holidays:

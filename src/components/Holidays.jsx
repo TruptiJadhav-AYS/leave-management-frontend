@@ -34,9 +34,15 @@ const annualLeaves = [
 export default function Holidays() {
 
   let responsive=UseReponsive()
+  const formatDate = (dateString) => {
+    const [day, month, year] = dateString.split('/');
+    const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  
+    return `${day} ${monthNames[parseInt(month, 10) - 1]} ${year}`;
+  };
 
   return (
-    <Grid container spacing={2} px={2}>
+    <Grid container spacing={2} pt={2} px={2}>
 
           {annualLeaves.map((holiday, index) => (
           <Grid item key={index} xs={6} sm={6} md={4} lg={3}>
@@ -49,13 +55,13 @@ export default function Holidays() {
               width={"50px"}
               heigh={"50px"}
               />
-              <Typography>{holiday.date}</Typography>
+              <Typography>{formatDate(holiday.date)}</Typography>
               <Typography sx={{ mb: 1 }}>{holiday.day}</Typography>
           </Paper>
           </Grid>
           ))}
         <Box width={"100%"} display={"flex"} justifyContent={"right"}>
-        <IconButton color="primary" sx={{width:"40px",height:"40px",mt:1}}>
+        <IconButton color="primary" sx={{width:"40px",height:"40px",mt:0.5}}>
           <AddCircleIcon sx={{width:"40px",height:"40px"}}/>
         </IconButton>
         </Box>
