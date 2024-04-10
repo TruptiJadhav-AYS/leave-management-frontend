@@ -85,79 +85,6 @@ const contacts = [
     Status: "Active",
     // Assign: 1,
   },
-  {
-    Name: "Pruthviraj Suryawanshi",
-    Project_Manager: "Pruthvi",
-    Start_date: "20-04-2024",
-    End_date: "20-07-2024",
-    Status: "Active",
-    // Assign: 1,
-  },
-  {
-    Name: "Pruthviraj Suryawanshi",
-    Project_Manager: "Pruthvi",
-    Start_date: "20-04-2024",
-    End_date: "20-07-2024",
-    Status: "Active",
-    // Assign: 1,
-  },
-  {
-    Name: "Pruthviraj Suryawanshi",
-    Project_Manager: "Pruthvi",
-    Start_date: "20-04-2024",
-    End_date: "20-07-2024",
-    Status: "Active",
-    // Assign: 1,
-  },
-  {
-    Name: "Pruthviraj Suryawanshi",
-    Project_Manager: "Pruthvi",
-    Start_date: "20-04-2024",
-    End_date: "20-07-2024",
-    Status: "Active",
-    // Assign: 1,
-  },
-  {
-    Name: "Pruthviraj Suryawanshi",
-    Project_Manager: "Pruthvi",
-    Start_date: "20-04-2024",
-    End_date: "20-07-2024",
-    Status: "Active",
-    // Assign: 1,
-  },
-  {
-    Name: "Pruthviraj Suryawanshi",
-    Project_Manager: "Pruthvi",
-    Start_date: "20-04-2024",
-    End_date: "20-07-2024",
-    Status: "Active",
-    // Assign: 1,
-  },
-  {
-    Name: "Pruthviraj Suryawanshi",
-    Project_Manager: "Pruthvi",
-    Start_date: "20-04-2024",
-    End_date: "20-07-2024",
-    Status: "Active",
-    // Assign: 1,
-  },
-  {
-    Name: "Pruthviraj Suryawanshi",
-    Project_Manager: "Pruthvi",
-    Start_date: "20-04-2024",
-    End_date: "20-07-2024",
-    Status: "Active",
-    // Assign: 1,
-  },
-  {
-    Name: "Pruthviraj Suryawanshi",
-    Project_Manager: "Pruthvi",
-    Start_date: "20-04-2024",
-    End_date: "20-07-2024",
-    Status: "Active",
-    // Assign: 1,
-  },
-  // Add more rows as needed...
 ];
 
 export default function ProjectMbList() {
@@ -299,7 +226,7 @@ export default function ProjectMbList() {
                             mx: 2,
                           }}
                         >
-                          <Typography variant="body1" fontWeight={"bold"}>
+                          <Typography variant="body1" fontWeight={"bold"} mr={1}>
                             Start_date :{" "}
                           </Typography>
                           {contact.Start_date}
@@ -314,7 +241,7 @@ export default function ProjectMbList() {
                             mx: 2,
                           }}
                         >
-                          <Typography variant="body1" fontWeight={"bold"}>
+                          <Typography variant="body1" fontWeight={"bold"} mr={1}>
                             End_date :{" "}
                           </Typography>
                           {contact.End_date}
@@ -330,7 +257,7 @@ export default function ProjectMbList() {
                             mx: 2,
                           }}
                         >
-                          <Typography variant="body1" fontWeight={"bold"}>
+                          <Typography variant="body1" fontWeight={"bold"} mr={1}>
                             Status :{" "}
                           </Typography>
                           {contact.Status}
