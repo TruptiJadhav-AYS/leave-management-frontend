@@ -7,7 +7,7 @@ import {
   Typography,
   MenuItem,
   Select,
-  Alert,
+  Alert
 } from "@mui/material";
 import Card from "@mui/material/Card";
 import { useState } from "react";
@@ -56,7 +56,7 @@ export default function EmployeeRegistrationForm() {
     },
 
     validationSchema: Yup.object({
-      Name: Yup.string().required("Name is mandatory."),
+      Name: Yup.string().required("Name is Mandatory."),
 
       // Role: Yup.string().required("Role is required."),
 

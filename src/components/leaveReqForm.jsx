@@ -28,17 +28,11 @@ function LeaveReqForm() {
 
   const yup = require("yup");
 
-  const today = new Date();
-  const minDate = new Date(
-    today.getFullYear(),
-    today.getMonth(),
-    today.getDate() - 1
-  );
+  // const today = new Date();
 
   const leaveReqObj = yup.object({
     fromDate: yup
       .date()
-      .min(minDate, "Please Select a valid date")
       .required("Please select a date"),
     toDate: yup
       .date()
@@ -84,12 +78,11 @@ function LeaveReqForm() {
             container
             direction={"row"}
             columnSpacing={1.5}
-            mb={1}
-            height={"13vh"}
+            // mb={1}
             justifyContent={"space-between"}
             pt="5px"
           >
-            <Grid item xs={12} sm={6} >
+            <Grid item xs={12} sm={6} height={responsive.isMobile ? "15vh" : "15vh"}>
               <Typography fontSize={"13px"}>FROM DATE</Typography>
               <InputBase
                 onChange={formik.handleChange}
@@ -112,16 +105,15 @@ function LeaveReqForm() {
                 }}
               />
               {formik.touched.fromDate && Error.fromDate && (
-                <Typography variant="caption" color="error">
+                <Typography fontSize={"12px"} color="error">
                   {Error.fromDate}
                 </Typography>
               )}
             </Grid>
 
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={6} height={responsive.isMobile ? "15vh" : "15vh"}> 
               <Typography fontSize={"13px"}>TO DATE</Typography>
               <InputBase
-                min={minDate}
                 value={formik.values.toDate}
                 onChange={formik.handleChange}
                 type="date"
@@ -150,8 +142,8 @@ function LeaveReqForm() {
             </Grid>
           </Grid>
 
-          <Grid container height={"13vh"} pb={2}>
-            <Grid item xs={12} sm={6}>
+          <Grid container pb={2}>
+            <Grid item xs={12} sm={6} height={responsive.isMobile ? "11vh" : "11vh"}>
               <Stack width="100%">
                 <Typography fontSize={"13px"}>LEAVE TYPE</Typography>
                 <Select

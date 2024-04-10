@@ -142,7 +142,7 @@ export default function EditEmployeeForm() {
               </Grid>
               <Grid item xs={12} sm={6} md={6} lg={6}  height={responsive.isMobile ? "7vh" : "8vh"}>
                 <Stack width={"100%"}>
-                  <Typography variant="body2"> Contact NO</Typography>
+                  <Typography variant="body2"> Contact No</Typography>
                   <InputBase
                     type="tel"
                     pattern="[0-9]*"
@@ -185,7 +185,10 @@ export default function EditEmployeeForm() {
                       },
                       "&:hover": {
                         "&& fieldset": {
-                          border: "2px solid rgba(204, 204, 204, 0.5)"
+                          border: clickedBtnID === "Department"
+                          ? "2px solid blue"
+                          : "2px solid  rgba(204, 204, 204, 0.5)",
+                      height: "40px",
                         }
                       },
                       height: "40px",
@@ -225,7 +228,9 @@ export default function EditEmployeeForm() {
                     },
                     "&:hover": {
                       "&& fieldset": {
-                        border: "2px solid rgba(204, 204, 204, 0.5)"
+                        border: clickedBtnID === "Manager"
+                        ? "2px solid blue"
+                        : "2px solid  rgba(204, 204, 204, 0.5)",
                       }
                     },
                     height: "40px",
@@ -245,7 +250,7 @@ export default function EditEmployeeForm() {
             </Grid>
             <br />
 
-            <Box>
+            <Box pt={responsive.isMobile? 9:0}>
               <Button
                 // type="submit"
                 variant="contained"

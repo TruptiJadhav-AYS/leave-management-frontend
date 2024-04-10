@@ -1,9 +1,9 @@
 import { Grid, Card, CardContent, Typography } from "@mui/material";
 import { Gauge, gaugeClasses } from "@mui/x-charts";
 
-export function LeaveBalance() {
+export function LeaveBalanceDeskTop() {
   return (
-    <Grid container spacing={1}  pt={3}>
+    <Grid container spacing={1} pt={1}>
       <Grid item xs={4} sm={4} md={4} lg={4}>
         <Card
           sx={{
