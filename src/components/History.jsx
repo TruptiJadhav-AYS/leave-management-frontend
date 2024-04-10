@@ -9,7 +9,7 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 
 const columns = [
-  { id: "Start_Date", label: "Start Date", minWidth: 80, ml:"500px"},
+  { id: "Start_Date", label: "Start Date", minWidth: 90, ml:"500px"},
   { id: "End_Date", label: "End Date", minWidth: 80 },
   {
     id: "leave_type",
@@ -157,6 +157,15 @@ export default function History() {
     setPage(0);
   };
 
+  const formatDate = (dateString) => {
+    const [day, month, year] = dateString.split('/');
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+  
+    return `${day} ${monthNames[parseInt(month, 10) - 1]} ${year}`;
+  };
+  
   return (
     <Paper sx={{ width: "100%", overflow: "hidden",pt:1}}>
       <TableContainer sx={{ height: "80vh" ,scrollbarWidth:"thin"}}>
@@ -181,8 +190,9 @@ export default function History() {
               .map((row) => {
                 return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.Email}>
+
                     {columns.map((column) => {
-                      const value = row[column.id];
+                      const value = column.id === 'Start_Date' || column.id === 'End_Date' ? row[column.id]!=="" ? formatDate(row[column.id]) : "-" :row[column.id];
                       return (
                         <TableCell key={column.id} align={column.align} sx={{color: 
                           column.id === "status" && value === "Pending" ? "#FFA500" : 
