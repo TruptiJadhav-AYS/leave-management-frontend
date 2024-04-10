@@ -1,4 +1,5 @@
-import { CardContent, Typography, Grid, Card } from "@mui/material";
+import { Padding } from "@mui/icons-material";
+import { Box, Typography, Grid, Card, Stack } from "@mui/material";
 
 const History = [
   {
@@ -118,18 +119,47 @@ export default function HistoryMobile() {
   return (
     <Grid m={1} mt={2}>
       {History.map((history, index) => (
-        <Card key={index} sx={{ my: 0.5 }}>
-          <Typography>
-            {history.Start_Date} to {history.End_Date}
-          </Typography>
-          <Typography>{history.leave_type}</Typography>
-          {history.status === "Pending" ? (
-            <Typography color={"orange"} fontWeight={"bold"}>{history.status}</Typography>
-          ) : history.status === "Accepted" ? (
-            <Typography color={"green"} fontWeight={"bold"}>{history.status}</Typography>
-          ) : (
-            <Typography color={"red"} fontWeight={"bold"}>{history.status} </Typography>
-          )}
+        <Card
+          key={index}
+          sx={{
+            my: 0.5,
+            py: 1.5,
+            px:1,
+            borderRadius: "15px",
+            borderLeft:history.status==="Rejected" ? "8px solid #B22222" : history.status==="Pending" ? "8px solid #FFA500" : "8px solid #4caf50",
+          }}
+        >
+          <Stack
+            direction={"row"}
+            justifyContent={"space-between"}
+            alignItems={"center"}
+          >
+            <Stack>
+              <Typography sx={{ fontWeight: "bold" }}>
+                {history.leave_type}
+              </Typography>
+              <Typography variant="body2">{history.Start_Date}</Typography>
+              <Typography variant="body2">{history.End_Date}</Typography>
+            </Stack>
+            <Stack>
+              <Box
+                width="80px"
+                px={0.2}
+                py={0.2}
+                borderRadius={"6px"}
+                color="white"
+                bgcolor={
+                  history.status === "Accepted"
+                    ? "#4caf50"
+                    : history.status === "Pending"
+                    ? "#FFA500"
+                    : "#B22222"
+                }
+              >
+                  <Typography variant="body2">{history.status}</Typography>
+              </Box>
+            </Stack>
+          </Stack>
         </Card>
       ))}
     </Grid>
