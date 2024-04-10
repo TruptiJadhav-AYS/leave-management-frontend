@@ -173,9 +173,12 @@ export default function EmployeeList() {
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
+    // console.log(event.currentTarget)
   };
 
   const handleClose = () => {
+    // console.log(anchorEl)
+
     setAnchorEl(null);
   };
 
@@ -289,10 +292,12 @@ export default function EmployeeList() {
             {sortedRows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
+                // console.log(row)
                 return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.Email}>
                     {columns.map((column) => {
                       const value = row[column.id];
+                      // console.log(column)
                       return (
                         <TableCell key={column.id} align={column.align}>
                           {value}

@@ -111,6 +111,9 @@ export default function EmployeeRegistrationForm() {
   const errors = formik.errors;
 
   console.log(formik.values);
+  function onAddInventoryClick(){
+    navigate("/Employee/Employees/NewRegistration/Inventory")
+  }
 
   return (
     <Grid container justifyContent={"center"} width="100%" pt={3}>
@@ -478,9 +481,9 @@ export default function EmployeeRegistrationForm() {
               <br />
               <Button
                 variant="outlined"
-                onClick={() => {
-                  // Handle adding inventory
-                }}
+                onClick={
+                  onAddInventoryClick
+                }
                 sx={{
                   mr: 2,
                   mt: responsive.isMobile ? 12 : 2,

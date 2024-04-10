@@ -21,6 +21,7 @@ export default function ProjectOnboardForm() {
   const responsive = UseReponsive();
   const [clickedBtnID, setClickedBtnID] = useState("");
   const [onBoardSuccess, setOnBoardSuccess] = useState(false);
+  const [fieldStatus, setFieldStatus]= useState(false)
 
   function handleClick(id) {
     setClickedBtnID(id);
@@ -35,6 +36,7 @@ export default function ProjectOnboardForm() {
       fromDate: "",
       toDate: "",
       status: "",
+      Employeename:""
     },
     validationSchema: Yup.object({
       projectName: Yup.string().required("Project Name is required."),
@@ -42,6 +44,7 @@ export default function ProjectOnboardForm() {
       fromDate: Yup.date().required("Please select a date"),
       toDate: Yup.date().required("Please select a date"),
       status: Yup.string().required("Project status is required."),
+      // Employeename:Yup.string().required("Empl Name is required."),
     }),
     onSubmit: (values) => {
       console.log(values);
@@ -51,6 +54,11 @@ export default function ProjectOnboardForm() {
       }, 1000);
     },
   });
+
+
+  function addEmployeeClick(){
+    setFieldStatus(true)
+  }
 
   const errors = formik.errors;
 
@@ -217,9 +225,9 @@ export default function ProjectOnboardForm() {
                 <Grid
                   item
                   xs={12}
-                  sm={6}
-                  md={6}
-                  lg={6}
+                  sm={2}
+                  md={2}
+                  lg={2}
                   height={responsive.isMobile ? "11vh" : "11vh"}
                 >
                   <Stack width={"100%"}>
@@ -256,13 +264,47 @@ export default function ProjectOnboardForm() {
                   </Stack>
                 </Grid>
               </Grid>
-
+              {(fieldStatus && <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  md={6}
+                  lg={6}
+                  height={responsive.isMobile ? "11vh" : "11vh"}
+                >
+                  <Stack width={"100%"}>
+                    <Typography variant="body2"> Employee name </Typography>
+                    <InputBase
+                      placeholder="Employee name"
+                      type="text"
+                      name="Employeename"
+                      sx={{
+                        border:
+                          clickedBtnID === "Employeename"
+                            ? "2px solid blue"
+                            : "2px solid rgba(204, 204, 204, 0.5)",
+                        height: "40px",
+                        borderRadius: 1,
+                      }}
+                      onClick={() => handleClick("Employeename")}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.Employeename}
+                    />
+                    {formik.touched.Employeename && errors.Employeename && (
+                      <Typography variant="caption" color="error">
+                        {errors.Employeename}
+                      </Typography>
+                    )}
+                  </Stack>
+                </Grid>
+              )}
               <br />
               <Button
                 variant="outlined"
-                onClick={() => {
-                  // Handle adding inventory
-                }}
+                onClick={
+                  addEmployeeClick
+                }
                 sx={{
                   mr: 2,
                   mt: responsive.isMobile ? 12 : 2,
