@@ -71,6 +71,14 @@ const handleReject = (name) => {
   console.log("Rejected", name);
 };
 export default function PendingReq() {
+
+  const formatDate = (dateString) => {
+    const [day, month, year] = dateString.split('-');
+    const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  
+    return `${day} ${monthNames[parseInt(month, 10) - 1]} ${year}`;
+  };
+  
   return (
     <Card sx={{ height: "100%", overflow: "auto" }}>
       <CardContent sx={{ position: "sticky", top: 0, zIndex: 1 }}>
@@ -113,8 +121,8 @@ export default function PendingReq() {
                 <TableCell component="th" scope="row">
                   {row.name}
                 </TableCell>
-                <TableCell align="right">{row.fromDate}</TableCell>
-                <TableCell align="right">{row.toDate}</TableCell>
+                <TableCell align="right">{formatDate(row.fromDate)}</TableCell>
+                <TableCell align="right">{formatDate(row.toDate)}</TableCell>
                 <TableCell align="right">{row.leaveType}</TableCell>
                 <TableCell align="right">{row.reason}</TableCell>
                 <TableCell align="right">

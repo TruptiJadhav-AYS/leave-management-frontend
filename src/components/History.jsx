@@ -88,7 +88,7 @@ const rows = [
   },
   {
     Start_Date: "10/11/2023",
-    End_Date: "-",
+    End_Date: "",
     leave_type:"Half Day",
     reason:"Personal errands",
     status: "Accepted",
@@ -109,7 +109,7 @@ const rows = [
   },
   {
     Start_Date: "20/10/2023",
-    End_Date: "-",
+    End_Date: "",
     leave_type:"Half Day",
     reason:"Doctor's appointment",
     status: "Accepted",
@@ -130,7 +130,7 @@ const rows = [
   },
   {
     Start_Date: "05/10/2023",
-    End_Date: "-",
+    End_Date: "",
     leave_type:"Half Day",
     reason:"Parent-teacher meeting",
     status: "Rejected",

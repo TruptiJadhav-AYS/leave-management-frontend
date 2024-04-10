@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Grid,
   Card,
@@ -48,6 +48,16 @@ export default function UpcomingHolidaysMobile() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const currentHoliday = Holidays[currentIndex];
 
+ const formatDate = (dateString) => {
+  const [day, month, year] = dateString.split('/');
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  ];
+
+  return `${day} ${monthNames[parseInt(month, 10) - 1]} ${year}`;
+};
+
+
   const handleNext = () => {
     setCurrentIndex((prevIndex) =>
       prevIndex === Holidays.length - 1 ? 0 : prevIndex + 1
@@ -62,32 +72,31 @@ export default function UpcomingHolidaysMobile() {
 
   return (
     <>
-    {/* <Typography textAlign={"left"} mx={0.5} fontWeight={"bold"}>Upcoming Holidays</Typography> */}
-    <Grid item width="100%" display={"flex"} flexDirection={"row"} mt={1}>
-      <Card sx={{ width: "100%", py: 1.5, borderRadius: "10px" }}>
-        <Stack direction={"row"} justifyContent="space-around">
-          <IconButton disableRipple size="small" onClick={handlePrevious}>
-            <NavigateBeforeIcon />
-          </IconButton>
-          <Stack direction="row" alignItems={"center"} justifyContent={"center"} sx={{width:"80%"}}>
-            <Avatar
-              alt={currentHoliday.occasion}
-              src={currentHoliday.img}
-              sx={{ mx: "10px" }}
-            />
-            <Stack direction="column" spacing={0.5}>
-              <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                {currentHoliday.occasion}
-              </Typography>
-              <Typography variant="body1">{currentHoliday.date}</Typography>
+      <Grid item width="100%" display={"flex"} flexDirection={"row"} mt={1}>
+        <Card sx={{ width: "100%", py: 1.5, borderRadius: "10px" }}>
+          <Stack direction={"row"} justifyContent="space-around">
+            <IconButton disableRipple size="small" onClick={handlePrevious}>
+              <NavigateBeforeIcon />
+            </IconButton>
+            <Stack direction="row" alignItems={"center"} justifyContent={"center"} sx={{ width: "80%" }}>
+              <Avatar
+                alt={currentHoliday.occasion}
+                src={currentHoliday.img}
+                sx={{ mx: "10px" }}
+              />
+              <Stack direction="column" spacing={0.5}>
+                <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                  {currentHoliday.occasion}
+                </Typography>
+                <Typography variant="body1">{formatDate(currentHoliday.date)}</Typography>
+              </Stack>
             </Stack>
+            <IconButton disableRipple size="small" onClick={handleNext}>
+              <NavigateNextIcon />
+            </IconButton>
           </Stack>
-          <IconButton disableRipple size="small" onClick={handleNext}>
-            <NavigateNextIcon />
-          </IconButton>
-        </Stack>
-      </Card>
-    </Grid>
+        </Card>
+      </Grid>
     </>
   );
 }

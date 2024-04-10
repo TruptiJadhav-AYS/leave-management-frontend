@@ -116,6 +116,14 @@ const History = [
   },
 ];
 export default function HistoryMobile() {
+  const formatDate = (dateString) => {
+    const [day, month, year] = dateString.split('/');
+    const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  
+    return `${day} ${monthNames[parseInt(month, 10) - 1]} ${year}`;
+  };
+  
+
   return (
     <Grid m={1} mt={2}>
       {History.map((history, index) => (
@@ -138,8 +146,8 @@ export default function HistoryMobile() {
               <Typography sx={{ fontWeight: "bold" }}>
                 {history.leave_type}
               </Typography>
-              <Typography variant="body2">{history.Start_Date}</Typography>
-              <Typography variant="body2">{history.End_Date}</Typography>
+              <Typography variant="body2">{formatDate(history.Start_Date)}</Typography>
+              <Typography variant="body2">{history.End_Date!=="-" ? formatDate(history.End_Date) : history.End_Date}</Typography>
             </Stack>
             <Stack>
               <Box

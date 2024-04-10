@@ -61,6 +61,16 @@ const Holidays = [
 ];
 
 export default function UpcomingHolidays({role}) {
+
+  const formatDate = (dateString) => {
+    const [day, month, year] = dateString.split('/');
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+  
+    return `${day} ${monthNames[parseInt(month, 10) - 1]} ${year}`;
+  };
+  
   return (
     <Card sx={{ height: "100%"}}>
       <CardContent sx={{ position: "sticky"}}>
@@ -85,7 +95,7 @@ export default function UpcomingHolidays({role}) {
               <ListItemAvatar>
                 <Avatar src={Holiday.img}/>
               </ListItemAvatar>
-              <Typography ml="20%">{Holiday.occasion}<br/>{Holiday.date}</Typography>
+              <Typography ml="20%">{Holiday.occasion}<br/>{formatDate(Holiday.date)}</Typography>
             </ListItem>
             <Divider variant="inset"/>
             </>
