@@ -1,6 +1,6 @@
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import {Typography,Grid} from "@mui/material"
+import { Typography, Grid } from "@mui/material";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
@@ -15,17 +15,18 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import logoImage from "../assets/ays_logo.jpg";
 import UseReponsive from "../hooks/UseResponsive";
+import AssignmentIcon from '@mui/icons-material/Assignment';
 
-export default function SideDrawer({ role,handleDrawerClose }) {
+export default function SideDrawer({ role, handleDrawerClose }) {
   let Navigate = useNavigate();
   let path = useLocation().pathname;
   let selected = path.substring(path.lastIndexOf("/") + 1);
   let selectedItem;
   let sideDrawerList;
 
-  let responsive =UseReponsive()
-  function onMobile(){
-    return responsive.isMobile && handleDrawerClose()
+  let responsive = UseReponsive();
+  function onMobile() {
+    return responsive.isMobile && handleDrawerClose();
   }
 
   if (selected !== "Employee") {
@@ -41,33 +42,37 @@ export default function SideDrawer({ role,handleDrawerClose }) {
       "History",
       "Holidays",
       "Employees",
+      "Projects",
     ];
-  } else  {
-    sideDrawerList = ["Dashboard", "Apply Leave", "History", "Holidays"];
+  } else {
+    sideDrawerList = [
+      "Dashboard",
+      "Apply Leave",
+      "History",
+      "Holidays",
+    ];
   }
 
   return (
     <div>
-      <Toolbar sx={{ml:"-20px"}}>
+      <Toolbar sx={{ ml: "-20px" }}>
         <img
-            src={logoImage}
-            alt="Logo"
-            style={{
-              maxWidth: "60px",
-              borderRadius: "50%",
-              width: "100%",
-              height: "100%",
-            }}
-          />
-          <Grid ml="10px">
+          src={logoImage}
+          alt="Logo"
+          style={{
+            maxWidth: "60px",
+            borderRadius: "50%",
+            width: "100%",
+            height: "100%",
+          }}
+        />
+        <Grid ml="10px">
           <Typography textAlign={"left"} fontWeight={"bold"} color={"darkblue"}>
             AYS
           </Typography>
-          <Typography  fontWeight={"bold"}>
-            Software Solution
-          </Typography>
-          </Grid>
-          </Toolbar>
+          <Typography fontWeight={"bold"}>Software Solution</Typography>
+        </Grid>
+      </Toolbar>
       <Divider />
       <List>
         {sideDrawerList.map((text, index) => (
@@ -82,14 +87,34 @@ export default function SideDrawer({ role,handleDrawerClose }) {
             <ListItemButton
               onClick={
                 index === 0
-                  ? () =>{ Navigate("/Employee");onMobile()}
+                  ? () => {
+                      Navigate("/Employee");
+                      onMobile();
+                    }
                   : index === 1
-                  ? () => {Navigate("/Employee/ApplyLeave");onMobile()}
+                  ? () => {
+                      Navigate("/Employee/ApplyLeave");
+                      onMobile();
+                    }
                   : index === 2
-                  ? () => {Navigate("/Employee/History");onMobile()}
+                  ? () => {
+                      Navigate("/Employee/History");
+                      onMobile();
+                    }
                   : index === 3
-                  ? () => {Navigate("/Employee/Holidays");onMobile()}
-                  : () => {Navigate("/Employee/Employees");onMobile()}
+                  ? () => {
+                      Navigate("/Employee/Holidays");
+                      onMobile();
+                    }
+                  : index === 4
+                  ? () => {
+                      Navigate("/Employee/Employees");
+                      onMobile();
+                    }
+                  : () => {
+                      Navigate("/Employee/Projects");
+                      onMobile();
+                    }
               }
             >
               <ListItemIcon>
@@ -101,8 +126,10 @@ export default function SideDrawer({ role,handleDrawerClose }) {
                   <HistoryIcon />
                 ) : index === 3 ? (
                   <EventIcon />
-                ) : (
+                ) : index === 4 ? (
                   <People />
+                ) : (
+                  <AssignmentIcon />
                 )}
               </ListItemIcon>
               <ListItemText primary={text} />
