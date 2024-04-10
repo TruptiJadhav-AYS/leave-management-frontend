@@ -4,9 +4,10 @@ import Avatar from "@mui/material/Avatar";
 import ListItem from "@mui/material/ListItem";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
+
 const contacts = [
   {
-    Profile: require("../assets/gudhipadwa.jpg"),
+    Profile: require("../assets/profile1.webp"),
     Name: "Pruthviraj Suryawanshi",
     Email: "pruthvi@gmail.com",
     Gender: "Male",
@@ -14,7 +15,7 @@ const contacts = [
     DepartmentId: 1,
   },
   {
-    Profile: require("../assets/christmas.jpg"),
+    Profile: require("../assets/profile.webp"),
     Name: "Pratiksha Nimbalkar",
     Email: "pratiksha@gmail.com",
     Gender: "Female",
@@ -22,7 +23,7 @@ const contacts = [
     DepartmentId: 1,
   },
   {
-    Profile: require("../assets/diwali.png"),
+    Profile: require("../assets/profile4.jpeg"),
     Name: "Trupti Jadhav",
     Email: "trupti@gmail.com",
     Gender: "Female",
@@ -30,31 +31,31 @@ const contacts = [
     DepartmentId: 1,
   },
   {
-    Profile: require("../assets/profile.jpg"),
-    Name: "Ketan Rathod",
+    Profile: require("../assets/profile3.jpeg"),
+    Name: "Sakshi Rathod",
     Email: "ketan@gmail.com",
     Gender: "Male",
     manager: 1,
     DepartmentId: 1,
   },
   {
-    Profile: require("../assets/republicday.jpg"),
-    Name: "Yogesh Patel",
+    Profile: require("../assets/profile6.webp"),
+    Name: "Abhishek Patil",
     Email: "yogesh@gmail.com",
     Gender: "Male",
     manager: 1,
     DepartmentId: 1,
   },
   {
-    Profile: require("../assets/holi.jpg"),
-    Name: "Nupur Tyagi",
+    Profile: require("../assets/profile5.jpg"),
+    Name: "Sanjay Tyagi",
     Email: "nupur@gmail.com",
     Gender: "Female",
     manager: 2,
     DepartmentId: 2,
   },
   {
-    Profile: require("../assets/newyear.jpg"),
+    Profile: require("../assets/profile7.webp"),
     Name: "Mehvish Shaikh",
     Email: "mehvish@gmail.com",
     Gender: "Female",
@@ -62,7 +63,7 @@ const contacts = [
     DepartmentId: 2,
   },
   {
-    Profile: require("../assets/ganeshchaturthi.jpg"),
+    Profile: require("../assets/profile6.webp"),
     Name: "Abhinandan Ambekar",
     Email: "abhi@gmail.com",
     Gender: "Male",
@@ -70,7 +71,7 @@ const contacts = [
     DepartmentId: 1,
   },
   {
-    Profile: require("../assets/laborday.jpg"),
+    Profile: require("../assets/profile2.webp"),
     Name: "Shruti Bagde",
     Email: "shruti@gmail.com",
     Gender: "Female",
@@ -78,8 +79,8 @@ const contacts = [
     DepartmentId: 3,
   },
   {
-    Profile: require("../assets/gandhijayanti.jpg"),
-    Name: "Prerana Divekar",
+    Profile: require("../assets/profile8.jpg"),
+    Name: "Pratk Divekar",
     Email: "prerana@gmail.com",
     Gender: "Female",
     manager: 2,
@@ -115,7 +116,7 @@ export default function ContactsList() {
         >
           <Grid container justifyContent={"space-between"} alignItems="center">
             <Grid item ml={1} >
-              <Typography variant="h5">Contacts</Typography>
+              <Typography variant="h6">Employees</Typography>
             </Grid>
             <Grid item mr={1} mb={"2px"}>
               <Button

@@ -160,7 +160,7 @@ export default function Display({ logedInUser, role }) {
   };
 
   return (
-    <Box sx={{ display: "flex", bgcolor: "whitesmoke", height: "100vh" }}>
+    <Box sx={{ display: "flex", bgcolor: "whitesmoke" }}>
       <CssBaseline />
       <AppBar
         position="fixed"
