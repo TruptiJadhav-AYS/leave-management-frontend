@@ -1,4 +1,3 @@
-import { Padding } from "@mui/icons-material";
 import { Box, Typography, Grid, Card, Stack } from "@mui/material";
 
 const History = [
@@ -25,7 +24,7 @@ const History = [
   },
   {
     Start_Date: "10/02/2024",
-    End_Date: "10/02/2024",
+    End_Date: "",
     leave_type: "Half Day",
     reason: "Shceduled doctors appointment",
     status: "Accepted",
@@ -46,7 +45,7 @@ const History = [
   },
   {
     Start_Date: "25/11/2023",
-    End_Date: "25/11/2023",
+    End_Date: "",
     leave_type: "Half Day",
     reason: "Attending conference ",
     status: "Accepted",
@@ -60,7 +59,7 @@ const History = [
   },
   {
     Start_Date: "10/11/2023",
-    End_Date: "-",
+    End_Date: "",
     leave_type: "Half Day",
     reason: "Personal errands",
     status: "Accepted",
@@ -81,14 +80,14 @@ const History = [
   },
   {
     Start_Date: "20/10/2023",
-    End_Date: "-",
+    End_Date: "",
     leave_type: "Half Day",
     reason: "Doctor's appointment",
     status: "Accepted",
   },
   {
     Start_Date: "15/10/2023",
-    End_Date: "15/10/2023",
+    End_Date: "",
     leave_type: "Half Day",
     reason: "Attending seminar",
     status: "Accepted",
@@ -102,14 +101,14 @@ const History = [
   },
   {
     Start_Date: "05/10/2023",
-    End_Date: "-",
+    End_Date: "",
     leave_type: "Half Day",
     reason: "Parent-teacher meeting",
     status: "Rejected",
   },
   {
     Start_Date: "25/09/2023",
-    End_Date: "25/09/2023",
+    End_Date: "",
     leave_type: "Half Day",
     reason: "Attending training session",
     status: "Accepted",
@@ -117,10 +116,10 @@ const History = [
 ];
 export default function HistoryMobile() {
   const formatDate = (dateString) => {
-    const [day, month, year] = dateString.split('/');
+    const [day, month] = dateString.split('/');
     const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
   
-    return `${day} ${monthNames[parseInt(month, 10) - 1]} ${year}`;
+    return `${day} ${monthNames[parseInt(month, 10) - 1]}`;
   };
   
 
@@ -132,42 +131,43 @@ export default function HistoryMobile() {
           sx={{
             my: 0.5,
             py: 1.5,
-            px:1,
+            px:2,
             borderRadius: "15px",
-            borderLeft:history.status==="Rejected" ? "8px solid #B22222" : history.status==="Pending" ? "8px solid #FFA500" : "8px solid #4caf50",
           }}
         >
           <Stack
-            direction={"row"}
-            justifyContent={"space-between"}
-            alignItems={"center"}
+            direction={"column"}
           >
-            <Stack>
-              <Typography sx={{ fontWeight: "bold" }}>
+            <Stack justifyContent={"space-between"} direction={"row"}>
+            <Typography variant="body2" color="grey">
                 {history.leave_type}
-              </Typography>
-              <Typography variant="body2">{formatDate(history.Start_Date)}</Typography>
-              <Typography variant="body2">{history.End_Date!=="-" ? formatDate(history.End_Date) : history.End_Date}</Typography>
-            </Stack>
-            <Stack>
+            </Typography>
               <Box
                 width="80px"
-                px={0.2}
-                py={0.2}
                 borderRadius={"6px"}
+                py={0.2}
+                px={0.1}
                 color="white"
                 bgcolor={
                   history.status === "Accepted"
-                    ? "#4caf50"
+                    ? "#CCFFCC"
                     : history.status === "Pending"
-                    ? "#FFA500"
-                    : "#B22222"
+                    ? "#FFD699"
+                    : "#FFCCCC"
                 }
               >
-                  <Typography variant="body2">{history.status}</Typography>
+                  <Typography variant="body2" color={history.status === "Accepted"
+                    ? "darkgreen"
+                    : history.status === "Pending"
+                    ? "#7B3F00"
+                    : "darkred"}>{history.status}</Typography>
               </Box>
+              </Stack>
+              <Stack direction={"column"} textAlign={"left"}> 
+              <Typography variant="body" sx={{ fontWeight: "bold" }}>{formatDate(history.Start_Date)}{history.End_Date!=="" ? " - "+formatDate(history.End_Date) : ""}</Typography>
+              <Typography variant="caption" color="grey">{history.reason}</Typography>
+              </Stack>
             </Stack>
-          </Stack>
         </Card>
       ))}
     </Grid>

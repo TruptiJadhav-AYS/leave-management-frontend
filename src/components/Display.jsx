@@ -142,7 +142,7 @@ export default function Display({ logedInUser, role }) {
 
   const responsive = UseReponsive();
 
-  console.log(role);
+  // console.log(role);
 
   const handleDrawerClose = () => {
     setIsClosing(true);
