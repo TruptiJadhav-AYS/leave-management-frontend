@@ -13,6 +13,7 @@ import InventoryForm from "./InventoryForm";
 import EditProjectForm from "./EditProjectForm";
 import EmployeeMobile from "./EmployeeMobile"
 import HistoryMobile from "./HistoryMobile"
+import InventoryList from "./InventoryList";
 
 export default function CenterDisplay({ role }) {
   let responsive=UseReponsive()
@@ -26,6 +27,8 @@ export default function CenterDisplay({ role }) {
           path="/Employees"
           element={responsive.isMobile ? <EmployeeMobile /> : <EmployeeList />}
         />
+      <Route path="/Projects" element={<ProjectList />} />
+      <Route path="/InventoryList" element={<InventoryList/>}/>
       
       <Route
         path="/Employees/NewRegistration"
@@ -36,7 +39,6 @@ export default function CenterDisplay({ role }) {
         element={<EditEmployeeForm />}
       /> */}
       <Route path="/Employees/EditEmployee" element={<EditEmployeeForm />} />
-      <Route path="/Projects" element={<ProjectList />} />
       <Route path="/Projects/OnboardProject" element={<ProjectOnboardForm />} />
       <Route path="/Projects/EditProject" element={<EditProjectForm/>}/>
       <Route path="/Employees/EditForm/Inventory" element={<InventoryForm/>}/>

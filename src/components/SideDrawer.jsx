@@ -15,7 +15,8 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import logoImage from "../assets/ays_logo.jpg";
 import UseReponsive from "../hooks/UseResponsive";
-import AssignmentIcon from '@mui/icons-material/Assignment';
+import AssignmentIcon from "@mui/icons-material/Assignment";
+import CategoryIcon from '@mui/icons-material/Category';
 
 export default function SideDrawer({ role, handleDrawerClose }) {
   let Navigate = useNavigate();
@@ -43,14 +44,10 @@ export default function SideDrawer({ role, handleDrawerClose }) {
       "Holidays",
       "Employees",
       "Projects",
+      "Inventory List",
     ];
   } else {
-    sideDrawerList = [
-      "Dashboard",
-      "Apply Leave",
-      "History",
-      "Holidays",
-    ];
+    sideDrawerList = ["Dashboard", "Apply Leave", "History", "Holidays"];
   }
 
   return (
@@ -111,8 +108,13 @@ export default function SideDrawer({ role, handleDrawerClose }) {
                       Navigate("/Employee/Employees");
                       onMobile();
                     }
-                  : () => {
+                  : index === 5
+                  ? () => {
                       Navigate("/Employee/Projects");
+                      onMobile();
+                    }
+                  : () => {
+                      Navigate("/Employee/InventoryList");
                       onMobile();
                     }
               }
@@ -128,9 +130,11 @@ export default function SideDrawer({ role, handleDrawerClose }) {
                   <EventIcon />
                 ) : index === 4 ? (
                   <People />
-                ) : (
+                ) : index===5 ? (
                   <AssignmentIcon />
-                )}
+                ) : 
+                  <CategoryIcon/>
+                }
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>
