@@ -20,27 +20,62 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
-import MailIcon from '@mui/icons-material/Mail';
-import CallIcon from '@mui/icons-material/Call';
+import MailIcon from "@mui/icons-material/Mail";
+import CallIcon from "@mui/icons-material/Call";
 import UseReponsive from "../hooks/UseResponsive";
 import { Gauge, gaugeClasses } from "@mui/x-charts";
-import profile from "../assets/profile.jpg"
+import profile from "../assets/profile.jpg";
 import LeavePolicy from "./LeavePolicy";
-
 
 export default function Dashboard({ role }) {
   const responsive = UseReponsive();
-  function createData(name, fromDate, toDate, leaveType, reason,status) {
-    return {name, fromDate, toDate, leaveType, reason,status};
+  function createData(name, fromDate, toDate, leaveType, reason, status) {
+    return { name, fromDate, toDate, leaveType, reason, status };
   }
 
   const rows = [
-    createData('Pratiksha', "10-04-2024", "10-04-2024", "Half Day", "Doctor appointment"),
-    createData('Trupti', "10-04-2024", "10-04-2024", "Half Day", "Doctor appointment"),
-    createData('Pruthvi', "10-04-2024", "10-04-2024", "Half Day", "Doctor appointment"),
-    createData('Prerana', "10-04-2024", "10-04-2024", "Half Day", "Doctor appointment"),
-    createData('Prerana', "10-04-2024", "10-04-2024", "Half Day", "Doctor appointment"),
-    createData('Prerana', "10-04-2024", "10-04-2024", "Half Day", "Doctor appointment"),
+    createData(
+      "Pratiksha",
+      "10-04-2024",
+      "10-04-2024",
+      "Half Day",
+      "Doctor appointment"
+    ),
+    createData(
+      "Trupti",
+      "10-04-2024",
+      "10-04-2024",
+      "Half Day",
+      "Doctor appointment"
+    ),
+    createData(
+      "Pruthvi",
+      "10-04-2024",
+      "10-04-2024",
+      "Half Day",
+      "Doctor appointment"
+    ),
+    createData(
+      "Prerana",
+      "10-04-2024",
+      "10-04-2024",
+      "Half Day",
+      "Doctor appointment"
+    ),
+    createData(
+      "Prerana",
+      "10-04-2024",
+      "10-04-2024",
+      "Half Day",
+      "Doctor appointment"
+    ),
+    createData(
+      "Prerana",
+      "10-04-2024",
+      "10-04-2024",
+      "Half Day",
+      "Doctor appointment"
+    ),
   ];
 
   const handleAccept = (name) => {
@@ -189,10 +224,7 @@ export default function Dashboard({ role }) {
                 >
                   <ListItem alignItems="flex-start">
                     <ListItemAvatar>
-                      <Avatar
-                          
-                        src="/static/images/avatar/1.jpg"
-                      />
+                      <Avatar src="/static/images/avatar/1.jpg" />
                     </ListItemAvatar>
                     <ListItemText
                       primary="Diwali"
@@ -212,10 +244,7 @@ export default function Dashboard({ role }) {
                   </ListItem>
                   <ListItem alignItems="flex-start">
                     <ListItemAvatar>
-                      <Avatar
-                          
-                        src="/static/images/avatar/1.jpg"
-                      />
+                      <Avatar src="/static/images/avatar/1.jpg" />
                     </ListItemAvatar>
                     <ListItemText
                       primary="Holi"
@@ -235,7 +264,7 @@ export default function Dashboard({ role }) {
                   </ListItem>
                   <ListItem alignItems="flex-start">
                     <ListItemAvatar>
-                      <Avatar/>
+                      <Avatar />
                     </ListItemAvatar>
                     <ListItemText
                       primary="Holi"
@@ -255,10 +284,7 @@ export default function Dashboard({ role }) {
                   </ListItem>
                   <ListItem alignItems="flex-start">
                     <ListItemAvatar>
-                      <Avatar
-                          
-                        src="/static/images/avatar/1.jpg"
-                      />
+                      <Avatar src="/static/images/avatar/1.jpg" />
                     </ListItemAvatar>
                     <ListItemText
                       primary="Holi"
@@ -278,10 +304,7 @@ export default function Dashboard({ role }) {
                   </ListItem>
                   <ListItem alignItems="flex-start">
                     <ListItemAvatar>
-                      <Avatar
-                          
-                        src="/static/images/avatar/1.jpg"
-                      />
+                      <Avatar src="/static/images/avatar/1.jpg" />
                     </ListItemAvatar>
                     <ListItemText
                       primary="Holi"
@@ -301,10 +324,7 @@ export default function Dashboard({ role }) {
                   </ListItem>
                   <ListItem alignItems="flex-start">
                     <ListItemAvatar>
-                      <Avatar
-                          
-                        src="/static/images/avatar/1.jpg"
-                      />
+                      <Avatar src="/static/images/avatar/1.jpg" />
                     </ListItemAvatar>
                     <ListItemText
                       primary="Holi"
@@ -326,7 +346,7 @@ export default function Dashboard({ role }) {
               </Box>
             </Card>
           </Grid>
-          
+
           {role === "Admin" || role === "Manager" ? (
             //Pending request card
             <Grid item xs={12} sm={9} md={9} lg={9} sx={{ height: "100%" }}>
@@ -418,44 +438,55 @@ export default function Dashboard({ role }) {
                     Approver
                   </Typography>
                 </CardContent>
-                <Divider/>
+                <Divider />
                 <CardContent>
-                <Box display="flex" alignItems="center" justifyContent={"center"} my={1}>
-                  <Avatar src={profile} style={{ width: "70px", height: "70px" ,border:"2px solid blue"}} />
-                  <Box ml={3}>
-                    <Typography variant="h6"> Pratik Deshmukh</Typography>
-                    <Typography variant="subtitle1">Project Manager</Typography>
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    justifyContent={"center"}
+                    my={1}
+                  >
+                    <Avatar
+                      src={profile}
+                      style={{
+                        width: "70px",
+                        height: "70px",
+                        border: "2px solid blue",
+                      }}
+                    />
+                    <Box ml={3}>
+                      <Typography variant="h6"> Pratik Deshmukh</Typography>
+                      <Typography variant="subtitle1">
+                        Project Manager
+                      </Typography>
+                    </Box>
                   </Box>
-                </Box>
-          
-                <Grid
-                  container
-                  display="flex"
-                  width={"100%"}
-                  justifyContent="space-between"
-                  textAlign="center"
-                  py={1}
-                  px={"3%"}
-                >
-                  <Grid item  display="flex">
-                  <MailIcon/>
-                  <Typography pl={0.5}>pratik.23@gmail.com</Typography>
+
+                  <Grid
+                    container
+                    display="flex"
+                    width={"100%"}
+                    justifyContent="space-between"
+                    textAlign="center"
+                    py={1}
+                    px={"3%"}
+                  >
+                    <Grid item display="flex">
+                      <MailIcon />
+                      <Typography pl={0.5}>pratik.23@gmail.com</Typography>
+                    </Grid>
+                    <Grid item display="flex">
+                      <CallIcon />
+                      <Typography>+91 8356789870</Typography>
+                    </Grid>
                   </Grid>
-                  <Grid item display="flex">
-                  <CallIcon/>
-                  <Typography >+91 8356789870</Typography>
-                  </Grid>
-                </Grid>
                 </CardContent>
               </Card>
-
-              
               <Grid mt={1}>
-              <LeavePolicy/>
+                <LeavePolicy />
               </Grid>
             </Grid>
           )}
-          
         </Grid>
       </Grid>
     </Grid>
