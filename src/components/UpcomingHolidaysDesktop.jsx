@@ -9,15 +9,12 @@ import {
   ListItem,
   ListItemAvatar,
   Avatar,
-  ListItemText,
 } from "@mui/material";
 import eid from "../assets/eid.jpg";
 import mayday from "../assets/mayday.jpg";
 import independanceDay from "../assets/independance.jpg";
 import ganeshChaturthi from "../assets/ganeshchaturthi.jpg";
 import gandhiJayanti from "../assets/gandhijayanti.jpg";
-import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 const Holidays = [
   { date: "11/04/2024",
@@ -86,7 +83,7 @@ export default function UpcomingHolidays({role}) {
             height:300,
             maxWidth: 360,
             bgcolor: "background.paper",
-            ml:role==="Employee" ? "7%" : "0%"
+            ml:role==="Employee" ? "8%" : "0%"
           }}
         >
           {Holidays.map((Holiday,index)=>(
@@ -95,132 +92,12 @@ export default function UpcomingHolidays({role}) {
               <ListItemAvatar>
                 <Avatar src={Holiday.img}/>
               </ListItemAvatar>
-              <Typography ml="20%">{Holiday.occasion}<br/>{formatDate(Holiday.date)}</Typography>
+              <Typography sx={{ml:role==="Employee" ? "25%" : "15%"}}>{Holiday.occasion}<br/>{formatDate(Holiday.date)}</Typography>
             </ListItem>
             <Divider variant="inset"/>
             </>
           ))
           }
-          {/* <ListItem alignItems="flex-start">
-            <ListItemAvatar>
-              <Avatar src="/static/images/avatar/1.jpg" />
-            </ListItemAvatar>
-            <ListItemText
-              primary="Diwali"
-              secondary={
-                <React.Fragment>
-                  <Typography
-                    sx={{ display: "inline" }}
-                    component="span"
-                    variant="body1"
-                    color="text.primary"
-                  >
-                    Monday, 20-04-2024
-                  </Typography>
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <ListItem alignItems="flex-start">
-            <ListItemAvatar>
-              <Avatar src="/static/images/avatar/1.jpg" />
-            </ListItemAvatar>
-            <ListItemText
-              primary="Holi"
-              secondary={
-                <React.Fragment>
-                  <Typography
-                    sx={{ display: "inline" }}
-                    component="span"
-                    variant="body1"
-                    color="text.primary"
-                  >
-                    Monday, 20-04-2024
-                  </Typography>
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <ListItem alignItems="flex-start">
-            <ListItemAvatar>
-              <Avatar />
-            </ListItemAvatar>
-            <ListItemText
-              primary="Holi"
-              secondary={
-                <React.Fragment>
-                  <Typography
-                    sx={{ display: "inline" }}
-                    component="span"
-                    variant="body1"
-                    color="text.primary"
-                  >
-                    Monday, 20-04-2024
-                  </Typography>
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <ListItem alignItems="flex-start">
-            <ListItemAvatar>
-              <Avatar src="/static/images/avatar/1.jpg" />
-            </ListItemAvatar>
-            <ListItemText
-              primary="Holi"
-              secondary={
-                <React.Fragment>
-                  <Typography
-                    sx={{ display: "inline" }}
-                    component="span"
-                    variant="body1"
-                    color="text.primary"
-                  >
-                    Monday, 20-04-2024
-                  </Typography>
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <ListItem alignItems="flex-start">
-            <ListItemAvatar>
-              <Avatar src="/static/images/avatar/1.jpg" />
-            </ListItemAvatar>
-            <ListItemText
-              primary="Holi"
-              secondary={
-                <React.Fragment>
-                  <Typography
-                    sx={{ display: "inline" }}
-                    component="span"
-                    variant="body1"
-                    color="text.primary"
-                  >
-                    Monday, 20-04-2024
-                  </Typography>
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <ListItem alignItems="flex-start">
-            <ListItemAvatar>
-              <Avatar src="/static/images/avatar/1.jpg" />
-            </ListItemAvatar>
-            <ListItemText
-              primary="Holi"
-              secondary={
-                <React.Fragment>
-                  <Typography
-                    sx={{ display: "inline" }}
-                    component="span"
-                    variant="body1"
-                    color="text.primary"
-                  >
-                    Monday, 20-04-2024
-                  </Typography>
-                </React.Fragment>
-              }
-            />
-          </ListItem> */}
         </List>
       </Box>
     </Card>
