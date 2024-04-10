@@ -132,10 +132,9 @@ export default function ContactsList() {
       <Grid
         container
         sx={{
-          height: "10vh",
-          pt: 1,
+          height: "6vh",
           width: "100%",
-          top: "10%",
+          top: "11%",
           zIndex: 1,
           bgcolor: "white",
         }}
@@ -184,6 +183,7 @@ export default function ContactsList() {
           overflowY: "auto",
           mx: 1,
           width: "100%",
+          
         }}
       >
         <Grid item xs={12}>
@@ -238,8 +238,10 @@ export default function ContactsList() {
                             container
                             sx={{ display: "flex", justifyContent: "flex-end" }}
                           >
-                            <EditIcon fontSize="small" sx={{ mr: 1 }} />
-                            <DeleteIcon fontSize="small" />
+                            <EditIcon fontSize="small" sx={{ mr: 1 }} onClick={()=>{
+                              Navigate("/Employee/Employees/EditEmployee")
+                            }} />
+                            <DeleteIcon fontSize="small" sx={{mr:1}}/>
                           </Grid>
                         </Grid>
                         <Grid item xs={12}>
