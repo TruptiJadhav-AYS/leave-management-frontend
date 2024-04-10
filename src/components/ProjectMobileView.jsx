@@ -294,13 +294,13 @@ export default function ProjectMbList() {
                           sx={{
                             textTransform: "none",
                             color: "black",
-                            fontWeight: "300",
+                           
                             display: "flex",
                             mx: 2,
                           }}
                         >
                           <Typography variant="body1" fontWeight={"bold"}>
-                            Start_Date :{" "}
+                            Start_date :{" "}
                           </Typography>
                           {contact.Start_date}
                         </Typography>
@@ -325,7 +325,7 @@ export default function ProjectMbList() {
                           sx={{
                             textTransform: "none",
                             color: "black",
-                            fontWeight: "300",
+                          
                             display: "flex",
                             mx: 2,
                           }}

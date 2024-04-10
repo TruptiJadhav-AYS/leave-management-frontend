@@ -208,7 +208,7 @@ export default function ContactsList() {
                             sx={{
                               textTransform: "none",
                               color: "black",
-                              fontWeight: "530",
+                              fontWeight: "30",
                             }}
                           >
                             {contact.Name}
