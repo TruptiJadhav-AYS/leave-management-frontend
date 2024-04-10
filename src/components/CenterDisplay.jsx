@@ -7,7 +7,6 @@ import EmployeeList from "./Employee";
 import EmployeeRegistrationForm from "./EmployeeRegistrationForm";
 import Dashboard from "./Dashboard";
 import EmployeeMobile from "./EmployeeMobile";
-import EmployeeDetails from "./EmployeeDetails";
 
 export default function CenterDisplay({ role }) {
   let responsive=UseReponsive()
@@ -21,7 +20,6 @@ export default function CenterDisplay({ role }) {
           path="/Employees"
           element={responsive.isMobile ? <EmployeeMobile /> : <EmployeeList />}
         />
-        <Route path="/Employees/ContactDetails/:id" element={<EmployeeDetails/>}/>
       
       <Route
         path="/Employees/NewRegistration"
