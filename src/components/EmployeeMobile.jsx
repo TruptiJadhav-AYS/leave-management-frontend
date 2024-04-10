@@ -1,5 +1,13 @@
 import React from "react";
-import { Card, Typography, Grid, Paper, Button, Divider } from "@mui/material";
+import {
+  Card,
+  Typography,
+  Grid,
+  Button,
+  Divider,
+  InputBase,
+  Box,
+} from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import ListItem from "@mui/material/ListItem";
 import AddIcon from "@mui/icons-material/Add";
@@ -8,6 +16,10 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import SearchIcon from "@mui/icons-material/Search";
+import { useState } from "react";
 
 const contacts = [
   {
@@ -16,8 +28,8 @@ const contacts = [
     Name: "Pruthvi Suryawanshi",
     Email: "pruthvi@gmail.com",
     Gender: "Male",
-    manager: 1,
-    DepartmentId: 1,
+    manager: "Yogesh Patel",
+    Department: "HR",
   },
   {
     id: 2,
@@ -25,8 +37,8 @@ const contacts = [
     Name: "Pratiksha Nimbalkar",
     Email: "pratiksha@gmail.com",
     Gender: "Female",
-    manager: 1,
-    DepartmentId: 1,
+    manager: "Yogesh Patel",
+    Department: "HR",
   },
   {
     id: 3,
@@ -34,8 +46,8 @@ const contacts = [
     Name: "Trupti Jadhav",
     Email: "trupti@gmail.com",
     Gender: "Female",
-    manager: 1,
-    DepartmentId: 1,
+    manager: "Yogesh Patel",
+    Department: "HR",
   },
   {
     id: 4,
@@ -43,8 +55,8 @@ const contacts = [
     Name: "Sakshi Rathod",
     Email: "ketan@gmail.com",
     Gender: "Male",
-    manager: 1,
-    DepartmentId: 1,
+    manager: "Yogesh Patel",
+    Department: "HR",
   },
   {
     id: 5,
@@ -52,8 +64,8 @@ const contacts = [
     Name: "Abhishek Patil",
     Email: "yogesh@gmail.com",
     Gender: "Male",
-    manager: 1,
-    DepartmentId: 1,
+    manager: "Yogesh Patel",
+    Department: "HR",
   },
   {
     id: 6,
@@ -61,8 +73,8 @@ const contacts = [
     Name: "Sanjay Tyagi",
     Email: "nupur@gmail.com",
     Gender: "Female",
-    manager: 2,
-    DepartmentId: 2,
+    manager: "Yogesh Patel",
+    Department: "HR",
   },
   {
     id: 7,
@@ -70,8 +82,8 @@ const contacts = [
     Name: "Mehvish Shaikh",
     Email: "mehvish@gmail.com",
     Gender: "Female",
-    manager: 2,
-    DepartmentId: 2,
+    manager: "Yogesh Patel",
+    Department: "HR",
   },
   {
     id: 8,
@@ -79,8 +91,8 @@ const contacts = [
     Name: "Abhinandan Ambekar",
     Email: "abhi@gmail.com",
     Gender: "Male",
-    manager: 2,
-    DepartmentId: 1,
+    manager: "Yogesh Patel",
+    Department: "HR",
   },
   {
     id: 9,
@@ -88,8 +100,8 @@ const contacts = [
     Name: "Shruti Bagde",
     Email: "shruti@gmail.com",
     Gender: "Female",
-    manager: 2,
-    DepartmentId: 3,
+    manager: "Yogesh Patel",
+    Department: "HR",
   },
   {
     id: 10,
@@ -97,75 +109,97 @@ const contacts = [
     Name: "Pratk Divekar",
     Email: "prerana@gmail.com",
     Gender: "Female",
-    manager: 2,
-    DepartmentId: 1,
+    manager: "Yogesh Patel",
+    Department: "HR",
   },
 ];
 
 export default function ContactsList() {
-
   const Navigate = useNavigate();
+  const [searchText, setsearchText] = useState("");
+
+  function handleSearchText(event) {
+    setsearchText(event.target.value);
+  }
+  console.log(searchText);
+
+  const FilterArray = contacts.filter((contact) =>
+    contact.Name.toLowerCase().includes(searchText.toLowerCase())
+  );
 
   return (
-    <Paper sx={{ width: "100%" }}>
-      <Grid itme xs={12}  >
-        <Grid
-          container
-          sx={{
-            height: "10vh",
-            pt: 1,
-            width: "100%",
-            top: "10%",
-            zIndex: 1,
-            bgcolor: "white", 
-                     
-          }}
-          position={"sticky"}
-        >
-            <Grid item xs={10} >
-              <Typography variant="h5">Contacts</Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <Button
-                variant="contained"
-                sx={{
-                  borderRadius: "50px",
-                  backgroundColor: "white",
-                  color: "black",
-                }}
-                onClick={() => {
-                  Navigate("/Employee/Employees/NewRegistration");
-                }}
-              >
-                <AddIcon />
-              </Button>
-          </Grid>
-          <Divider />
+    <Grid itme xs={12}>
+      <Grid
+        container
+        sx={{
+          height: "10vh",
+          pt: 1,
+          width: "100%",
+          top: "10%",
+          zIndex: 1,
+          bgcolor: "white",
+        }}
+        position={"sticky"}
+      >
+        <Grid item xs={10}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "98%",
+              border: "2px solid rgba(204, 204, 204, 0.5)",
+              borderRadius: "10px",
+              mr: "1",
+            }}
+          >
+            <InputBase
+              sx={{ width: "98%", pl: 2 }}
+              placeholder="Search for Employee..."
+              onChange={handleSearchText}
+            />
+            <SearchIcon sx={{ my: "1%", mr: 1.5 }} />
+          </Box>
         </Grid>
+        <Grid item xs={2}>
+          <Button
+            variant="contained"
+            sx={{
+              borderRadius: "10px",
+              backgroundColor: "white",
+              color: "black",
+            }}
+            onClick={() => {
+              Navigate("/Employee/Employees/NewRegistration");
+            }}
+          >
+            <AddIcon />
+          </Button>
+        </Grid>
+        <Divider />
+      </Grid>
 
-        <Grid
-          container
-          sx={{
-            width: "100%",
-            height: "calc(100vh - 14%)",
-            overflowY: "auto",
-            mx: 1,
-          }}
-        >
-          {contacts.map((contact) => (
+      <Grid
+        container
+        sx={{
+          overflowY: "auto",
+          mx: 1,
+          width: "100%",
+        }}
+      >
+        <Grid item xs={12}>
+          {FilterArray.map((contact) => (
             <Card
               sx={{ mb: 1, borderRadius: 2 }}
               elevation={3}
               key={contact.id}
+              fullWidth
             >
               <Accordion>
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                >
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                   {
-                    <ListItem alignItems="flex-start">
+                    <ListItem alignItems="flex-start" fullWidth mx={1}>
                       <Grid container spacing={2}>
-                        <Grid item >
+                        <Grid item>
                           <Avatar src={contact.Profile} alt={contact.Name} />
                         </Grid>
                         <Grid item>
@@ -190,63 +224,32 @@ export default function ContactsList() {
                     </ListItem>
                   }
                 </AccordionSummary>
-                <AccordionDetails>
+                <AccordionDetails sx={{padding:0}}>
                   {
-                    <Card
-                      sx={{ borderRadius: 2 }}
-                      elevation={3}
-                      key={contact.id}
-                    >
-                      <Grid container spacing={2} sx={{ width: "100%" }}>
-                        <Grid
-                          item
-                          xs={12}
-                          sx={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                          }}
-                        >
-                          <Avatar src={contact.Profile} alt={contact.Name} />
+                    // <Card
+                    //   sx={{ borderRadius: 2 }}
+                    //   elevation={3}
+                    //   key={contact.id}
+                    //   fullWidth
+                    // >
+                      <Grid container width={"100%"}>
+                        <Grid item xs={12}>
+                          <Grid
+                            container
+                            sx={{ display: "flex", justifyContent: "flex-end" }}
+                          >
+                            <EditIcon fontSize="small" sx={{ mr: 1 }} />
+                            <DeleteIcon fontSize="small" />
+                          </Grid>
                         </Grid>
                         <Grid item xs={12}>
-                          <Typography
-                            label="Name"
-                            variant="body1"
-                            sx={{
-                              textTransform: "none",
-                              color: "black",
-                              fontWeight: "530",
-                              display: "flex",
-                              mx: 2,
-                            }}
-                          >
-                            <Typography variant="body1" fontWeight={"bold"}>
-                              Name :{" "}
-                            </Typography>
-                            {contact.Name}
-                          </Typography>
-                          <Typography
-                            variant="body1"
-                            sx={{
-                              textTransform: "none",
-                              color: "black",
-                              display: "flex",
-                              mx: 2,
-                            }}
-                          >
-                            <Typography variant="body1" fontWeight={"bold"}>
-                              Email :{" "}
-                            </Typography>
-                            {contact.Email}
-                          </Typography>
                           <Typography
                             label="Gender"
                             variant="body1"
                             sx={{
                               textTransform: "none",
                               color: "black",
-                              fontWeight: "530",
+                              fontWeight: "300",
                               display: "flex",
                               mx: 2,
                             }}
@@ -257,20 +260,20 @@ export default function ContactsList() {
                             {contact.Gender}
                           </Typography>
                           <Typography
-                            label="DepartmentId"
+                            label="Department"
                             variant="body1"
                             sx={{
                               textTransform: "none",
                               color: "black",
-                              fontWeight: "530",
+                              fontWeight: "300",
                               display: "flex",
                               mx: 2,
                             }}
                           >
                             <Typography variant="body1" fontWeight={"bold"}>
-                              DepartmentId :{" "}
+                              Department :{" "}
                             </Typography>
-                            {contact.DepartmentId}
+                            {contact.Department}
                           </Typography>
                           <Typography
                             label="Manager"
@@ -288,19 +291,8 @@ export default function ContactsList() {
                             {contact.manager}
                           </Typography>
                         </Grid>
-                        <Grid item xs={12}>
-                          <Grid container>
-                            <Grid item xs={6}>
-                              <Button variant="contained">Edit</Button>
-                            </Grid>
-                            <Grid item xs={6}>
-                              <Button variant="contained">Delete</Button>
-                            </Grid>
-                          </Grid>
-                          <br />
-                        </Grid>
                       </Grid>
-                    </Card>
+                    // </Card>
                   }
                 </AccordionDetails>
               </Accordion>
@@ -308,6 +300,6 @@ export default function ContactsList() {
           ))}
         </Grid>
       </Grid>
-    </Paper>
+    </Grid>
   );
 }
