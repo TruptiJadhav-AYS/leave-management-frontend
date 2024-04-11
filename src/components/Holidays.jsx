@@ -13,7 +13,6 @@ import dusshera from "../assets/dusshera.jpg";
 import diwali from "../assets/diwali.png";
 import christmas from "../assets/christmas.jpg";
 import UseReponsive from '../hooks/UseResponsive';
-import EditIcon from '@mui/icons-material/Edit';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 const annualLeaves = [

@@ -76,18 +76,18 @@ export default function UpcomingHolidays({role}) {
         </Typography>
       </CardContent>
       <Divider />
-      <Box sx={{ overflow: "auto", scrollbarWidth: "thin", height: "85%",width:"100%" }}>
+      <Box sx={{ overflow: "auto", scrollbarWidth: "thin", height: "85%",width:"100%" }} >
         <List
           sx={{
             width: "100%",
             height:300,
             maxWidth: 360,
             bgcolor: "background.paper",
-            ml:role==="Employee" ? "8%" : "0%"
+            ml:role==="Employee" ? "8%" : "0%",overflow: "auto", scrollbarWidth: "thin", height: "85%",width:"100%"
           }}
         >
           {Holidays.map((Holiday,index)=>(
-            <>
+            <Box key={index}>
             <ListItem width="100%">
               <ListItemAvatar>
                 <Avatar src={Holiday.img}/>
@@ -95,7 +95,7 @@ export default function UpcomingHolidays({role}) {
               <Typography sx={{ml:role==="Employee" ? "25%" : "15%"}}>{Holiday.occasion}<br/>{formatDate(Holiday.date)}</Typography>
             </ListItem>
             <Divider variant="inset"/>
-            </>
+            </Box>
           ))
           }
         </List>

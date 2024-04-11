@@ -131,9 +131,9 @@ export default function InventoryList() {
         <Table stickyHeader>
           <TableHead>
             <TableRow>
-              {columns.map((column) => (
+              {columns.map((column,index) => (
                 <TableCell
-                  key={column.id}
+                  key={index}
                   align={column.align}
                   sx={{ color: "primary.main", minWidth: column.minWidth }}
                 >
@@ -141,6 +141,23 @@ export default function InventoryList() {
                     <Typography fontWeight={550} fontSize={"16px"}>
                       {column.label}
                     </Typography>
+                    {column.label === "Name" ? (
+                      <Button
+                        disableRipple
+                        size="small"
+                        onClick={
+                          column.id === "Name"
+                            ? () => handleSortClick(column.id)
+                            : undefined
+                        }
+                      >
+                        {sortOrder === "asc" ? (
+                          <ArrowUpwardIcon />
+                        ) : (
+                          <ArrowDownwardIcon />
+                        )}
+                      </Button>
+                    ) : null}
                   </Stack>
                 </TableCell>
               ))}
@@ -152,9 +169,9 @@ export default function InventoryList() {
           <TableBody>
             {sortedRows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
+              .map((row,index) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.Email}>
+                  <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (

@@ -41,7 +41,7 @@ const rows = [
     "Doctor appointment"
   ),
   createData(
-    "Prerana",
+    "Priya",
     "10-04-2024",
     "10-04-2024",
     "Half Day",
@@ -55,7 +55,7 @@ const rows = [
     "Doctor appointment"
   ),
   createData(
-    "Prerana",
+    "Riya",
     "10-04-2024",
     "10-04-2024",
     "Half Day",

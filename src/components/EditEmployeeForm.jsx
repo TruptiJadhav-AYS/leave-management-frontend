@@ -35,9 +35,9 @@ export default function EditEmployeeForm() {
 
   const navigate = useNavigate();
 
-  function onAddInventoryClick() {
-    navigate("/Employee/Employees/EditForm/Inventory");
-  }
+  // function onAddInventoryClick() {
+  //   navigate("/Employee/Employees/EditForm/Inventory");
+  // }
 
   function handleSubmit() {
     setOnBoardSuccess(true);

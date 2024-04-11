@@ -7,7 +7,7 @@ import {
   Divider,
   InputBase,
   Box,
-  Paper,
+  Paper
 } from "@mui/material";
 import ListItem from "@mui/material/ListItem";
 import AddIcon from "@mui/icons-material/Add";
@@ -87,6 +87,7 @@ const Projects = [
   },
 ];
 
+
 export default function ContactsList() {
   const Navigate = useNavigate();
   const [searchText, setsearchText] = useState("");
@@ -109,7 +110,8 @@ export default function ContactsList() {
           top: "10%",
           zIndex: 1,
           bgcolor: "white",
-          height: "5vh",
+          height: "5vh"
+
         }}
         position={"sticky"}
       >
@@ -160,7 +162,7 @@ export default function ContactsList() {
           flexDirection: "column",
           bgcolor: "white",
           height: "90vh",
-          mt: "11px",
+          mt: "11px"
         }}
       >
         <Grid item xs={12}>
@@ -171,14 +173,14 @@ export default function ContactsList() {
               overflowY: "scroll",
               scrollbarWidth: "thin",
               mt: "2%",
-              bgcolor: "white",
+              bgcolor: "white"
             }}
           >
-            {FilterArray.map((project) => (
+            {FilterArray.map((project,index) => (
               <Card
                 sx={{ mb: 1, borderRadius: 2, mr: 1 }}
                 elevation={3}
-                key={project.id}
+                key={index}
                 fullWidth
               >
                 <Accordion>
@@ -223,13 +225,8 @@ export default function ContactsList() {
                             container
                             sx={{ display: "flex", justifyContent: "flex-end" }}
                           >
-                            <EditIcon
-                              fontSize="small"
-                              sx={{ mr: 1 }}
-                              onClick={() => {
-                                Navigate("/Employee/Projects/EditProject");
-                              }}
-                            />
+    
+                            <EditIcon fontSize="small" sx={{ mr: 1 }} onClick={()=>{Navigate("/Employee/Projects/EditProject")}}/>
                             <DeleteIcon fontSize="small" />
                           </Grid>
                         </Grid>
@@ -245,11 +242,7 @@ export default function ContactsList() {
                               mx: 2,
                             }}
                           >
-                            <Typography
-                              variant="body1"
-                              fontWeight={"bold"}
-                              mr={1}
-                            >
+                            <Typography variant="body1" fontWeight={"bold"} mr={1}>
                               Start_date :{" "}
                             </Typography>
                             {project.Start_date}
@@ -264,11 +257,7 @@ export default function ContactsList() {
                               mx: 2,
                             }}
                           >
-                            <Typography
-                              variant="body1"
-                              fontWeight={"bold"}
-                              mr={1}
-                            >
+                            <Typography variant="body1" fontWeight={"bold"} mr={1}>
                               End_date :{" "}
                             </Typography>
                             {project.End_date}
@@ -284,11 +273,7 @@ export default function ContactsList() {
                               mx: 2,
                             }}
                           >
-                            <Typography
-                              variant="body1"
-                              fontWeight={"bold"}
-                              mr={1}
-                            >
+                            <Typography variant="body1" fontWeight={"bold"} mr={1}>
                               Status :{" "}
                             </Typography>
                             {project.Status}
@@ -297,12 +282,13 @@ export default function ContactsList() {
                       </Grid>
                     }
                   </AccordionDetails>
-                </Accordion>
-              </Card>
+                </Accordion>                
+                </Card>
             ))}
           </Grid>
         </Grid>
       </Grid>
     </Paper>
+
   );
 }

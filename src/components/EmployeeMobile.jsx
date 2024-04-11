@@ -213,7 +213,7 @@ export default function ContactsList() {
                   <Accordion>
                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                       {
-                        <ListItem alignItems="flex-start" fullWidth mx={1}>
+                        <ListItem alignItems="flex-start" mx={1}>
                           <Grid container spacing={2}>
                             <Grid item>
                               <Avatar
@@ -243,9 +243,9 @@ export default function ContactsList() {
                         </ListItem>
                       }
                     </AccordionSummary>
-                    <AccordionDetails sx={{ padding: 0 }}>
+                    <AccordionDetails>
                       {
-                        <Grid container width={"100%"}>
+                        <Grid container width={"100%"} sx={{pb:2}}>
                           <Grid item xs={12}>
                             <Grid
                               container
@@ -276,7 +276,7 @@ export default function ContactsList() {
                                 mx: 2,
                               }}
                             >
-                              <Typography variant="body1" fontWeight={"bold"}>
+                              <Typography variant="body2" fontWeight={"bold"}>
                                 Gender :{
 " "}
                               </Typography>
@@ -284,7 +284,7 @@ export default function ContactsList() {
                             </Typography>
                             <Typography
                               label="Department"
-                              variant="body1"
+                              variant="body2"
                               sx={{
                                 textTransform: "none",
                                 color: "black",
@@ -293,7 +293,7 @@ export default function ContactsList() {
                                 mx: 2,
                               }}
                             >
-                              <Typography variant="body1" fontWeight={"bold"}>
+                              <Typography variant="body2" fontWeight={"bold"}>
                                 Department :{
 " "}
                               </Typography>
@@ -301,7 +301,7 @@ export default function ContactsList() {
                             </Typography>
                             <Typography
                               label="Manager"
-                              variant="body1"
+                              variant="body2"
                               sx={{
                                 textTransform: "none",
                                 color: "black",
@@ -309,7 +309,7 @@ export default function ContactsList() {
                                 mx: 2,
                               }}
                             >
-                              <Typography variant="body1" fontWeight={"bold"}>
+                              <Typography variant="body2" fontWeight={"bold"}>
                                 Manager :{
 " "}
                               </Typography>

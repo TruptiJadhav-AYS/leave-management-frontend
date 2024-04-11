@@ -113,7 +113,7 @@ function AccountMenu({ role }) {
                   : "pruthvi@gmail.com"}
               </Typography>
             </Box>
-            <Box item display="flex">
+            <Box  display="flex">
               <CallIcon />
               <Typography color="textSecondary">+91 8356789870</Typography>
             </Box>
