@@ -11,37 +11,53 @@ import ProjectList from "./ProjectList";
 import EditEmployeeForm from "./EditEmployeeForm";
 import InventoryForm from "./InventoryForm";
 import EditProjectForm from "./EditProjectForm";
-import EmployeeMobile from "./EmployeeMobile"
-import HistoryMobile from "./HistoryMobile"
+import EmployeeMobile from "./EmployeeMobile";
+import HistoryMobile from "./HistoryMobile";
 import InventoryList from "./InventoryList";
-import ProjectMbList from "./ProjectMobileView"
+import ProjectMbList from "./ProjectMobileView";
+import InventoryListMb from "./InventoryListMb";
 
 export default function CenterDisplay({ role }) {
-  let responsive=UseReponsive()
+  let responsive = UseReponsive();
   return (
     <Routes>
       <Route path="/" element={<Dashboard role={role} />} />
       <Route path="/ApplyLeave" element={<LeaveReqForm />} />
-      <Route path="/History" element={responsive.isDesktop||responsive.isLaptop||responsive.isTablet ? <History /> :<HistoryMobile/>} />
+      <Route
+        path="/History"
+        element={
+          responsive.isDesktop || responsive.isLaptop || responsive.isTablet ? (
+            <History />
+          ) : (
+            <HistoryMobile />
+          )
+        }
+      />
       <Route path="/Holidays" element={<Holidays />} />
       <Route
-          path="/Employees"
-          element={responsive.isMobile ? <EmployeeMobile /> : <EmployeeList />}
-        />
-      <Route path="/InventoryList" element={<InventoryList/>}/>
-      
+        path="/Employees"
+        element={responsive.isMobile ? <EmployeeMobile /> : <EmployeeList />}
+      />
+
+      <Route
+        path="/InventoryList"
+        element={responsive.isMobile ? <InventoryListMb /> : <InventoryList />}
+      />
+
+      {/* <Route path="/InventoryList" element={<InventoryList />} /> */}
+
       <Route
         path="/Employees/NewRegistration"
         element={<EmployeeRegistrationForm />}
       />
       <Route path="/Employees/EditEmployee" element={<EditEmployeeForm />} />
       <Route
-          path="/Projects"
-          element={responsive.isMobile ? < ProjectMbList/> : <ProjectList />}
-        />
+        path="/Projects"
+        element={responsive.isMobile ? <ProjectMbList /> : <ProjectList />}
+      />
       <Route path="/Projects/OnboardProject" element={<ProjectOnboardForm />} />
-      <Route path="/Projects/EditProject" element={<EditProjectForm/>}/>
-      <Route path="/Employees/EditForm/Inventory" element={<InventoryForm/>}/>
+      <Route path="/Projects/EditProject" element={<EditProjectForm />} />
+      <Route path="/Employees/EditForm/Inventory" element={<InventoryForm />} />
     </Routes>
   );
 }

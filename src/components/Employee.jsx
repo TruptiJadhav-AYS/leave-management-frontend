@@ -239,7 +239,7 @@ export default function EmployeeList() {
         >
           <InputBase
             sx={{ width: "90%", pl: 2 }}
-            placeholder="Search for User..."
+            placeholder="Search for Employee..."
             onChange={handleSearchText}
           />
           <SearchIcon sx={{ my: "1%", mr: 1.5 }} />

@@ -45,7 +45,7 @@ const columns = [
   },
 ];
 
-const rows = [
+const Projects = [
   {
     Name: "Employee Management System",
     Project_Manager: "Ketan Rathod",
@@ -119,9 +119,16 @@ export default function ProjectList() {
   const [sortedBy, setSortedBy] = useState("Name"); // Track sorted column
   const [sortOrder, setSortOrder] = useState("asc"); // Track sort order
 
+  const [searchText, setsearchText] = useState("");
+
+  function handleSearchText(event) {
+    setsearchText(event.target.value);
+  }
+  console.log(searchText);
+
   const sortedRows = useMemo(() => {
     // Sort rows based on sortedBy and sortOrder
-    return rows.slice().sort((a, b) => {
+    return Projects.slice().sort((a, b) => {
       const valueA = a[sortedBy];
       const valueB = b[sortedBy];
 
@@ -153,6 +160,10 @@ export default function ProjectList() {
     Navigate("/Employee/Projects/EditProject");
   };
 
+  const FilterArray = sortedRows.filter((project) =>
+  project.Name.toLowerCase().includes(searchText.toLowerCase())
+);
+
   return (
     <Paper sx={{ width: "100%", overflow: "hidden", pb: 1, minHeight: "100%" }}>
       <Box display={"flex"} justifyContent={"space-between"} m={1} mx={1}>
@@ -168,6 +179,7 @@ export default function ProjectList() {
           <InputBase
             sx={{ width: "90%", pl: 2 }}
             placeholder="Search for Project..."
+            onChange={handleSearchText}
           />
           <SearchIcon sx={{ my: "1%", mr: 1.5 }} />
         </Box>
@@ -230,7 +242,7 @@ export default function ProjectList() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {sortedRows
+            {FilterArray
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
@@ -262,7 +274,7 @@ export default function ProjectList() {
       <TablePagination
         rowsPerPageOptions={[5, 10, 20, 100]}
         component="div"
-        count={rows.length}
+        count={Projects.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
