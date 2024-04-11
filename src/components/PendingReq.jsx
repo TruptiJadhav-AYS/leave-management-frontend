@@ -128,6 +128,7 @@ export default function PendingReq() {
                 <TableCell align="right">
                   <Stack direction={"row"}>
                   <Button
+                    disableRipple
                     variant="contained"
                     color="success"
                     size="small"
@@ -137,6 +138,7 @@ export default function PendingReq() {
                     Accept
                   </Button>
                   <Button
+                    disableRipple
                     variant="outlined"
                     color="error"
                     size="small"

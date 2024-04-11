@@ -61,7 +61,7 @@ function LeaveReqForm() {
   const Error = formik.errors;
 
   return (
-    <Grid container justifyContent={"center"} width="100%" pt={3}>
+    <Grid container justifyContent={"center"} width="100%" pt={responsive.isMobile ? 0 : 3}>
       <Stack sx={{textAlign: "left", width : (responsive.isDesktop || responsive.isLaptop || responsive.isTa) ? "70%" : "100%"}}>
       <Card
         elevation={1}
@@ -194,7 +194,7 @@ function LeaveReqForm() {
                     ? "2px solid blue"
                     : "2px solid  rgba(204, 204, 204, 0.5)",
                 borderRadius: "4px",
-                // p: "5px",
+                px:1
               }}
               multiline
               rows={3}

@@ -213,6 +213,17 @@ export default function EmployeeList() {
     setPage(0);
   };
 
+  const [searchText, setsearchText] = useState("");
+
+  function handleSearchText(event) {
+    setsearchText(event.target.value);
+  }
+  console.log(searchText);
+
+  const FilterArray = sortedRows.filter((contact) =>
+    contact.Name.toLowerCase().includes(searchText.toLowerCase())
+  );
+
   return (
     <Paper sx={{ width: "100%", overflow: "hidden",  minHeight: "100%", height:"100%" }}>
       <Box display={"flex"} justifyContent={"space-between"}  mx={1}>
@@ -228,7 +239,8 @@ export default function EmployeeList() {
         >
           <InputBase
             sx={{ width: "90%", pl: 2 }}
-            placeholder="Search for User..."
+            placeholder="Search for Employee..."
+            onChange={handleSearchText}
           />
           <SearchIcon sx={{ my: "1%", mr: 1.5 }} />
         </Box>
@@ -263,6 +275,7 @@ export default function EmployeeList() {
                     </Typography>
                     {column.label === "Name" ? (
                       <Button
+                        disableRipple
                         size="small"
                         onClick={
                           column.id === "Name"
@@ -286,7 +299,7 @@ export default function EmployeeList() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {sortedRows
+            {FilterArray
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
@@ -312,7 +325,7 @@ export default function EmployeeList() {
                           onClose={handleClose}
                           onClick={handleClose}
                           PaperProps={{
-                            elevation:0,
+                            elevation: 0,
                             sx: {
                               overflow: "visible",
                               filter:
@@ -381,7 +394,6 @@ export default function EmployeeList() {
                                 +91 8356789870
                               </Typography>
                             </Box>
-                            
                           </Box>
                         </Menu>
                         <EditIcon

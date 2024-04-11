@@ -129,7 +129,7 @@ export default function ContactsList() {
   );
 
   return (
-      <Paper sx={{height:"80vh",mt:0.4}}>
+      <Paper sx={{height:"100%",mt:"5%"}}>
         <Grid
           container
           sx={{
@@ -187,8 +187,8 @@ export default function ContactsList() {
             width: "100%",
             display: "flex",
             flexDirection: "column",
-            bgcolor: "yellow",
-            height: "70vh",
+            bgcolor: "white",
+            height: "90vh",
             mt:"11px"
           }}
         >
@@ -196,11 +196,11 @@ export default function ContactsList() {
             <Grid
               contianer
               sx={{
-                maxHeight: "88vh",
+                height:"90vh",
                 overflowY: "scroll",
                 scrollbarWidth: "thin",
-                mt:3,
-                bgcolor:"red"
+                mt:"2%",
+                bgcolor:"white"
               }}
             >
               {FilterArray.map((contact) => (
@@ -277,7 +277,8 @@ export default function ContactsList() {
                               }}
                             >
                               <Typography variant="body1" fontWeight={"bold"}>
-                                Gender :{" "}
+                                Gender :{
+" "}
                               </Typography>
                               {contact.Gender}
                             </Typography>
@@ -293,7 +294,8 @@ export default function ContactsList() {
                               }}
                             >
                               <Typography variant="body1" fontWeight={"bold"}>
-                                Department :{" "}
+                                Department :{
+" "}
                               </Typography>
                               {contact.Department}
                             </Typography>
@@ -308,7 +310,8 @@ export default function ContactsList() {
                               }}
                             >
                               <Typography variant="body1" fontWeight={"bold"}>
-                                Manager :{" "}
+                                Manager :{
+" "}
                               </Typography>
                               {contact.manager}
                             </Typography>
