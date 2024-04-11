@@ -24,41 +24,25 @@ import MailIcon from "@mui/icons-material/Mail";
 import CallIcon from "@mui/icons-material/Call";
 import Profile from "../assets/profile.jpg";
 import EditIcon from "@mui/icons-material/Edit";
-
 import DeleteIcon from "@mui/icons-material/Delete";
+
 const columns = [
-  { id: "projectName",
-   label: "Project Name",
-    minWidth: 180 
-  },
-  { id: "managerName",
-   label: "MAnager Name",
-    minWidth: 170 
-  },
+  { id: "name", label: "Name", minWidth: 180 },
+  { id: "category", label: "Category", minWidth: 170 },
   {
-    id: "startDate",
-    label: "startDate",
+    id: "serialNo",
+    label: "Serial No",
     minWidth: 110,
-  },
-  {
-    id: "endDate",
-    label: "End Date",
-    minWidth: 120,
-  },
-  {
-    id: "status",
-    label: "Status",
-    minWidth: 80,
-    align: "center",
   },
 ];
 
-const rows=[
-
-]
+const rows = [
+  { name: "Dell", category: "Laptop", serialNo: "76876gbhj8798ui" },
+  { name:"HP",category:"Laptop",serialNo:"874385huy87987"},
+  { name:"IPhone",category:"Mobile",serialNo:"6bc787hc3827879"}
+];
 
 export default function InventoryList() {
-    
   const Navigate = useNavigate();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -133,10 +117,10 @@ export default function InventoryList() {
           variant="contained"
           sx={{ borderRadius: "50px", textTransform: "none" }}
           onClick={() => {
-            Navigate("/Employee/Employees/NewRegistration");
+            Navigate("/Employee/Employees/EditForm/Inventory");
           }}
         >
-          Employee
+          Add Inventory
           <AddIcon />
         </Button>
       </Box>
@@ -157,22 +141,6 @@ export default function InventoryList() {
                     <Typography fontWeight={550} fontSize={"16px"}>
                       {column.label}
                     </Typography>
-                    {column.label === "Name" ? (
-                      <Button
-                        size="small"
-                        onClick={
-                          column.id === "Name"
-                            ? () => handleSortClick(column.id)
-                            : undefined
-                        }
-                      >
-                        {sortOrder === "asc" ? (
-                          <ArrowUpwardIcon />
-                        ) : (
-                          <ArrowDownwardIcon />
-                        )}
-                      </Button>
-                    ) : null}
                   </Stack>
                 </TableCell>
               ))}
@@ -208,7 +176,7 @@ export default function InventoryList() {
                           onClose={handleClose}
                           onClick={handleClose}
                           PaperProps={{
-                            elevation:0,
+                            elevation: 0,
                             sx: {
                               overflow: "visible",
                               filter:
@@ -277,7 +245,6 @@ export default function InventoryList() {
                                 +91 8356789870
                               </Typography>
                             </Box>
-                            
                           </Box>
                         </Menu>
                         <EditIcon
@@ -303,5 +270,5 @@ export default function InventoryList() {
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
     </Paper>
-    )
+  );
 }

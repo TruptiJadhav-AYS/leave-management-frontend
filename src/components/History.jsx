@@ -177,7 +177,7 @@ export default function History() {
                   key={column.id}
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
-                  sx={{ color: "primary.main" }}
+                  sx={{ color: "primary.main" ,fontWeight:550, fontSize:"16px"}}
                 >
                   {column.label}
                 </TableCell>

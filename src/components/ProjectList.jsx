@@ -43,151 +43,73 @@ const columns = [
     label: "Status",
     minWidth: 80,
   },
-  //   {
-  //     id: "Assign",
-  //     label: "Assign",
-  //     minWidth: 80,
-  //   },
 ];
 
 const rows = [
   {
-    Name: "Pruthviraj Suryawanshi",
-    Project_Manager: "pruthvi",
+    Name: "Employee Management System",
+    Project_Manager: "Ketan Rathod",
     Start_date: "20-04-2024",
     End_date: "20-07-2024",
     Status: "Active",
     // Assign: 1,
   },
   {
-    Name: "Pruthviraj Suryawanshi",
-    Project_Manager: "pruthvi",
+    Name: "Horeca",
+    Project_Manager: "Prashil Sir",
     Start_date: "20-04-2024",
     End_date: "20-07-2024",
     Status: "Active",
     // Assign: 1,
   },
   {
-    Name: "Pruthviraj Suryawanshi",
-    Project_Manager: "pruthvi",
+    Name: "Bloqcube",
+    Project_Manager: "Mehvish Shaikh",
     Start_date: "20-04-2024",
     End_date: "20-07-2024",
     Status: "Active",
     // Assign: 1,
   },
   {
-    Name: "Pruthviraj Suryawanshi",
-    Project_Manager: "pruthvi",
+    Name: "Zopt",
+    Project_Manager: "Abhishek Shinde",
     Start_date: "20-04-2024",
     End_date: "20-07-2024",
     Status: "Active",
     // Assign: 1,
   },
   {
-    Name: "Pruthviraj Suryawanshi",
-    Project_Manager: "pruthvi",
+    Name: "Leave Management",
+    Project_Manager: "Pratiksha Nimbalkar",
     Start_date: "20-04-2024",
     End_date: "20-07-2024",
     Status: "Active",
     // Assign: 1,
   },
   {
-    Name: "Pruthviraj Suryawanshi",
-    Project_Manager: "pruthvi",
+    Name: "Whatsapp Clone",
+    Project_Manager: "Prerana Divekar",
     Start_date: "20-04-2024",
     End_date: "20-07-2024",
     Status: "Active",
     // Assign: 1,
   },
   {
-    Name: "Pruthviraj Suryawanshi",
-    Project_Manager: "pruthvi",
+    Name: "Amazon Clone",
+    Project_Manager: "Pruthvi",
     Start_date: "20-04-2024",
     End_date: "20-07-2024",
     Status: "Active",
     // Assign: 1,
   },
   {
-    Name: "Pruthviraj Suryawanshi",
-    Project_Manager: "pruthvi",
+    Name: "Instagram Clone",
+    Project_Manager: "Pruthvi",
     Start_date: "20-04-2024",
     End_date: "20-07-2024",
     Status: "Active",
     // Assign: 1,
   },
-  {
-    Name: "Pruthviraj Suryawanshi",
-    Project_Manager: "pruthvi",
-    Start_date: "20-04-2024",
-    End_date: "20-07-2024",
-    Status: "Active",
-    // Assign: 1,
-  },
-  {
-    Name: "Pruthviraj Suryawanshi",
-    Project_Manager: "pruthvi",
-    Start_date: "20-04-2024",
-    End_date: "20-07-2024",
-    Status: "Active",
-    // Assign: 1,
-  },
-  {
-    Name: "Pruthviraj Suryawanshi",
-    Project_Manager: "pruthvi",
-    Start_date: "20-04-2024",
-    End_date: "20-07-2024",
-    Status: "Active",
-    // Assign: 1,
-  },
-  {
-    Name: "Pruthviraj Suryawanshi",
-    Project_Manager: "pruthvi",
-    Start_date: "20-04-2024",
-    End_date: "20-07-2024",
-    Status: "Active",
-    // Assign: 1,
-  },
-  {
-    Name: "Pruthviraj Suryawanshi",
-    Project_Manager: "pruthvi",
-    Start_date: "20-04-2024",
-    End_date: "20-07-2024",
-    Status: "Active",
-    // Assign: 1,
-  },
-  {
-    Name: "Pruthviraj Suryawanshi",
-    Project_Manager: "pruthvi",
-    Start_date: "20-04-2024",
-    End_date: "20-07-2024",
-    Status: "Active",
-    // Assign: 1,
-  },
-  {
-    Name: "Pruthviraj Suryawanshi",
-    Project_Manager: "pruthvi",
-    Start_date: "20-04-2024",
-    End_date: "20-07-2024",
-    Status: "Active",
-    // Assign: 1,
-  },
-  {
-    Name: "Pruthviraj Suryawanshi",
-    Project_Manager: "pruthvi",
-    Start_date: "20-04-2024",
-    End_date: "20-07-2024",
-    Status: "Active",
-    // Assign: 1,
-  },
-  {
-    Name: "Pruthviraj Suryawanshi",
-    Project_Manager: "pruthvi",
-    Start_date: "20-04-2024",
-    End_date: "20-07-2024",
-    Status: "Active",
-    // Assign: 1,
-  },
-  // Add more rows as needed...
 ];
 
 export default function ProjectList() {
@@ -241,7 +163,6 @@ export default function ProjectList() {
             width: "50%",
             border: "2px solid rgba(204, 204, 204, 0.5)",
             borderRadius: "20px",
-            mr: "1",
           }}
         >
           <InputBase
@@ -273,14 +194,15 @@ export default function ProjectList() {
                 <TableCell
                   key={column.id}
                   align={column.align}
-                  sx={{ color: "primary.main", minWidth: column.minWidth }}
+                  sx={{ color: "primary.main", minWidth: column.minWidth,pl : column.id === 'Name' ?  5 : {}}}
                 >
                   <Stack direction={"row"} alignItems={"center"}>
                     <Typography fontWeight={550} fontSize={"16px"}>
-                      {column.label}
+                    {column.label}
                     </Typography>
                     {column.label === "Name" ? (
                       <Button
+                        disableRipple
                         size="small"
                         onClick={
                           column.id === "Name"
@@ -312,11 +234,11 @@ export default function ProjectList() {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.Name}>
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.Name} ml={2}>
                     {columns.map((column) => {
                       const value = row[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
+                      return ( 
+                        <TableCell key={column.id} align={column.align} sx={{pl : column.id === 'Name' ?  5 : {}}}>
                           {value}
                         </TableCell>
                       );

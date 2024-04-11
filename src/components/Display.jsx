@@ -242,7 +242,7 @@ export default function Display({ logedInUser, role }) {
         </Drawer>
       </Box>
       <Grid container direction={"row"}>
-        <Toolbar />
+        <Toolbar/>
         <Box bgcolor={"#f5f5f5"} sx={{ width: "100%", height: "89.7vh" }}>
           <CenterDisplay role={role} />
         </Box>
