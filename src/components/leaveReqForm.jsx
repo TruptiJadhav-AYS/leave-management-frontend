@@ -8,16 +8,19 @@ import {
   Card,
   CardContent,
   Grid,
+  Alert
 } from "@mui/material";
 import { useState } from "react";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import UseReponsive from "../hooks/UseResponsive";
+import CheckIcon from "@mui/icons-material/Check"
 
 function LeaveReqForm() {
   let Navigate = useNavigate();
   let [clickedId, setClickedId] = useState("");
   let responsive=UseReponsive();
+  let [submitSuccess,setSubmitSuccess]=useState(false)
 
   function handleClick(id) {
     setClickedId(id);
@@ -25,17 +28,11 @@ function LeaveReqForm() {
 
   const yup = require("yup");
 
-  const today = new Date();
-  const minDate = new Date(
-    today.getFullYear(),
-    today.getMonth(),
-    today.getDate() - 1
-  );
+  // const today = new Date();
 
   const leaveReqObj = yup.object({
     fromDate: yup
       .date()
-      .min(minDate, "Please Select a valid date")
       .required("Please select a date"),
     toDate: yup
       .date()
@@ -54,9 +51,10 @@ function LeaveReqForm() {
     },
     validationSchema: leaveReqObj,
     onSubmit: (values) => {
-      console.log(values);
+      setSubmitSuccess(true);
+      setTimeout(()=>{
       Navigate("/Employee");
-      alert("Leave request sent successfully!!");
+      },1000)
     },
   });
 
@@ -64,31 +62,27 @@ function LeaveReqForm() {
 
   return (
     <Grid container justifyContent={"center"} width="100%" pt={3}>
-      
+      <Stack sx={{textAlign: "left", width : (responsive.isDesktop || responsive.isLaptop || responsive.isTa) ? "70%" : "100%"}}>
       <Card
         elevation={1}
         pt="5%"
-        sx={{
-          minHeight: "auto",
-          textAlign: "left",
-          width : (responsive.isDesktop || responsive.isLaptop || responsive.isTa) ? "80%" : "100%",
-        }}
-        
       >
+        
         <CardContent component={"form"} onSubmit={formik.handleSubmit}>
-          <Typography mb={4} variant="h5" color={"primary"}>
+        
+          <Typography mb={2} variant="h5" color={"primary"}>
             Apply Leave
           </Typography>
 
           <Grid
             container
             direction={"row"}
-            spacing={1.5}
-            mb={1}
+            columnSpacing={1.5}
+            // mb={1}
             justifyContent={"space-between"}
             pt="5px"
           >
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={6} height={responsive.isMobile ? "15vh" : "15vh"}>
               <Typography fontSize={"13px"}>FROM DATE</Typography>
               <InputBase
                 onChange={formik.handleChange}
@@ -111,16 +105,15 @@ function LeaveReqForm() {
                 }}
               />
               {formik.touched.fromDate && Error.fromDate && (
-                <Typography variant="caption" color="error">
+                <Typography fontSize={"12px"} color="error">
                   {Error.fromDate}
                 </Typography>
               )}
             </Grid>
 
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={6} height={responsive.isMobile ? "15vh" : "15vh"}> 
               <Typography fontSize={"13px"}>TO DATE</Typography>
               <InputBase
-                min={minDate}
                 value={formik.values.toDate}
                 onChange={formik.handleChange}
                 type="date"
@@ -149,8 +142,8 @@ function LeaveReqForm() {
             </Grid>
           </Grid>
 
-          <Grid container>
-            <Grid item xs={12} sm={6}>
+          <Grid container pb={2}>
+            <Grid item xs={12} sm={6} height={responsive.isMobile ? "11vh" : "11vh"}>
               <Stack width="100%">
                 <Typography fontSize={"13px"}>LEAVE TYPE</Typography>
                 <Select
@@ -168,12 +161,15 @@ function LeaveReqForm() {
                       borderColor: "rgba(204, 204, 204, 0.5)",
                       borderWidth: "2px",
                     },
-                  }}
-                  MenuProps={{
-                    disableHover: true,
+                    "&:hover": {
+                      "&& fieldset": {
+                        border: "2px solid rgba(204, 204, 204, 0.5)"
+                      }
+                    },
                   }}
                 >
-                  <MenuItem value="Half day">Half Day</MenuItem>
+                  <MenuItem value="Half day (First half)">Half Day (First half)</MenuItem>
+                  <MenuItem  value="Half day (Second half)">Half Day (Second half)</MenuItem>
                   <MenuItem value="Full day">Full Day</MenuItem>
                   <MenuItem value="Work From Home">Work From Home</MenuItem>
                 </Select>
@@ -198,10 +194,10 @@ function LeaveReqForm() {
                     ? "2px solid blue"
                     : "2px solid  rgba(204, 204, 204, 0.5)",
                 borderRadius: "4px",
-                p: "5px",
+                // p: "5px",
               }}
               multiline
-              rows={4}
+              rows={3}
               placeholder="Reason for leave"
               onClick={() => {
                 handleClick("reason");
@@ -212,11 +208,20 @@ function LeaveReqForm() {
 
           <br />
 
-          <Button type="submit" variant="contained" color="primary">
-            Submit
+          <Button type="submit" variant="contained" color="primary" sx={{textTransform:"none",}} >
+            Apply Leave
           </Button>
+  
         </CardContent>
+        
       </Card>
+      {submitSuccess && 
+          (
+          <Alert  icon={<CheckIcon fontSize="inherit" />} sx={{height:"50px",mt:"10px"}}  severity="success">
+            You have applied for leave successfully.
+          </Alert>
+          )}
+          </Stack>
     </Grid>
   );
 }
