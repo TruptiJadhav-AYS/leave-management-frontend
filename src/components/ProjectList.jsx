@@ -206,7 +206,7 @@ export default function ProjectList() {
                 <TableCell
                   key={column.id}
                   align={column.align}
-                  sx={{ color: "primary.main", minWidth: column.minWidth,pl : column.id === 'Name' ?  5 : {}}}
+                  sx={{ color: "primary.main", minWidth: column.minWidth}}
                 >
                   <Stack direction={"row"} alignItems={"center"}>
                     <Typography fontWeight={550} fontSize={"16px"}>
@@ -247,10 +247,10 @@ export default function ProjectList() {
               .map((row) => {
                 return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.Name} ml={2}>
-                    {columns.map((column) => {
+                    {columns.map((column,index) => {
                       const value = row[column.id];
                       return ( 
-                        <TableCell key={column.id} align={column.align} sx={{pl : column.id === 'Name' ?  5 : {}}}>
+                        <TableCell key={index} align={column.align} >
                           {value}
                         </TableCell>
                       );

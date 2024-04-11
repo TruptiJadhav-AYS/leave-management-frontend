@@ -22,7 +22,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import SearchIcon from "@mui/icons-material/Search";
 import { useState } from "react";
 
-const contacts = [
+const Employees = [
   {
     id: 1,
     Profile: require("../assets/profile1.webp"),
@@ -115,7 +115,7 @@ const contacts = [
   },
 ];
 
-export default function ContactsList() {
+export default function EmployeeList() {
   const Navigate = useNavigate();
   const [searchText, setsearchText] = useState("");
 
@@ -124,7 +124,7 @@ export default function ContactsList() {
   }
   console.log(searchText);
 
-  const FilterArray = contacts.filter((contact) =>
+  const FilterArray = Employees.filter((contact) =>
     contact.Name.toLowerCase().includes(searchText.toLowerCase())
   );
 
@@ -194,7 +194,6 @@ export default function ContactsList() {
         >
           <Grid item xs={12}>
             <Grid
-              contianer
               sx={{
                 height:"90vh",
                 overflowY: "scroll",
@@ -208,12 +207,12 @@ export default function ContactsList() {
                   sx={{ mb: 1, borderRadius: 2, mr:1 }}
                   elevation={3}
                   key={contact.id}
-                  fullWidth
+                  
                 >
                   <Accordion>
                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                       {
-                        <ListItem alignItems="flex-start" fullWidth mx={1}>
+                        <ListItem alignItems="flex-start" mx={1}>
                           <Grid container spacing={2}>
                             <Grid item>
                               <Avatar
@@ -243,9 +242,9 @@ export default function ContactsList() {
                         </ListItem>
                       }
                     </AccordionSummary>
-                    <AccordionDetails sx={{ padding: 0 }}>
+                    <AccordionDetails>
                       {
-                        <Grid container width={"100%"}>
+                        <Grid container width={"100%"} sx={{pb:2}}>
                           <Grid item xs={12}>
                             <Grid
                               container
@@ -276,7 +275,7 @@ export default function ContactsList() {
                                 mx: 2,
                               }}
                             >
-                              <Typography variant="body1" fontWeight={"bold"}>
+                              <Typography variant="body2" fontWeight={"bold"}>
                                 Gender :{
 " "}
                               </Typography>
@@ -284,7 +283,7 @@ export default function ContactsList() {
                             </Typography>
                             <Typography
                               label="Department"
-                              variant="body1"
+                              variant="body2"
                               sx={{
                                 textTransform: "none",
                                 color: "black",
@@ -293,7 +292,7 @@ export default function ContactsList() {
                                 mx: 2,
                               }}
                             >
-                              <Typography variant="body1" fontWeight={"bold"}>
+                              <Typography variant="body2" fontWeight={"bold"}>
                                 Department :{
 " "}
                               </Typography>
@@ -301,7 +300,7 @@ export default function ContactsList() {
                             </Typography>
                             <Typography
                               label="Manager"
-                              variant="body1"
+                              variant="body2"
                               sx={{
                                 textTransform: "none",
                                 color: "black",
@@ -309,7 +308,7 @@ export default function ContactsList() {
                                 mx: 2,
                               }}
                             >
-                              <Typography variant="body1" fontWeight={"bold"}>
+                              <Typography variant="body2" fontWeight={"bold"}>
                                 Manager :{
 " "}
                               </Typography>

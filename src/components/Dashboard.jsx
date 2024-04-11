@@ -39,7 +39,8 @@ export default function Dashboard({ role }) {
             </Grid>
           )}
 
-          {(responsive.isDesktop || responsive.isLaptop || responsive.isTablet) && (role==="Admin" || role==="Manager")? (<Grid
+          {(responsive.isDesktop || responsive.isLaptop || responsive.isTablet) && (role==="Admin" || role==="Manager")? (
+          <Grid
             item
             sm={3}
             md={3}
