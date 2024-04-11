@@ -34,11 +34,17 @@ export default function CenterDisplay({ role }) {
         path="/Employees/NewRegistration"
         element={<EmployeeRegistrationForm />}
       />
+      
       {/* <Route
         path="/Employees/NewRegistration"
         element={<EditEmployeeForm />}
       /> */}
       <Route path="/Employees/EditEmployee" element={<EditEmployeeForm />} />
+      {/* <Route path="/Projects" element={<ProjectList />} /> */}
+      <Route
+          path="/Projects"
+          element={responsive.isMobile ? < ProjectMbList/> : <ProjectList />}
+        />
       <Route path="/Projects/OnboardProject" element={<ProjectOnboardForm />} />
       <Route path="/Projects/EditProject" element={<EditProjectForm/>}/>
       <Route path="/Employees/EditForm/Inventory" element={<InventoryForm/>}/>
