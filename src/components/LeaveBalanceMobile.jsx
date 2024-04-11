@@ -1,4 +1,4 @@
-import {Card,CardContent,Grid,Stack,Typography} from "@mui/material"
+import {Card,Grid,Typography} from "@mui/material"
 
 export function LeaveBalanceMobile(){
     return(

@@ -82,6 +82,7 @@ export default function SideDrawer({ role, handleDrawerClose }) {
             }}
           >
             <ListItemButton
+              disableTouchRipple
               onClick={
                 index === 0
                   ? () => {

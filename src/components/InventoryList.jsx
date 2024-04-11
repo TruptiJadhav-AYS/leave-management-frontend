@@ -256,7 +256,7 @@ export default function InventoryList() {
                                 {"pruthvi@gmail.com"}
                               </Typography>
                             </Box>
-                            <Box item display="flex">
+                            <Box display="flex">
                               <CallIcon />
                               <Typography color="textSecondary">
                                 +91 8356789870

@@ -22,7 +22,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import SearchIcon from "@mui/icons-material/Search";
 import { useState } from "react";
 
-const contacts = [
+const Employees = [
   {
     id: 1,
     Profile: require("../assets/profile1.webp"),
@@ -115,7 +115,7 @@ const contacts = [
   },
 ];
 
-export default function ContactsList() {
+export default function EmployeeList() {
   const Navigate = useNavigate();
   const [searchText, setsearchText] = useState("");
 
@@ -124,7 +124,7 @@ export default function ContactsList() {
   }
   console.log(searchText);
 
-  const FilterArray = contacts.filter((contact) =>
+  const FilterArray = Employees.filter((contact) =>
     contact.Name.toLowerCase().includes(searchText.toLowerCase())
   );
 
@@ -194,7 +194,6 @@ export default function ContactsList() {
         >
           <Grid item xs={12}>
             <Grid
-              contianer
               sx={{
                 height:"90vh",
                 overflowY: "scroll",
@@ -208,7 +207,7 @@ export default function ContactsList() {
                   sx={{ mb: 1, borderRadius: 2, mr:1 }}
                   elevation={3}
                   key={contact.id}
-                  fullWidth
+                  
                 >
                   <Accordion>
                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>

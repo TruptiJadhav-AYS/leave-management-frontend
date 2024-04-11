@@ -155,7 +155,7 @@ export default function ProjectList() {
 
   return (
     <Paper sx={{ width: "100%", overflow: "hidden", pb: 1, minHeight: "100%" }}>
-      <Box display={"flex"} justifyContent={"space-between"} m={1} mx={1}>
+      <Box display={"flex"} justifyContent={"space-between"} m={1} >
         <Box
           sx={{
             display: "flex",

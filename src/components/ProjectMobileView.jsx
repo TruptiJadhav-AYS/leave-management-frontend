@@ -20,6 +20,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SearchIcon from "@mui/icons-material/Search";
 import { useState } from "react";
+
 const Projects = [
   {
     Name: "Employee Management System",
@@ -167,7 +168,6 @@ export default function ContactsList() {
       >
         <Grid item xs={12}>
           <Grid
-            contianer
             sx={{
               height: "90vh",
               overflowY: "scroll",
@@ -181,7 +181,7 @@ export default function ContactsList() {
                 sx={{ mb: 1, borderRadius: 2, mr: 1 }}
                 elevation={3}
                 key={index}
-                fullWidth
+                // fullWidth
               >
                 <Accordion>
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
