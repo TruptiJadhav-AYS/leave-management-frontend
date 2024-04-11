@@ -111,28 +111,9 @@ export default function InventoryList() {
                   align={column.align}
                   sx={{ color: "primary.main", minWidth: column.minWidth }}
                 >
-                  <Stack direction={"row"} alignItems={"center"}>
                     <Typography fontWeight={550} fontSize={"16px"}>
                       {column.label}
                     </Typography>
-                    {column.label === "Name" ? (
-                      <Button
-                        disableRipple
-                        size="small"
-                        onClick={
-                          column.id === "Name"
-                            ? () => handleSortClick(column.id)
-                            : undefined
-                        }
-                      >
-                        {sortOrder === "asc" ? (
-                          <ArrowUpwardIcon />
-                        ) : (
-                          <ArrowDownwardIcon />
-                        )}
-                      </Button>
-                    ) : null}
-                  </Stack>
                 </TableCell>
               ))}
               <TableCell
