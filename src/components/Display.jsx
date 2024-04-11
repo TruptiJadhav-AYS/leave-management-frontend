@@ -165,6 +165,7 @@ export default function Display({ logedInUser, role }) {
       <AppBar
         position="fixed"
         sx={{
+          // height: {sm:"9vh"},
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
           backgroundColor: "primary",
