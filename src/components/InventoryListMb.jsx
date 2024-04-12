@@ -103,7 +103,6 @@ export default function InventoryListMb() {
       >
         <Grid item xs={12}>
           <Grid
-            contianer
             sx={{
               height: "90vh",
               overflowY: "scroll",
@@ -112,15 +111,15 @@ export default function InventoryListMb() {
               bgcolor: "white",
             }}
           >
-            {FilterArray.map((inventory) => (
+            {FilterArray.map((inventory,index) => (
               <Card
                 sx={{ mb: 1, borderRadius: 2, mr: 1 }}
                 elevation={3}
-                key={inventory.id}
+                key={index}
                 fullWidth
               >
                 {
-                  <ListItem alignItems="flex-start" fullWidth mx={1}>
+                  <ListItem alignItems="flex-start" mx={1}>
                     <Grid container spacing={2}>
                       <Grid item>
                         <Typography

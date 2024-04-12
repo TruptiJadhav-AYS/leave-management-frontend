@@ -133,7 +133,7 @@ export default function PendingReq() {
                     color="success"
                     size="small"
                     onClick={() => handleAccept(row.name)}
-                    sx={{ marginRight: 1 }}
+                    sx={{ marginRight: 1 ,textTransform:"none"}}
                   >
                     Accept
                   </Button>
@@ -143,6 +143,7 @@ export default function PendingReq() {
                     color="error"
                     size="small"
                     onClick={() => handleReject(row.name)}
+                    sx={{textTransform:"none"}}
                   >
                     Reject
                   </Button>

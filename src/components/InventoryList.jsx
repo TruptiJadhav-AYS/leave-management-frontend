@@ -124,9 +124,9 @@ export default function InventoryList() {
           <TableBody>
             {FilterArray
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((InventoryListItem) => {
+              .map((InventoryListItem,index) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={InventoryListItem.Email}>
+                  <TableRow hover role="checkbox" tabIndex={-1} key={index} >
                     {columns.map((column) => {
                       const value = InventoryListItem[column.id];
                       return (
@@ -136,7 +136,7 @@ export default function InventoryList() {
                       );
                     })}
                     <TableCell align="center">
-                      <Stack direction="row" spacing={0.8}>
+                      <Stack direction="row">
                         <EditIcon
                           // onClick={handleEditClick}
                           sx={{ cursor: "pointer" }}

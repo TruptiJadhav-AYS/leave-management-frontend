@@ -72,7 +72,7 @@ export default function UpcomingHolidaysMobile() {
 
   return (
     <>
-      <Grid item width="100%" display={"flex"} flexDirection={"row"} mt={1}>
+      <Grid item width="100%" mt={1} alignItems={"center"}>
         <Card sx={{ width: "100%", py: 1.5, borderRadius: "10px" }}>
           <Stack direction={"row"} justifyContent="space-around">
             <IconButton disableRipple size="small" onClick={handlePrevious}>
@@ -84,7 +84,7 @@ export default function UpcomingHolidaysMobile() {
                 src={currentHoliday.img}
                 sx={{ mx: "10px" }}
               />
-              <Stack direction="column" spacing={0.5}>
+              <Stack direction="column">
                 <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
                   {currentHoliday.occasion}
                 </Typography>

@@ -87,17 +87,6 @@ export default function EmployeeRegistrationForm() {
 
       Gender: Yup.string().required("Gender is required."),
 
-      // Password: Yup.string()
-      //   .min(8, "Password should atleast Contain 8 or above characters")
-      //   .matches(/[a-z]/, "Password must contain a lowercase letter")
-      //   .matches(/[A-Z]/, "Password must contain an uppercase letter")
-      //   .matches(
-      //     /[!@#$%^&*()_+-]+/,
-      //     "Password must contain a special character"
-      //   )
-      //   .required("Password is required."),
-
-      // Manager: Yup.string().required("Manager is required."),
     }),
     onSubmit: (values) => {
       console.log(values);
@@ -199,6 +188,7 @@ export default function EmployeeRegistrationForm() {
                     >
                       <MenuItem value="Male">Male</MenuItem>
                       <MenuItem value="Female">Female</MenuItem>
+                      <MenuItem value="Other">Other</MenuItem>
                     </Select>
                     {formik.touched.Gender && errors.Gender && (
                       <Typography variant="caption" color="error">

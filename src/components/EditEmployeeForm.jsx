@@ -297,7 +297,7 @@ export default function EditEmployeeForm() {
               </Grid>
               <br />
 
-              <Box pt={responsive.isMobile ? 9 : 0} spacing={1}>
+              <Box pt={responsive.isMobile ? 9 : 0}>
                 <Button
                   // type="submit"
                   variant="outlined"

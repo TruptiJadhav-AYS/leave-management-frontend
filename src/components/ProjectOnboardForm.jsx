@@ -272,14 +272,16 @@ export default function ProjectOnboardForm() {
                   </Stack>
                   </Grid>
               </Grid>
+              <Grid sx={{ mt: responsive.isMobile ? 0.5 : 2}}>
               <Button
                 variant="outlined"
                 onClick={() => {
                   // Handle adding inventory
                 }}
                 sx={{
+                  textTransform: "none",
                   mr: 2,
-                  mt: responsive.isMobile ? 0.5 : 2,
+                  mb:1
                 }}
               >
                 Add Employee
@@ -287,17 +289,18 @@ export default function ProjectOnboardForm() {
               <Button
                 type="submit"
                 variant="contained"
-                sx={{ textTransform: "none", mt: 2 }}
+                sx={{ textTransform: "none" ,mb:1}}
               >
                 Onboard Project
               </Button>
+              </Grid>
             </form>
           </CardContent>
         </Card>
         {onBoardSuccess && (
           <Alert
             icon={<CheckIcon fontSize="inherit" />}
-            sx={{ height: "50px", mt: "10px" }}
+            sx={{ height: "50px" }}
             severity="success"
           >
             Project onboarded successfully.
