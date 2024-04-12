@@ -13,55 +13,7 @@ import {
   TableContainer,
   Stack,
 } from "@mui/material";
-
-function createData(name, fromDate, toDate, leaveType, reason, status) {
-  return { name, fromDate, toDate, leaveType, reason, status };
-}
-
-const rows = [
-  createData(
-    "Pratiksha",
-    "10-04-2024",
-    "10-04-2024",
-    "Half Day",
-    "Doctor appointment"
-  ),
-  createData(
-    "Trupti",
-    "10-04-2024",
-    "10-04-2024",
-    "Half Day",
-    "Doctor appointment"
-  ),
-  createData(
-    "Pruthvi",
-    "10-04-2024",
-    "10-04-2024",
-    "Half Day",
-    "Doctor appointment"
-  ),
-  createData(
-    "Priya",
-    "10-04-2024",
-    "10-04-2024",
-    "Half Day",
-    "Doctor appointment"
-  ),
-  createData(
-    "Prerana",
-    "10-04-2024",
-    "10-04-2024",
-    "Half Day",
-    "Doctor appointment"
-  ),
-  createData(
-    "Riya",
-    "10-04-2024",
-    "10-04-2024",
-    "Half Day",
-    "Doctor appointment"
-  ),
-];
+import {useSelector} from 'react-redux'
 
 const handleAccept = (name) => {
   console.log("Accepted", name);
@@ -71,14 +23,29 @@ const handleReject = (name) => {
   console.log("Rejected", name);
 };
 export default function PendingReq() {
+  const PendingRequestList = useSelector(state=>state.PendingRequests.PendingRequestList)
+  console.log("))))))))))))))))))))))))))",PendingRequestList)
 
   const formatDate = (dateString) => {
-    const [day, month, year] = dateString.split('-');
-    const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-  
+    const [day, month, year] = dateString.split("-");
+    const monthNames = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+
     return `${day} ${monthNames[parseInt(month, 10) - 1]} ${year}`;
   };
-  
+
   return (
     <Card sx={{ height: "100%", overflow: "auto" }}>
       <CardContent sx={{ position: "sticky", top: 0, zIndex: 1 }}>
@@ -111,7 +78,7 @@ export default function PendingReq() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {PendingRequestList.map((row) => (
               <TableRow
                 key={row.name}
                 sx={{
@@ -127,26 +94,26 @@ export default function PendingReq() {
                 <TableCell align="right">{row.reason}</TableCell>
                 <TableCell align="right">
                   <Stack direction={"row"}>
-                  <Button
-                    disableRipple
-                    variant="contained"
-                    color="success"
-                    size="small"
-                    onClick={() => handleAccept(row.name)}
-                    sx={{ marginRight: 1 ,textTransform:"none"}}
-                  >
-                    Accept
-                  </Button>
-                  <Button
-                    disableRipple
-                    variant="outlined"
-                    color="error"
-                    size="small"
-                    onClick={() => handleReject(row.name)}
-                    sx={{textTransform:"none"}}
-                  >
-                    Reject
-                  </Button>
+                    <Button
+                      disableRipple
+                      variant="contained"
+                      color="success"
+                      size="small"
+                      onClick={() => handleAccept(row.name)}
+                      sx={{ marginRight: 1, textTransform: "none" }}
+                    >
+                      Accept
+                    </Button>
+                    <Button
+                      disableRipple
+                      variant="outlined"
+                      color="error"
+                      size="small"
+                      onClick={() => handleReject(row.name)}
+                      sx={{ textTransform: "none" }}
+                    >
+                      Reject
+                    </Button>
                   </Stack>
                 </TableCell>
               </TableRow>

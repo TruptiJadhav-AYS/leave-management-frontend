@@ -14,30 +14,23 @@ import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import { useState } from "react";
-
-const InventoryList = [
-  { name: "Dell", category: "Laptop", serialNo: "76876gbhj8798ui" },
-  { name: "HP", category: "Laptop", serialNo: "874385huy87987" },
-  { name: "IPhone", category: "Mobile", serialNo: "6bc787hc3827879" },
-  { name: "Dell", category: "Laptop Charger", serialNo: "76876gbhj8798uiX" },
-  { name: "HP", category: "Laptop Charger", serialNo: "874385huy87987X" },
-  { name: "IPhone", category: "Mobile Charger", serialNo: "6bc787hc3827879X" },
-];
+import { useSelector } from "react-redux";
 
 export default function InventoryListMb() {
+  const InventoryList = useSelector(state=>state.Inventory.InventoryListItems)
   const Navigate = useNavigate();
   const [searchText, setsearchText] = useState("");
 
   function handleSearchText(event) {
     setsearchText(event.target.value);
   }
-  console.log(searchText);
+  // console.log(searchText);
 
   const FilterArray = InventoryList.filter((inventory) =>
     inventory.category.toLowerCase().includes(searchText.toLowerCase())
   );
 
-  console.log("filtered array : ", FilterArray);
+  // console.log("filtered array : ", FilterArray);
   return (
     <Paper sx={{ height: "100%", mt: "5%" }}>
       <Grid

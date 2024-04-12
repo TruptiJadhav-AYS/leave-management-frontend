@@ -44,8 +44,6 @@ export default function CenterDisplay({ role }) {
         element={responsive.isMobile ? <InventoryListMb /> : <InventoryList />}
       />
 
-      {/* <Route path="/InventoryList" element={<InventoryList />} /> */}
-
       <Route
         path="/Employees/NewRegistration"
         element={<EmployeeRegistrationForm />}

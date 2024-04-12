@@ -11,6 +11,8 @@ import {
   Table,
   Stack,
 } from "@mui/material";
+import {useSelector} from "react-redux";
+
 import { useNavigate } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
@@ -28,16 +30,9 @@ const columns = [
   },
 ];
 
-const InventoryListItems = [
-  { name: "Dell", category: "Laptop", serialNo: "76876gbhj8798ui" },
-  { name:"HP",category:"Laptop",serialNo:"874385huy87987"},
-  { name:"IPhone",category:"Mobile",serialNo:"6bc787hc3827879"},
-  { name: "Dell", category: "Laptop Charger", serialNo: "76876gbhj8798uiX" },
-  { name: "HP", category: "Laptop Charger", serialNo: "874385huy87987X" },
-  { name: "IPhone", category: "Mobile Charger", serialNo: "6bc787hc3827879X" },
-];
-
 export default function InventoryList() {
+  const InventoryListItems = useSelector(state=>state.Inventory.InventoryListItems)
+  // console.log("****************", InventoryListItems)
   const Navigate = useNavigate();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
