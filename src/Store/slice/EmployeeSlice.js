@@ -1,4 +1,3 @@
-import { Toll } from "@mui/icons-material";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -139,7 +138,7 @@ const initialState = {
 };
 
 const employeeSlice=createSlice({
-    name:"EmployeeSlice",
+    name:"employees",
     initialState,
     reducers:{
            

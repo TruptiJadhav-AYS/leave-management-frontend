@@ -218,7 +218,7 @@ export default function EmployeeList() {
   function handleSearchText(event) {
     setsearchText(event.target.value);
   }
-  console.log(searchText);
+
 
   const FilterArray = sortedRows.filter((contact) =>
     contact.Name.toLowerCase().includes(searchText.toLowerCase())
