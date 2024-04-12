@@ -20,6 +20,9 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useState, useMemo } from "react";
+import {useSelector} from 'react-redux'
+
+
 
 const columns = [
   { id: "Name", label: "Name", minWidth: 120 },
@@ -45,74 +48,9 @@ const columns = [
   },
 ];
 
-const Projects = [
-  {
-    Name: "Employee Management System",
-    Project_Manager: "Ketan Rathod",
-    Start_date: "20-04-2024",
-    End_date: "20-07-2024",
-    Status: "Active",
-    // Assign: 1,
-  },
-  {
-    Name: "Horeca",
-    Project_Manager: "Prashil Sir",
-    Start_date: "20-04-2024",
-    End_date: "20-07-2024",
-    Status: "Active",
-    // Assign: 1,
-  },
-  {
-    Name: "Bloqcube",
-    Project_Manager: "Mehvish Shaikh",
-    Start_date: "20-04-2024",
-    End_date: "20-07-2024",
-    Status: "Active",
-    // Assign: 1,
-  },
-  {
-    Name: "Zopt",
-    Project_Manager: "Abhishek Shinde",
-    Start_date: "20-04-2024",
-    End_date: "20-07-2024",
-    Status: "Active",
-    // Assign: 1,
-  },
-  {
-    Name: "Leave Management",
-    Project_Manager: "Pratiksha Nimbalkar",
-    Start_date: "20-04-2024",
-    End_date: "20-07-2024",
-    Status: "Active",
-    // Assign: 1,
-  },
-  {
-    Name: "Whatsapp Clone",
-    Project_Manager: "Prerana Divekar",
-    Start_date: "20-04-2024",
-    End_date: "20-07-2024",
-    Status: "Active",
-    // Assign: 1,
-  },
-  {
-    Name: "Amazon Clone",
-    Project_Manager: "Pruthvi",
-    Start_date: "20-04-2024",
-    End_date: "20-07-2024",
-    Status: "Active",
-    // Assign: 1,
-  },
-  {
-    Name: "Instagram Clone",
-    Project_Manager: "Pruthvi",
-    Start_date: "20-04-2024",
-    End_date: "20-07-2024",
-    Status: "Active",
-    // Assign: 1,
-  },
-];
-
 export default function ProjectList() {
+  const Projects =useSelector(state=>state.Project.Projects)
+  // console.log("Projectsssssssssssssssssssssssssssss" , Projects)
   const Navigate = useNavigate();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
