@@ -10,8 +10,11 @@ import {
 import MailIcon from "@mui/icons-material/Mail";
 import CallIcon from "@mui/icons-material/Call";
 import profile from "../assets/profile.jpg";
+import UseReponsive from "../hooks/UseResponsive";
 
 export default function ApproverCard() {
+  let responsive=UseReponsive()
+
   return (
     <Card>
       <CardContent>
@@ -25,15 +28,15 @@ export default function ApproverCard() {
           display="flex"
           alignItems="center"
           justifyContent={"center"}
-          my={1}
+          my={responsive.isMobile ? 2 :0.8}
         >
           <Avatar
             src={profile}
-            style={{ width: "70px", height: "70px", border: "2px solid blue" }}
+            style={{ width:responsive.isMobile ? "50px" :"70px", height:responsive.isMobile ? "50px" : "70px", border: "2px solid blue" }}
           />
-          <Box ml={3}>
-            <Typography variant="h6"> Pratik Deshmukh</Typography>
-            <Typography variant="subtitle1">Project Manager</Typography>
+          <Box px={6} display={"flex"} flexDirection={"column"}>
+            <Typography fontSize={responsive.isDesktop ? "19px" : "16px"}> Pratik Deshmukh</Typography>
+            <Typography variant={responsive.isDesktop ? "subtitle1" : "subtitle2"}>Project Manager</Typography>
           </Box>
         </Box>
 
@@ -43,16 +46,16 @@ export default function ApproverCard() {
           width={"100%"}
           justifyContent="space-between"
           textAlign="center"
-          py={1}
-          px={"3%"}
+          py={0.5}
+          px={responsive.isMobile ? "5%" : "10%"}
         >
-          <Grid item display="flex">
+          <Grid item display="flex" px={0.5}>
             <MailIcon />
-            <Typography pl={0.5}>pratik.23@gmail.com</Typography>
+            <Typography variant={responsive.isMobile ? "subtitle2" : "15px"}>pratik.23@gmail.com</Typography>
           </Grid>
           <Grid item display="flex">
             <CallIcon />
-            <Typography>+91 8356789870</Typography>
+            <Typography variant={responsive.isMobile ? "subtitle2" : "15px"}>+91 8356789870</Typography>
           </Grid>
         </Grid>
       </CardContent>

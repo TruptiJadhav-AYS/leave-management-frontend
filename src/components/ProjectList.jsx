@@ -43,14 +43,9 @@ const columns = [
     label: "Status",
     minWidth: 80,
   },
-  //   {
-  //     id: "Assign",
-  //     label: "Assign",
-  //     minWidth: 80,
-  //   },
 ];
 
-const rows = [
+const Projects = [
   {
     Name: "Employee Management System",
     Project_Manager: "Ketan Rathod",
@@ -76,7 +71,7 @@ const rows = [
     // Assign: 1,
   },
   {
-    Name: "Zopto",
+    Name: "Zopt",
     Project_Manager: "Abhishek Shinde",
     Start_date: "20-04-2024",
     End_date: "20-07-2024",
@@ -100,7 +95,7 @@ const rows = [
     // Assign: 1,
   },
   {
-    Name: "Pruthviraj Suryawanshi",
+    Name: "Amazon Clone",
     Project_Manager: "Pruthvi",
     Start_date: "20-04-2024",
     End_date: "20-07-2024",
@@ -108,7 +103,7 @@ const rows = [
     // Assign: 1,
   },
   {
-    Name: "Pruthviraj Suryawanshi",
+    Name: "Instagram Clone",
     Project_Manager: "Pruthvi",
     Start_date: "20-04-2024",
     End_date: "20-07-2024",
@@ -124,9 +119,16 @@ export default function ProjectList() {
   const [sortedBy, setSortedBy] = useState("Name"); // Track sorted column
   const [sortOrder, setSortOrder] = useState("asc"); // Track sort order
 
+  const [searchText, setsearchText] = useState("");
+
+  function handleSearchText(event) {
+    setsearchText(event.target.value);
+  }
+  console.log(searchText);
+
   const sortedRows = useMemo(() => {
     // Sort rows based on sortedBy and sortOrder
-    return rows.slice().sort((a, b) => {
+    return Projects.slice().sort((a, b) => {
       const valueA = a[sortedBy];
       const valueB = b[sortedBy];
 
@@ -158,9 +160,13 @@ export default function ProjectList() {
     Navigate("/Employee/Projects/EditProject");
   };
 
+  const FilterArray = sortedRows.filter((project) =>
+  project.Name.toLowerCase().includes(searchText.toLowerCase())
+);
+
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden", pb: 1, minHeight: "100%" }}>
-      <Box display={"flex"} justifyContent={"space-between"} m={1} mx={1}>
+    <Paper sx={{ width: "100%", overflow: "hidden", minHeight: "100%", height:"100%" }}>
+      <Box display={"flex"} justifyContent={"space-between"}  m={1}>
         <Box
           sx={{
             display: "flex",
@@ -168,12 +174,12 @@ export default function ProjectList() {
             width: "50%",
             border: "2px solid rgba(204, 204, 204, 0.5)",
             borderRadius: "20px",
-            mr: "1",
           }}
         >
           <InputBase
             sx={{ width: "90%", pl: 2 }}
             placeholder="Search for Project..."
+            onChange={handleSearchText}
           />
           <SearchIcon sx={{ my: "1%", mr: 1.5 }} />
         </Box>
@@ -191,7 +197,7 @@ export default function ProjectList() {
       </Box>
       <Divider />
       <TableContainer
-        sx={{ height: "69vh", overflow: "auto", scrollbarWidth: "thin" }}
+        sx={{ height: "64.5vh", overflow: "auto", scrollbarWidth: "thin" }}
       >
         <Table stickyHeader>
           <TableHead>
@@ -200,14 +206,15 @@ export default function ProjectList() {
                 <TableCell
                   key={column.id}
                   align={column.align}
-                  sx={{ color: "primary.main", minWidth: column.minWidth }}
+                  sx={{ color: "primary.main", minWidth: column.minWidth}}
                 >
                   <Stack direction={"row"} alignItems={"center"}>
                     <Typography fontWeight={550} fontSize={"16px"}>
-                      {column.label}
+                    {column.label}
                     </Typography>
                     {column.label === "Name" ? (
                       <Button
+                        disableRipple
                         size="small"
                         onClick={
                           column.id === "Name"
@@ -235,15 +242,15 @@ export default function ProjectList() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {sortedRows
+            {FilterArray
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.Name}>
-                    {columns.map((column) => {
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.Name} ml={2}>
+                    {columns.map((column,index) => {
                       const value = row[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
+                      return ( 
+                        <TableCell key={index} align={column.align} >
                           {value}
                         </TableCell>
                       );
@@ -267,7 +274,7 @@ export default function ProjectList() {
       <TablePagination
         rowsPerPageOptions={[5, 10, 20, 100]}
         component="div"
-        count={rows.length}
+        count={Projects.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

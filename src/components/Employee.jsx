@@ -216,9 +216,20 @@ export default function EmployeeList() {
     setPage(0);
   };
 
+  const [searchText, setsearchText] = useState("");
+
+  function handleSearchText(event) {
+    setsearchText(event.target.value);
+  }
+  console.log(searchText);
+
+  const FilterArray = sortedRows.filter((contact) =>
+    contact.Name.toLowerCase().includes(searchText.toLowerCase())
+  );
+
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden", pb: 1, minHeight: "100%" }}>
-      <Box display={"flex"} justifyContent={"space-between"} m={1} mx={1}>
+    <Paper sx={{ width: "100%", overflow: "hidden",  minHeight: "100%", height:"100%" }}>
+      <Box display={"flex"} justifyContent={"space-between"}  m={1}>
         <Box
           sx={{
             display: "flex",
@@ -231,7 +242,8 @@ export default function EmployeeList() {
         >
           <InputBase
             sx={{ width: "90%", pl: 2 }}
-            placeholder="Search for User..."
+            placeholder="Search for Employee..."
+            onChange={handleSearchText}
           />
           <SearchIcon sx={{ my: "1%", mr: 1.5 }} />
         </Box>
@@ -249,7 +261,7 @@ export default function EmployeeList() {
       </Box>
       <Divider />
       <TableContainer
-        sx={{ height: "69vh", overflow: "auto", scrollbarWidth: "thin" }}
+        sx={{ height: "64vh", overflow: "auto", scrollbarWidth: "thin" }}
       >
         <Table stickyHeader>
           <TableHead>
@@ -266,6 +278,7 @@ export default function EmployeeList() {
                     </Typography>
                     {column.label === "Name" ? (
                       <Button
+                        disableRipple
                         size="small"
                         onClick={
                           column.id === "Name"
@@ -289,7 +302,7 @@ export default function EmployeeList() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {sortedRows
+            {FilterArray
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 // console.log(row)
@@ -317,7 +330,7 @@ export default function EmployeeList() {
                           onClose={handleClose}
                           onClick={handleClose}
                           PaperProps={{
-                            elevation:0,
+                            elevation: 0,
                             sx: {
                               overflow: "visible",
                               filter:
@@ -386,7 +399,6 @@ export default function EmployeeList() {
                                 +91 8356789870
                               </Typography>
                             </Box>
-                            
                           </Box>
                         </Menu>
                         <EditIcon

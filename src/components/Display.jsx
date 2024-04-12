@@ -15,7 +15,6 @@ import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 import Logout from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router-dom";
-import UseReponsive from "../hooks/UseResponsive";
 import MailIcon from "@mui/icons-material/Mail";
 import CallIcon from "@mui/icons-material/Call";
 import Profile from "../assets/profile.jpg"
@@ -41,7 +40,7 @@ function AccountMenu({ role }) {
   return (
     <Box>
       <Tooltip title="Account settings">
-        <IconButton onClick={handleClick} size="small" sx={{ ml: 1 }}>
+        <IconButton onClick={handleClick} size="small" sx={{ ml: 0.2 }}>
           <Avatar src={Profile} sx={{ width: 32, height: 32 }}/>
         </IconButton>
       </Tooltip>
@@ -113,7 +112,7 @@ function AccountMenu({ role }) {
                   : "pruthvi@gmail.com"}
               </Typography>
             </Box>
-            <Box item display="flex">
+            <Box  display="flex">
               <CallIcon />
               <Typography color="textSecondary">+91 8356789870</Typography>
             </Box>
@@ -140,10 +139,6 @@ export default function Display({ logedInUser, role }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
 
-  const responsive = UseReponsive();
-
-  // console.log(role);
-
   const handleDrawerClose = () => {
     setIsClosing(true);
     setMobileOpen(false);
@@ -165,6 +160,7 @@ export default function Display({ logedInUser, role }) {
       <AppBar
         position="fixed"
         sx={{
+          // height: {sm:"9vh"},
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
           backgroundColor: "primary",
@@ -184,23 +180,19 @@ export default function Display({ logedInUser, role }) {
           </Stack>
           <Stack
             direction={"row"}
-            spacing={2}
+            // spacing={0.1}
             height={"100%"}
             alignItems={"center"}
           >
-            {responsive.isDesktop ||
-            responsive.isLaptop ||
-            responsive.isTablet ? (
-              <Typography variant="h6" noWrap component="div">
+
+              <Typography fontSize={"18px"} noWrap component="div">
                 {role === "Admin"
                   ? "Pratiksha Nimbalkar"
                   : role === "Manager"
                   ? "Trupti Jadhav"
                   : " Pruthviraj Suryavanshi"}
               </Typography>
-            ) : (
-              <></>
-            )}
+
             <AccountMenu  role={role} />
           </Stack>
         </Stack>
@@ -242,7 +234,7 @@ export default function Display({ logedInUser, role }) {
         </Drawer>
       </Box>
       <Grid container direction={"row"}>
-        <Toolbar />
+        <Toolbar/>
         <Box bgcolor={"#f5f5f5"} sx={{ width: "100%", height: "89.7vh" }}>
           <CenterDisplay role={role} />
         </Box>

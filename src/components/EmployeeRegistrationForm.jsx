@@ -87,17 +87,6 @@ export default function EmployeeRegistrationForm() {
 
       Gender: Yup.string().required("Gender is required."),
 
-      // Password: Yup.string()
-      //   .min(8, "Password should atleast Contain 8 or above characters")
-      //   .matches(/[a-z]/, "Password must contain a lowercase letter")
-      //   .matches(/[A-Z]/, "Password must contain an uppercase letter")
-      //   .matches(
-      //     /[!@#$%^&*()_+-]+/,
-      //     "Password must contain a special character"
-      //   )
-      //   .required("Password is required."),
-
-      Manager: Yup.string().required("Manager is required."),
     }),
     onSubmit: (values) => {
       console.log(values);
@@ -116,7 +105,7 @@ export default function EmployeeRegistrationForm() {
   }
 
   return (
-    <Grid container justifyContent={"center"} width="100%" pt={3}>
+    <Grid container justifyContent={"center"} width="100%" pt={responsive.isMobile ? 0 : 3}>
       <Stack
         sx={{
           textAlign: "left",
@@ -145,7 +134,7 @@ export default function EmployeeRegistrationForm() {
                   <Stack width={"100%"}>
                     <Typography variant="body2"> NAME</Typography>
                     <InputBase
-                      placeholder=" Name"
+                      placeholder="Name"
                       type="text"
                       name="Name"
                       sx={{
@@ -155,6 +144,7 @@ export default function EmployeeRegistrationForm() {
                             : "2px solid  rgba(204, 204, 204, 0.5)",
                         height: "40px",
                         borderRadius: 1,
+                        px:1
                       }}
                       onClick={() => handleClick("Name")}
                       onChange={formik.handleChange}
@@ -201,6 +191,7 @@ export default function EmployeeRegistrationForm() {
                     >
                       <MenuItem value="Male">Male</MenuItem>
                       <MenuItem value="Female">Female</MenuItem>
+                      <MenuItem value="Other">Other</MenuItem>
                     </Select>
                     {formik.touched.Gender && errors.Gender && (
                       <Typography variant="caption" color="error">
@@ -263,7 +254,7 @@ export default function EmployeeRegistrationForm() {
                       name="Email"
                       onChange={formik.handleChange}
                       value={formik.values.Email}
-                      placeholder=" example@gmail.com"
+                      placeholder="example@gmail.com"
                       sx={{
                         border:
                           clickedBtnID === "Email"
@@ -271,6 +262,7 @@ export default function EmployeeRegistrationForm() {
                             : "2px solid  rgba(204, 204, 204, 0.5)",
                         height: "40px",
                         borderRadius: 1,
+                        px:1
                       }}
                       onClick={() => handleClick("Email")}
                       onBlur={formik.handleBlur}
@@ -297,7 +289,7 @@ export default function EmployeeRegistrationForm() {
                       pattern="[0-9]*"
                       maxLength={10}
                       name="Contact"
-                      placeholder=" Phone Number"
+                      placeholder="Phone Number"
                       onChange={formik.handleChange}
                       value={formik.values.Contact}
                       sx={{
@@ -306,6 +298,7 @@ export default function EmployeeRegistrationForm() {
                             ? "2px solid blue"
                             : "2px solid  rgba(204, 204, 204, 0.5)",
                         height: "40px",
+                        px:1,
                         borderRadius: 1,
                       }}
                       onClick={() => handleClick("Contact")}
@@ -356,6 +349,7 @@ export default function EmployeeRegistrationForm() {
               </Grid> */}
 
               {/* </Grid> */}
+
               <br />
 
               <Grid container height={"10vh"} spacing={1}>
@@ -414,23 +408,6 @@ export default function EmployeeRegistrationForm() {
                 >
                   <Stack width={"100%"}>
                     <Typography variant="body2">MANAGER</Typography>
-                    {/* <InputBase
-                    placeholder="Manager"
-                    name="manager"
-                    onChange={formik.handleChange}
-                    value={formik.values.manager}
-                    sx={{
-                      border:
-                        clickedBtnID === "manager"
-                          ? "2px solid blue"
-                          : "2px solid  rgba(204, 204, 204, 0.5)",
-                      height: "40px",
-                      borderRadius: 1,
-                      px:0.5
-                    }}
-                    onClick={() => handleClick("manager")}
-                    onBlur={formik.handleBlur}
-                  /> */}
 
                     <Select
                       size="small"
@@ -470,15 +447,16 @@ export default function EmployeeRegistrationForm() {
                       <MenuItem value="Trupti Jadhav">Trupti Jadhav</MenuItem>
                     </Select>
 
-                    {formik.touched.Manager && errors.Manager && (
+                    {/* {formik.touched.Manager && errors.Manager && (
                       <Typography variant="caption" color="error">
                         {errors.Manager}
                       </Typography>
-                    )}
+                    )} */}
                   </Stack>
                 </Grid>
               </Grid>
               <br />
+              <Grid container sx={{mt: responsive.isMobile ? 12: 2,rowGap:2 }}>
               <Button
                 variant="outlined"
                 onClick={
@@ -486,18 +464,20 @@ export default function EmployeeRegistrationForm() {
                 }
                 sx={{
                   mr: 2,
-                  mt: responsive.isMobile ? 12 : 2,
+                  textTransform: "none",
                 }}
               >
-                Add Inventory
+                Assign Inventory
               </Button>
               <Button
                 type="submit"
                 variant="contained"
-                sx={{ textTransform: "none", mt: responsive.isMobile ? 12 : 2 }}
+                sx={{ textTransform: "none",
+               }}
               >
                 Onboard Employee
               </Button>
+              </Grid>
             </form>
           </CardContent>
         </Card>
