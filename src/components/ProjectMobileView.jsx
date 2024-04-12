@@ -20,76 +20,12 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SearchIcon from "@mui/icons-material/Search";
 import { useState } from "react";
-
-const Projects = [
-  {
-    Name: "Employee Management System",
-    Project_Manager: "Ketan Rathod",
-    Start_date: "20-04-2024",
-    End_date: "20-07-2024",
-    Status: "Active",
-    // Assign: 1,
-  },
-  {
-    Name: "Horeca",
-    Project_Manager: "Prashil Sir",
-    Start_date: "20-04-2024",
-    End_date: "20-07-2024",
-    Status: "Active",
-    // Assign: 1,
-  },
-  {
-    Name: "Bloqcube",
-    Project_Manager: "Mehvish Shaikh",
-    Start_date: "20-04-2024",
-    End_date: "20-07-2024",
-    Status: "Active",
-    // Assign: 1,
-  },
-  {
-    Name: "Zopt",
-    Project_Manager: "Abhishek Shinde",
-    Start_date: "20-04-2024",
-    End_date: "20-07-2024",
-    Status: "Active",
-    // Assign: 1,
-  },
-  {
-    Name: "Leave Management",
-    Project_Manager: "Pratiksha Nimbalkar",
-    Start_date: "20-04-2024",
-    End_date: "20-07-2024",
-    Status: "Active",
-    // Assign: 1,
-  },
-  {
-    Name: "Whatsapp Clone",
-    Project_Manager: "Prerana Divekar",
-    Start_date: "20-04-2024",
-    End_date: "20-07-2024",
-    Status: "Active",
-    // Assign: 1,
-  },
-  {
-    Name: "Amazon Clone",
-    Project_Manager: "Pruthvi",
-    Start_date: "20-04-2024",
-    End_date: "20-07-2024",
-    Status: "Active",
-    // Assign: 1,
-  },
-  {
-    Name: "Instagram Clone",
-    Project_Manager: "Pruthvi",
-    Start_date: "20-04-2024",
-    End_date: "20-07-2024",
-    Status: "Active",
-    // Assign: 1,
-  },
-];
+import {useSelector} from 'react-redux'
 
 
 export default function ContactsList() {
+  const Projects =useSelector(state=>state.Project.Projects)
+  // console.log("Ppppppppppppppppprojects" , Projects)
   const Navigate = useNavigate();
   const [searchText, setsearchText] = useState("");
 
