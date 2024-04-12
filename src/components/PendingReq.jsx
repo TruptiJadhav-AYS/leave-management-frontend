@@ -41,7 +41,7 @@ const rows = [
     "Doctor appointment"
   ),
   createData(
-    "Prerana",
+    "Priya",
     "10-04-2024",
     "10-04-2024",
     "Half Day",
@@ -55,7 +55,7 @@ const rows = [
     "Doctor appointment"
   ),
   createData(
-    "Prerana",
+    "Riya",
     "10-04-2024",
     "10-04-2024",
     "Half Day",
@@ -128,19 +128,22 @@ export default function PendingReq() {
                 <TableCell align="right">
                   <Stack direction={"row"}>
                   <Button
+                    disableRipple
                     variant="contained"
                     color="success"
                     size="small"
                     onClick={() => handleAccept(row.name)}
-                    sx={{ marginRight: 1 }}
+                    sx={{ marginRight: 1 ,textTransform:"none"}}
                   >
                     Accept
                   </Button>
                   <Button
+                    disableRipple
                     variant="outlined"
                     color="error"
                     size="small"
                     onClick={() => handleReject(row.name)}
+                    sx={{textTransform:"none"}}
                   >
                     Reject
                   </Button>

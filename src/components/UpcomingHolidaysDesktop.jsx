@@ -87,7 +87,7 @@ export default function UpcomingHolidays({role}) {
           }}
         >
           {Holidays.map((Holiday,index)=>(
-            <>
+            <Box key={index}>
             <ListItem width="100%">
               <ListItemAvatar>
                 <Avatar src={Holiday.img}/>
@@ -95,7 +95,7 @@ export default function UpcomingHolidays({role}) {
               <Typography sx={{ml:role==="Employee" ? "25%" : "15%"}}>{Holiday.occasion}<br/>{formatDate(Holiday.date)}</Typography>
             </ListItem>
             <Divider variant="inset"/>
-            </>
+            </Box>
           ))
           }
         </List>

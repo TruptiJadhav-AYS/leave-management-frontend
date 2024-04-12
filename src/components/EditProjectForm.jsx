@@ -64,7 +64,7 @@ import {
     }
   
     return (
-      <Grid container justifyContent={"center"} width="100%" pt={3}>
+      <Grid container justifyContent={"center"} width="100%" pt={responsive.isMobile ? 0 : 3}>
         <Stack
           sx={{
             textAlign: "left",

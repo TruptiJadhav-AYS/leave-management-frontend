@@ -55,7 +55,7 @@ export default function ProjectOnboardForm() {
   const errors = formik.errors;
 
   return (
-    <Grid container justifyContent={"center"} width="100%" pt={3}>
+    <Grid container justifyContent={"center"} width="100%" pt={responsive.isMobile ? 0 : 3}>
       <Stack
         sx={{
           textAlign: "left",
@@ -93,6 +93,7 @@ export default function ProjectOnboardForm() {
                             ? "2px solid blue"
                             : "2px solid rgba(204, 204, 204, 0.5)",
                         height: "40px",
+                        px:1,
                         borderRadius: 1,
                       }}
                       onClick={() => handleClick("projectName")}
@@ -128,6 +129,7 @@ export default function ProjectOnboardForm() {
                             : "2px solid rgba(204, 204, 204, 0.5)",
                         height: "40px",
                         borderRadius: 1,
+                        px:1
                       }}
                       onClick={() => handleClick("managerName")}
                       onChange={formik.handleChange}
@@ -220,7 +222,7 @@ export default function ProjectOnboardForm() {
                   sm={6}
                   md={6}
                   lg={6}
-                  height={responsive.isMobile ? "11vh" : "11vh"}
+                  height={responsive.isMobile ? "17vh" : "15vh"}
                 >
                   <Stack width={"100%"}>
                     <Typography variant="body2"> Status</Typography>
@@ -255,17 +257,31 @@ export default function ProjectOnboardForm() {
                     )}
                   </Stack>
                 </Grid>
+                <Grid item xs={12} sm={6} md={6} lg={6} height={responsive.isMobile ? "17vh" : "15vh"}>
+                  <Stack>
+                    <Typography variant="body2">Description</Typography>
+                    <InputBase
+                     sx={{
+                      border: "2px solid  rgba(204, 204, 204, 0.5)",
+                      borderRadius: "4px",
+                      p: "7px",
+                    }}
+                    multiline
+                    >
+                    </InputBase>
+                  </Stack>
+                  </Grid>
               </Grid>
-
-              <br />
+              <Grid sx={{ mt: responsive.isMobile ? 0.5 : 2}}>
               <Button
                 variant="outlined"
                 onClick={() => {
                   // Handle adding inventory
                 }}
                 sx={{
+                  textTransform: "none",
                   mr: 2,
-                  mt: responsive.isMobile ? 12 : 2,
+                  mb:1
                 }}
               >
                 Add Employee
@@ -273,17 +289,18 @@ export default function ProjectOnboardForm() {
               <Button
                 type="submit"
                 variant="contained"
-                sx={{ textTransform: "none", mt: 2 }}
+                sx={{ textTransform: "none" ,mb:1}}
               >
                 Onboard Project
               </Button>
+              </Grid>
             </form>
           </CardContent>
         </Card>
         {onBoardSuccess && (
           <Alert
             icon={<CheckIcon fontSize="inherit" />}
-            sx={{ height: "50px", mt: "10px" }}
+            sx={{ height: "50px" }}
             severity="success"
           >
             Project onboarded successfully.

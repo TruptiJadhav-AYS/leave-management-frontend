@@ -171,13 +171,13 @@ export default function History() {
       <TableContainer sx={{ height: "80vh" ,scrollbarWidth:"thin"}}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
-            <TableRow>
+            <TableRow >
               {columns.map((column) => (
                 <TableCell
                   key={column.id}
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
-                  sx={{ color: "primary.main" }}
+                  sx={{ color: "primary.main" ,fontWeight:550, fontSize:"16px"}}
                 >
                   {column.label}
                 </TableCell>
@@ -187,9 +187,9 @@ export default function History() {
           <TableBody>
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
+              .map((row,index) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.Email}>
+                  <TableRow hover role="checkbox" tabIndex={-1} key={index}>
 
                     {columns.map((column) => {
                       const value = column.id === 'Start_Date' || column.id === 'End_Date' ? row[column.id]!=="" ? formatDate(row[column.id]) : "-" :row[column.id];

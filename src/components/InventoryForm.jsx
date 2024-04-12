@@ -1,4 +1,4 @@
-import { Button, CardContent, Grid, InputBase, Stack, Typography, Alert, Box } from "@mui/material";
+import { Button, CardContent, Grid, InputBase, Stack, Typography, Alert } from "@mui/material";
 import Card from "@mui/material/Card";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -21,7 +21,7 @@ export default function InventoryForm() {
   const navigate = useNavigate();
 
   const formik = useFormik({
-    initialValues: { Type: '', Category: '', AssignDate: '', SerialNo: '' },
+    initialValues: { Name: '', Category: '', AssignDate: '', SerialNo: '' },
     validationSchema: validationSchema,
     onSubmit: (values, { setSubmitting }) => {
       setOnBoardSuccess(true);
@@ -41,9 +41,9 @@ export default function InventoryForm() {
   }
 
   return (
-    <Grid container justifyContent="center" width="100%" pt={3}>
+    <Grid container justifyContent="center" width="100%" height="100%" pt={responsive.isMobile ? 0 : 3}>
       <Stack sx={{ textAlign: "left", width: responsive.isDesktop || responsive.isLaptop || responsive.isTablet ? "70%" : "100%" }}>
-        <Card elevation={1}>
+        <Card elevation={1} sx={{minHeight:responsive.isMobile && "100%"}}>
           <CardContent>
             <form onSubmit={formik.handleSubmit}>
               <Typography color="primary" variant="h5" mb={2}>
@@ -53,7 +53,7 @@ export default function InventoryForm() {
                 {/* Type Input */}
                 <Grid item xs={12} sm={6} height={responsive.isMobile ? "14vh" : "11vh"}>
                   <Stack width="100%">
-                    <Typography variant="body2">Type</Typography>
+                    <Typography variant="body2">Name</Typography>
                     <InputBase
                       name="Type"
                       value={formik.values.Type}
@@ -67,6 +67,7 @@ export default function InventoryForm() {
                         : "2px solid  rgba(204, 204, 204, 0.5)",
                         height: "40px",
                         borderRadius: 1,
+                        px:1
                       }}
                       onClick={() => handleClick('Type')}
                     />
@@ -94,6 +95,7 @@ export default function InventoryForm() {
                         : "2px solid  rgba(204, 204, 204, 0.5)",
                         height: "40px",
                         borderRadius: 1,
+                        px:1
                       }}
                       onClick={() => handleClick('Category')}
                     />
@@ -108,8 +110,8 @@ export default function InventoryForm() {
               <br />
               <Grid container spacing={1}>
                 {/* Assign Date Input */}
-                <Grid item xs={12} sm={6} height={responsive.isMobile ? "14vh" : "11vh"}>
-                  <Stack width="100%">
+                {/* <Grid item xs={12} sm={6} height={responsive.isMobile ? "14vh" : "11vh"}> */}
+                  {/* <Stack width="100%">
                     <Typography variant="body2">Assign Date</Typography>
                     <InputBase
                       name="AssignDate"
@@ -131,8 +133,8 @@ export default function InventoryForm() {
                         {formik.errors.AssignDate}
                       </Typography>
                     )}
-                  </Stack>
-                </Grid>
+                  </Stack> */}
+                {/* </Grid> */}
                 {/* Serial No Input */}
                 <Grid item xs={12} sm={6} height={responsive.isMobile ? "14vh" : "11vh"}>
                   <Stack width="100%">
@@ -150,6 +152,7 @@ export default function InventoryForm() {
                         : "2px solid  rgba(204, 204, 204, 0.5)",
                         height: "40px",
                         borderRadius: 1,
+                        px:1
                       }}
                       onClick={() => handleClick('SerialNo')}
                     />
@@ -162,14 +165,14 @@ export default function InventoryForm() {
                 </Grid>
               </Grid>
               <br />
-              <Box>
-                <Button type="submit" variant="contained" sx={{ textTransform: "none", mt: 3 }} disabled={formik.isSubmitting}>
+              <Grid container mt={2} >
+                <Button type="submit" variant="contained" sx={{ textTransform: "none" ,mr: 2}} disabled={formik.isSubmitting}>
                   Submit
                 </Button>
-                <Button type="button" variant="contained" sx={{ textTransform: "none", mt: 3, ml: 1 }} onClick={handleCancel}>
+                <Button type="button" variant="contained" sx={{ textTransform: "none"}} onClick={handleCancel}>
                   Cancel
                 </Button>
-              </Box>
+              </Grid>
             </form>
           </CardContent>
         </Card>

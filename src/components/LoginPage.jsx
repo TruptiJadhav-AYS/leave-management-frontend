@@ -96,7 +96,7 @@ function LoginPage(props) {
       </Grid>
       <Container maxWidth="xs" sx={{ pt: "4vh" }}>
         <Card elevation={8}>
-          <CardContent spacing={2}>
+          <CardContent>
             <form onSubmit={handleSubmit}>
               <Typography
                 variant="h6"

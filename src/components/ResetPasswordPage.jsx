@@ -83,7 +83,7 @@ function ResetPasswordPage(props) {
       </Grid>
       <Container maxWidth="xs" sx={{ pt: "4vh" }}>
         <Card elevation={8}>
-          <CardContent spacing={2}>
+          <CardContent>
             <form onSubmit={handleResetPassword}>
               <Typography
                 variant="h6"
