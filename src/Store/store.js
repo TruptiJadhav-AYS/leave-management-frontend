@@ -5,6 +5,7 @@ import EmployeeLeaveHistory from './slice/HistorySlice'
 import ProjectsSlice from './slice/ProjectsSlice'
 import InventorySlice from './slice/InventorySlice'
 import PendingRequestsSlice from './slice/PendingRequestsSlice'
+
 export const store = configureStore({
   reducer: {
     employees: employeeSlice,
