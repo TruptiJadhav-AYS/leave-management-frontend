@@ -15,7 +15,6 @@ import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 import Logout from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router-dom";
-import UseReponsive from "../hooks/UseResponsive";
 import MailIcon from "@mui/icons-material/Mail";
 import CallIcon from "@mui/icons-material/Call";
 import Profile from "../assets/profile.jpg"
@@ -139,10 +138,6 @@ const drawerWidth = 240;
 export default function Display({ logedInUser, role }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
-
-  const responsive = UseReponsive();
-
-  // console.log(role);
 
   const handleDrawerClose = () => {
     setIsClosing(true);
