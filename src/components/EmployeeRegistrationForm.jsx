@@ -16,9 +16,13 @@ import UseReponsive from "../hooks/UseResponsive";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import CheckIcon from "@mui/icons-material/Check";
+import {useDispatch} from 'react-redux'
+import addEmployee from "../Store/action/EmployeeAction";
 
 export default function EmployeeRegistrationForm() {
   const responsive = UseReponsive();
+  let dispatch=useDispatch()
+
   const [clickedBtnID, setClickedBtnID] = useState("");
   let [onBoardSuccess, setOnBoardSuccess] = useState(false);
 
@@ -45,30 +49,30 @@ export default function EmployeeRegistrationForm() {
 
   const formik = useFormik({
     initialValues: {
-      Name: "",
-      // Role: "",
-      Email: "",
-      Contact: "",
-      // DateOfBirth: "",
-      Department: "",
-      Gender: "",
-      Manager: "",
+      name: "",
+      // role: "",
+      email: "",
+      contact: "",
+      // dob: "",
+      department: "",
+      gender: "",
+      manager: "",
     },
 
     validationSchema: Yup.object({
-      Name: Yup.string().required("Name is Mandatory."),
+      name: Yup.string().required("name is Mandatory."),
 
       // Role: Yup.string().required("Role is required."),
 
-      Email: Yup.string()
+      email: Yup.string()
         .trim()
         .matches(emailRegex, "Invalid email format")
-        .required("Email is required."),
+        .required("email is required."),
 
-      Contact: Yup.number()
+      contact: Yup.number()
         .test(
           "len",
-          "Contact no should contain only 10 characters.",
+          "contact no should contain only 10 characters.",
           (value) => {
             if (value === undefined || value === null) {
               return true;
@@ -76,20 +80,20 @@ export default function EmployeeRegistrationForm() {
             return String(value).length === 10;
           }
         )
-        .required("Contact no is required."),
+        .required("contact no is required."),
 
       // DateOfBirth: Yup.date()
       //   .min("1950-01-01", "Birthdate should be after 1950-01-01")
       //   .max(eighteenYearsAgo, `Birthdate should be before ${eighteenYearsAgo.getDate()}-${eighteenYearsAgo.getMonth()}-${eighteenYearsAgo.getFullYear()}`)
       //   .required("Date of birth is required."),
 
-      Department: Yup.string().required("Department is mandatory."),
+      department: Yup.string().required("department is mandatory."),
 
-      Gender: Yup.string().required("Gender is required."),
+      gender: Yup.string().required("gender is required."),
 
     }),
     onSubmit: (values) => {
-      console.log(values);
+      dispatch(addEmployee(values))
       setOnBoardSuccess(true);
       setTimeout(() => {
         navigate("/Employee/Employees");
@@ -132,28 +136,28 @@ export default function EmployeeRegistrationForm() {
                   height={responsive.isMobile ? "14vh" : "11vh"}
                 >
                   <Stack width={"100%"}>
-                    <Typography variant="body2"> NAME</Typography>
+                    <Typography variant="body2"> name</Typography>
                     <InputBase
-                      placeholder="Name"
+                      placeholder="name"
                       type="text"
-                      name="Name"
+                      name="name"
                       sx={{
                         border:
-                          clickedBtnID === "Name"
+                          clickedBtnID === "name"
                             ? "2px solid blue"
                             : "2px solid  rgba(204, 204, 204, 0.5)",
                         height: "40px",
                         borderRadius: 1,
                         px:1
                       }}
-                      onClick={() => handleClick("Name")}
+                      onClick={() => handleClick("name")}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
-                      value={formik.values.Name}
+                      value={formik.values.name}
                     />
-                    {formik.touched.Name && errors.Name && (
+                    {formik.touched.name && errors.name && (
                       <Typography variant="caption" color="error">
-                        {errors.Name}
+                        {errors.name}
                       </Typography>
                     )}
                   </Stack>
@@ -167,12 +171,12 @@ export default function EmployeeRegistrationForm() {
                   height={responsive.isMobile ? "11vh" : "11vh"}
                 >
                   <Stack width={"100%"}>
-                    <Typography variant="body2"> GENDER </Typography>
+                    <Typography variant="body2"> gender </Typography>
                     <Select
                       size="small"
-                      name="Gender"
+                      name="gender"
                       onChange={formik.handleChange}
-                      value={formik.values.Gender}
+                      value={formik.values.gender}
                       sx={{
                         "& fieldset": {
                           borderColor: "rgba(204, 204, 204, 0.5)",
@@ -186,16 +190,16 @@ export default function EmployeeRegistrationForm() {
                         height: "40px",
                         borderRadius: 1,
                       }}
-                      onClick={() => handleClick("Gender")}
+                      onClick={() => handleClick("gender")}
                       onBlur={formik.handleBlur}
                     >
                       <MenuItem value="Male">Male</MenuItem>
                       <MenuItem value="Female">Female</MenuItem>
                       <MenuItem value="Other">Other</MenuItem>
                     </Select>
-                    {formik.touched.Gender && errors.Gender && (
+                    {formik.touched.gender && errors.gender && (
                       <Typography variant="caption" color="error">
-                        {errors.Gender}
+                        {errors.gender}
                       </Typography>
                     )}
                   </Stack>
@@ -225,7 +229,7 @@ export default function EmployeeRegistrationForm() {
                     onClick={() => handleClick("Role")}
                     onBlur={formik.handleBlur}
                   >
-                    <MenuItem value="Manager"> Manager</MenuItem>
+                    <MenuItem value="manager"> manager</MenuItem>
                     <MenuItem value="Employee">Employee</MenuItem>
                   </Select>
                   {formik.touched.Role && errors.Role && (
@@ -248,28 +252,28 @@ export default function EmployeeRegistrationForm() {
                   height={responsive.isMobile ? "14vh" : "8vh"}
                 >
                   <Stack width={"100%"}>
-                    <Typography variant="body2"> EMAIL </Typography>
+                    <Typography variant="body2"> email </Typography>
                     <InputBase
                       type="email"
-                      name="Email"
+                      name="email"
                       onChange={formik.handleChange}
-                      value={formik.values.Email}
+                      value={formik.values.email}
                       placeholder="example@gmail.com"
                       sx={{
                         border:
-                          clickedBtnID === "Email"
+                          clickedBtnID === "email"
                             ? "2px solid blue"
                             : "2px solid  rgba(204, 204, 204, 0.5)",
                         height: "40px",
                         borderRadius: 1,
                         px:1
                       }}
-                      onClick={() => handleClick("Email")}
+                      onClick={() => handleClick("email")}
                       onBlur={formik.handleBlur}
                     />
-                    {formik.touched.Email && errors.Email && (
+                    {formik.touched.email && errors.email && (
                       <Typography variant="caption" color="error">
-                        {errors.Email}
+                        {errors.email}
                       </Typography>
                     )}
                   </Stack>
@@ -283,30 +287,30 @@ export default function EmployeeRegistrationForm() {
                   height={responsive.isMobile ? "7vh" : "8vh"}
                 >
                   <Stack width={"100%"}>
-                    <Typography variant="body2"> Contact NO</Typography>
+                    <Typography variant="body2"> contact NO</Typography>
                     <InputBase
                       type="tel"
                       pattern="[0-9]*"
                       maxLength={10}
-                      name="Contact"
+                      name="contact"
                       placeholder="Phone Number"
                       onChange={formik.handleChange}
-                      value={formik.values.Contact}
+                      value={formik.values.contact}
                       sx={{
                         border:
-                          clickedBtnID === "Contact"
+                          clickedBtnID === "contact"
                             ? "2px solid blue"
                             : "2px solid  rgba(204, 204, 204, 0.5)",
                         height: "40px",
                         px:1,
                         borderRadius: 1,
                       }}
-                      onClick={() => handleClick("Contact")}
+                      onClick={() => handleClick("contact")}
                       onBlur={formik.handleBlur}
                     />
-                    {formik.touched.Contact && errors.Contact && (
+                    {formik.touched.contact && errors.contact && (
                       <Typography variant="caption" color="error">
-                        {errors.Contact}
+                        {errors.contact}
                       </Typography>
                     )}
                   </Stack>
@@ -362,12 +366,12 @@ export default function EmployeeRegistrationForm() {
                   height={responsive.isMobile ? "14vh" : "11vh"}
                 >
                   <Stack width={"100%"}>
-                    <Typography variant="body2"> DEPARTMENT</Typography>
+                    <Typography variant="body2"> department</Typography>
                     <Select
                       size="small"
-                      name="Department"
+                      name="department"
                       onChange={formik.handleChange}
-                      value={formik.values.Department}
+                      value={formik.values.department}
                       sx={{
                         "& fieldset": {
                           borderColor: "rgba(204, 204, 204, 0.5)",
@@ -381,7 +385,7 @@ export default function EmployeeRegistrationForm() {
                         height: "40px",
                         borderRadius: 1,
                       }}
-                      onClick={() => handleClick("Department")}
+                      onClick={() => handleClick("department")}
                       onBlur={formik.handleBlur}
                     >
                       <MenuItem value="Human Resource">Human Resource</MenuItem>
@@ -390,9 +394,9 @@ export default function EmployeeRegistrationForm() {
                       <MenuItem value="Finance">Finance</MenuItem>
                     </Select>
 
-                    {formik.touched.Department && errors.Department && (
+                    {formik.touched.department && errors.department && (
                       <Typography variant="caption" color="error">
-                        {errors.Department}
+                        {errors.department}
                       </Typography>
                     )}
                   </Stack>
@@ -407,13 +411,13 @@ export default function EmployeeRegistrationForm() {
                   height={responsive.isMobile ? "10vh" : "11vh"}
                 >
                   <Stack width={"100%"}>
-                    <Typography variant="body2">MANAGER</Typography>
+                    <Typography variant="body2">manager</Typography>
 
                     <Select
                       size="small"
-                      name="Manager"
+                      name="manager"
                       onChange={formik.handleChange}
-                      value={formik.values.Manager}
+                      value={formik.values.manager}
                       sx={{
                         "& fieldset": {
                           borderColor: "rgba(204, 204, 204, 0.5)",
@@ -447,9 +451,9 @@ export default function EmployeeRegistrationForm() {
                       <MenuItem value="Trupti Jadhav">Trupti Jadhav</MenuItem>
                     </Select>
 
-                    {/* {formik.touched.Manager && errors.Manager && (
+                    {/* {formik.touched.manager && errors.manager && (
                       <Typography variant="caption" color="error">
-                        {errors.Manager}
+                        {errors.manager}
                       </Typography>
                     )} */}
                   </Stack>

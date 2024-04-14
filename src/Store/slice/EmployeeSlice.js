@@ -140,8 +140,13 @@ const initialState = {
 const employeeSlice = createSlice({
   name: "EmployeeSlice",
   initialState,
-  reducers: {},
+  reducers: {
+    addEmp:(state,action)=>{
+      state.Employees=action.payload;
+    },
+  }
 });
 
 // export const {onSelectContact,onMsg,onSearch}=contactSlice.actions
+export const {addEmp}=employeeSlice.actions
 export default employeeSlice.reducer;
