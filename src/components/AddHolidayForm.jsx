@@ -17,9 +17,12 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import CheckIcon from "@mui/icons-material/Check";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
+import {useDispatch} from 'react-redux'
+import addHol from "../Store/action/AddHolidayAction";
 
 export default function AddHolidayForm() {
   const responsive = UseReponsive();
+  const dispatch=useDispatch();
 
   const [clickedBtnID, setClickedBtnID] = useState("");
   const [onBoardSuccess, setOnBoardSuccess] = useState(false);
@@ -28,25 +31,33 @@ export default function AddHolidayForm() {
     setClickedBtnID(id);
   }
   const navigate = useNavigate();
+  function formatDate(dateStr) {
+    // Assuming dateStr is in "YYYY-MM-DD" format
+    const parts = dateStr.split('-'); // split the date into an array [YYYY, MM, DD]
+    return `${parts[2]}-${parts[1]}-${parts[0]}`; // rearrange to "DD-MM-YYYY"
+}
 
   const formik = useFormik({
     initialValues: {
-      holidayName: "",
-      occassion: "",
-      Date: "",
-      Day: "",
-      image: "",
+    //   holidayName: "",
+    occasion: "",
+      date: "",
+      day: "",
+      img: "",
     },
     validationSchema: Yup.object({
-      holidayName: Yup.string().required("Holiday Name is required."),
-      occassion: Yup.string().required("Occassion is required."),
-      Date: Yup.date().required("Please select a date"),
+    //   holidayName: Yup.string().required("Holiday Name is required."),
+    occasion: Yup.string().required("Occassion is required."),
+      date: Yup.date().required("Please select a date"),
       // toDate: Yup.date().required("Please select a date"),
-      Day: Yup.string().required("Day is required."),
+      day: Yup.string().required("Day is required."),
     //   image: Yup.string().required("Image is required."),
     }),
     onSubmit: (values) => {
-    //   console.log(values);
+      
+console.log(values)
+    dispatch(addHol(values))
+    
       setOnBoardSuccess(true);
       setTimeout(() => {
         navigate("/Employee/Holidays");
@@ -77,7 +88,7 @@ export default function AddHolidayForm() {
               </Typography>
 
               <Grid container spacing={1}>
-                <Grid
+                {/* <Grid
                   item
                   xs={12}
                   sm={6}
@@ -110,64 +121,61 @@ export default function AddHolidayForm() {
                       </Typography>
                     )}
                   </Stack>
-                </Grid>
+                </Grid> */}
                 <Grid
                   item
                   xs={12}
                   sm={6}
                   md={6}
                   lg={6}
-                  height={responsive.isMobile ? "11vh" : "11vh"}
+                  height={responsive.isMobile ? "15vh" : "11vh"}
                 >
                   <Stack width={"100%"}>
-                    <Typography variant="body2"> OCCASSION </Typography>
+                    <Typography variant="body2"> OCCASION </Typography>
                     <InputBase
                       placeholder="Occasion"
                       type="text"
-                      name="occassion"
+                      name="occasion"
                       sx={{
                         border:
-                          clickedBtnID === "occassion"
+                          clickedBtnID === "occasion"
                             ? "2px solid blue"
                             : "2px solid rgba(204, 204, 204, 0.5)",
                         height: "40px",
                         borderRadius: 1,
                       }}
-                      onClick={() => handleClick("occassion")}
+                      onClick={() => handleClick("occasion")}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
-                      value={formik.values.occassion}
+                      value={formik.values.occasion}
                     />
-                    {formik.touched.occassion && errors.occassion && (
+                    {formik.touched.occasion && errors.occasion && (
                       <Typography variant="caption" color="error">
-                        {errors.occassion}
+                        {errors.occasion}
                       </Typography>
                     )}
                   </Stack>
                 </Grid>
-              </Grid>
-              <br />
-              <Grid container spacing={1}>
                 <Grid
                   item
                   xs={12}
                   sm={6}
-                  height={responsive.isMobile ? "17vh" : "11vh"}
+                  height={responsive.isMobile ? "13vh" : "11vh"}
                 >
                   <Typography variant="body2">DATE</Typography>
                   <InputBase
                     onChange={formik.handleChange}
-                    value={formik.values.Date}
+                    value={formik.values.date}
                     type="date"
-                    name="Date"
+                    name="date"
                     lable="Date"
                     onClick={() => {
-                      handleClick("Date");
+                      handleClick("date");
                     }}
                     onBlur={formik.handleBlur}
                     sx={{
                       border:
-                        clickedBtnID === "Date"
+                        clickedBtnID === "date"
                           ? "2px solid blue"
                           : "2px solid rgba(204, 204, 204, 0.5)",
                       borderRadius: "4px",
@@ -175,27 +183,31 @@ export default function AddHolidayForm() {
                       width: "100%",
                     }}
                   />
-                  {formik.touched.Date && errors.Date && (
+                  {formik.touched.date && errors.date && (
                     <Typography variant="caption" color="error">
-                      {errors.Date}
+                      {errors.date}
                     </Typography>
                   )}
                 </Grid>
+              </Grid>
+              <br />
+              <Grid container spacing={1}>
+                
                 <Grid
                   item
                   xs={12}
                   sm={6}
                   md={6}
                   lg={6}
-                  height={responsive.isMobile ? "11vh" : "11vh"}
+                  height={responsive.isMobile ? "15vh" : "11vh"}
                 >
                   <Stack width={"100%"}>
                     <Typography variant="body2">DAY</Typography>
                     <Select
                       size="small"
-                      name="Day"
+                      name="day"
                       onChange={formik.handleChange}
-                      value={formik.values.Day}
+                      value={formik.values.day}
                       sx={{
                         "& fieldset": {
                           borderColor: "rgba(204, 204, 204, 0.5)",
@@ -209,7 +221,7 @@ export default function AddHolidayForm() {
                         height: "40px",
                         borderRadius: 1,
                       }}
-                      onClick={() => handleClick("Day")}
+                      onClick={() => handleClick("day")}
                       onBlur={formik.handleBlur}
                     >
                       <MenuItem value="Monday">Monday</MenuItem>
@@ -220,16 +232,13 @@ export default function AddHolidayForm() {
                       <MenuItem value="Saturday">Saturday</MenuItem>
                       <MenuItem value="Sunday">Sunday</MenuItem>
                     </Select>
-                    {formik.touched.Day && errors.Day && (
+                    {formik.touched.day && errors.day && (
                       <Typography variant="caption" color="error">
-                        {errors.Day}
+                        {errors.day}
                       </Typography>
                     )}
                   </Stack>
                 </Grid>
-              </Grid>
-              <br />
-              <Grid container spacing={1}>
                 <Grid
                   item
                   xs={12}
@@ -240,13 +249,14 @@ export default function AddHolidayForm() {
                   
                   <Button variant="outlined" sx={{textTransform:"none"}}><FileUploadIcon/>Upload Image</Button>
 
-                  {formik.touched.image && errors.image && (
+                  {formik.touched.img && errors.img && (
                     <Typography variant="caption" color="error">
-                      {errors.image}
+                      {errors.img}
                     </Typography>
                   )}
                 </Grid>
               </Grid>
+              
               <Button
                 type="submit"
                 variant="contained"

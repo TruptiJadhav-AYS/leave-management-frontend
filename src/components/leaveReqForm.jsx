@@ -15,9 +15,12 @@ import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import UseReponsive from "../hooks/UseResponsive";
 import CheckIcon from "@mui/icons-material/Check"
+import { useDispatch } from "react-redux";
+import addSendingRequest from "../Store/action/AddRequestHistory";
 
 function LeaveReqForm() {
   let Navigate = useNavigate();
+  let dispatch=useDispatch();
   let [clickedId, setClickedId] = useState("");
   let responsive=UseReponsive();
   let [submitSuccess,setSubmitSuccess]=useState(false)
@@ -51,6 +54,7 @@ function LeaveReqForm() {
     },
     validationSchema: leaveReqObj,
     onSubmit: (values) => {
+      dispatch(addSendingRequest(values))
       setSubmitSuccess(true);
       setTimeout(()=>{
       Navigate("/Employee");

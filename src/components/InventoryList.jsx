@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
 import { useState } from "react";
-import EditIcon from "@mui/icons-material/Edit";
+// import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const columns = [
@@ -32,7 +32,7 @@ const columns = [
 
 export default function InventoryList() {
   const InventoryListItems = useSelector(state=>state.Inventory.InventoryListItems)
-  // console.log("****************", InventoryListItems)
+  console.log("****************", InventoryListItems)
   const Navigate = useNavigate();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -55,7 +55,7 @@ export default function InventoryList() {
   function handleSearchText(event) {
     setsearchText(event.target.value);
   }
-  console.log(searchText);
+  // console.log(searchText);
 
   const FilterArray = InventoryListItems.filter((inventory) =>
     inventory.category.toLowerCase().includes(searchText.toLowerCase())
@@ -120,6 +120,7 @@ export default function InventoryList() {
             {FilterArray
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((InventoryListItem,index) => {
+                console.log("yuyyuuyyyggg",index)
                 return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={index} sx={{cursor:"pointer"}} >
                     {columns.map((column) => {
@@ -132,10 +133,6 @@ export default function InventoryList() {
                     })}
                     <TableCell align="center">
                       <Stack direction="row">
-                        {/* <EditIcon
-                          // onClick={handleEditClick}
-                          sx={{ cursor: "pointer" }}
-                        /> */}
                         <DeleteIcon sx={{ cursor: "pointer" }} />
                       </Stack>
                     </TableCell>

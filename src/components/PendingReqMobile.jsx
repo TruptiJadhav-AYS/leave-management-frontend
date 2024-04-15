@@ -7,55 +7,12 @@ import {
   Stack,
   Box,
 } from "@mui/material";
-
-const PendingRequest = [
-  {
-    name: "Pratiksha",
-    from_date: "10/04/2024",
-    to_date: "10/04/2024",
-    leave_type: "Half Day",
-    reason: "Doctor appointment",
-  },
-  {
-    name: "Trupti",
-    from_date: "10/04/2024",
-    to_date: "10/04/2024",
-    leave_type: "Half Day",
-    reason: "",
-  },
-  {
-    name: "Pruthvi",
-    from_date: "10/04/2024",
-    to_date: "10/04/2024",
-    leave_type: "Half Day",
-    reason: "Doctor appointment",
-  },
-  {
-    name: "Prerana",
-    from_date: "10/04/2024",
-    to_date: "10/04-/2024",
-    leave_type: "Half Day",
-    reason: "Doctor appointment",
-  },
-  {
-    name: "Priya",
-    from_date: "10/04/2024",
-    to_date: "10/04/2024",
-    leave_type: "Half Day",
-    reason: "Doctor appointment",
-  },
-  {
-    name: "Siya",
-    from_date: "10/04/2024",
-    to_date: "10/04/2024",
-    leave_type: "Half Day",
-    reason: "Doctor appointment",
-  },
-];
+import {useSelector} from 'react-redux'
 
 export default function PendingReqMobile() {
+  const PendingRequestList = useSelector(state=>state.PendingRequests.PendingRequestList)
   const formatDate = (dateString) => {
-    const [day, month, year] = dateString.split("/");
+    const [day, month, year] = dateString.split("-");
     const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 
     return `${day} ${monthNames[parseInt(month, 10) - 1]} ${year}`;
@@ -70,7 +27,7 @@ export default function PendingReqMobile() {
           width: "100%",
         }}
       >
-        {PendingRequest.map((request, index) => (
+        {PendingRequestList.map((request, index) => (
           <Card
             sx={{ my: 0.2, borderRadius: 2, width: "100%" }}
             elevation={3}
@@ -94,10 +51,10 @@ export default function PendingReqMobile() {
                     variant="subtitle2"
                     sx={{ textTransform: "none", color: "black" }}
                   >
-                    {formatDate(request.from_date)} to{" "}
-                    {request.to_date !== "-"
-                      ? formatDate(request.to_date)
-                      : "-"}
+                    {formatDate(request.fromDate)} 
+                    {request.toDate !== ""
+                      ? " to "+formatDate(request.toDate)
+                      : ""}
                   </Typography>
                   <Box style={{ minHeight: "24px" }}>
                     <Typography variant="caption">{request.reason}</Typography>

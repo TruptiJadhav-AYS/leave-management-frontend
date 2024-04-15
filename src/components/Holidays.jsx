@@ -4,11 +4,14 @@ import { Grid, Typography, Paper, Box, IconButton } from "@mui/material";
 import UseReponsive from "../hooks/UseResponsive";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { deleteHoliday } from "../Store/slice/HolidaysSlice";
+import deleteHol from "../Store/action/DeleteHolidayAction";
 
 export default function Holidays({role}) {
   const navigate = useNavigate();
+  const dispatch=useDispatch();
   const [hoverIndex, setHoverIndex] = useState(null); // State to track hovered card
 
   function handleAddClick() {
@@ -18,8 +21,14 @@ export default function Holidays({role}) {
   const annualLeaves = useSelector((state) => state.holidays.annualLeaves);
   let responsive = UseReponsive();
 
+  function handledeleteHolidayClick(value){
+    console.log(value)
+    dispatch(deleteHol(value))
+  }
+
   const formatDate = (dateString) => {
-    const [day, month, year] = dateString.split("/");
+
+    const [year, month, day] = dateString.split("-");
     const monthNames = [
       "Jan",
       "Feb",
@@ -79,7 +88,7 @@ export default function Holidays({role}) {
             <Typography>{formatDate(holiday.date)}</Typography>
             <Typography sx={{ mb: 1 }}>{holiday.day}</Typography>
             {hoverIndex === index && role === "Admin" && ((
-              <IconButton sx={{ position: "absolute", top: 0, right: 0 }}>
+              <IconButton sx={{ position: "absolute", top: 0, right: 0 }} onClick={()=>{handledeleteHolidayClick(holiday.id)}}>
                 <DeleteIcon />
               </IconButton>
             ))}

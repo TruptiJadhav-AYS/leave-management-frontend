@@ -84,10 +84,11 @@ export default function History() {
                     {columns.map((column) => {
                       const value = column.id === 'Start_Date' || column.id === 'End_Date' ? row[column.id]!=="" ? formatDate(row[column.id]) : "-" :row[column.id];
                       return (
+                        
                         <TableCell key={column.id} align={column.align} sx={{color: 
-                          column.id === "status" && value === "Pending" ? "#FFA500" : 
-                          column.id === "status" && value === "Accepted" ? "#008800" : 
-                          column.id === "status" && value === "Rejected" ? "red" : 
+                          column.id === "status" && value === "Pending" ? "#7B3F00" : 
+                          column.id === "status" && value === "Accepted" ? "darkgreen" : 
+                          column.id === "status" && value === "Rejected" ? "darkred" : 
                           "black",
                           fontWeight: 
                           column.id === "status" && value === "Pending" ? "bold" : 
