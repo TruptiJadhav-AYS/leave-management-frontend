@@ -455,18 +455,14 @@ import { useSelector } from "react-redux";
 
 export default function EmployeeList() {
   const Navigate = useNavigate();
-  const EmployeesList = useSelector((state)=>state.EmployeeList.EmployeeList);
-  console.log("************",EmployeesList)
   const [searchText, setsearchText] = useState("");
   const Employees=useSelector(
     (state) => state.employees.Employees
   );
-  console.log(Employees)
 
   function handleSearchText(event) {
     setsearchText(event.target.value);
   }
-  // console.log(searchText);
 
   const FilterArray = Employees.filter((contact) =>
     contact.name.toLowerCase().includes(searchText.toLowerCase())

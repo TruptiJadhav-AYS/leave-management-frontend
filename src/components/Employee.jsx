@@ -29,137 +29,6 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useSelector } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-// const columns = [
-//   { id: "name", label: "Name", minWidth: 180 },
-//   { id: "Email", label: "Email", minWidth: 170 },
-
-//   {
-//     id: "gender",
-//     label: "Gender",
-//     minWidth: 110,
-//   },
-//   {
-//     id: "manager",
-//     label: "manager",
-//     minWidth: 120,
-//     // align: "center",
-//   },
-//   {
-//     id: "department",
-//     label: "Department",
-//     minWidth: 80,
-//     align: "center",
-//   },
-//   // {
-//   //   id: "Inventory",
-//   //   label: "Inventory",
-//   //   minWidth: 80,
-//   //   align: "center",
-//   // },
-// ];
-
-// const rows = useSelector(
-//   (state) => state.employees.Employees
-
-// );
-// [
-//   {
-//     Name: "Pruthviraj Suryawanshi",
-//     Email: "pruthvi@gmail.com",
-//     Role: "Employee",
-//     Gender: "Male",
-//     manager: "Yogesh Patel",
-//     Department: "HR",
-//   },
-//   {
-//     Name: "Pratiksha Nimbalkar",
-//     Email: "pratiksha@gmail.com",
-//     Role: "Employee",
-//     Gender: "Female",
-//     manager: "Yogesh Patel",
-//     Department: "HR",
-//   },
-//   {
-//     Name: "Trupti Jadhav",
-//     Email: "trupti@gmail.com",
-//     Role: "Employee",
-//     Gender: "Female",
-//     manager: "Yogesh Patel",
-//     Department: "HR",
-//   },
-//   {
-//     Name: "Ketan Rathod",
-//     Email: "ketan@gmail.com",
-//     Role: "Manager",
-//     Gender: "Male",
-//     manager: "Yogesh Patel",
-//     Department: "HR",
-//   },
-//   {
-//     Name: "Yogesh Patel",
-//     Email: "yogesh@gmail.com",
-//     Role: "Admin",
-//     Gender: "Male",
-//     manager: "Yogesh Patel",
-//     Department: "HR",
-//   },
-//   {
-//     Name: "Nupur Tyagi",
-//     Email: "nupur@gmail.com",
-//     Role: "Employee",
-//     Gender: "Female",
-//     manager: "Yogesh Patel",
-//     Department: "HR",
-//   },
-//   {
-//     Name: "Mehvish Shaikh",
-//     Email: "mehvish@gmail.com",
-//     Role: "Employee",
-//     Gender: "Female",
-//     manager: "Yogesh Patel",
-//     Department: "HR",
-//   },
-//   {
-//     Name: "Abhinandan Ambekar",
-//     Email: "abhi@gmail.com",
-//     Role: "Employee",
-//     Gender: "Male",
-//     manager: "Yogesh Patel",
-//     Department: "HR",
-//   },
-//   {
-//     Name: "Shruti Bagde",
-//     Email: "shruti@gmail.com",
-//     Role: "Employee",
-//     Gender: "Female",
-//     manager: "Yogesh Patel",
-//     Department: "HR",
-//   },
-//   {
-//     Name: "Prerana Divekar",
-//     Email: "prerana@gmail.com",
-//     Role: "Employee",
-//     Gender: "Female",
-//     manager: "Yogesh Patel",
-//     Department: "HR",
-//   },
-//   {
-//     Name: "Abhishek Shinde",
-//     Email: "abhi123@gmail.com",
-//     // Role: "Employee",
-//     Gender: "Male",
-//     manager: "Yogesh Patel",
-//     Department: "HR",
-//   },
-//   {
-//     Name: "Shital Theware",
-//     Email: "shital@gmail.com",
-//     // Role: "Employee",
-//     Gender: "Female",
-//     manager: "Yogesh Patel",
-//     Department: "HR",
-//   },
-// ];
 
 export default function EmployeeList() {
   const Navigate = useNavigate();
@@ -213,21 +82,16 @@ export default function EmployeeList() {
   // const onLogoutClick = () => {
   //   setLogoutClick(true);
   // };
+  
   function handleSearchText(event) {
     setsearchText(event.target.value);
   }
-  // console.log(searchText);
-
-
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
-    // console.log(event.currentTarget)
   };
 
   const handleClose = () => {
-    // console.log(anchorEl)
-
     setAnchorEl(null);
   };
 
