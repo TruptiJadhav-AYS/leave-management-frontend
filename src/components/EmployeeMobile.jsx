@@ -102,6 +102,7 @@ export default function EmployeeList() {
               scrollbarWidth: "thin",
               pt: "2%",
               bgcolor: "white",
+              minHeight:"100%"
             }}
           >
             {FilterArray.map((contact) => (
