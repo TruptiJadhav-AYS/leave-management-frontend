@@ -6,7 +6,8 @@ import {
   Divider,
   InputBase,
   Box,
-  Paper
+  Paper,
+  Card,
 } from "@mui/material";
 // import Avatar from "@mui/material/Avatar";
 import ListItem from "@mui/material/ListItem";
@@ -19,9 +20,7 @@ import { useSelector } from "react-redux";
 export default function EmployeeList() {
   const Navigate = useNavigate();
   const [searchText, setsearchText] = useState("");
-  const Employees=useSelector(
-    (state) => state.employees.Employees
-  );
+  const Employees = useSelector((state) => state.employees.Employees);
 
   function handleSearchText(event) {
     setsearchText(event.target.value);
@@ -32,109 +31,114 @@ export default function EmployeeList() {
   );
 
   return (
-      <Paper height={"90vh"}>
-        <Grid
-          container
-          sx={{
-            width: "100%",
-            top: "9%",
-            zIndex: 1,
-            bgcolor: "white",
-            height:"8vh"
-          }}
-          position={"sticky"}
-        >
-          <Grid item xs={10}>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                width: "98%",
-                border: "2px solid rgba(204, 204, 204, 0.5)",
-                borderRadius: "10px",
-                mr: "1",
-              }}
-            >
-              <InputBase
-                sx={{ width: "98%", pl: 2 }}
-                placeholder="Search for Employee..."
-                onChange={handleSearchText}
-              />
-              <SearchIcon sx={{ my: "1%", mr: 1.5 }} />
-            </Box>
-          </Grid>
-          <Grid item xs={2}>
-            <Button
-              variant="contained"
-              sx={{
-                borderRadius: "10px",
-                backgroundColor: "white",
-                color: "black",
-              }}
-              onClick={() => {
-                Navigate("/Employee/Employees/NewRegistration");
-              }}
-            >
-              <AddIcon />
-            </Button>
-          </Grid>
-          <Divider />
+    <Paper height={"90vh"}>
+      <Grid
+        container
+        sx={{
+          width: "100%",
+          top: "9%",
+          zIndex: 1,
+          bgcolor: "white",
+          height: "8vh",
+        }}
+        position={"sticky"}
+      >
+        <Grid item xs={10}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "98%",
+              border: "2px solid rgba(204, 204, 204, 0.5)",
+              borderRadius: "10px",
+              mr: "1",
+            }}
+          >
+            <InputBase
+              sx={{ width: "98%", pl: 2 }}
+              placeholder="Search for Employee..."
+              onChange={handleSearchText}
+            />
+            <SearchIcon sx={{ my: "1%", mr: 1.5 }} />
+          </Box>
         </Grid>
+        <Grid item xs={2}>
+          <Button
+            variant="contained"
+            sx={{
+              borderRadius: "10px",
+              backgroundColor: "white",
+              color: "black",
+            }}
+            onClick={() => {
+              Navigate("/Employee/Employees/NewRegistration");
+            }}
+          >
+            <AddIcon />
+          </Button>
+        </Grid>
+        <Divider />
+      </Grid>
 
+      <Grid
+        container
+        sx={{
+          top: "10%",
+          width: "100%",
+        }}
+      >
         <Grid
-          container
           sx={{
-          top:"10%"
+            minHeight: "100%",
+            overflowY: "scroll",
+            scrollbarWidth: "thin",
           }}
-          
         >
-          <Grid item xs={12}>
-            <Grid
-
-              sx={{
-                height:"90vh",
-                overflowY: "scroll",
-                scrollbarWidth: "thin",
+          {FilterArray.map((contact, index) => (
+            <Button
+              onClick={() => {
+                Navigate(`/Employee/${contact.id}`);
               }}
+              sx={{ width: "100%" }}
             >
-              {FilterArray.map((contact, index) => (
-                <Box key={index}>
-                        <ListItem alignItems="flex-start" mx={1}>
-                          <Button onClick={()=>{Navigate(`/Employee/${contact.id}`)}}>
-                          <Grid container spacing={2}>
-                            {/* <Grid item>
+              <Card
+                sx={{ mb: 1, borderRadius: 2, mr: 1, width: "100%" }}
+                elevation={3}
+                key={index}
+              >
+                <ListItem alignItems="flex-start" mx={1}>
+                  <Grid container spacing={2}>
+                    {/* <Grid item>
                               <Avatar
                                 // src={contact.Profile}
                                 alt={contact.name}
                               />
                             </Grid> */}
-                            <Grid item>
-                              <Typography
-                                variant="body1"
-                                sx={{
-                                  textTransform: "none",
-                                  color: "black",
-                                  fontWeight: "30",
-                                }}
-                              >
-                                {contact.name}
-                              </Typography>
-                              {/* <Typography
+                    <Grid item>
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          textTransform: "none",
+                          color: "black",
+                          fontWeight: "30",
+                        }}
+                      >
+                        {contact.name}
+                      </Typography>
+                      {/* <Typography
                                 variant="caption"
                                 sx={{ textTransform: "none", color: "black" }}
                               >
                                 {contact.email}
                               </Typography> */}
-                            </Grid>
-                          </Grid>
-                          </Button>
-                        </ListItem>
-                        </Box>
-              ))}
-            </Grid>
-          </Grid>
+                    </Grid>
+                  </Grid>
+                </ListItem>
+              </Card>
+            </Button>
+          ))}
         </Grid>
-        </Paper>
+      </Grid>
+    </Paper>
   );
 }
-
