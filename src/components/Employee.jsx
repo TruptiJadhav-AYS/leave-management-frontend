@@ -36,7 +36,7 @@ export default function EmployeeList() {
         container
         sx={{
           width: "100%",
-          top: "9%",
+          top: "10%",
           zIndex: 1,
           bgcolor: "white",
           height: "8vh",
@@ -48,7 +48,7 @@ export default function EmployeeList() {
             sx={{
               display: "flex",
               justifyContent: "space-between",
-              width: "98%",
+              width: "40%",
               border: "2px solid rgba(204, 204, 204, 0.5)",
               borderRadius: "10px",
               mr: "1",
@@ -83,7 +83,7 @@ export default function EmployeeList() {
       <Grid
         container
         sx={{
-          top: "10%",
+          top: "11%",
           width: "100%",
         }}
       >
@@ -92,6 +92,7 @@ export default function EmployeeList() {
             minHeight: "100%",
             overflowY: "scroll",
             scrollbarWidth: "thin",
+            minWidth:"100%"
           }}
         >
           {FilterArray.map((contact, index) => (
