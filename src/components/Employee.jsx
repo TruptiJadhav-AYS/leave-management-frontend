@@ -26,156 +26,208 @@ import MailIcon from "@mui/icons-material/Mail";
 import CallIcon from "@mui/icons-material/Call";
 import Profile from "../assets/profile.jpg";
 import EditIcon from "@mui/icons-material/Edit";
-
+import { useSelector } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-const columns = [
-  { id: "Name", label: "Name", minWidth: 180 },
-  { id: "Email", label: "Email", minWidth: 170 },
+// const columns = [
+//   { id: "name", label: "Name", minWidth: 180 },
+//   { id: "Email", label: "Email", minWidth: 170 },
 
-  {
-    id: "Gender",
-    label: "Gender",
-    minWidth: 110,
-  },
-  {
-    id: "manager",
-    label: "manager",
-    minWidth: 120,
-    // align: "center",
-  },
-  {
-    id: "Department",
-    label: "Department",
-    minWidth: 80,
-    align: "center",
-  },
-  // {
-  //   id: "Inventory",
-  //   label: "Inventory",
-  //   minWidth: 80,
-  //   align: "center",
-  // },
-];
+//   {
+//     id: "gender",
+//     label: "Gender",
+//     minWidth: 110,
+//   },
+//   {
+//     id: "manager",
+//     label: "manager",
+//     minWidth: 120,
+//     // align: "center",
+//   },
+//   {
+//     id: "department",
+//     label: "Department",
+//     minWidth: 80,
+//     align: "center",
+//   },
+//   // {
+//   //   id: "Inventory",
+//   //   label: "Inventory",
+//   //   minWidth: 80,
+//   //   align: "center",
+//   // },
+// ];
 
-const rows = [
-  {
-    Name: "Pruthviraj Suryawanshi",
-    Email: "pruthvi@gmail.com",
-    // Role: "Employee",
-    Gender: "Male",
-    manager: "Yogesh Patel",
-    Department: "HR",
-  },
-  {
-    Name: "Pratiksha Nimbalkar",
-    Email: "pratiksha@gmail.com",
-    // Role: "Employee",
-    Gender: "Female",
-    manager: "Yogesh Patel",
-    Department: "HR",
-  },
-  {
-    Name: "Trupti Jadhav",
-    Email: "trupti@gmail.com",
-    // Role: "Employee",
-    Gender: "Female",
-    manager: "Yogesh Patel",
-    Department: "HR",
-  },
-  {
-    Name: "Ketan Rathod",
-    Email: "ketan@gmail.com",
-    // Role: "Manager",
-    Gender: "Male",
-    manager: "Yogesh Patel",
-    Department: "HR",
-  },
-  {
-    Name: "Yogesh Patel",
-    Email: "yogesh@gmail.com",
-    // Role: "Admin",
-    Gender: "Male",
-    manager: "Yogesh Patel",
-    Department: "HR",
-  },
-  {
-    Name: "Nupur Tyagi",
-    Email: "nupur@gmail.com",
-    // Role: "Employee",
-    Gender: "Female",
-    manager: "Yogesh Patel",
-    Department: "HR",
-  },
-  {
-    Name: "Mehvish Shaikh",
-    Email: "mehvish@gmail.com",
-    // Role: "Employee",
-    Gender: "Female",
-    manager: "Yogesh Patel",
-    Department: "HR",
-  },
-  {
-    Name: "Abhinandan Ambekar",
-    Email: "abhi@gmail.com",
-    // Role: "Employee",
-    Gender: "Male",
-    manager: "Yogesh Patel",
-    Department: "HR",
-  },
-  {
-    Name: "Shruti Bagde",
-    Email: "shruti@gmail.com",
-    // Role: "Employee",
-    Gender: "Female",
-    manager: "Yogesh Patel",
-    Department: "HR",
-  },
-  {
-    Name: "Prerana Divekar",
-    Email: "prerana@gmail.com",
-    // Role: "Employee",
-    Gender: "Female",
-    manager: "Yogesh Patel",
-    Department: "HR",
-  },
-  {
-    Name: "Abhishek Shinde",
-    Email: "abhi123@gmail.com",
-    // Role: "Employee",
-    Gender: "Male",
-    manager: "Yogesh Patel",
-    Department: "HR",
-  },
-  {
-    Name: "Shital Theware",
-    Email: "shital@gmail.com",
-    // Role: "Employee",
-    Gender: "Female",
-    manager: "Yogesh Patel",
-    Department: "HR",
-  },
-];
+// const rows = useSelector(
+//   (state) => state.employees.Employees
+
+// );
+// [
+//   {
+//     Name: "Pruthviraj Suryawanshi",
+//     Email: "pruthvi@gmail.com",
+//     Role: "Employee",
+//     Gender: "Male",
+//     manager: "Yogesh Patel",
+//     Department: "HR",
+//   },
+//   {
+//     Name: "Pratiksha Nimbalkar",
+//     Email: "pratiksha@gmail.com",
+//     Role: "Employee",
+//     Gender: "Female",
+//     manager: "Yogesh Patel",
+//     Department: "HR",
+//   },
+//   {
+//     Name: "Trupti Jadhav",
+//     Email: "trupti@gmail.com",
+//     Role: "Employee",
+//     Gender: "Female",
+//     manager: "Yogesh Patel",
+//     Department: "HR",
+//   },
+//   {
+//     Name: "Ketan Rathod",
+//     Email: "ketan@gmail.com",
+//     Role: "Manager",
+//     Gender: "Male",
+//     manager: "Yogesh Patel",
+//     Department: "HR",
+//   },
+//   {
+//     Name: "Yogesh Patel",
+//     Email: "yogesh@gmail.com",
+//     Role: "Admin",
+//     Gender: "Male",
+//     manager: "Yogesh Patel",
+//     Department: "HR",
+//   },
+//   {
+//     Name: "Nupur Tyagi",
+//     Email: "nupur@gmail.com",
+//     Role: "Employee",
+//     Gender: "Female",
+//     manager: "Yogesh Patel",
+//     Department: "HR",
+//   },
+//   {
+//     Name: "Mehvish Shaikh",
+//     Email: "mehvish@gmail.com",
+//     Role: "Employee",
+//     Gender: "Female",
+//     manager: "Yogesh Patel",
+//     Department: "HR",
+//   },
+//   {
+//     Name: "Abhinandan Ambekar",
+//     Email: "abhi@gmail.com",
+//     Role: "Employee",
+//     Gender: "Male",
+//     manager: "Yogesh Patel",
+//     Department: "HR",
+//   },
+//   {
+//     Name: "Shruti Bagde",
+//     Email: "shruti@gmail.com",
+//     Role: "Employee",
+//     Gender: "Female",
+//     manager: "Yogesh Patel",
+//     Department: "HR",
+//   },
+//   {
+//     Name: "Prerana Divekar",
+//     Email: "prerana@gmail.com",
+//     Role: "Employee",
+//     Gender: "Female",
+//     manager: "Yogesh Patel",
+//     Department: "HR",
+//   },
+//   {
+//     Name: "Abhishek Shinde",
+//     Email: "abhi123@gmail.com",
+//     // Role: "Employee",
+//     Gender: "Male",
+//     manager: "Yogesh Patel",
+//     Department: "HR",
+//   },
+//   {
+//     Name: "Shital Theware",
+//     Email: "shital@gmail.com",
+//     // Role: "Employee",
+//     Gender: "Female",
+//     manager: "Yogesh Patel",
+//     Department: "HR",
+//   },
+// ];
 
 export default function EmployeeList() {
   const Navigate = useNavigate();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [sortedBy, setSortedBy] = useState("Name");
+  const [sortedBy, setSortedBy] = useState("name");
   const [sortOrder, setSortOrder] = useState("asc");
   const [anchorEl, setAnchorEl] = useState(null);
+  const [searchText, setsearchText] = useState("");
+
+  const initialState = useSelector(
+    (state) => state.employees.Employees
+
+  );
+  console.log(initialState)
+  const columns = [
+    { id: "name", label: "Name", minWidth: 180 },
+    { id: "email", label: "Email", minWidth: 170 },
+  
+    {
+      id: "gender",
+      label: "Gender",
+      minWidth: 110,
+    },
+    {
+      id: "manager",
+      label: "manager",
+      minWidth: 120,
+      // align: "center",
+    },
+    {
+      id: "department",
+      label: "Department",
+      minWidth: 80,
+      align: "center",
+    },
+    // {
+    //   id: "Inventory",
+    //   label: "Inventory",
+    //   minWidth: 80,
+    //   align: "center",
+    // },
+  ];
+  
+  const rows = useSelector(
+    (state) => state.employees.Employees
+  );
   // const [logoutClick, setLogoutClick] = useState(false);
   const open = Boolean(anchorEl);
 
   // const onLogoutClick = () => {
   //   setLogoutClick(true);
   // };
+  function handleSearchText(event) {
+    setsearchText(event.target.value);
+  }
+  // console.log(searchText);
+
+
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
+    // console.log(event.currentTarget)
   };
 
   const handleClose = () => {
+    // console.log(anchorEl)
+
     setAnchorEl(null);
   };
 
@@ -203,6 +255,9 @@ export default function EmployeeList() {
     setSortedBy(columnId);
     setSortOrder(isAscending ? "desc" : "asc");
   };
+  const FilterArray = sortedRows.filter((contact) =>
+  contact.name.toLowerCase().includes(searchText.toLowerCase())
+);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -213,20 +268,9 @@ export default function EmployeeList() {
     setPage(0);
   };
 
-  const [searchText, setsearchText] = useState("");
-
-  function handleSearchText(event) {
-    setsearchText(event.target.value);
-  }
-  console.log(searchText);
-
-  const FilterArray = sortedRows.filter((contact) =>
-    contact.Name.toLowerCase().includes(searchText.toLowerCase())
-  );
-
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden",  minHeight: "100%", height:"100%" }}>
-      <Box display={"flex"} justifyContent={"space-between"}  m={1}>
+    <Paper sx={{ width: "100%", overflow: "hidden", pb: 1, minHeight: "100%" }}>
+      <Box display={"flex"} justifyContent={"space-between"} m={1} mx={1}>
         <Box
           sx={{
             display: "flex",
@@ -239,7 +283,7 @@ export default function EmployeeList() {
         >
           <InputBase
             sx={{ width: "90%", pl: 2 }}
-            placeholder="Search for Employee..."
+            placeholder="Search for User..."
             onChange={handleSearchText}
           />
           <SearchIcon sx={{ my: "1%", mr: 1.5 }} />
@@ -258,7 +302,7 @@ export default function EmployeeList() {
       </Box>
       <Divider />
       <TableContainer
-        sx={{ height: "64vh", overflow: "auto", scrollbarWidth: "thin" }}
+        sx={{ height: "69vh", overflow: "auto", scrollbarWidth: "thin" }}
       >
         <Table stickyHeader>
           <TableHead>
@@ -275,10 +319,9 @@ export default function EmployeeList() {
                     </Typography>
                     {column.label === "Name" ? (
                       <Button
-                        disableRipple
                         size="small"
                         onClick={
-                          column.id === "Name"
+                          column.id === "name"
                             ? () => handleSortClick(column.id)
                             : undefined
                         }
@@ -302,10 +345,12 @@ export default function EmployeeList() {
             {FilterArray
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
+                // console.log(row)
                 return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.Email}>
                     {columns.map((column) => {
                       const value = row[column.id];
+                      // console.log(column)
                       return (
                         <TableCell key={column.id} align={column.align}>
                           {value}
@@ -325,7 +370,7 @@ export default function EmployeeList() {
                           onClose={handleClose}
                           onClick={handleClose}
                           PaperProps={{
-                            elevation: 0,
+                            elevation:0,
                             sx: {
                               overflow: "visible",
                               filter:
@@ -394,6 +439,7 @@ export default function EmployeeList() {
                                 +91 8356789870
                               </Typography>
                             </Box>
+                            
                           </Box>
                         </Menu>
                         <EditIcon

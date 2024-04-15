@@ -10,7 +10,7 @@ export default function Holidays() {
   // console.log("%%%%%%%%%", annualLeaves)
   let responsive=UseReponsive()
   const formatDate = (dateString) => {
-    const [day, month, year] = dateString.split('/');
+    const [day, month, year] = dateString.split('-');
     const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
   
     return `${day} ${monthNames[parseInt(month, 10) - 1]} ${year}`;

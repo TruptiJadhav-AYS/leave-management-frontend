@@ -12,9 +12,10 @@ export function LeaveBalanceDeskTop() {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
+            py:3,
           }}
         >
-          <CardContent>
+          {/* <CardContent> */}
             <Gauge
               width={100}
               height={100}
@@ -32,8 +33,8 @@ export function LeaveBalanceDeskTop() {
             />
             {/* </CardContent>
             <CardContent> */}
-            <Typography>Earned Leave</Typography>
-          </CardContent>
+            <Typography>Remaining Leave</Typography>
+          {/* </CardContent> */}
         </Card>
       </Grid>
       <Grid item xs={4} sm={4} md={4} lg={4}>
@@ -44,9 +45,41 @@ export function LeaveBalanceDeskTop() {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
+            py:3
           }}
         >
-          <CardContent>
+          {/* <CardContent> */}
+            <Gauge
+              width={100}
+              height={100}
+              value={10}
+              valueMax={21}
+              startAngle={-110}
+              endAngle={110}
+              sx={{
+                [`& .${gaugeClasses.valueText}`]: {
+                  fontSize: 13,
+                  transform: "translate(0px, 0px)",
+                },
+              }}
+              text={({ value, valueMax }) => `${value} / ${valueMax}`}
+            />
+            <Typography>Work From Home</Typography>
+          {/* </CardContent> */}
+        </Card>
+      </Grid>
+      <Grid item xs={4} sm={4} md={4} lg={4}>
+        <Card
+          sx={{
+            height: "100%", // Adjusted to 100%
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            py:3
+          }}
+        >
+          {/* <CardContent> */}
             <Gauge
               width={100}
               height={100}
@@ -65,37 +98,7 @@ export function LeaveBalanceDeskTop() {
             {/* </CardContent>
             <CardContent> */}
             <Typography>Annual Leave</Typography>
-          </CardContent>
-        </Card>
-      </Grid>
-      <Grid item xs={4} sm={4} md={4} lg={4}>
-        <Card
-          sx={{
-            height: "100%", // Adjusted to 100%
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <CardContent>
-            <Gauge
-              width={100}
-              height={100}
-              value={10}
-              valueMax={21}
-              startAngle={-110}
-              endAngle={110}
-              sx={{
-                [`& .${gaugeClasses.valueText}`]: {
-                  fontSize: 13,
-                  transform: "translate(0px, 0px)",
-                },
-              }}
-              text={({ value, valueMax }) => `${value} / ${valueMax}`}
-            />
-            <Typography>Total Leave</Typography>
-          </CardContent>
+          {/* </CardContent> */}
         </Card>
       </Grid>
     </Grid>

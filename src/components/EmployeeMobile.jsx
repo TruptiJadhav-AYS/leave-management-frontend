@@ -355,8 +355,102 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SearchIcon from "@mui/icons-material/Search";
 import { useState } from "react";
-import {useSelector} from 'react-redux'
-// import  { EmployeeList } from '../ReduxToolkit/Slices/EmployeeListSlice';
+import { useSelector } from "react-redux";
+
+
+// const Employees = [
+//   {
+//     id: 1,
+//     Profile: require("../assets/profile1.webp"),
+//     Name: "Pruthvi Suryawanshi",
+//     Email: "pruthvi@gmail.com",
+//     Gender: "Male",
+//     manager: "Yogesh Patel",
+//     Department: "HR",
+//   },
+//   {
+//     id: 2,
+//     Profile: require("../assets/profile.webp"),
+//     Name: "Pratiksha Nimbalkar",
+//     Email: "pratiksha@gmail.com",
+//     Gender: "Female",
+//     manager: "Yogesh Patel",
+//     Department: "HR",
+//   },
+//   {
+//     id: 3,
+//     Profile: require("../assets/profile4.jpeg"),
+//     Name: "Trupti Jadhav",
+//     Email: "trupti@gmail.com",
+//     Gender: "Female",
+//     manager: "Yogesh Patel",
+//     Department: "HR",
+//   },
+//   {
+//     id: 4,
+//     Profile: require("../assets/profile3.jpeg"),
+//     Name: "Sakshi Rathod",
+//     Email: "ketan@gmail.com",
+//     Gender: "Male",
+//     manager: "Yogesh Patel",
+//     Department: "HR",
+//   },
+//   {
+//     id: 5,
+//     Profile: require("../assets/profile6.webp"),
+//     Name: "Abhishek Patil",
+//     Email: "yogesh@gmail.com",
+//     Gender: "Male",
+//     manager: "Yogesh Patel",
+//     Department: "HR",
+//   },
+//   {
+//     id: 6,
+//     Profile: require("../assets/profile5.jpg"),
+//     Name: "Sanjay Tyagi",
+//     Email: "nupur@gmail.com",
+//     Gender: "Female",
+//     manager: "Yogesh Patel",
+//     Department: "HR",
+//   },
+//   {
+//     id: 7,
+//     Profile: require("../assets/profile7.webp"),
+//     Name: "Mehvish Shaikh",
+//     Email: "mehvish@gmail.com",
+//     Gender: "Female",
+//     manager: "Yogesh Patel",
+//     Department: "HR",
+//   },
+//   {
+//     id: 8,
+//     Profile: require("../assets/profile6.webp"),
+//     Name: "Abhinandan Ambekar",
+//     Email: "abhi@gmail.com",
+//     Gender: "Male",
+//     manager: "Yogesh Patel",
+//     Department: "HR",
+//   },
+//   {
+//     id: 9,
+//     Profile: require("../assets/profile2.webp"),
+//     Name: "Shruti Bagde",
+//     Email: "shruti@gmail.com",
+//     Gender: "Female",
+//     manager: "Yogesh Patel",
+//     Department: "HR",
+//   },
+//   {
+//     id: 10,
+//     Profile: require("../assets/profile8.jpg"),
+//     Name: "Pratk Divekar",
+//     Email: "prerana@gmail.com",
+//     Gender: "Female",
+//     manager: "Yogesh Patel",
+//     Department: "HR",
+//   },
+// ];
+
 
 
 export default function EmployeeList() {
@@ -364,14 +458,18 @@ export default function EmployeeList() {
   const EmployeesList = useSelector((state)=>state.EmployeeList.EmployeeList);
   console.log("************",EmployeesList)
   const [searchText, setsearchText] = useState("");
+  const Employees=useSelector(
+    (state) => state.employees.Employees
+  );
+  console.log(Employees)
 
   function handleSearchText(event) {
     setsearchText(event.target.value);
   }
-  console.log(searchText);
+  // console.log(searchText);
 
-  const FilterArray = EmployeesList.filter((contact) =>
-    contact.Name.toLowerCase().includes(searchText.toLowerCase())
+  const FilterArray = Employees.filter((contact) =>
+    contact.name.toLowerCase().includes(searchText.toLowerCase())
   );
 
   return (
@@ -463,8 +561,8 @@ export default function EmployeeList() {
                           <Grid container spacing={2}>
                             <Grid item>
                               <Avatar
-                                src={contact.Profile}
-                                alt={contact.Name}
+                                // src={contact.Profile}
+                                alt={contact.name}
                               />
                             </Grid>
                             <Grid item>
@@ -476,13 +574,13 @@ export default function EmployeeList() {
                                   fontWeight: "30",
                                 }}
                               >
-                                {contact.Name}
+                                {contact.name}
                               </Typography>
                               <Typography
                                 variant="caption"
                                 sx={{ textTransform: "none", color: "black" }}
                               >
-                                {contact.Email}
+                                {contact.email}
                               </Typography>
                             </Grid>
                           </Grid>
@@ -526,7 +624,7 @@ export default function EmployeeList() {
                                 Gender :{
 " "}
                               </Typography>
-                              {contact.Gender}
+                              {contact.gender}
                             </Typography>
                             <Typography
                               label="Department"
@@ -543,7 +641,7 @@ export default function EmployeeList() {
                                 Department :{
 " "}
                               </Typography>
-                              {contact.Department}
+                              {contact.department}
                             </Typography>
                             <Typography
                               label="Manager"

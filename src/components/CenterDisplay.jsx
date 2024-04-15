@@ -54,8 +54,9 @@ export default function CenterDisplay({ role }) {
         element={responsive.isMobile ? <ProjectMbList /> : <ProjectList />}
       />
       <Route path="/Projects/OnboardProject" element={<ProjectOnboardForm />} />
-      <Route path="/Projects/EditProject" element={<EditProjectForm />} />
-      <Route path="/Employees/EditForm/Inventory" element={<InventoryForm />} />
+      <Route path="/Projects/EditProject" element={<EditProjectForm/>}/>
+      <Route path="/Employees/EditForm/Inventory" element={<InventoryForm/>}/>
+      <Route path="/Employees/NewRegistration/Inventory" element={<InventoryForm/>}/>
     </Routes>
   );
 }
