@@ -36,11 +36,11 @@ const columns = [
     label: "Start Date",
     minWidth: 90,
   },
-  {
-    id: "End_date",
-    label: "End Date",
-    minWidth: 90,
-  },
+  // {
+  //   id: "End_date",
+  //   label: "End Date",
+  //   minWidth: 90,
+  // },
   {
     id: "Status",
     label: "Status",
@@ -62,7 +62,7 @@ export default function ProjectList() {
   function handleSearchText(event) {
     setsearchText(event.target.value);
   }
-  console.log(searchText);
+  // console.log(searchText);
 
   const sortedRows = useMemo(() => {
     // Sort rows based on sortedBy and sortOrder
@@ -109,7 +109,7 @@ export default function ProjectList() {
           sx={{
             display: "flex",
             justifyContent: "space-between",
-            width: "50%",
+            width: "30%",
             border: "2px solid rgba(204, 204, 204, 0.5)",
             borderRadius: "20px",
           }}
@@ -119,7 +119,7 @@ export default function ProjectList() {
             placeholder="Search for Project..."
             onChange={handleSearchText}
           />
-          <SearchIcon sx={{ my: "1%", mr: 1.5 }} />
+          <SearchIcon sx={{ my: "1.5%", mr: 1.5 }} />
         </Box>
 
         <Button
@@ -139,7 +139,7 @@ export default function ProjectList() {
       >
         <Table stickyHeader>
           <TableHead>
-            <TableRow>
+            <TableRow >
               {columns.map((column) => (
                 <TableCell
                   key={column.id}
@@ -184,7 +184,7 @@ export default function ProjectList() {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.Name} ml={2}>
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.Name} ml={2} sx={{cursor:"pointer"}}>
                     {columns.map((column,index) => {
                       const value = row[column.id];
                       return ( 
@@ -193,7 +193,7 @@ export default function ProjectList() {
                         </TableCell>
                       );
                     })}
-                    <TableCell>
+                    {/* <TableCell>
                       <Box sx={{ display: "flex", gap: 1 }}>
                         <VisibilityIcon sx={{ cursor: "pointer" }} />
                         <EditIcon
@@ -202,7 +202,7 @@ export default function ProjectList() {
                         />
                         <DeleteIcon sx={{ cursor: "pointer" }} />
                       </Box>
-                    </TableCell>
+                    </TableCell> */}
                   </TableRow>
                 );
               })}

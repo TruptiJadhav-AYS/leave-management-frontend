@@ -34,9 +34,9 @@ const annualLeaveSlice = createSlice({
     name: 'annualLeave',
     initialState,
     reducers: {
-        // addAnnualLeave: (state, action) => {
-        //     state.annualLeaves.push(action.payload)
-        // }
+        addAnnualLeave: (state, action) => {
+            state.annualLeaves=action.payload
+        }
     }
 })
 

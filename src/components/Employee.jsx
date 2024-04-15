@@ -170,11 +170,11 @@ export default function EmployeeList() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [searchText, setsearchText] = useState("");
 
-  const initialState = useSelector(
-    (state) => state.employees.Employees
+  // const initialState = useSelector(
+  //   (state) => state.employees.Employees
 
-  );
-  console.log(initialState)
+  // );
+  // console.log(initialState)
   const columns = [
     { id: "name", label: "Name", minWidth: 180 },
     { id: "email", label: "Email", minWidth: 170 },
@@ -186,7 +186,7 @@ export default function EmployeeList() {
     },
     {
       id: "manager",
-      label: "manager",
+      label: "Manager",
       minWidth: 120,
       // align: "center",
     },
@@ -275,10 +275,11 @@ export default function EmployeeList() {
           sx={{
             display: "flex",
             justifyContent: "space-between",
-            width: "50%",
+            width: "30%",
             border: "2px solid rgba(204, 204, 204, 0.5)",
             borderRadius: "20px",
             mr: "1",
+            maxHeight:"10vh"
           }}
         >
           <InputBase
@@ -286,7 +287,7 @@ export default function EmployeeList() {
             placeholder="Search for User..."
             onChange={handleSearchText}
           />
-          <SearchIcon sx={{ my: "1%", mr: 1.5 }} />
+          <SearchIcon sx={{ my: "1.5%", mr: 1.5 }} />
         </Box>
 
         <Button
@@ -347,7 +348,7 @@ export default function EmployeeList() {
               .map((row) => {
                 // console.log(row)
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.Email}>
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.Email} sx={{cursor:"pointer"}}>
                     {columns.map((column) => {
                       const value = row[column.id];
                       // console.log(column)
@@ -357,7 +358,7 @@ export default function EmployeeList() {
                         </TableCell>
                       );
                     })}
-                    <TableCell align="center">
+                    {/* <TableCell align="center">
                       <Stack direction="row" spacing={0.8}>
                         <VisibilityIcon
                           sx={{ cursor: "pointer" }}
@@ -448,7 +449,7 @@ export default function EmployeeList() {
                         />
                         <DeleteIcon sx={{ cursor: "pointer" }} />
                       </Stack>
-                    </TableCell>
+                    </TableCell> */}
                   </TableRow>
                 );
               })}

@@ -33,14 +33,15 @@ export default function ProjectOnboardForm() {
       projectName: "",
       managerName: "",
       fromDate: "",
-      toDate: "",
+      // toDate: "",
       status: "",
+      Description:"",
     },
     validationSchema: Yup.object({
       projectName: Yup.string().required("Project Name is required."),
       managerName: Yup.string().required("Manager Name is required."),
       fromDate: Yup.date().required("Please select a date"),
-      toDate: Yup.date().required("Please select a date"),
+      // toDate: Yup.date().required("Please select a date"),
       status: Yup.string().required("Project status is required."),
     }),
     onSubmit: (values) => {
@@ -150,7 +151,7 @@ export default function ProjectOnboardForm() {
                   sm={6}
                   height={responsive.isMobile ? "17vh" : "11vh"}
                 >
-                  <Typography fontSize={"13px"}>START DATE</Typography>
+                  <Typography variant="body2">Start date</Typography>
                   <InputBase
                     onChange={formik.handleChange}
                     value={formik.values.fromDate}
@@ -178,7 +179,7 @@ export default function ProjectOnboardForm() {
                   )}
                 </Grid>
 
-                <Grid
+                {/* <Grid
                   item
                   xs={12}
                   sm={6}
@@ -211,9 +212,7 @@ export default function ProjectOnboardForm() {
                       {errors.toDate}
                     </Typography>
                   )}
-                </Grid>
-              </Grid>
-              <Grid container spacing={1}>
+                </Grid> */}
                 <Grid
                   item
                   xs={12}
@@ -255,6 +254,86 @@ export default function ProjectOnboardForm() {
                     )}
                   </Stack>
                 </Grid>
+              </Grid>
+              <br/>
+              <Grid container spacing={1}>
+                {/* <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  md={6}
+                  lg={6}
+                  height={responsive.isMobile ? "11vh" : "11vh"}
+                >
+                  <Stack width={"100%"}>
+                    <Typography variant="body2"> Status</Typography>
+                    <Select
+                      size="small"
+                      name="status"
+                      onChange={formik.handleChange}
+                      value={formik.values.status}
+                      sx={{
+                        "& fieldset": {
+                          borderColor: "rgba(204, 204, 204, 0.5)",
+                          borderWidth: "2px",
+                        },
+                        "&:hover": {
+                          "&& fieldset": {
+                            border: "2px solid rgba(204, 204, 204, 0.5)",
+                          },
+                        },
+                        height: "40px",
+                        borderRadius: 1,
+                      }}
+                      onClick={() => handleClick("status")}
+                      onBlur={formik.handleBlur}
+                    >
+                      <MenuItem value="active">Active</MenuItem>
+                      <MenuItem value="inactive">Inactive</MenuItem>
+                    </Select>
+                    {formik.touched.status && errors.status && (
+                      <Typography variant="caption" color="error">
+                        {errors.status}
+                      </Typography>
+                    )}
+                  </Stack>
+                </Grid> */}
+                <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  md={6}
+                  lg={6}
+                  height={responsive.isMobile ? "11vh" : "11vh"}
+                  // height={"12vh"}
+                >
+                  <Stack width={"100%"}>
+                    <Typography variant="body2"> Description </Typography>
+                    <InputBase
+                      placeholder="Description"
+                      type="text"
+                      name="Description"
+                      sx={{
+                        border:
+                          clickedBtnID === "Description"
+                            ? "2px solid blue"
+                            : "2px solid rgba(204, 204, 204, 0.5)",
+                        height: "40px",
+                        borderRadius: 1,
+                      }}
+                      onClick={() => handleClick("Description")}
+                      // onChange={formik.handleChange}
+                      // onBlur={formik.handleBlur}
+                      // value={formik.values.managerName}
+                    />
+                    {/* {formik.touched.Description && errors.Description && (
+                      <Typography variant="caption" color="error">
+                        {errors.Description}
+                      </Typography>
+                    )} */}
+                  </Stack>
+                </Grid>
+              {/* </Grid> */}
               </Grid>
 
               <br />

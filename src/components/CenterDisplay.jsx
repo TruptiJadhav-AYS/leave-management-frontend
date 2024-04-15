@@ -16,6 +16,7 @@ import HistoryMobile from "./HistoryMobile";
 import InventoryList from "./InventoryList";
 import ProjectMbList from "./ProjectMobileView";
 import InventoryListMb from "./InventoryListMb";
+import AddHolidayForm from "./AddHolidayForm";
 
 export default function CenterDisplay({ role }) {
   let responsive = UseReponsive();
@@ -33,7 +34,8 @@ export default function CenterDisplay({ role }) {
           )
         }
       />
-      <Route path="/Holidays" element={<Holidays />} />
+      <Route path="/Holidays" element={<Holidays role={role}/>} />
+      <Route path="/Holidays/AddHoliday" element={<AddHolidayForm/>}/>
       <Route
         path="/Employees"
         element={responsive.isMobile ? <EmployeeMobile /> : <EmployeeList />}

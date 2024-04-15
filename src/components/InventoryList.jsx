@@ -68,7 +68,7 @@ export default function InventoryList() {
           sx={{
             display: "flex",
             justifyContent: "space-between",
-            width: "50%",
+            width: "30%",
             border: "2px solid rgba(204, 204, 204, 0.5)",
             borderRadius: "20px",
             mr: "1",
@@ -79,7 +79,7 @@ export default function InventoryList() {
             placeholder="Search for Category ..."
             onChange={handleSearchText}
           />
-          <SearchIcon sx={{ my: "1%", mr: 1.5 }} />
+          <SearchIcon sx={{ my: "1.5%", mr: 1.5 }} />
         </Box>
 
         <Button
@@ -121,7 +121,7 @@ export default function InventoryList() {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((InventoryListItem,index) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={index} >
+                  <TableRow hover role="checkbox" tabIndex={-1} key={index} sx={{cursor:"pointer"}} >
                     {columns.map((column) => {
                       const value = InventoryListItem[column.id];
                       return (
@@ -132,10 +132,10 @@ export default function InventoryList() {
                     })}
                     <TableCell align="center">
                       <Stack direction="row">
-                        <EditIcon
+                        {/* <EditIcon
                           // onClick={handleEditClick}
                           sx={{ cursor: "pointer" }}
-                        />
+                        /> */}
                         <DeleteIcon sx={{ cursor: "pointer" }} />
                       </Stack>
                     </TableCell>
