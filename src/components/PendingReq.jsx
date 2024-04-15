@@ -67,7 +67,7 @@ export default function PendingReq() {
               <TableCell align="left" sx={{ fontWeight: "bold" }}>
                 To date
               </TableCell>
-              <TableCell align="rigth" sx={{ fontWeight: "bold" }}>
+              <TableCell align="right" sx={{ fontWeight: "bold" }}>
                 Leave Type
               </TableCell>
               <TableCell align="left" sx={{ fontWeight: "bold" }}>
@@ -91,7 +91,7 @@ export default function PendingReq() {
                 <TableCell align="center">{row.toDate !== ""
                       ? formatDate(row.toDate)
                       : "-"}</TableCell>
-                <TableCell align="rigth">{row.leaveType}</TableCell>
+                <TableCell align="right">{row.leaveType}</TableCell>
                 <TableCell align="left">{row.reason}</TableCell>
                 <TableCell align="right">
                   <Stack direction={"row"}>

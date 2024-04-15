@@ -17,6 +17,7 @@ import InventoryList from "./InventoryList";
 import ProjectMbList from "./ProjectMobileView";
 import InventoryListMb from "./InventoryListMb";
 import { useSelector } from "react-redux";
+import EmployeeDetails from "./EmployeeDetails";
 
 export default function CenterDisplay() {
   const role=useSelector((state)=>state.employees.userRole)
@@ -39,6 +40,10 @@ export default function CenterDisplay() {
       <Route
         path="/Employees"
         element={responsive.isMobile ? <EmployeeMobile /> : <EmployeeList />}
+      />
+
+      <Route path="/:id"
+      element={<EmployeeDetails/>}
       />
 
       <Route
