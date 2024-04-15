@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { setSelectedEmp } from "../Store/slice/EmployeeSlice";
 
 export default function EmployeeList() {
   const Navigate = useNavigate();

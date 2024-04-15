@@ -1,16 +1,21 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 // import { Dispatch } from "@reduxjs/toolkit";
-import { Box, Card, CardContent, Typography, Grid } from "@mui/material";
+import { Box, Button, Card, CardContent, Typography, Grid } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
+import { setSelectedEmp } from "../Store/slice/EmployeeSlice";
 
 export default function EmployeeDetails() {
   const params = useParams();
   const selectedUser = parseInt(params.id);
   const Employees = useSelector((state) => state.employees.Employees);
+  const selectedEmp=useSelector((state)=>state.employees.selectedEmp)
+  const dispatch=useDispatch()
+  dispatch(setSelectedEmp(selectedUser))
+
+  const Navigate=useNavigate()
 
   const index = Employees.findIndex((contact) => contact.id === selectedUser);
-  console.log(Employees[index]);
 
   return (
     <Box

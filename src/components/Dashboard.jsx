@@ -9,8 +9,10 @@ import PendingReq from "./PendingReq";
 import ApproverCard from "./ApproverCard";
 import PendingReqMobile from "./PendingReqMobile";
 import UpcomingHolidaysMobile from "./UpcomingHolidaysMobile";
+import { useSelector } from "react-redux";
 
-export default function Dashboard({ role }) {
+export default function Dashboard() {
+  const role=useSelector((state)=>state.employees.userRole)
   const responsive = UseReponsive();
 
   return (
@@ -51,7 +53,7 @@ export default function Dashboard({ role }) {
           (responsive.isDesktop || responsive.isLaptop || responsive.isTablet) && (role==="Employee")&&
           (
             <Grid item sm={5.5} md={5.5} lg={5.5}>
-              <UpcomingHolidaysDesktop role={role}/>
+              <UpcomingHolidaysDesktop />
             </Grid>
           )}
 

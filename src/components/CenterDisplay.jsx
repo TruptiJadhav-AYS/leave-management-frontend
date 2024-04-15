@@ -16,13 +16,15 @@ import HistoryMobile from "./HistoryMobile";
 import InventoryList from "./InventoryList";
 import ProjectMbList from "./ProjectMobileView";
 import InventoryListMb from "./InventoryListMb";
+import { useSelector } from "react-redux";
 import EmployeeDetails from "./EmployeeDetails";
 
-export default function CenterDisplay({ role }) {
+export default function CenterDisplay() {
+  const role=useSelector((state)=>state.employees.userRole)
   let responsive = UseReponsive();
   return (
     <Routes>
-      <Route path="/" element={<Dashboard role={role} />} />
+      <Route path="/" element={<Dashboard  />} />
       <Route path="/ApplyLeave" element={<LeaveReqForm />} />
       <Route
         path="/History"
@@ -53,7 +55,7 @@ export default function CenterDisplay({ role }) {
         path="/Employees/NewRegistration"
         element={<EmployeeRegistrationForm />}
       />
-      <Route path="/Employees/EditEmployee" element={<EditEmployeeForm />} />
+      <Route path="/Employees/EditEmployee/:id" element={<EditEmployeeForm />} />
       <Route
         path="/Projects"
         element={responsive.isMobile ? <ProjectMbList /> : <ProjectList />}
