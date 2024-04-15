@@ -15,11 +15,69 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UseReponsive from "../hooks/UseResponsive";
 import CheckIcon from "@mui/icons-material/Check";
+import { editEmployee } from "../Store/action/EmployeeAction";
 
 export default function EditEmployeeForm() {
   const responsive = UseReponsive();
   const [clickedBtnID, setClickedBtnID] = useState("");
   let [onBoardSuccess, setOnBoardSuccess] = useState(false);
+
+  let newEmp={}
+  function onNewname(name){
+    if(newEmp.name){
+      newEmp.name=name
+    }else{
+      newEmp["name"]=name
+    }
+  }
+
+  function onNewdepartment(department){
+    if(newEmp.department){
+      newEmp.department=department
+    }else{
+      newEmp["department"]=department
+    }
+  }
+
+  function onNewmanager(manager){
+    if(newEmp.manager){
+      newEmp.manager=manager
+    }else{
+      newEmp["manager"]=manager
+    }
+  }
+
+  function onNewgender(gender){
+    if(newEmp.gender){
+      newEmp.gender=gender
+    }else{
+      newEmp["gender"]=gender
+    }
+  }
+
+  function onNewmobile_no(mobile_no){
+    if(newEmp.mobile_no){
+      newEmp.mobile_no=mobile_no
+    }else{
+      newEmp["mobile_no"]=mobile_no
+    }
+  }
+
+  function onNewemail(email){
+    if(newEmp.email){
+      newEmp.email=email
+    }else{
+      newEmp["email"]=email
+    }
+  }
+
+  function onNewdob(dob){
+    if(newEmp.dob){
+      newEmp.dob=dob
+    }else{
+      newEmp["dob"]=dob
+    }
+  }
 
   function handleClick(id) {
     setClickedBtnID(id);
@@ -41,8 +99,9 @@ export default function EditEmployeeForm() {
 
   function handleSubmit() {
     setOnBoardSuccess(true);
+    editEmployee(newEmp)
     setTimeout(() => {
-      navigate("/Employee/Projects");
+      navigate("/Employee/Employees");
     }, 1000);
   }
 
@@ -88,6 +147,7 @@ export default function EditEmployeeForm() {
                         borderRadius: 1,
                       }}
                       onClick={() => handleClick("Name")}
+                      onChange={(e)=>onNewname(e.target.value)}
                     />
                   </Stack>
                 </Grid>
@@ -118,6 +178,7 @@ export default function EditEmployeeForm() {
                         borderRadius: 1,
                       }}
                       onClick={() => handleClick("Gender")}
+                      onChange={(e)=>onNewgender(e.target.value)}
                     >
                       <MenuItem value="Male">Male</MenuItem>
                       <MenuItem value="Female">Female</MenuItem>
@@ -152,6 +213,7 @@ export default function EditEmployeeForm() {
                         borderRadius: 1,
                       }}
                       onClick={() => handleClick("Email")}
+                      onChange={(e)=>onNewemail(e.target.value)}
                       // onBlur={formik.handleBlur}
                     />
                   </Stack>
@@ -183,6 +245,7 @@ export default function EditEmployeeForm() {
                         borderRadius: 1,
                       }}
                       onClick={() => handleClick("Contact")}
+                      onChange={(e)=>onNewmobile_no(e.target.value)}
                       // onBlur={formik.handleBlur}
                     />
                   </Stack>
@@ -225,6 +288,7 @@ export default function EditEmployeeForm() {
                         borderRadius: 1,
                       }}
                       onClick={() => handleClick("Department")}
+                      onChange={(e)=>onNewdepartment(e.target.value)}
                       // onBlur={formik.handleBlur}
                     >
                       <MenuItem value="Human Resource">Human Resource</MenuItem>
@@ -274,6 +338,7 @@ export default function EditEmployeeForm() {
                         borderRadius: 1,
                       }}
                       MenuProps={MenuProps}
+                      onChange={(e)=>onNewmanager(e.target.value)}
                     >
                       <MenuItem value="Pratiksha Nimbalkar">
                         Pratiksha Nimbalkar
@@ -291,6 +356,7 @@ export default function EditEmployeeForm() {
                         Abhinandan Ambekar
                       </MenuItem>
                       <MenuItem value="Trupti Jadhav">Trupti Jadhav</MenuItem>
+                     
                     </Select>
                   </Stack>
                 </Grid>

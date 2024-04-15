@@ -144,9 +144,12 @@ const employeeSlice = createSlice({
     addEmp:(state,action)=>{
       state.Employees=action.payload;
     },
+    ediEmp:(state,action)=>{
+      state.Employees=action.payload
+    }
   }
 });
 
 // export const {onSelectContact,onMsg,onSearch}=contactSlice.actions
-export const {addEmp}=employeeSlice.actions
+export const {addEmp,editEmp}=employeeSlice.actions
 export default employeeSlice.reducer;
