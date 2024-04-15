@@ -136,7 +136,7 @@ export default function EmployeeRegistrationForm() {
                   height={responsive.isMobile ? "14vh" : "11vh"}
                 >
                   <Stack width={"100%"}>
-                    <Typography variant="body2"> name</Typography>
+                    <Typography variant="body2"> NAME</Typography>
                     <InputBase
                       placeholder="name"
                       type="text"
@@ -171,7 +171,7 @@ export default function EmployeeRegistrationForm() {
                   height={responsive.isMobile ? "11vh" : "11vh"}
                 >
                   <Stack width={"100%"}>
-                    <Typography variant="body2"> gender </Typography>
+                    <Typography variant="body2"> GENDER </Typography>
                     <Select
                       size="small"
                       name="gender"
@@ -252,7 +252,7 @@ export default function EmployeeRegistrationForm() {
                   height={responsive.isMobile ? "14vh" : "8vh"}
                 >
                   <Stack width={"100%"}>
-                    <Typography variant="body2"> email </Typography>
+                    <Typography variant="body2"> EMAIL </Typography>
                     <InputBase
                       type="email"
                       name="email"
@@ -287,7 +287,7 @@ export default function EmployeeRegistrationForm() {
                   height={responsive.isMobile ? "7vh" : "8vh"}
                 >
                   <Stack width={"100%"}>
-                    <Typography variant="body2"> contact NO</Typography>
+                    <Typography variant="body2"> CONTACT NO</Typography>
                     <InputBase
                       type="tel"
                       pattern="[0-9]*"
@@ -318,42 +318,6 @@ export default function EmployeeRegistrationForm() {
               </Grid>
               <br />
 
-              {/* <Grid container height={"10vh"} spacing={1}> */}
-              {/* <Grid
-                item
-                xs={12}
-                sm={6}
-                md={6}
-                lg={6}
-                sx={{ display: "flex", justifyContent: "space-between" }}
-              >
-                <Stack width={"100%"}>
-                  <Typography variant="body2"> DATE OF BIRTH </Typography>
-                  <InputBase
-                    type="date"
-                    name="DateOfBirth"
-                    onChange={formik.handleChange}
-                    sx={{
-                      border:
-                        clickedBtnID === "DateOfBirth"
-                          ? "2px solid blue"
-                          : "2px solid  rgba(204, 204, 204, 0.5)",
-                      height: "40px",
-                      borderRadius: 1,
-                    }}
-                    onClick={() => handleClick("DateOfBirth")}
-                    onBlur={formik.handleBlur}
-                  />
-                  {formik.touched.DateOfBirth && errors.DateOfBirth && (
-                    <Typography variant="caption" color="error">
-                      {errors.DateOfBirth}
-                    </Typography>
-                  )}
-                </Stack>
-              </Grid> */}
-
-              {/* </Grid> */}
-
               <br />
 
               <Grid container height={"10vh"} spacing={1}>
@@ -366,7 +330,7 @@ export default function EmployeeRegistrationForm() {
                   height={responsive.isMobile ? "14vh" : "11vh"}
                 >
                   <Stack width={"100%"}>
-                    <Typography variant="body2"> department</Typography>
+                    <Typography variant="body2"> DEPARTMENT</Typography>
                     <Select
                       size="small"
                       name="department"
@@ -411,7 +375,7 @@ export default function EmployeeRegistrationForm() {
                   height={responsive.isMobile ? "10vh" : "11vh"}
                 >
                   <Stack width={"100%"}>
-                    <Typography variant="body2">manager</Typography>
+                    <Typography variant="body2">MANAGER</Typography>
 
                     <Select
                       size="small"
@@ -459,6 +423,45 @@ export default function EmployeeRegistrationForm() {
                   </Stack>
                 </Grid>
               </Grid>
+
+              <Grid container spacing={1} mt={2}>
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={6}
+                lg={6}
+                sx={{ display: "flex", justifyContent: "space-between" }}
+                height={responsive.isMobile ? "7vh" : "8vh"}
+              >
+                <Stack width={"100%"}>
+                  <Typography variant="body2"> DATE OF BIRTH </Typography>
+                  <InputBase
+                    type="date"
+                    name="DateOfBirth"
+                    onChange={formik.handleChange}
+                    sx={{
+                      border:
+                        clickedBtnID === "DateOfBirth"
+                          ? "2px solid blue"
+                          : "2px solid  rgba(204, 204, 204, 0.5)",
+                      height: "40px",
+                      borderRadius: 1,
+                      p:1,
+                    }}
+                    onClick={() => handleClick("DateOfBirth")}
+                    onBlur={formik.handleBlur}
+                  />
+                  {formik.touched.DateOfBirth && errors.DateOfBirth && (
+                    <Typography variant="caption" color="error">
+                      {errors.DateOfBirth}
+                    </Typography>
+                  )}
+                </Stack>
+              </Grid>
+
+              </Grid>
+
               <br />
               <Grid container sx={{mt: responsive.isMobile ? 12: 2,rowGap:2 }}>
               <Button

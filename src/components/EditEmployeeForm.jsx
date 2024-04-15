@@ -362,6 +362,43 @@ export default function EditEmployeeForm() {
                 </Grid>
               </Grid>
               <br />
+              <Grid container spacing={1} mt={2}>
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={6}
+                lg={6}
+                sx={{ display: "flex", justifyContent: "space-between" }}
+                height={responsive.isMobile ? "7vh" : "8vh"}
+              >
+                <Stack width={"100%"}>
+                  <Typography variant="body2"> DATE OF BIRTH </Typography>
+                  <InputBase
+                    type="date"
+                    name="DateOfBirth"
+                    // onChange={formik.handleChange}
+                    sx={{
+                      border:
+                        clickedBtnID === "DateOfBirth"
+                          ? "2px solid blue"
+                          : "2px solid  rgba(204, 204, 204, 0.5)",
+                      height: "40px",
+                      borderRadius: 1,
+                      p:1,
+                    }}
+                    onClick={() => handleClick("DateOfBirth")}
+                    // onBlur={formik.handleBlur}
+                  />
+                  {/* {formik.touched.DateOfBirth && errors.DateOfBirth && (
+                    <Typography variant="caption" color="error">
+                      {errors.DateOfBirth}
+                    </Typography>
+                  )} */}
+                </Stack>
+              </Grid>
+
+              </Grid>
 
               <Box pt={responsive.isMobile ? 9 : 0}>
                 <Button

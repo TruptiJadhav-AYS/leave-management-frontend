@@ -15,7 +15,7 @@ import mayday from "../assets/mayday.jpg";
 import independanceDay from "../assets/independance.jpg";
 import ganeshChaturthi from "../assets/ganeshchaturthi.jpg";
 import gandhiJayanti from "../assets/gandhijayanti.jpg";
-
+import { useSelector } from "react-redux";
 const Holidays = [
   { date: "11/04/2024",
     day: "Thursday",
@@ -57,7 +57,8 @@ const Holidays = [
   },
 ];
 
-export default function UpcomingHolidays({role}) {
+export default function UpcomingHolidays() {
+  const role=useSelector((state)=>state.employees.userRole)
 
   const formatDate = (dateString) => {
     const [day, month, year] = dateString.split('/');

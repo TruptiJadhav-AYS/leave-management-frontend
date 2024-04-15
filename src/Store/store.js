@@ -5,6 +5,7 @@ import EmployeeLeaveHistory from './slice/HistorySlice'
 import ProjectsSlice from './slice/ProjectsSlice'
 import InventorySlice from './slice/InventorySlice'
 import PendingRequestsSlice from './slice/PendingRequestsSlice'
+import UserSlice from './slice/UserSlice'
 
 export const store = configureStore({
   reducer: {
@@ -13,7 +14,8 @@ export const store = configureStore({
     leaveHistory : EmployeeLeaveHistory,
     Project : ProjectsSlice,
     Inventory : InventorySlice,
-    PendingRequests: PendingRequestsSlice
+    PendingRequests: PendingRequestsSlice,
+    users:UserSlice
   },
 })
 

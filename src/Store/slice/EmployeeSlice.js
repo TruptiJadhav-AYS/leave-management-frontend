@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   Employees: [
     {
-      id: 1,
+      id: 3,
       name: "Pruthviraj Suryawanshi",
       mobile_no: "7890789067",
       email: "pruthvi@gmail.com",
@@ -14,7 +14,7 @@ const initialState = {
       department: "HR",
     },
     {
-      id: 2,
+      id: 1,
       name: "Pratiksha Nimbalkar",
       mobile_no: "7899089087",
       email: "pratiksha@gmail.com",
@@ -25,7 +25,7 @@ const initialState = {
       department: "HR",
     },
     {
-      id: 3,
+      id: 2,
       name: "Trupti Jadhav",
       mobile_no: "6798978458",
       // mobile_no:"8899088967",
@@ -135,6 +135,8 @@ const initialState = {
       department: "HR",
     },
   ],
+  logedInEmp:{},
+  userRole:""
 };
 
 const employeeSlice = createSlice({
@@ -144,12 +146,19 @@ const employeeSlice = createSlice({
     addEmp:(state,action)=>{
       state.Employees=action.payload;
     },
+    getLogedInEmp:(state,action)=>{
+      state.logedInEmp=action.payload
+    },
     ediEmp:(state,action)=>{
       state.Employees=action.payload
+    },
+    getRole:(state,action)=>{
+      console.log("actionrole",action.payload)
+      state.userRole=action.payload
     }
   }
 });
 
 // export const {onSelectContact,onMsg,onSearch}=contactSlice.actions
-export const {addEmp,editEmp}=employeeSlice.actions
+export const {addEmp,editEmp,getRole,getLogedInEmp}=employeeSlice.actions
 export default employeeSlice.reducer;

@@ -1,4 +1,23 @@
-import EmployeeSlice, { addEmp ,editEmp} from "../slice/EmployeeSlice";
+import  { addEmp ,editEmp,getRole,getLogedInEmp} from "../slice/EmployeeSlice";
+
+function findLogedInEmployee(id){
+    return(dispatch,getState)=>{
+        const {Employees}=getState().employees
+        let emp=Employees.find(emp => emp.id === id);
+        dispatch(getLogedInEmp(emp))
+    }
+}
+
+function findRole(id){
+    return(dispatch,getState)=>{
+        const {Employees}=getState().employees
+        let emp=Employees.find(emp => emp.id === id);
+        if(emp!==-1){
+            let role= emp.role
+            dispatch(getRole(role))
+        }
+    }
+}
 
 function addEmployee(obj){
     return(dispatch,getState)=>{
@@ -41,4 +60,4 @@ function editEmployee(newEmp){
     }
 }
 
-export { addEmployee, editEmployee };
+export { addEmployee, editEmployee,findRole ,findLogedInEmployee};
