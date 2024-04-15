@@ -16,6 +16,7 @@ import HistoryMobile from "./HistoryMobile";
 import InventoryList from "./InventoryList";
 import ProjectMbList from "./ProjectMobileView";
 import InventoryListMb from "./InventoryListMb";
+import EmployeeDetails from "./EmployeeDetails";
 
 export default function CenterDisplay({ role }) {
   let responsive = UseReponsive();
@@ -37,6 +38,10 @@ export default function CenterDisplay({ role }) {
       <Route
         path="/Employees"
         element={responsive.isMobile ? <EmployeeMobile /> : <EmployeeList />}
+      />
+
+      <Route path="/:id"
+      element={<EmployeeDetails/>}
       />
 
       <Route
