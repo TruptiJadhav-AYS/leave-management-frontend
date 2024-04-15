@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { setSelectedEmp } from "../Store/slice/EmployeeSlice";
 
 export default function EmployeeList() {
   const Navigate = useNavigate();
@@ -100,7 +101,7 @@ export default function EmployeeList() {
               {FilterArray.map((contact, index) => (
                 <Box key={index}>
                         <ListItem alignItems="flex-start" mx={1}>
-                          <Button onClick={()=>{Navigate(`/Employee/${contact.id}`)}}>
+                          <Button onClick={()=>{Navigate(`/Employee/${contact.id}`);}}>
                           <Grid container spacing={2}>
                             {/* <Grid item>
                               <Avatar

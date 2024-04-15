@@ -40,20 +40,20 @@ export default function EmployeeRegistrationForm() {
 
   const navigate = useNavigate();
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  // const today = new Date();
-  // const eighteenYearsAgo = new Date(
-  //   today.getFullYear() - 18,
-  //   today.getMonth(),
-  //   today.getDate()
-  // );
+  const today = new Date();
+  const eighteenYearsAgo = new Date(
+    today.getFullYear() - 18,
+    today.getMonth(),
+    today.getDate()
+  );
 
   const formik = useFormik({
     initialValues: {
       name: "",
       // role: "",
       email: "",
-      contact: "",
-      // dob: "",
+      mobile_no: "",
+      dob: "",
       department: "",
       gender: "",
       manager: "",
@@ -69,7 +69,7 @@ export default function EmployeeRegistrationForm() {
         .matches(emailRegex, "Invalid email format")
         .required("email is required."),
 
-      contact: Yup.number()
+        mobile_no: Yup.number()
         .test(
           "len",
           "contact no should contain only 10 characters.",
@@ -82,10 +82,10 @@ export default function EmployeeRegistrationForm() {
         )
         .required("contact no is required."),
 
-      // DateOfBirth: Yup.date()
-      //   .min("1950-01-01", "Birthdate should be after 1950-01-01")
-      //   .max(eighteenYearsAgo, `Birthdate should be before ${eighteenYearsAgo.getDate()}-${eighteenYearsAgo.getMonth()}-${eighteenYearsAgo.getFullYear()}`)
-      //   .required("Date of birth is required."),
+      dob: Yup.date()
+        .min("1950-01-01", "Birthdate should be after 1950-01-01")
+        .max(eighteenYearsAgo, `Birthdate should be before ${eighteenYearsAgo.getDate()}-${eighteenYearsAgo.getMonth()}-${eighteenYearsAgo.getFullYear()}`)
+        .required("Date of birth is required."),
 
       department: Yup.string().required("department is mandatory."),
 
@@ -292,10 +292,10 @@ export default function EmployeeRegistrationForm() {
                       type="tel"
                       pattern="[0-9]*"
                       maxLength={10}
-                      name="contact"
+                      name="mobile_no"
                       placeholder="Phone Number"
                       onChange={formik.handleChange}
-                      value={formik.values.contact}
+                      value={formik.values.mobile_no}
                       sx={{
                         border:
                           clickedBtnID === "contact"
@@ -308,9 +308,9 @@ export default function EmployeeRegistrationForm() {
                       onClick={() => handleClick("contact")}
                       onBlur={formik.handleBlur}
                     />
-                    {formik.touched.contact && errors.contact && (
+                    {formik.touched.mobile_no && errors.mobile_no && (
                       <Typography variant="caption" color="error">
-                        {errors.contact}
+                        {errors.mobile_no}
                       </Typography>
                     )}
                   </Stack>
@@ -438,7 +438,7 @@ export default function EmployeeRegistrationForm() {
                   <Typography variant="body2"> DATE OF BIRTH </Typography>
                   <InputBase
                     type="date"
-                    name="DateOfBirth"
+                    name="dob"
                     onChange={formik.handleChange}
                     sx={{
                       border:
@@ -452,9 +452,9 @@ export default function EmployeeRegistrationForm() {
                     onClick={() => handleClick("DateOfBirth")}
                     onBlur={formik.handleBlur}
                   />
-                  {formik.touched.DateOfBirth && errors.DateOfBirth && (
+                  {formik.touched.dob && errors.dob && (
                     <Typography variant="caption" color="error">
-                      {errors.DateOfBirth}
+                      {errors.dob}
                     </Typography>
                   )}
                 </Stack>

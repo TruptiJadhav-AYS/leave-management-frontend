@@ -136,6 +136,7 @@ const initialState = {
     },
   ],
   logedInEmp:{},
+  selectedEmp:"",
   userRole:""
 };
 
@@ -149,16 +150,18 @@ const employeeSlice = createSlice({
     getLogedInEmp:(state,action)=>{
       state.logedInEmp=action.payload
     },
-    ediEmp:(state,action)=>{
+    editEmp:(state,action)=>{
       state.Employees=action.payload
     },
     getRole:(state,action)=>{
-      console.log("actionrole",action.payload)
       state.userRole=action.payload
-    }
+    },
+    setSelectedEmp:(state,action)=>{
+      state.selectedEmp=action.payload
+    },
   }
 });
 
 // export const {onSelectContact,onMsg,onSearch}=contactSlice.actions
-export const {addEmp,editEmp,getRole,getLogedInEmp}=employeeSlice.actions
+export const {addEmp,editEmp,getRole,getLogedInEmp,setSelectedEmp}=employeeSlice.actions
 export default employeeSlice.reducer;

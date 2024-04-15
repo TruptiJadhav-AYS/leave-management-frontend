@@ -55,7 +55,7 @@ export default function CenterDisplay() {
         path="/Employees/NewRegistration"
         element={<EmployeeRegistrationForm />}
       />
-      <Route path="/Employees/EditEmployee" element={<EditEmployeeForm />} />
+      <Route path="/Employees/EditEmployee/:id" element={<EditEmployeeForm />} />
       <Route
         path="/Projects"
         element={responsive.isMobile ? <ProjectMbList /> : <ProjectList />}
