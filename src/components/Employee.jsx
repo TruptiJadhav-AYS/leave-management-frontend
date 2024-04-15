@@ -32,16 +32,15 @@ export default function EmployeeList() {
   );
 
   return (
-      <Paper sx={{height:"100%",mt:"5%"}}>
+      <Paper height={"90vh"}>
         <Grid
           container
           sx={{
             width: "100%",
-            top: "10%",
+            top: "9%",
             zIndex: 1,
             bgcolor: "white",
-            height:"5vh"
-
+            height:"8vh"
           }}
           position={"sticky"}
         >
@@ -84,16 +83,10 @@ export default function EmployeeList() {
 
         <Grid
           container
-          // sx={{
-          //   overflowY: "auto",
-          //   mx: 1,
-          //   width: "100%",
-          //   display: "flex",
-          //   flexDirection: "column",
-          //   bgcolor: "yellow",
-          //   height: "90vh",
-          //   mt:"11px"
-          // }}
+          sx={{
+          top:"10%"
+          }}
+          
         >
           <Grid item xs={12}>
             <Grid
@@ -102,8 +95,6 @@ export default function EmployeeList() {
                 height:"90vh",
                 overflowY: "scroll",
                 scrollbarWidth: "thin",
-                mt:"2%",
-                bgcolor:"red"
               }}
             >
               {FilterArray.map((contact, index) => (
