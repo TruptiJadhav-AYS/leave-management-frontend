@@ -1,4 +1,4 @@
-import  { addEmp ,editEmp,getRole,getLogedInEmp} from "../slice/EmployeeSlice";
+import  { addEmp ,editEmp,getRole,getLogedInEmp,deleteEmp} from "../slice/EmployeeSlice";
 
 function findLogedInEmployee(id){
     return(dispatch,getState)=>{
@@ -22,6 +22,7 @@ function findRole(id){
 function addEmployee(obj){
     return(dispatch,getState)=>{
         const {Employees}=getState().employees
+        let updatedEmployees=[...Employees]
 
         let role
         if(obj.manager){
@@ -34,21 +35,19 @@ function addEmployee(obj){
             role    
         }
         emp={...obj,...emp}
-        const updatedEmployees = [...Employees, emp];
+        updatedEmployees.push(emp)
         dispatch(addEmp(updatedEmployees))
     }
 }
 
 function editEmployee(newEmp){
     return(dispatch,getState)=>{
-        let {Employees}=getState().employees
+        const {Employees}=getState().employees
         const {selectedEmp}=getState().employees
         let updatedEmployees=[...Employees]
 
-        console.log("idddd",selectedEmp)
-
         let index=Employees.findIndex(emp => emp.id === selectedEmp);
-        console.log("index",index)
+
           if (index !== -1) {
             if (newEmp.name) updatedEmployees[index] = { ...updatedEmployees[index], name: newEmp.name };
             if (newEmp.department) updatedEmployees[index] ={ ...updatedEmployees[index], department: newEmp.department };
@@ -64,4 +63,15 @@ function editEmployee(newEmp){
     }
 }
 
-export { addEmployee, editEmployee,findRole ,findLogedInEmployee};
+function deleteEmployee(){
+    return(dispatch,getState)=>{
+        const {Employees}=getState().employees
+        const {selectedEmp}=getState().employees
+        let updatedEmployees=[...Employees]
+        let index=updatedEmployees.findIndex(emp => emp.id === selectedEmp);
+        updatedEmployees.splice(index, 1)
+        dispatch(deleteEmp(updatedEmployees))
+    }
+}
+
+export { addEmployee, editEmployee,findRole ,findLogedInEmployee,deleteEmployee};

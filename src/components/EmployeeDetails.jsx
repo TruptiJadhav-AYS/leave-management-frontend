@@ -2,10 +2,13 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Box, Button, Card, CardContent, Typography, Grid } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
+import { useDispatch } from "react-redux";
+import {deleteEmployee} from "../Store/action/EmployeeAction"
 
-export default function EmployeeDetails() {
+export default function EmployeeDetails({onAddOrEdit}) {
   const Employees = useSelector((state) => state.employees.Employees);
-  const selectedEmp=useSelector((state)=>state.employees.selectedEmp)
+  const selectedEmp=useSelector((state)=>state.employees.selectedEmp);
+  const dispatch=useDispatch();
 
   const Navigate=useNavigate()
 
@@ -23,18 +26,20 @@ export default function EmployeeDetails() {
       }}
     >
       <Card elevation={2}>
+        <Grid display={"flex"} justifyContent={"space-between"} mx={2}>
         <Typography
           variant="h5"
           display="flex"
           justifyContent="left"
           alignItems={"left"}
-          ml={2}
           mt={3}
           width="100%"
         >
           Employee Details
         </Typography>
-        <Button onClick={()=>Navigate(`/Employee/Employees/EditEmployee/${parseInt(selectedEmp)}`)}>edit</Button>
+        <Button onClick={()=>{onAddOrEdit("edit");Navigate("/Employee/Employees/EmployeeDetailsForm")}}>edit</Button>
+        <Button onClick={()=>{dispatch(deleteEmployee());Navigate("/Employee/Employees")}}>Delete</Button>
+        </Grid>
         <CardContent>
           <Grid container justifyContent={"space-around"} align={'center'} columnGap={12}>
             <Grid item lg={12} md={12} xs={12} sm={12}>
