@@ -22,6 +22,7 @@ import { useSelector } from "react-redux";
 
 function AccountMenu() {
   const role=useSelector((state)=>state.employees.userRole)
+  const logedInUser=useSelector((state)=>state.employees.logedInEmp)
   const [anchorEl, setAnchorEl] = useState(null);
   const [logoutClick, setLogoutClick] = useState(false);
   const open = Boolean(anchorEl);
@@ -107,11 +108,7 @@ function AccountMenu() {
             <Box display={"flex"} gap={0.5} mt={1} flexDirection={"row"}>
               <MailIcon />
               <Typography color="textSecondary">
-                {role === "Admin"
-                  ? "pratiksha@gmail.com"
-                  : role === "Manager"
-                  ? "trupti@gmail.com"
-                  : "pruthvi@gmail.com"}
+               {logedInUser.email}
               </Typography>
             </Box>
             <Box  display="flex">

@@ -9,20 +9,20 @@ import {
   Paper,
   Card,
 } from "@mui/material";
-// import Avatar from "@mui/material/Avatar";
 import ListItem from "@mui/material/ListItem";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch,} from "react-redux";
 import { setSelectedEmp } from "../Store/slice/EmployeeSlice";
 
 export default function EmployeeList() {
   const Navigate = useNavigate();
   const [searchText, setsearchText] = useState("");
   const Employees = useSelector((state) => state.employees.Employees);
-
+  const dispatch=useDispatch()
+  
   function handleSearchText(event) {
     setsearchText(event.target.value);
   }
@@ -99,6 +99,7 @@ export default function EmployeeList() {
           {FilterArray.map((contact, index) => (
             <Button
               onClick={() => {
+                dispatch(setSelectedEmp(contact.id))
                 Navigate(`/Employee/${contact.id}`);
               }}
               sx={{ width: "100%" }}
@@ -108,7 +109,7 @@ export default function EmployeeList() {
                 elevation={3}
                 key={index}
               >
-                <ListItem alignItems="flex-start" mx={1}>
+                <ListItem alignItems="flex-start" mx={1} > 
                   <Grid container spacing={2}>
                     {/* <Grid item>
         <Grid

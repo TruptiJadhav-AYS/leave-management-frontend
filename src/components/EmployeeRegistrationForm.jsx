@@ -424,7 +424,7 @@ export default function EmployeeRegistrationForm() {
                 </Grid>
               </Grid>
 
-              <Grid container spacing={1} mt={2}>
+              <Grid container  mt={responsive.isMobile?13 :2} spacing={1}>
               <Grid
                 item
                 xs={12}
@@ -432,7 +432,7 @@ export default function EmployeeRegistrationForm() {
                 md={6}
                 lg={6}
                 sx={{ display: "flex", justifyContent: "space-between" }}
-                height={responsive.isMobile ? "7vh" : "8vh"}
+                height={responsive.isMobile ? "10vh" : "11vh"}
               >
                 <Stack width={"100%"}>
                   <Typography variant="body2"> DATE OF BIRTH </Typography>
@@ -463,7 +463,7 @@ export default function EmployeeRegistrationForm() {
               </Grid>
 
               <br />
-              <Grid container sx={{mt: responsive.isMobile ? 12: 2,rowGap:2 }}>
+              <Grid container sx={{mt: responsive.isMobile ? 1.5: 1.5,rowGap:2 }}>
               <Button
                 variant="outlined"
                 onClick={
