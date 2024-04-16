@@ -9,6 +9,7 @@ import {
   Paper,
   Card,
 } from "@mui/material";
+import Avatar from "@mui/material/Avatar";
 import ListItem from "@mui/material/ListItem";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
@@ -93,7 +94,7 @@ export default function EmployeeList() {
             minHeight: "100%",
             overflowY: "scroll",
             scrollbarWidth: "thin",
-            minWidth:"100%"
+            minWidth: "100%",
           }}
         >
           {FilterArray.map((contact, index) => (
@@ -111,35 +112,10 @@ export default function EmployeeList() {
               >
                 <ListItem alignItems="flex-start" mx={1} > 
                   <Grid container spacing={2}>
-                    {/* <Grid item>
-        <Grid
-          container
-          sx={{
-          top:"10%"
-          }}
-          
-        >
-          <Grid item xs={12}>
-            <Grid
-
-              sx={{
-                height:"90vh",
-                overflowY: "scroll",
-                scrollbarWidth: "thin",
-              }}
-            >
-              {FilterArray.map((contact, index) => (
-                <Box key={index}>
-                        <ListItem alignItems="flex-start" mx={1}>
-                          <Button onClick={()=>{Navigate(`/Employee/${contact.id}`);}}>
-                          <Grid container spacing={2}>
-                            {/* <Grid item>
-                              <Avatar
-                                // src={contact.Profile}
-                                alt={contact.name}
-                              />
-                            </Grid> */}
-                    <Grid item>
+                    <Grid item lg={1} md={1}>
+                      <Avatar src={contact.Profile} alt={contact.name} />
+                    </Grid>
+                    <Grid item lg={11} md={11}>
                       <Typography
                         variant="body1"
                         sx={{
@@ -150,12 +126,12 @@ export default function EmployeeList() {
                       >
                         {contact.name}
                       </Typography>
-                      {/* <Typography
-                                variant="caption"
-                                sx={{ textTransform: "none", color: "black" }}
-                              >
-                                {contact.email}
-                              </Typography> */}
+                      <Typography
+                        variant="caption"
+                        sx={{ textTransform: "none", color: "black" }}
+                      >
+                        {contact.email}
+                      </Typography>
                     </Grid>
                   </Grid>
                 </ListItem>
