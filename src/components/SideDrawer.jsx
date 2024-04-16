@@ -17,13 +17,15 @@ import logoImage from "../assets/ays_logo.jpg";
 import UseReponsive from "../hooks/UseResponsive";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import CategoryIcon from '@mui/icons-material/Category';
+import { useSelector } from "react-redux";
 
-export default function SideDrawer({ role, handleDrawerClose }) {
+export default function SideDrawer({ handleDrawerClose }) {
   let Navigate = useNavigate();
   let path = useLocation().pathname;
   let selected = path.substring(path.lastIndexOf("/") + 1);
   let selectedItem;
   let sideDrawerList;
+  const role=useSelector((state)=>state.employees.userRole)
 
   let responsive = UseReponsive();
   function onMobile() {

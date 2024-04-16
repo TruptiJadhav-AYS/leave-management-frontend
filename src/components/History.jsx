@@ -174,7 +174,7 @@ export default function History() {
 //     { Name: "Pratiksha Nimbalkar", Role: "Employee", Gender: "Female" },
 //     { Name: "Trupti Jadhav", Role: "Employee", Gender: "Female" },
 //     { Name: "Ketan Rathod", Role: "      Manager", Gender: "Male" },
-//     { Name: "Yogesh Patel", Role: "Admin", Gender: "Male" },
+//     { Name: "Pratik Deshmukh", Role: "Admin", Gender: "Male" },
 //     { Name: "Nupur Tyagi", Role: "Employee", Gender: "Female" },
 //     { Name: "Mehvish Shaikh", Role: "Employee", Gender: "Female" },
 //     { Name: "Abhinandan Ambekar", Role: "Employee", Gender: "Male" },

@@ -3,6 +3,9 @@ import backgroundImage from "../assets/bg_loginpage.jpg";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logoImage from "../assets/ays_logo.jpg";
+import findRole from "../Store/action/FindRoleAction";
+import findLogedInEmployee  from "../Store/action/FindLoggedInEmployee";
+import { useDispatch } from "react-redux";
 
 import {
   TextField,
@@ -12,12 +15,7 @@ import {
   Card,
   CardContent,
 } from "@mui/material";
-
-const users = [
-  { email: "pratiksha@gmail.com", password: "123" },
-  { email: "trupti@gmail.com", password: "1234" },
-  { email: "pruthvi@gmail.com", password: "12345" },
-];
+import { useSelector } from "react-redux";
 
 function LoginPage(props) {
   const [email, setEmail] = useState("");
@@ -25,7 +23,11 @@ function LoginPage(props) {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate();
-  
+  const dispatch=useDispatch()
+
+  const users=useSelector((state) => state.users.Users)
+  // const role=useSelector((state)=>state.employees.userRole)
+
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
     setEmailError("");
@@ -57,11 +59,14 @@ function LoginPage(props) {
     } else if (userByEmail.password !== password) {
       setPasswordError("Invalid email or password");
     } else {
+      dispatch(findRole(userByEmail.id))
+      dispatch(findLogedInEmployee(userByEmail.id))
       navigate("/Employee");
       console.log("Login successful", userByEmail);
       props.onSignInClick(true);
       props.onSignIn(email);
     }
+
   };
 
   return (

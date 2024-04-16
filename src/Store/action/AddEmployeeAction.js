@@ -1,4 +1,8 @@
-import { addEmp } from "../slice/EmployeeSlice";
+import  { addEmp ,editEmp,getRole,getLogedInEmp} from "../slice/EmployeeSlice";
+
+
+
+
 
 function addEmployee(obj){
     return(dispatch,getState)=>{
@@ -20,4 +24,6 @@ function addEmployee(obj){
     }
 }
 
-export default addEmployee
+
+
+export default addEmployee;

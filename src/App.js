@@ -74,7 +74,7 @@ function App() {
           {routeStatus && (
             <Route
               path="/Employee/*"
-              element={<Display logedInUser={logedInUser} role={role}/>}
+              element={<Display logedInUser={logedInUser} />}
             />
           )}
         </Routes>

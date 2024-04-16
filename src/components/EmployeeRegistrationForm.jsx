@@ -40,20 +40,20 @@ export default function EmployeeRegistrationForm() {
 
   const navigate = useNavigate();
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  // const today = new Date();
-  // const eighteenYearsAgo = new Date(
-  //   today.getFullYear() - 18,
-  //   today.getMonth(),
-  //   today.getDate()
-  // );
+  const today = new Date();
+  const eighteenYearsAgo = new Date(
+    today.getFullYear() - 18,
+    today.getMonth(),
+    today.getDate()
+  );
 
   const formik = useFormik({
     initialValues: {
       name: "",
       // role: "",
       email: "",
-      contact: "",
-      // dob: "",
+      mobile_no: "",
+      dob: "",
       department: "",
       gender: "",
       manager: "",
@@ -69,7 +69,7 @@ export default function EmployeeRegistrationForm() {
         .matches(emailRegex, "Invalid email format")
         .required("email is required."),
 
-      contact: Yup.number()
+        mobile_no: Yup.number()
         .test(
           "len",
           "contact no should contain only 10 characters.",
@@ -82,10 +82,10 @@ export default function EmployeeRegistrationForm() {
         )
         .required("contact no is required."),
 
-      // DateOfBirth: Yup.date()
-      //   .min("1950-01-01", "Birthdate should be after 1950-01-01")
-      //   .max(eighteenYearsAgo, `Birthdate should be before ${eighteenYearsAgo.getDate()}-${eighteenYearsAgo.getMonth()}-${eighteenYearsAgo.getFullYear()}`)
-      //   .required("Date of birth is required."),
+      dob: Yup.date()
+        .min("1950-01-01", "Birthdate should be after 1950-01-01")
+        .max(eighteenYearsAgo, `Birthdate should be before ${eighteenYearsAgo.getDate()}-${eighteenYearsAgo.getMonth()}-${eighteenYearsAgo.getFullYear()}`)
+        .required("Date of birth is required."),
 
       department: Yup.string().required("department is mandatory."),
 
@@ -136,7 +136,7 @@ export default function EmployeeRegistrationForm() {
                   height={responsive.isMobile ? "14vh" : "11vh"}
                 >
                   <Stack width={"100%"}>
-                    <Typography variant="body2"> name</Typography>
+                    <Typography variant="body2"> NAME</Typography>
                     <InputBase
                       placeholder="name"
                       type="text"
@@ -171,7 +171,7 @@ export default function EmployeeRegistrationForm() {
                   height={responsive.isMobile ? "11vh" : "11vh"}
                 >
                   <Stack width={"100%"}>
-                    <Typography variant="body2"> gender </Typography>
+                    <Typography variant="body2"> GENDER </Typography>
                     <Select
                       size="small"
                       name="gender"
@@ -252,7 +252,7 @@ export default function EmployeeRegistrationForm() {
                   height={responsive.isMobile ? "14vh" : "8vh"}
                 >
                   <Stack width={"100%"}>
-                    <Typography variant="body2"> email </Typography>
+                    <Typography variant="body2"> EMAIL </Typography>
                     <InputBase
                       type="email"
                       name="email"
@@ -287,15 +287,15 @@ export default function EmployeeRegistrationForm() {
                   height={responsive.isMobile ? "7vh" : "8vh"}
                 >
                   <Stack width={"100%"}>
-                    <Typography variant="body2"> contact NO</Typography>
+                    <Typography variant="body2"> CONTACT NO</Typography>
                     <InputBase
                       type="tel"
                       pattern="[0-9]*"
                       maxLength={10}
-                      name="contact"
+                      name="mobile_no"
                       placeholder="Phone Number"
                       onChange={formik.handleChange}
-                      value={formik.values.contact}
+                      value={formik.values.mobile_no}
                       sx={{
                         border:
                           clickedBtnID === "contact"
@@ -308,51 +308,15 @@ export default function EmployeeRegistrationForm() {
                       onClick={() => handleClick("contact")}
                       onBlur={formik.handleBlur}
                     />
-                    {formik.touched.contact && errors.contact && (
+                    {formik.touched.mobile_no && errors.mobile_no && (
                       <Typography variant="caption" color="error">
-                        {errors.contact}
+                        {errors.mobile_no}
                       </Typography>
                     )}
                   </Stack>
                 </Grid>
               </Grid>
               <br />
-
-              {/* <Grid container height={"10vh"} spacing={1}> */}
-              {/* <Grid
-                item
-                xs={12}
-                sm={6}
-                md={6}
-                lg={6}
-                sx={{ display: "flex", justifyContent: "space-between" }}
-              >
-                <Stack width={"100%"}>
-                  <Typography variant="body2"> DATE OF BIRTH </Typography>
-                  <InputBase
-                    type="date"
-                    name="DateOfBirth"
-                    onChange={formik.handleChange}
-                    sx={{
-                      border:
-                        clickedBtnID === "DateOfBirth"
-                          ? "2px solid blue"
-                          : "2px solid  rgba(204, 204, 204, 0.5)",
-                      height: "40px",
-                      borderRadius: 1,
-                    }}
-                    onClick={() => handleClick("DateOfBirth")}
-                    onBlur={formik.handleBlur}
-                  />
-                  {formik.touched.DateOfBirth && errors.DateOfBirth && (
-                    <Typography variant="caption" color="error">
-                      {errors.DateOfBirth}
-                    </Typography>
-                  )}
-                </Stack>
-              </Grid> */}
-
-              {/* </Grid> */}
 
               <br />
 
@@ -366,7 +330,7 @@ export default function EmployeeRegistrationForm() {
                   height={responsive.isMobile ? "14vh" : "11vh"}
                 >
                   <Stack width={"100%"}>
-                    <Typography variant="body2"> department</Typography>
+                    <Typography variant="body2"> DEPARTMENT</Typography>
                     <Select
                       size="small"
                       name="department"
@@ -411,7 +375,7 @@ export default function EmployeeRegistrationForm() {
                   height={responsive.isMobile ? "10vh" : "11vh"}
                 >
                   <Stack width={"100%"}>
-                    <Typography variant="body2">manager</Typography>
+                    <Typography variant="body2">MANAGER</Typography>
 
                     <Select
                       size="small"
@@ -459,8 +423,47 @@ export default function EmployeeRegistrationForm() {
                   </Stack>
                 </Grid>
               </Grid>
+
+              <Grid container  mt={responsive.isMobile?13 :2} spacing={1}>
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={6}
+                lg={6}
+                sx={{ display: "flex", justifyContent: "space-between" }}
+                height={responsive.isMobile ? "10vh" : "11vh"}
+              >
+                <Stack width={"100%"}>
+                  <Typography variant="body2"> DATE OF BIRTH </Typography>
+                  <InputBase
+                    type="date"
+                    name="dob"
+                    onChange={formik.handleChange}
+                    sx={{
+                      border:
+                        clickedBtnID === "DateOfBirth"
+                          ? "2px solid blue"
+                          : "2px solid  rgba(204, 204, 204, 0.5)",
+                      height: "40px",
+                      borderRadius: 1,
+                      p:1,
+                    }}
+                    onClick={() => handleClick("DateOfBirth")}
+                    onBlur={formik.handleBlur}
+                  />
+                  {formik.touched.dob && errors.dob && (
+                    <Typography variant="caption" color="error">
+                      {errors.dob}
+                    </Typography>
+                  )}
+                </Stack>
+              </Grid>
+
+              </Grid>
+
               <br />
-              <Grid container sx={{mt: responsive.isMobile ? 12: 2,rowGap:2 }}>
+              <Grid container sx={{mt: responsive.isMobile ? 1.5: 1.5,rowGap:2 }}>
               <Button
                 variant="outlined"
                 onClick={

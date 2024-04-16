@@ -3,38 +3,37 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   Employees: [
     {
-      id: 1,
+      id: 3,
       name: "Pruthviraj Suryawanshi",
       mobile_no: "7890789067",
       email: "pruthvi@gmail.com",
       role: "Employee",
       gender: "Male",
       dob: "2003-06-27",
-      manager: "Yogesh Patel",
-      department: "HR",
+      manager: "Pratik Deshmukh",
+      department: "Developement",
     },
     {
-      id: 2,
+      id: 1,
       name: "Pratiksha Nimbalkar",
       mobile_no: "7899089087",
       email: "pratiksha@gmail.com",
       role: "Admin",
       gender: "Female",
       dob: "2003-08-17",
-      manager: "Yogesh Patel",
-      department: "HR",
+      manager: "Pratik Deshmukh",
+      department: "Developement",
     },
     {
-      id: 3,
+      id: 2,
       name: "Trupti Jadhav",
       mobile_no: "6798978458",
-      // mobile_no:"8899088967",
       email: "trupti@gmail.com",
       role: "Manager",
       gender: "Female",
       dob: "2003-06-17",
-      manager: "Yogesh Patel",
-      department: "HR",
+      manager: "Pratik Deshmukh",
+      department: "Developement",
     },
     {
       id: 4,
@@ -44,19 +43,19 @@ const initialState = {
       role: "Manager",
       gender: "Male",
       dob: "2000-08-06",
-      manager: "Yogesh Patel",
-      department: "HR",
+      manager: "Pratik Deshmukh",
+      department: "Human Resource",
     },
     {
       id: 5,
-      name: "Yogesh Patel",
+      name: "Pratik Deshmukh",
       mobile_no: "6798957898",
       email: "yogesh@gmail.com",
       role: "Admin",
       gender: "Male",
       dob: "2001-01-06",
-      manager: "Yogesh Patel",
-      department: "HR",
+      manager: "Pratik Deshmukh",
+      department: "Human Resource",
     },
     {
       id: 6,
@@ -66,8 +65,8 @@ const initialState = {
       role: "Employee",
       gender: "Female",
       dob: "2001-10-01",
-      manager: "Yogesh Patel",
-      department: "HR",
+      manager: "Pratik Deshmukh",
+      department: "Developement",
     },
     {
       id: 7,
@@ -77,8 +76,8 @@ const initialState = {
       role: "Employee",
       gender: "Female",
       dob: "2000-08-06",
-      manager: "Yogesh Patel",
-      department: "HR",
+      manager: "Pratik Deshmukh",
+      department: "Human Resource",
     },
     {
       id: 8,
@@ -88,19 +87,19 @@ const initialState = {
       role: "Employee",
       gender: "Male",
       dob: "1997-08-06",
-      manager: "Yogesh Patel",
-      department: "HR",
+      manager: "Pratik Deshmukh",
+      department: "Human Resource",
     },
     {
       id: 9,
       name: "Shruti Bagde",
       mobile_no: "6797834798",
-      email: "shruti@gmail.com",
+      email: "sDevelopementuti@gmail.com",
       role: "Employee",
       gender: "Female",
       dob: "1997-08-02",
-      manager: "Yogesh Patel",
-      department: "HR",
+      manager: "Pratik Deshmukh",
+      department: "Developement",
     },
     {
       id: 10,
@@ -110,8 +109,8 @@ const initialState = {
       role: "Employee",
       gender: "Female",
       dob: "1998-02-06",
-      manager: "Yogesh Patel",
-      department: "HR",
+      manager: "Pratik Deshmukh",
+      department: "Human Resource",
     },
     {
       id: 11,
@@ -121,8 +120,8 @@ const initialState = {
       role: "Employee",
       dob: "1997-08-06",
       gender: "Male",
-      manager: "Yogesh Patel",
-      department: "HR",
+      manager: "Pratik Deshmukh",
+      department: "Human Resource",
     },
     {
       id: 12,
@@ -131,22 +130,37 @@ const initialState = {
       email: "shital@gmail.com",
       role: "Employee",
       gender: "Female",
-      manager: "Yogesh Patel",
-      department: "HR",
+      manager: "Pratik Deshmukh",
+      department: "Human Resource",
     },
   ],
+  logedInEmp:{},
+  selectedEmp:"",
+  userRole:""
 };
 
-const employeeSlice = createSlice({
+const EmployeeSlice = createSlice({
   name: "EmployeeSlice",
   initialState,
   reducers: {
     addEmp:(state,action)=>{
       state.Employees=action.payload;
     },
+    getLogedInEmp:(state,action)=>{
+      state.logedInEmp=action.payload
+    },
+    editEmp:(state,action)=>{
+      state.Employees=action.payload
+    },
+    getRole:(state,action)=>{
+      state.userRole=action.payload
+    },
+    setSelectedEmp:(state,action)=>{
+      state.selectedEmp=action.payload
+    },
   }
 });
 
 // export const {onSelectContact,onMsg,onSearch}=contactSlice.actions
-export const {addEmp}=employeeSlice.actions
-export default employeeSlice.reducer;
+export const {addEmp,editEmp,getRole,getLogedInEmp,setSelectedEmp}=EmployeeSlice.actions
+export default EmployeeSlice.reducer;

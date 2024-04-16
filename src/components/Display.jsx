@@ -18,8 +18,11 @@ import { useNavigate } from "react-router-dom";
 import MailIcon from "@mui/icons-material/Mail";
 import CallIcon from "@mui/icons-material/Call";
 import Profile from "../assets/profile.jpg"
+import { useSelector } from "react-redux";
 
-function AccountMenu({ role }) {
+function AccountMenu() {
+  const role=useSelector((state)=>state.employees.userRole)
+  const logedInUser=useSelector((state)=>state.employees.logedInEmp)
   const [anchorEl, setAnchorEl] = useState(null);
   const [logoutClick, setLogoutClick] = useState(false);
   const open = Boolean(anchorEl);
@@ -105,11 +108,7 @@ function AccountMenu({ role }) {
             <Box display={"flex"} gap={0.5} mt={1} flexDirection={"row"}>
               <MailIcon />
               <Typography color="textSecondary">
-                {role === "Admin"
-                  ? "pratiksha@gmail.com"
-                  : role === "Manager"
-                  ? "trupti@gmail.com"
-                  : "pruthvi@gmail.com"}
+               {logedInUser.email}
               </Typography>
             </Box>
             <Box  display="flex">
@@ -135,7 +134,10 @@ function AccountMenu({ role }) {
 
 const drawerWidth = 240;
 
-export default function Display({ logedInUser, role }) {
+export default function Display() {
+  const role=useSelector((state)=>state.employees.userRole)
+  const logedInUser=useSelector((state)=>state.employees.logedInEmp)
+
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
 
@@ -186,14 +188,10 @@ export default function Display({ logedInUser, role }) {
           >
 
               <Typography fontSize={"18px"} noWrap component="div">
-                {role === "Admin"
-                  ? "Pratiksha Nimbalkar"
-                  : role === "Manager"
-                  ? "Trupti Jadhav"
-                  : " Pruthviraj Suryavanshi"}
+                {logedInUser.name}
               </Typography>
 
-            <AccountMenu  role={role} />
+            <AccountMenu   />
           </Stack>
         </Stack>
       </AppBar>
@@ -217,7 +215,7 @@ export default function Display({ logedInUser, role }) {
             },
           }}
         >
-          <SideDrawer role={role} handleDrawerClose={handleDrawerClose} />
+          <SideDrawer  handleDrawerClose={handleDrawerClose} />
         </Drawer>
         <Drawer
           variant="permanent"
@@ -230,13 +228,13 @@ export default function Display({ logedInUser, role }) {
           }}
           open
         >
-          <SideDrawer role={role} />
+          <SideDrawer  />
         </Drawer>
       </Box>
       <Grid container direction={"row"}>
         <Toolbar/>
         <Box bgcolor={"#f5f5f5"} sx={{ width: "100%", height: "89.7vh" }}>
-          <CenterDisplay role={role} />
+          <CenterDisplay  />
         </Box>
       </Grid>
     </Box>
