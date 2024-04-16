@@ -1,9 +1,7 @@
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
-// import { Dispatch } from "@reduxjs/toolkit";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Box, Button, Card, CardContent, Typography, Grid } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
-import { setSelectedEmp } from "../Store/slice/EmployeeSlice";
 
 export default function EmployeeDetails() {
   const Employees = useSelector((state) => state.employees.Employees);
@@ -36,6 +34,7 @@ export default function EmployeeDetails() {
         >
           Employee Details
         </Typography>
+        <Button onClick={()=>Navigate(`/Employee/Employees/EditEmployee/${parseInt(selectedEmp)}`)}>edit</Button>
         <CardContent>
           <Grid container justifyContent={"space-around"} align={'center'} columnGap={12}>
             <Grid item lg={12} md={12} xs={12} sm={12}>

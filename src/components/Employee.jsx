@@ -41,11 +41,14 @@ export default function EmployeeList() {
           top: "10%",
           zIndex: 1,
           bgcolor: "white",
-          height: "8vh",
+          height: "7.5vh",
+          ml: 1,
+          pt:1
         }}
         position={"sticky"}
+        justifyContent={"space-between"}
       >
-        <Grid item xs={10}>
+        <Grid item xs={10.5}>
           <Box
             sx={{
               display: "flex",
@@ -53,7 +56,6 @@ export default function EmployeeList() {
               width: "40%",
               border: "2px solid rgba(204, 204, 204, 0.5)",
               borderRadius: "10px",
-              mr: "1",
             }}
           >
             <InputBase
@@ -64,7 +66,7 @@ export default function EmployeeList() {
             <SearchIcon sx={{ my: "1%", mr: 1.5 }} />
           </Box>
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={1.5}>
           <Button
             variant="contained"
             sx={{
@@ -79,7 +81,7 @@ export default function EmployeeList() {
             <AddIcon />
           </Button>
         </Grid>
-        <Divider />
+        {/* <Divider /> */}
       </Grid>
 
       <Grid
@@ -106,12 +108,12 @@ export default function EmployeeList() {
               sx={{ width: "100%" }}
             >
               <Card
-                sx={{ mb: 1, borderRadius: 2, mr: 1, width: "100%" }}
+                sx={{  borderRadius: 2, mr: 1, width: "100%" }}
                 elevation={3}
                 key={index}
               >
                 <ListItem alignItems="flex-start" mx={1} > 
-                  <Grid container spacing={2}>
+                  <Grid container spacing={2} alignItems={"center"}>
                     <Grid item lg={1} md={1}>
                       <Avatar src={contact.Profile} alt={contact.name} />
                     </Grid>
