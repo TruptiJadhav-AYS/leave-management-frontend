@@ -3,8 +3,8 @@ import backgroundImage from "../assets/bg_loginpage.jpg";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logoImage from "../assets/ays_logo.jpg";
-import { findRole } from "../Store/action/EmployeeAction";
-import { findLogedInEmployee } from "../Store/action/EmployeeAction";
+import findRole from "../Store/action/FindRoleAction";
+import findLogedInEmployee  from "../Store/action/FindLoggedInEmployee";
 import { useDispatch } from "react-redux";
 
 import {
@@ -26,7 +26,7 @@ function LoginPage(props) {
   const dispatch=useDispatch()
 
   const users=useSelector((state) => state.users.Users)
-  const role=useSelector((state)=>state.employees.userRole)
+  // const role=useSelector((state)=>state.employees.userRole)
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);

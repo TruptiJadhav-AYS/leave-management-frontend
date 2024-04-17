@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
 import { useState } from "react";
-import EditIcon from "@mui/icons-material/Edit";
+// import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const columns = [
@@ -32,7 +32,7 @@ const columns = [
 
 export default function InventoryList() {
   const InventoryListItems = useSelector(state=>state.Inventory.InventoryListItems)
-  // console.log("****************", InventoryListItems)
+  console.log("****************", InventoryListItems)
   const Navigate = useNavigate();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -55,7 +55,7 @@ export default function InventoryList() {
   function handleSearchText(event) {
     setsearchText(event.target.value);
   }
-  console.log(searchText);
+  // console.log(searchText);
 
   const FilterArray = InventoryListItems.filter((inventory) =>
     inventory.category.toLowerCase().includes(searchText.toLowerCase())
@@ -68,7 +68,7 @@ export default function InventoryList() {
           sx={{
             display: "flex",
             justifyContent: "space-between",
-            width: "50%",
+            width: "30%",
             border: "2px solid rgba(204, 204, 204, 0.5)",
             borderRadius: "20px",
             mr: "1",
@@ -79,7 +79,7 @@ export default function InventoryList() {
             placeholder="Search for Category ..."
             onChange={handleSearchText}
           />
-          <SearchIcon sx={{ my: "1%", mr: 1.5 }} />
+          <SearchIcon sx={{ my: "1.5%", mr: 1.5 }} />
         </Box>
 
         <Button
@@ -120,8 +120,9 @@ export default function InventoryList() {
             {FilterArray
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((InventoryListItem,index) => {
+                console.log("yuyyuuyyyggg",index)
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={index} >
+                  <TableRow hover role="checkbox" tabIndex={-1} key={index} sx={{cursor:"pointer"}} >
                     {columns.map((column) => {
                       const value = InventoryListItem[column.id];
                       return (
@@ -132,10 +133,6 @@ export default function InventoryList() {
                     })}
                     <TableCell align="center">
                       <Stack direction="row">
-                        <EditIcon
-                          // onClick={handleEditClick}
-                          sx={{ cursor: "pointer" }}
-                        />
                         <DeleteIcon sx={{ cursor: "pointer" }} />
                       </Stack>
                     </TableCell>

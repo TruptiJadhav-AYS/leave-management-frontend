@@ -139,7 +139,7 @@ const initialState = {
   userRole: "",
 };
 
-const employeeSlice = createSlice({
+const EmployeeSlice = createSlice({
   name: "EmployeeSlice",
   initialState,
   reducers: {

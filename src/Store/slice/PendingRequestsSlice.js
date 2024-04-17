@@ -57,13 +57,13 @@ const PendingRequestSlice = createSlice({
     name: 'PendingRequest',
     initialState,
     reducers: {
-        // setPendingRequest: (state, action) => {
-        //     return action.payload
-        // }
+      addRequest: (state, action) => {
+        state.annualLeaves = action.payload;
+      }, 
     }
 
 })
 
 
 export default PendingRequestSlice.reducer;
-// export const { setPendingRequest } = PendingRequestSlice.actions;
+export const { addRequest } = PendingRequestSlice.actions;

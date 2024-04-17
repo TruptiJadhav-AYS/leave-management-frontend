@@ -15,8 +15,9 @@ import HistoryMobile from "./HistoryMobile";
 import InventoryList from "./InventoryList";
 import ProjectMbList from "./ProjectMobileView";
 import InventoryListMb from "./InventoryListMb";
-import EmployeeDetails from "./EmployeeDetails";
-import { useState } from "react";
+import { useSelector } from "react-redux";
+import EmployeeDetails from "./EmployeeDetails"
+import AddHolidayForm from "./AddHolidayForm"
 
 export default function CenterDisplay() {
   let [addOrEditForm,setAddOrEditForm]=useState() 
@@ -40,7 +41,8 @@ export default function CenterDisplay() {
           )
         }
       />
-      <Route path="/Holidays" element={<Holidays />} />
+      <Route path="/Holidays" element={<Holidays role={role}/>} />
+      <Route path="/Holidays/AddHoliday" element={<AddHolidayForm/>}/>
       <Route
         path="/Employees"
         element={responsive.isMobile ? <EmployeeMobile onAddOrEdit={onAddOrEdit}/> : <EmployeeList onAddOrEdit={onAddOrEdit}/>}

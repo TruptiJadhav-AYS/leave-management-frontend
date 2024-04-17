@@ -17,7 +17,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import CheckIcon from "@mui/icons-material/Check";
 import {useDispatch} from 'react-redux'
-import { addEmployee } from "../Store/action/EmployeeAction";
+import addEmployee from "../Store/action/AddEmployeeAction";
 
 export default function EmployeeRegistrationForm() {
   const responsive = UseReponsive();

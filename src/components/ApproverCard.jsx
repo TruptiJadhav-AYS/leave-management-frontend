@@ -36,7 +36,7 @@ export default function ApproverCard() {
           />
           <Box px={6} display={"flex"} flexDirection={"column"}>
             <Typography fontSize={responsive.isDesktop ? "19px" : "16px"}> Pratik Deshmukh</Typography>
-            <Typography variant={responsive.isDesktop ? "subtitle1" : "subtitle2"}>Project Manager</Typography>
+            <Typography variant={responsive.isDesktop ? "subtitle1" : "subtitle2"}> Project Manager</Typography>
           </Box>
         </Box>
 
