@@ -10,95 +10,61 @@ import {
   ListItemAvatar,
   Avatar,
 } from "@mui/material";
-import eid from "../assets/eid.jpg";
-import mayday from "../assets/mayday.jpg";
-import independanceDay from "../assets/independance.jpg";
-import ganeshChaturthi from "../assets/ganeshchaturthi.jpg";
-import gandhiJayanti from "../assets/gandhijayanti.jpg";
 import { useSelector } from "react-redux";
-const Holidays = [
-  { date: "11/04/2024",
-    day: "Thursday",
-    occasion: "Eid e milad", 
-    img: eid },
-  { date: "01/05/2024", 
-    day: "Wednesday", 
-    occasion: "Labour Day", 
-    img: mayday },
-  {
-    date: "15/08/2024",
-    day: "Thursday",
-    occasion: "Independence Day",
-    img: independanceDay,
-  },
-  {
-    date: "07/09/2024",
-    day: "Saturday",
-    occasion: "Ganesh Chaturthi",
-    img: ganeshChaturthi,
-  },
-  {
-    date: "02/10/2024",
-    day: "Wednesday",
-    occasion: "Gandhi Jayanti",
-    img: gandhiJayanti,
-  },
-  {
-    date: "07/09/2024",
-    day: "Saturday",
-    occasion: "Ganesh Chaturthi",
-    img: ganeshChaturthi,
-  },
-  {
-    date: "02/10/2024",
-    day: "Wednesday",
-    occasion: "Gandhi Jayanti",
-    img: gandhiJayanti,
-  },
-];
 
 export default function UpcomingHolidays() {
-  const role=useSelector((state)=>state.employees.userRole)
+  const role = useSelector((state) => state.employees.userRole);
+  const Holidays = useSelector((state) => state.holidays.annualLeaves);
 
   const formatDate = (dateString) => {
-    const [day, month, year] = dateString.split('/');
-    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-    ];
-  
+    const [year, month, day] = dateString.split("-");
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
     return `${day} ${monthNames[parseInt(month, 10) - 1]} ${year}`;
   };
-  
+
+  // Get the current date
+  const currentDate = new Date();
+
+  // Filter holidays that occur after the current date
+  const upcomingHolidays = Holidays.filter((holiday) => {
+    const holidayDate = new Date(holiday.date);
+    return holidayDate > currentDate;
+  });
+
   return (
-    <Card sx={{ height: "100%"}}>
-      <CardContent sx={{ position: "sticky"}}>
+    <Card sx={{ height: "100%" }}>
+      <CardContent sx={{ position: "sticky" }}>
         <Typography fontWeight={"bold"} textAlign={"left"} fontSize={"16px"}>
           Upcoming Holidays
         </Typography>
       </CardContent>
       <Divider />
-      <Box sx={{ overflow: "auto", scrollbarWidth: "thin", height: "85%",width:"100%" }}>
+      <Box sx={{ overflow: "auto", scrollbarWidth: "thin", height: "85%", width: "100%" }}>
         <List
           sx={{
             width: "100%",
-            height:300,
+            height: 300,
             maxWidth: 360,
             bgcolor: "background.paper",
-            ml:role==="Employee" ? "8%" : "0%"
+            ml: role === "Employee" ? "8%" : "0%",
           }}
         >
-          {Holidays.map((Holiday,index)=>(
+          {upcomingHolidays.map((holiday, index) => (
             <Box key={index}>
-            <ListItem width="100%">
-              <ListItemAvatar>
-                <Avatar src={Holiday.img}/>
-              </ListItemAvatar>
-              <Typography sx={{ml:role==="Employee" ? "25%" : "15%"}}>{Holiday.occasion}<br/>{formatDate(Holiday.date)}</Typography>
-            </ListItem>
-            <Divider variant="inset"/>
+              <ListItem width="100%">
+                <ListItemAvatar>
+                  <Avatar src={holiday.img} />
+                </ListItemAvatar>
+                <Typography sx={{ ml: role === "Employee" ? "25%" : "15%" }}>
+                  {holiday.occasion}
+                  <br />
+                  {formatDate(holiday.date)}
+                </Typography>
+              </ListItem>
+              <Divider variant="inset" />
             </Box>
-          ))
-          }
+          ))}
         </List>
       </Box>
     </Card>

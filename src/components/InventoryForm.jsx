@@ -8,6 +8,8 @@ import {
   Alert,
   Select,
   MenuItem,
+  IconButton,
+  Box,
 } from "@mui/material";
 import Card from "@mui/material/Card";
 import { useFormik } from "formik";
@@ -16,45 +18,52 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UseResponsive from "../hooks/UseResponsive";
 import CheckIcon from "@mui/icons-material/Check";
+import AddIcon from "@mui/icons-material/Add";
 import { useDispatch, useSelector } from "react-redux";
 import addInventorynew from "../Store/action/AddInventoryAction";
-import AddIcon from '@mui/icons-material/Add';
+import addCategoryNew from "../Store/action/AddCategory";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
   category: Yup.string().required("Category is required"),
-  // AssignDate: Yup.date().required("Assign Date is required"),
   serialNo: Yup.string().required("Serial No is required"),
 });
 
 export default function InventoryForm() {
   const responsive = UseResponsive();
-  const dispatch = useDispatch();
   const [onBoardSuccess, setOnBoardSuccess] = useState(false);
-  const [clickedBtnID, setClickedBtnID] = useState("");
+  const [onCategorySuccess, setOnCategorySuccess] = useState(false);
+  const [newCategory, setNewCategory] = useState("");
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const CategoryList = useSelector((state) => state.Category.CategoryList);
-  console.log(CategoryList);
+  const [showAddCategoryField, setShowAddCategoryField] = useState(false);
+
   const formik = useFormik({
     initialValues: { name: "", category: "", serialNo: "" },
     validationSchema: validationSchema,
     onSubmit: (values) => {
       dispatch(addInventorynew(values));
-      console.log(values);
       setOnBoardSuccess(true);
       setTimeout(() => {
         navigate("/Employee/InventoryList");
-        // setSubmitting(false);
       }, 1000);
     },
   });
 
+  function handleChangeCatgory(e) {
+    setNewCategory(e.target.value);
+  }
   function handleCancel() {
     navigate("/Employee/InventoryList");
   }
-
-  function handleClick(id) {
-    setClickedBtnID(id);
+  function addNewCategory() {
+    if (newCategory) {
+      dispatch(addCategoryNew(newCategory));
+      setShowAddCategoryField(false);
+      setOnCategorySuccess(true)
+      
+    }
   }
 
   return (
@@ -81,7 +90,7 @@ export default function InventoryForm() {
                 Add Inventory
               </Typography>
               <Grid container spacing={1}>
-                {/* Type Input */}
+                {/* Name Input */}
                 <Grid
                   item
                   xs={12}
@@ -99,14 +108,13 @@ export default function InventoryForm() {
                       type="text"
                       sx={{
                         border:
-                          clickedBtnID === "name"
-                            ? "2px solid blue"
-                            : "2px solid  rgba(204, 204, 204, 0.5)",
+                          formik.touched.name && formik.errors.name
+                            ? "2px solid red"
+                            : "2px solid rgba(204, 204, 204, 0.5)",
                         height: "40px",
                         borderRadius: 1,
                         px: 1,
                       }}
-                      onClick={() => handleClick("name")}
                     />
                     {formik.touched.name && formik.errors.name && (
                       <Typography variant="caption" color="error">
@@ -115,6 +123,7 @@ export default function InventoryForm() {
                     )}
                   </Stack>
                 </Grid>
+                {/* Serial No Input */}
                 <Grid
                   item
                   xs={12}
@@ -132,14 +141,13 @@ export default function InventoryForm() {
                       type="text"
                       sx={{
                         border:
-                          clickedBtnID === "SerialNo"
-                            ? "2px solid blue"
-                            : "2px solid  rgba(204, 204, 204, 0.5)",
+                          formik.touched.serialNo && formik.errors.serialNo
+                            ? "2px solid red"
+                            : "2px solid rgba(204, 204, 204, 0.5)",
                         height: "40px",
                         borderRadius: 1,
                         px: 1,
                       }}
-                      onClick={() => handleClick("serialNo")}
                     />
                     {formik.touched.serialNo && formik.errors.serialNo && (
                       <Typography variant="caption" color="error">
@@ -148,12 +156,11 @@ export default function InventoryForm() {
                     )}
                   </Stack>
                 </Grid>
-                {/* Category Input */}
-                
               </Grid>
               <br />
               <Grid container spacing={1}>
-              <Grid
+                {/* Category Input */}
+                <Grid
                   item
                   xs={10}
                   sm={5}
@@ -161,14 +168,13 @@ export default function InventoryForm() {
                 >
                   <Stack width="100%">
                     <Typography variant="body2">CATEGORY</Typography>
-                    
                     <Select
                       value={formik.values.category}
                       name="category"
                       size="small"
                       labelId="category"
                       onClick={() => {
-                        handleClick("category");
+                        setShowAddCategoryField(false);
                       }}
                       onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
@@ -184,18 +190,12 @@ export default function InventoryForm() {
                         },
                       }}
                     >
-                      
                       {CategoryList.map((category) => (
                         <MenuItem key={category.id} value={category.name}>
                           {category.name}
-
                         </MenuItem>
                       ))}
-                      
-                      
                     </Select>
-                    
-                    
                     {formik.touched.category && formik.errors.category && (
                       <Typography variant="caption" color="error">
                         {formik.errors.category}
@@ -203,9 +203,51 @@ export default function InventoryForm() {
                     )}
                   </Stack>
                 </Grid>
-                <Grid item xs={2} sm={1} sx={{mt:3.5}} >
-                  <AddIcon/>
+                <Grid item xs={2} sm={1} sx={{ mt: 2.5 }}>
+                  {!showAddCategoryField && (
+                    <IconButton
+                      disableRipple
+                      size="small"
+                      onClick={() => setShowAddCategoryField(true)}
+                    >
+                      <AddIcon />
+                    </IconButton>
+                  )}
                 </Grid>
+                {showAddCategoryField && (
+                  <Grid
+                    item
+                    xs={10}
+                    sm={5}
+                    height={responsive.isMobile ? "14vh" : "11vh"}
+                  >
+                    <Stack width="100%">
+                      <Typography variant="body2">ADD CATEGORY</Typography>
+                      <Box display={"flex"}>
+                        <InputBase
+                          name="newCategory"
+                          // value={newCategory}
+                          onChange={handleChangeCatgory}
+                          // onBlur={formik.handleBlur}
+                          placeholder="Add New Category"
+                          type="text"
+                          sx={{
+                            border: "2px solid rgba(204, 204, 204, 0.5)",
+                            height: "40px",
+                            borderRadius: 1,
+                            px: 1,
+                          }}
+                        ></InputBase>
+                        <IconButton
+                          sx={{ mt: 0.5, ml: 2, cursor: "pointer" }}
+                          onClick={addNewCategory}
+                        >
+                          <CheckIcon />
+                        </IconButton>
+                      </Box>
+                    </Stack>
+                  </Grid>
+                )}
               </Grid>
               <br />
               <Grid container mt={2}>
@@ -229,6 +271,16 @@ export default function InventoryForm() {
             </form>
           </CardContent>
         </Card>
+        {onCategorySuccess &&(
+          <Alert
+          icon={<CheckIcon fontSize="inherit" />}
+          sx={{ height: "50px", mt: "10px" }}
+          severity="success"
+        >
+          Category added successfully.
+        </Alert>
+        )}
+
         {onBoardSuccess && (
           <Alert
             icon={<CheckIcon fontSize="inherit" />}

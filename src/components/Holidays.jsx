@@ -6,7 +6,6 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { deleteHoliday } from "../Store/slice/HolidaysSlice";
 import deleteHol from "../Store/action/DeleteHolidayAction";
 
 export default function Holidays({role}) {

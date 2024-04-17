@@ -32,7 +32,7 @@ const initialState = {
     { id: 3, date: "2024-03-25", day: "Monday", occasion: "Holi", img: holi },
     {
       id: 4,
-      date: "2024-09-04",
+      date: "2024-04-09",
       day: "Tuesday",
       occasion: "Gudhi padwa",
       img: gudhipadwa,

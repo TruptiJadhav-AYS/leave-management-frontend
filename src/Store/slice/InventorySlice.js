@@ -21,7 +21,7 @@ const InventoryListSlice = createSlice({
     deleteInv: (state, action) => {
       //   console.log(action.payload);
       if (action.payload !== -1) {
-        state.annualLeaves.splice(action.payload, 1);
+        state.InventoryListItems.splice(action.payload, 1);
       }
     },
   },

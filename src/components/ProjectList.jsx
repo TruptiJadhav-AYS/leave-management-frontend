@@ -16,9 +16,9 @@ import AddIcon from "@mui/icons-material/Add";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import SearchIcon from "@mui/icons-material/Search";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
+// import VisibilityIcon from "@mui/icons-material/Visibility";
+// import EditIcon from "@mui/icons-material/Edit";
+// import DeleteIcon from "@mui/icons-material/Delete";
 import { useState, useMemo } from "react";
 import {useSelector} from 'react-redux'
 
@@ -93,9 +93,6 @@ export default function ProjectList() {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
-  };
-  const handleEditClick = () => {
-    Navigate("/Employee/Projects/EditProject");
   };
 
   const FilterArray = sortedRows.filter((project) =>
