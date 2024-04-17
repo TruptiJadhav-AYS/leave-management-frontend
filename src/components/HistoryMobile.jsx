@@ -41,9 +41,9 @@ export default function HistoryMobile() {
                 {history.leave_type}
               </Typography>
               <Box
-                width="80px"
+                width="60px"
                 borderRadius={"6px"}
-                py={0.2}
+                py={0.1}
                 px={0.1}
                 color="white"
                 bgcolor={
@@ -51,17 +51,18 @@ export default function HistoryMobile() {
                     ? "#CCFFCC"
                     : history.status === "Pending"
                     ? "#FFD699"
-                    : "#FFCCCC"
+                    : "#D3D3D3"
                 }
+                sx={{alignContent:"center"}}
               >
                 <Typography
-                  variant="body2"
+                  fontSize={"12px"}
                   color={
                     history.status === "Accepted"
                       ? "darkgreen"
                       : history.status === "Pending"
                       ? "#7B3F00"
-                      : "darkred"
+                      : "gray"
                   }
                 >
                   {history.status}

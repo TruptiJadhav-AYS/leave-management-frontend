@@ -16,11 +16,27 @@ import UseReponsive from "../hooks/UseResponsive";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import CheckIcon from "@mui/icons-material/Check";
+import addProjectAction from "../Store/action/AddProjectAction";
+import { useDispatch, useSelector } from "react-redux";
+import editProjectAction from "../Store/action/EditProjectAction";
 
-export default function ProjectOnboardForm() {
+export default function ProjectOnboardForm({projectAddOrEdit}) {
   const responsive = UseReponsive();
   const [clickedBtnID, setClickedBtnID] = useState("");
-  const [onBoardSuccess, setOnBoardSuccess] = useState(false);
+  const [onSuccess, setSuccess] = useState(false);
+  const dispatch = useDispatch();
+  const Projects = useSelector((state) => state.Project.Projects);
+  const selectedProject = useSelector((state) => state.Project.selectedProject);
+  const index = Projects.findIndex((project) => project.Id === selectedProject);
+
+  let { Employees } = useSelector((state) => state.employees);
+  let projectManagerList=[]
+
+  for (let i in Employees) {
+    if (Employees[i].name) {
+      projectManagerList.push(Employees[i].name); 
+    }
+  }
 
   function handleClick(id) {
     setClickedBtnID(id);
@@ -30,23 +46,54 @@ export default function ProjectOnboardForm() {
 
   const formik = useFormik({
     initialValues: {
-      projectName: "",
-      managerName: "",
-      fromDate: "",
-      // toDate: "",
-      status: "",
-      Description:"",
+      Name: projectAddOrEdit === "edit"
+      ? selectedProject
+        ? Projects[index].Name
+          ? Projects[index].Name
+          : ""
+        : ""
+      : "",
+      Project_Manager:  projectAddOrEdit === "edit"
+      ? selectedProject
+        ? Projects[index].Project_Manager
+          ? Projects[index].Project_Manager
+          : ""
+        : ""
+      : "",
+      Start_date: projectAddOrEdit === "edit"
+      ? selectedProject
+        ? Projects[index].Start_date
+          ? Projects[index].Start_date
+          : ""
+        : ""
+      : "",
+      Status: projectAddOrEdit === "edit"
+      ? selectedProject
+        ? Projects[index].Status
+          ? Projects[index].Status
+          : ""
+        : ""
+      : "",
+      Description: projectAddOrEdit === "edit"
+      ? selectedProject
+        ? Projects[index].Description
+          ? Projects[index].Description
+          : ""
+        : ""
+      : "",
     },
     validationSchema: Yup.object({
-      projectName: Yup.string().required("Project Name is required."),
-      managerName: Yup.string().required("Manager Name is required."),
-      fromDate: Yup.date().required("Please select a date"),
-      // toDate: Yup.date().required("Please select a date"),
-      status: Yup.string().required("Project status is required."),
+      Name: Yup.string().required("Project Name is required."),
+      Project_Manager: Yup.string().required("Manager Name is required."),
+      Start_date: Yup.date().required("Please select a date"),
+      Status: Yup.string().required("Project status is required."),
+      Description:Yup.string()
     }),
     onSubmit: (values) => {
-      console.log(values);
-      setOnBoardSuccess(true);
+      console.log(values)
+      {projectAddOrEdit==="add" ?
+      dispatch(addProjectAction(values)) : dispatch(editProjectAction(values))}
+      setSuccess(true);
       setTimeout(() => {
         navigate("/Employee/Projects");
       }, 1000);
@@ -54,6 +101,15 @@ export default function ProjectOnboardForm() {
   });
 
   const errors = formik.errors;
+  
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: 220,
+        width: 250,
+      },
+    },
+  };
 
   return (
     <Grid container justifyContent={"center"} width="100%" pt={3}>
@@ -70,7 +126,8 @@ export default function ProjectOnboardForm() {
           <CardContent>
             <form onSubmit={formik.handleSubmit}>
               <Typography color={"primary"} variant="h5" mb={2}>
-                Onboard Project
+                {projectAddOrEdit==="add" ?
+                "Add Project" : "Edit Project Details"}
               </Typography>
 
               <Grid container spacing={1}>
@@ -87,23 +144,23 @@ export default function ProjectOnboardForm() {
                     <InputBase
                       placeholder="Project Name"
                       type="text"
-                      name="projectName"
+                      name="Name"
                       sx={{
                         border:
-                          clickedBtnID === "projectName"
+                          clickedBtnID === "Name"
                             ? "2px solid blue"
                             : "2px solid rgba(204, 204, 204, 0.5)",
                         height: "40px",
                         borderRadius: 1,
                       }}
-                      onClick={() => handleClick("projectName")}
+                      onClick={() => handleClick("Name")}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
-                      value={formik.values.projectName}
+                      value={formik.values.Name}
                     />
-                    {formik.touched.projectName && errors.projectName && (
+                    {formik.touched.Name && errors.Name && (
                       <Typography variant="caption" color="error">
-                        {errors.projectName}
+                        {errors.Name}
                       </Typography>
                     )}
                   </Stack>
@@ -118,28 +175,55 @@ export default function ProjectOnboardForm() {
                 >
                   <Stack width={"100%"}>
                     <Typography variant="body2"> Manager Name </Typography>
-                    <InputBase
+                    {/* <InputBase
                       placeholder="Manager Name"
                       type="text"
-                      name="managerName"
+                      name="Project_Manager"
                       sx={{
                         border:
-                          clickedBtnID === "managerName"
+                          clickedBtnID === "Project_Manager"
                             ? "2px solid blue"
                             : "2px solid rgba(204, 204, 204, 0.5)",
                         height: "40px",
                         borderRadius: 1,
                       }}
-                      onClick={() => handleClick("managerName")}
+                      onClick={() => handleClick("Project_Manager")}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
-                      value={formik.values.managerName}
-                    />
-                    {formik.touched.managerName && errors.managerName && (
-                      <Typography variant="caption" color="error">
-                        {errors.managerName}
-                      </Typography>
-                    )}
+                      value={formik.values.Project_Manager}
+                    /> */}
+                    <Select name="Project_Manager"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.Project_Manager}
+                    size="small"
+                      sx={{
+                        "& fieldset": {
+                          borderColor: "rgba(204, 204, 204, 0.5)",
+                          borderWidth: "2px",
+                        },
+                        "&:hover": {
+                          "&& fieldset": {
+                            border: "2px solid rgba(204, 204, 204, 0.5)",
+                          },
+                        },
+                        height: "40px",
+                        borderRadius: 1,
+                      }}
+                      MenuProps={MenuProps}
+                    >
+                    {projectManagerList.map((manager,index) => (
+                        <MenuItem key={index} value={manager}>
+                          {manager}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                    {formik.touched.Project_Manager &&
+                      errors.Project_Manager && (
+                        <Typography variant="caption" color="error">
+                          {errors.Project_Manager}
+                        </Typography>
+                      )}
                   </Stack>
                 </Grid>
               </Grid>
@@ -154,14 +238,14 @@ export default function ProjectOnboardForm() {
                   <Typography variant="body2">Start date</Typography>
                   <InputBase
                     onChange={formik.handleChange}
-                    value={formik.values.fromDate}
                     type="date"
-                    name="fromDate"
+                    name="Start_date"
                     lable="From Date"
                     onClick={() => {
-                      handleClick("fromDate");
+                      handleClick("Start_date");
                     }}
                     onBlur={formik.handleBlur}
+                    value={formik.values.Start_date}
                     sx={{
                       border:
                         clickedBtnID === "fromDate"
@@ -172,47 +256,13 @@ export default function ProjectOnboardForm() {
                       width: "100%",
                     }}
                   />
-                  {formik.touched.fromDate && errors.fromDate && (
+                  {formik.touched.Start_date && errors.Start_date && (
                     <Typography variant="caption" color="error">
-                      {errors.fromDate}
+                      {errors.Start_date}
                     </Typography>
                   )}
                 </Grid>
 
-                {/* <Grid
-                  item
-                  xs={12}
-                  sm={6}
-                  height={responsive.isMobile ? "17vh" : "15vh"}
-                >
-                  <Typography fontSize={"13px"}>END DATE</Typography>
-                  <InputBase
-                    value={formik.values.toDate}
-                    onChange={formik.handleChange}
-                    type="date"
-                    name="toDate"
-                    lable="To Date"
-                    onClick={() => {
-                      handleClick("toDate");
-                    }}
-                    onBlur={formik.handleBlur}
-                    sx={{
-                      border:
-                        clickedBtnID === "toDate"
-                          ? "2px solid blue"
-                          : "2px solid rgba(204, 204, 204, 0.5)",
-                      borderRadius: "4px",
-                      p: "4px",
-                      width: "100%",
-                    }}
-                  />
-
-                  {formik.touched.toDate && errors.toDate && (
-                    <Typography variant="caption" color="error">
-                      {errors.toDate}
-                    </Typography>
-                  )}
-                </Grid> */}
                 <Grid
                   item
                   xs={12}
@@ -225,9 +275,9 @@ export default function ProjectOnboardForm() {
                     <Typography variant="body2"> Status</Typography>
                     <Select
                       size="small"
-                      name="status"
+                      name="Status"
                       onChange={formik.handleChange}
-                      value={formik.values.status}
+                      value={formik.values.Status}
                       sx={{
                         "& fieldset": {
                           borderColor: "rgba(204, 204, 204, 0.5)",
@@ -244,60 +294,20 @@ export default function ProjectOnboardForm() {
                       onClick={() => handleClick("status")}
                       onBlur={formik.handleBlur}
                     >
-                      <MenuItem value="active">Active</MenuItem>
-                      <MenuItem value="inactive">Inactive</MenuItem>
+                      <MenuItem value="Active">Active</MenuItem>
+                      <MenuItem value="Inactive">Inactive</MenuItem>
                     </Select>
-                    {formik.touched.status && errors.status && (
+                    {formik.touched.Status && errors.Status && (
                       <Typography variant="caption" color="error">
-                        {errors.status}
+                        {errors.Status}
                       </Typography>
                     )}
                   </Stack>
                 </Grid>
               </Grid>
-              <br/>
+              <br />
               <Grid container spacing={1}>
-                {/* <Grid
-                  item
-                  xs={12}
-                  sm={6}
-                  md={6}
-                  lg={6}
-                  height={responsive.isMobile ? "11vh" : "11vh"}
-                >
-                  <Stack width={"100%"}>
-                    <Typography variant="body2"> Status</Typography>
-                    <Select
-                      size="small"
-                      name="status"
-                      onChange={formik.handleChange}
-                      value={formik.values.status}
-                      sx={{
-                        "& fieldset": {
-                          borderColor: "rgba(204, 204, 204, 0.5)",
-                          borderWidth: "2px",
-                        },
-                        "&:hover": {
-                          "&& fieldset": {
-                            border: "2px solid rgba(204, 204, 204, 0.5)",
-                          },
-                        },
-                        height: "40px",
-                        borderRadius: 1,
-                      }}
-                      onClick={() => handleClick("status")}
-                      onBlur={formik.handleBlur}
-                    >
-                      <MenuItem value="active">Active</MenuItem>
-                      <MenuItem value="inactive">Inactive</MenuItem>
-                    </Select>
-                    {formik.touched.status && errors.status && (
-                      <Typography variant="caption" color="error">
-                        {errors.status}
-                      </Typography>
-                    )}
-                  </Stack>
-                </Grid> */}
+
                 <Grid
                   item
                   xs={12}
@@ -322,18 +332,11 @@ export default function ProjectOnboardForm() {
                         borderRadius: 1,
                       }}
                       onClick={() => handleClick("Description")}
-                      // onChange={formik.handleChange}
-                      // onBlur={formik.handleBlur}
-                      // value={formik.values.managerName}
+                      onChange={formik.handleChange}
+                      value={formik.values.Description}
                     />
-                    {/* {formik.touched.Description && errors.Description && (
-                      <Typography variant="caption" color="error">
-                        {errors.Description}
-                      </Typography>
-                    )} */}
                   </Stack>
                 </Grid>
-              {/* </Grid> */}
               </Grid>
 
               <br />
@@ -342,18 +345,20 @@ export default function ProjectOnboardForm() {
                 variant="contained"
                 sx={{ textTransform: "none", mt: 2 }}
               >
-                Onboard Project
+                {projectAddOrEdit==="add" ?
+                "Onboard Project" : "Submit"}
               </Button>
             </form>
           </CardContent>
         </Card>
-        {onBoardSuccess && (
+        {onSuccess && (
           <Alert
             icon={<CheckIcon fontSize="inherit" />}
             sx={{ height: "50px", mt: "10px" }}
             severity="success"
           >
-            Project onboarded successfully.
+            {projectAddOrEdit==="add" ? "Project added successfully." : "Project Edited Successfully"}
+            
           </Alert>
         )}
       </Stack>

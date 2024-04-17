@@ -20,7 +20,8 @@ import SearchIcon from "@mui/icons-material/Search";
 // import EditIcon from "@mui/icons-material/Edit";
 // import DeleteIcon from "@mui/icons-material/Delete";
 import { useState, useMemo } from "react";
-import {useSelector} from 'react-redux'
+import {useSelector,useDispatch} from 'react-redux'
+import { selectProject } from "../Store/slice/ProjectsSlice";
 
 
 
@@ -48,9 +49,11 @@ const columns = [
   },
 ];
 
-export default function ProjectList() {
+export default function ProjectList({onProjectAddOrEdit}) {
   const Projects =useSelector(state=>state.Project.Projects)
-  // console.log("Projectsssssssssssssssssssssssssssss" , Projects)
+  const selectedProject=useSelector(state=>state.Project.selectedProject)
+  console.log("selected project",selectedProject)
+  const dispatch = useDispatch();
   const Navigate = useNavigate();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -123,6 +126,7 @@ export default function ProjectList() {
           variant="contained"
           sx={{ borderRadius: "50px", textTransform: "none" }}
           onClick={() => {
+            onProjectAddOrEdit("add")
             Navigate("/Employee/Projects/OnboardProject");
           }}
         >
@@ -136,7 +140,7 @@ export default function ProjectList() {
       >
         <Table stickyHeader>
           <TableHead>
-            <TableRow >
+            <TableRow>
               {columns.map((column) => (
                 <TableCell
                   key={column.id}
@@ -181,7 +185,7 @@ export default function ProjectList() {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.Name} ml={2} sx={{cursor:"pointer"}}>
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.Name} ml={2} sx={{cursor:"pointer"}}  onClick={()=>{dispatch(selectProject(row.Id));Navigate(`/Employee/Projects/${row.Id}`)}}>
                     {columns.map((column,index) => {
                       const value = row[column.id];
                       return ( 
@@ -190,16 +194,6 @@ export default function ProjectList() {
                         </TableCell>
                       );
                     })}
-                    {/* <TableCell>
-                      <Box sx={{ display: "flex", gap: 1 }}>
-                        <VisibilityIcon sx={{ cursor: "pointer" }} />
-                        <EditIcon
-                          onClick={handleEditClick}
-                          sx={{ cursor: "pointer" }}
-                        />
-                        <DeleteIcon sx={{ cursor: "pointer" }} />
-                      </Box>
-                    </TableCell> */}
                   </TableRow>
                 );
               })}
