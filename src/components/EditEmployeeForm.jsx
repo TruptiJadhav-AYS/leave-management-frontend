@@ -40,6 +40,7 @@ export default function EditEmployeeForm() {
   const [clickedBtnID, setClickedBtnID] = useState("");
   let [onBoardSuccess, setOnBoardSuccess] = useState(false);
   let dispatch = useDispatch();
+  const InventoryList=useSelector((state) => state.Inventory.InventoryListItems)
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const today = new Date();
@@ -416,17 +417,55 @@ export default function EditEmployeeForm() {
                     )}
                   </Stack>
                 </Grid>
+                <Grid
+                item
+                xs={12}
+                sm={6}
+                md={6}
+                lg={6}
+                sx={{ display: "flex", justifyContent: "space-between" }}
+                height={responsive.isMobile ? "10vh" : "11vh"}
+              >
+                <Stack width={"100%"}>
+                  <Typography variant="body2"> ASSIGN INVENTORY </Typography>
+                  <Select
+                      value={formik.values.category}
+                      name="assignInventory"
+                      size="small"
+                      labelId="assignInventory"
+                      // onBlur={formik.handleBlur}
+                      // onChange={formik.handleChange}
+                      sx={{
+                        "& fieldset": {
+                          borderColor: "rgba(204, 204, 204, 0.5)",
+                          borderWidth: "2px",
+                        },
+                        "&:hover": {
+                          "&& fieldset": {
+                            border: "2px solid rgba(204, 204, 204, 0.5)",
+                          },
+                        },
+                      }}
+                    >
+                      {InventoryList.map((inventory) => (
+                        <MenuItem key={inventory.id} value={inventory.name}>
+                          {inventory.name} - {inventory.category} - {inventory.serialNo}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                </Stack>
+              </Grid>
               </Grid>
 
               <Box pt={responsive.isMobile ? 3 : 0}>
-                <Button
+                {/* <Button
                   // type="submit"
                   variant="outlined"
                   sx={{ textTransform: "none", mt: 2 }}
                   // onClick={onAddInventoryClick}
                 >
                   Assign Inventory
-                </Button>
+                </Button> */}
                 <Button
                   type="submit"
                   variant="contained"
