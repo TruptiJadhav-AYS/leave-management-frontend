@@ -108,18 +108,12 @@ export default function History() {
                         sx={{
                           color:
                             column.id === "status" && value === "Pending"
-                              ? "#FFA500"
+                              ? "#7B3F00"
                               : column.id === "status" && value === "Accepted"
                               ? "#008800"
                               : column.id === "status" && value === "Rejected"
-                              ? "red"
+                              ? "gray"
                               : "black",
-                          // bgcolor:
-                          // column.id === "status" && value === "Pending" ? "#FFD699" :
-                          // column.id === "status" && value === "Accepted" ? "#CCFFCC" :
-                          // column.id === "status" && value === "Rejected" ? "#FFCCCC" :
-                          // "",
-                          fontWeight: column.id === "status" && "bold",
                         }}
                       >
                         {column.id === "status" ? (
@@ -133,13 +127,14 @@ export default function History() {
                                   ? "#CCFFCC"
                                   : column.id === "status" &&
                                     value === "Rejected"
-                                  ? "#FFCCCC"
+                                  ? "#D3D3D3"
                                   : "",
-                              width: column.id === "status" && "80px",
+                              width: column.id === "status" && "70px",
                               borderRadius: column.id === "status" && "6px",
-                              py: column.id === "status" && 0.2,
-                              px: column.id === "status" && 0.1,
+                              py: column.id === "status" && "1px",
+                              px: column.id === "status" && "1px",
                               textAlign: column.id === "status" && "center",
+                              fontSize:"12px"
                             }}
                           >
                             {value}
