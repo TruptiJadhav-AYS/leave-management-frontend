@@ -15,7 +15,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UseReponsive from "../hooks/UseResponsive";
 import CheckIcon from "@mui/icons-material/Check";
-import { addEmployee, editEmployee } from "../Store/action/EmployeeAction";
+// import { addEmployee, editEmployee } from "../Store/action/EmployeeAction";
+import editEmployee from "../Store/action/EditEmployeeAction";
+import addEmployee from "../Store/action/AddEmployeeAction"
 import { useSelector } from "react-redux";
 import * as Yup from "yup";
 import { useFormik } from "formik";

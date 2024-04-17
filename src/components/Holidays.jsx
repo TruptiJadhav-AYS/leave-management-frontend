@@ -9,9 +9,10 @@ import { useNavigate } from "react-router-dom";
 import { deleteHoliday } from "../Store/slice/HolidaysSlice";
 import deleteHol from "../Store/action/DeleteHolidayAction";
 
-export default function Holidays({role}) {
+export default function Holidays() {
   const navigate = useNavigate();
   const dispatch=useDispatch();
+  const role=useSelector((state)=>state.employees.userRole)
   const [hoverIndex, setHoverIndex] = useState(null); // State to track hovered card
 
   function handleAddClick() {

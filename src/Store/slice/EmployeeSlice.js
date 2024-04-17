@@ -171,5 +171,5 @@ export const {
   getLogedInEmp,
   setSelectedEmp,
   deleteEmp,
-} = employeeSlice.actions;
-export default employeeSlice.reducer;
+} = EmployeeSlice.actions;
+export default EmployeeSlice.reducer;
