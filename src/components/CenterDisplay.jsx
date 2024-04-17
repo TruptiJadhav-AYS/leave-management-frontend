@@ -4,11 +4,10 @@ import Holidays from "./Holidays";
 import History from "./History";
 import UseReponsive from "../hooks/UseResponsive";
 import EmployeeList from "./Employee";
-import EmployeeRegistrationForm from "./EmployeeRegistrationForm";
 import Dashboard from "./Dashboard";
 import ProjectOnboardForm from "./ProjectOnboardForm";
 import ProjectList from "./ProjectList";
-import EditEmployeeForm from "./EditEmployeeForm";
+import EmloyeeDetailForm from "./EmloyeeDetailForm";
 import InventoryForm from "./InventoryForm";
 import EditProjectForm from "./EditProjectForm";
 import EmployeeMobile from "./EmployeeMobile";
@@ -16,12 +15,18 @@ import HistoryMobile from "./HistoryMobile";
 import InventoryList from "./InventoryList";
 import ProjectMbList from "./ProjectMobileView";
 import InventoryListMb from "./InventoryListMb";
+import EmployeeDetails from "./EmployeeDetails";
+import { useState } from "react";
 import { useSelector } from "react-redux";
-import EmployeeDetails from "./EmployeeDetails"
 import AddHolidayForm from "./AddHolidayForm"
 
 export default function CenterDisplay() {
-  const role=useSelector((state)=>state.employees.userRole)
+  let [addOrEditForm,setAddOrEditForm]=useState() 
+
+  function onAddOrEdit(form){
+    setAddOrEditForm(form)
+  }
+
   let responsive = UseReponsive();
   return (
     <Routes>
@@ -37,15 +42,15 @@ export default function CenterDisplay() {
           )
         }
       />
-      <Route path="/Holidays" element={<Holidays role={role}/>} />
+      <Route path="/Holidays" element={<Holidays />} />
       <Route path="/Holidays/AddHoliday" element={<AddHolidayForm/>}/>
       <Route
         path="/Employees"
-        element={responsive.isMobile ? <EmployeeMobile /> : <EmployeeList />}
+        element={responsive.isMobile ? <EmployeeMobile onAddOrEdit={onAddOrEdit}/> : <EmployeeList onAddOrEdit={onAddOrEdit}/>}
       />
 
       <Route path="/:id"
-      element={<EmployeeDetails/>}
+      element={<EmployeeDetails onAddOrEdit={onAddOrEdit}/>}
       />
 
       <Route
@@ -53,11 +58,11 @@ export default function CenterDisplay() {
         element={responsive.isMobile ? <InventoryListMb /> : <InventoryList />}
       />
 
-      <Route
+      {/* <Route
         path="/Employees/NewRegistration"
         element={<EmployeeRegistrationForm />}
-      />
-      <Route path="/Employees/EditEmployee/:id" element={<EditEmployeeForm />} />
+      /> */}
+      <Route path="/Employees/EmployeeDetailsForm" element={<EmloyeeDetailForm addOrEditForm={addOrEditForm}/>} />
       <Route
         path="/Projects"
         element={responsive.isMobile ? <ProjectMbList /> : <ProjectList />}

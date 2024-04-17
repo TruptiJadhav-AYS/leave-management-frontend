@@ -18,7 +18,7 @@ import { useState } from "react";
 import { useSelector,useDispatch,} from "react-redux";
 import { setSelectedEmp } from "../Store/slice/EmployeeSlice";
 
-export default function EmployeeList() {
+export default function EmployeeList({onAddOrEdit}) {
   const Navigate = useNavigate();
   const [searchText, setsearchText] = useState("");
   const Employees = useSelector((state) => state.employees.Employees);
@@ -75,7 +75,8 @@ export default function EmployeeList() {
               color: "black",
             }}
             onClick={() => {
-              Navigate("/Employee/Employees/NewRegistration");
+              onAddOrEdit("add");
+              Navigate("/Employee/Employees/EmployeeDetailsForm")
             }}
           >
             <AddIcon />
@@ -101,6 +102,7 @@ export default function EmployeeList() {
         >
           {FilterArray.map((contact, index) => (
             <Button
+              key={index}
               onClick={() => {
                 dispatch(setSelectedEmp(contact.id))
                 Navigate(`/Employee/${contact.id}`);

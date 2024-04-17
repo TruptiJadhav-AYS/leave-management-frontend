@@ -7,16 +7,16 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
+import { Box } from "@mui/material";
 
 const columns = [
-  { id: "Start_Date", label: "Start Date", minWidth: 90, ml:"500px"},
+  { id: "Start_Date", label: "Start Date", minWidth: 90, ml: "500px" },
   { id: "End_Date", label: "End Date", minWidth: 80 },
   {
     id: "leave_type",
     label: "Leave Type",
     minWidth: 80,
-
   },
   {
     id: "reason",
@@ -30,10 +30,8 @@ const columns = [
   },
 ];
 
-
 export default function History() {
-
-  const LeaveHistory = useSelector((state)=>state.leaveHistory.LeaveHistory)
+  const LeaveHistory = useSelector((state) => state.leaveHistory.LeaveHistory);
   // console.log("(((((((((((((((((((((((((", LeaveHistory)
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -48,26 +46,41 @@ export default function History() {
   };
 
   const formatDate = (dateString) => {
-    const [day, month, year] = dateString.split('/');
-    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    const [day, month, year] = dateString.split("/");
+    const monthNames = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
     ];
-  
+
     return `${day} ${monthNames[parseInt(month, 10) - 1]} ${year}`;
   };
-  
+
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden",pt:1}}>
-      <TableContainer sx={{ height: "80vh" ,scrollbarWidth:"thin"}}>
+    <Paper sx={{ width: "100%", overflow: "hidden", pt: 1 }}>
+      <TableContainer sx={{ height: "80vh", scrollbarWidth: "thin" }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
-            <TableRow >
+            <TableRow>
               {columns.map((column) => (
                 <TableCell
                   key={column.id}
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
-                  sx={{ color: "primary.main" ,fontWeight:550, fontSize:"16px"}}
+                  sx={{
+                    color: "primary.main",
+                    fontWeight: 550,
+                    fontSize: "16px",
+                  }}
                 >
                   {column.label}
                 </TableCell>
@@ -75,38 +88,78 @@ export default function History() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {LeaveHistory
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row,index) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-
-                    {columns.map((column) => {
-                      const value = column.id === 'Start_Date' || column.id === 'End_Date' ? row[column.id]!=="" ? formatDate(row[column.id]) : "-" :row[column.id];
-                      return (
-                        
-                        <TableCell key={column.id} align={column.align} sx={{color: 
-                          column.id === "status" && value === "Pending" ? "#7B3F00" : 
-                          column.id === "status" && value === "Accepted" ? "darkgreen" : 
-                          column.id === "status" && value === "Rejected" ? "darkred" : 
-                          "black",
-                          fontWeight: 
-                          column.id === "status" && value === "Pending" ? "bold" : 
-                          column.id === "status" && value === "Accepted" ? "bold" : 
-                          column.id === "status" && value === "Rejected" ? "bold" : 
-                          "black"}}>
-                          {value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
+            {LeaveHistory.slice(
+              page * rowsPerPage,
+              page * rowsPerPage + rowsPerPage
+            ).map((row, index) => {
+              return (
+                <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                  {columns.map((column) => {
+                    const value =
+                      column.id === "Start_Date" || column.id === "End_Date"
+                        ? row[column.id] !== ""
+                          ? formatDate(row[column.id])
+                          : "-"
+                        : row[column.id];
+                    return (
+                      <TableCell
+                        key={column.id}
+                        align={column.align}
+                        sx={{
+                          color:
+                            column.id === "status" && value === "Pending"
+                              ? "#FFA500"
+                              : column.id === "status" && value === "Accepted"
+                              ? "#008800"
+                              : column.id === "status" && value === "Rejected"
+                              ? "red"
+                              : "black",
+                          // bgcolor:
+                          // column.id === "status" && value === "Pending" ? "#FFD699" :
+                          // column.id === "status" && value === "Accepted" ? "#CCFFCC" :
+                          // column.id === "status" && value === "Rejected" ? "#FFCCCC" :
+                          // "",
+                          fontWeight: column.id === "status" && "bold",
+                        }}
+                      >
+                        {column.id === "status" ? (
+                          <Box
+                            sx={{
+                              bgcolor:
+                                column.id === "status" && value === "Pending"
+                                  ? "#FFD699"
+                                  : column.id === "status" &&
+                                    value === "Accepted"
+                                  ? "#CCFFCC"
+                                  : column.id === "status" &&
+                                    value === "Rejected"
+                                  ? "#FFCCCC"
+                                  : "",
+                              width: column.id === "status" && "80px",
+                              borderRadius: column.id === "status" && "6px",
+                              py: column.id === "status" && 0.2,
+                              px: column.id === "status" && 0.1,
+                              textAlign: column.id === "status" && "center",
+                            }}
+                          >
+                            {value}
+                          </Box>
+                        ) : (
+                          <Box>
+                          { value }
+                          </Box>
+                        )}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10,15,20]}
+        rowsPerPageOptions={[10, 15, 20]}
         component="div"
         count={LeaveHistory.length}
         rowsPerPage={rowsPerPage}
@@ -117,46 +170,6 @@ export default function History() {
     </Paper>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import { Box, Button } from "@mui/material";
 // import { useNavigate } from "react-router-dom";

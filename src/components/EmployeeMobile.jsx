@@ -15,12 +15,14 @@ import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setSelectedEmp } from "../Store/slice/EmployeeSlice";
 
-export default function EmployeeList() {
+export default function EmployeeList({onAddOrEdit}) {
   const Navigate = useNavigate();
   const [searchText, setsearchText] = useState("");
   const Employees = useSelector((state) => state.employees.Employees);
+  const dispatch=useDispatch()
 
   function handleSearchText(event) {
     setsearchText(event.target.value);
@@ -70,7 +72,8 @@ export default function EmployeeList() {
               color: "black",
             }}
             onClick={() => {
-              Navigate("/Employee/Employees/NewRegistration");
+              onAddOrEdit("add");
+              Navigate("/Employee/Employees/EmployeeDetailsForm");
             }}
           >
             <AddIcon />
@@ -105,8 +108,8 @@ export default function EmployeeList() {
               minHeight:"100%"
             }}
           >
-            {FilterArray.map((contact) => (
-              <Button fullWidth onClick={()=>{Navigate(`/Employee/${contact.id}`)}}>
+            {FilterArray.map((contact,index) => (
+              <Button fullWidth key={index} onClick={()=>{dispatch(setSelectedEmp(contact.id));Navigate(`/Employee/${contact.id}`)}}>
               <Card
                 sx={{ mb: 1, borderRadius: 2, mr: 1, bgcolor:"white", width:"100%"}}
                 elevation={3}
@@ -116,7 +119,6 @@ export default function EmployeeList() {
                     <Grid container spacing={2}>
                       <Grid item>
                         <Avatar
-                          // src={contact.Profile}
                           alt={contact.name}
                         />
                       </Grid>
