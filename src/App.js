@@ -6,6 +6,8 @@ import LoginPage from "./components/LoginPage";
 import { useState } from "react";
 import ForgetPasswordPage from "./components/forgetPasswordPage";
 import ResetPasswordPage from "./components/ResetPasswordPage";
+import SwaggerUI from "swagger-ui-react";
+import 'swagger-ui-react/swagger-ui.css'
 
 const myTheme = createTheme({
   satus: {
@@ -78,8 +80,13 @@ function App() {
             />
           )}
         </Routes>
+        
       </div>
+      <>
+      <SwaggerUI url="api/json"></SwaggerUI>
+      </>
     </ThemeProvider>
+    
   );
 }
 

@@ -30,7 +30,8 @@
     "react-spring": "^9.7.3",
     "save": "^2.9.0",
     "sort-by": "^1.2.0",
-    "swagger-ui-react": "^5.15.0",
+    "swagger-ui": "^5.15.2",
+    "swagger-ui-react": "^5.15.2",
     "web-vitals": "^2.1.4",
     "yup": "^1.4.0"
   },

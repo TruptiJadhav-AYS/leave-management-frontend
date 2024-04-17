@@ -43,7 +43,16 @@ function LoginPage(props) {
   }
 
   const handleSubmit = (event) => {
+    // console.log(event)
     event.preventDefault();
+    // let user={
+    //   email:email,
+    //   password:password
+    // };
+    // // user.email=email;
+    // // user.password=password;
+    // console.log("userrrrr",user)
+
     setEmailError("");
     setPasswordError("");
     const userByEmail = users.find((user) => user.email === email);

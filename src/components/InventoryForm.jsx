@@ -43,6 +43,7 @@ export default function InventoryForm() {
     initialValues: { name: "", category: "", serialNo: "" },
     validationSchema: validationSchema,
     onSubmit: (values) => {
+      console.log(values)
       dispatch(addInventorynew(values));
       setOnBoardSuccess(true);
       setTimeout(() => {
