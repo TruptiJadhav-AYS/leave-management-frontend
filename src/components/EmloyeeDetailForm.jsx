@@ -165,7 +165,7 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
   const MenuProps = {
     PaperProps: {
       style: {
-        maxHeight: 220,
+        maxHeight: 130,
         width: 250,
       },
     },
@@ -318,7 +318,7 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
                   height={responsive.isMobile ? "6vh" : "8vh"}
                 >
                   <Stack width={"100%"}>
-                    <Typography variant="body2"> CONTACT NO</Typography>
+                    <Typography variant="body2">CONTACT NO</Typography>
                     <InputBase
                       type="tel"
                       pattern="[0-9]*"
@@ -479,7 +479,7 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
                     )}
                   </Stack>
                 </Grid>
-                <Grid
+                {/* <Grid
                 item
                 xs={12}
                 sm={6}
@@ -488,7 +488,7 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
                 sx={{ display: "flex", justifyContent: "space-between" }}
                 height={responsive.isMobile ? "10vh" : "11vh"}
               >
-                <Stack width={"100%"}>
+                <Stack width={"100%"} >
                   <Typography variant="body2"> ASSIGN INVENTORY </Typography>
                   <Select
                       value={formik.values.category}
@@ -506,17 +506,67 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
                           "&& fieldset": {
                             border: "2px solid rgba(204, 204, 204, 0.5)",
                           },
+                          height:"40px",
                         },
+                        
+                        
                       }}
                     >
                       {InventoryList.map((inventory) => (
-                        <MenuItem key={inventory.id} value={inventory.name}>
+                        <MenuItem key={inventory.id} value={inventory.name} >
                           {inventory.name} - {inventory.category} - {inventory.serialNo}
                         </MenuItem>
                       ))}
                     </Select>
                 </Stack>
-              </Grid>
+              </Grid> */}
+              <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  md={6}
+                  lg={6}
+                  height={responsive.isMobile ? "10vh" : "11vh"}
+                >
+                  <Stack width={"100%"}>
+                    <Typography variant="body2">ASSIGN INVENTORY</Typography>
+
+                    <Select
+                      // value={formik.values.category}
+                      name="assignInventory"
+                      size="small"
+                      labelId="assignInventory"
+                      sx={{
+                        "& fieldset": {
+                          borderColor: "rgba(204, 204, 204, 0.5)",
+                          borderWidth: "2px",
+                        },
+                        "&:hover": {
+                          "&& fieldset": {
+                            border: "2px solid rgba(204, 204, 204, 0.5)",
+                          },
+                        },
+                        height: "40px",
+                        borderRadius: 1,
+                      }}
+                      MenuProps={MenuProps}
+                    >
+                      {InventoryList.map((inventory) => (
+                        ((inventory.assign===0) &&
+                        <MenuItem key={inventory.id} value={inventory.name} >
+                          {inventory.name} - {inventory.category} - {inventory.serialNo}
+                        </MenuItem>
+                        )
+                      ))}
+                    </Select>
+
+                    {/* {formik.touched.manager && errors.manager && (
+                      <Typography variant="caption" color="error">
+                        {errors.manager}
+                      </Typography>
+                    )} */}
+                  </Stack>
+                </Grid>
               </Grid>
 
               <Box pt={responsive.isMobile ? 3 : 0}>

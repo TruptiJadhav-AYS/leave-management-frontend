@@ -61,8 +61,7 @@ export default function InventoryForm() {
     if (newCategory) {
       dispatch(addCategoryNew(newCategory));
       setShowAddCategoryField(false);
-      setOnCategorySuccess(true)
-      
+      setOnCategorySuccess(true);
     }
   }
 
@@ -215,15 +214,16 @@ export default function InventoryForm() {
                   )}
                 </Grid>
                 {showAddCategoryField && (
-                  <Grid
-                    item
-                    xs={10}
-                    sm={5}
-                    height={responsive.isMobile ? "14vh" : "11vh"}
-                  >
-                    <Stack width="100%">
-                      <Typography variant="body2">ADD CATEGORY</Typography>
-                      <Box display={"flex"}>
+                  <>
+                    <Grid
+                      item
+                      xs={10}
+                      sm={5}
+                      height={responsive.isMobile ? "14vh" : "11vh"}
+                    >
+                      <Stack width="100%">
+                        <Typography variant="body2">ADD CATEGORY</Typography>
+                        {/* <Box display={"flex"} width={"700px"}> */}
                         <InputBase
                           name="newCategory"
                           // value={newCategory}
@@ -238,15 +238,16 @@ export default function InventoryForm() {
                             px: 1,
                           }}
                         ></InputBase>
-                        <IconButton
-                          sx={{ mt: 0.5, ml: 2, cursor: "pointer" }}
-                          onClick={addNewCategory}
-                        >
-                          <CheckIcon />
-                        </IconButton>
-                      </Box>
-                    </Stack>
-                  </Grid>
+
+                        {/* </Box> */}
+                      </Stack>
+                    </Grid>
+                    <Grid item xs={2} sm={1} mt={2.3} >
+                      <IconButton onClick={addNewCategory} >
+                        <CheckIcon sx={{color:"black", border:"2px solid rgba(204, 204, 204, 0.5)", borderRadius:5, bgcolor:"lightblue"}} />
+                      </IconButton>
+                    </Grid>
+                  </>
                 )}
               </Grid>
               <br />
@@ -271,14 +272,14 @@ export default function InventoryForm() {
             </form>
           </CardContent>
         </Card>
-        {onCategorySuccess &&(
+        {onCategorySuccess && (
           <Alert
-          icon={<CheckIcon fontSize="inherit" />}
-          sx={{ height: "50px", mt: "10px" }}
-          severity="success"
-        >
-          Category added successfully.
-        </Alert>
+            icon={<CheckIcon fontSize="inherit" />}
+            sx={{ height: "50px", mt: "10px" }}
+            severity="success"
+          >
+            Category added successfully.
+          </Alert>
         )}
 
         {onBoardSuccess && (

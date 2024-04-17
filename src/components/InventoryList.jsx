@@ -89,7 +89,7 @@ export default function InventoryList() {
           variant="contained"
           sx={{ borderRadius: "50px", textTransform: "none" }}
           onClick={() => {
-            Navigate("/Employee/Employees/EditForm/Inventory");
+            Navigate("/Employee/Inventory/AddInventory");
           }}
         >
           Add Inventory

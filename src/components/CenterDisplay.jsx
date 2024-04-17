@@ -17,7 +17,7 @@ import ProjectMbList from "./ProjectMobileView";
 import InventoryListMb from "./InventoryListMb";
 import EmployeeDetails from "./EmployeeDetails";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import AddHolidayForm from "./AddHolidayForm"
 
 export default function CenterDisplay() {
@@ -69,7 +69,7 @@ export default function CenterDisplay() {
       />
       <Route path="/Projects/OnboardProject" element={<ProjectOnboardForm />} />
       <Route path="/Projects/EditProject" element={<EditProjectForm/>}/>
-      <Route path="/Employees/EditForm/Inventory" element={<InventoryForm/>}/>
+      <Route path="/Inventory/AddInventory" element={<InventoryForm/>}/>
       <Route path="/Employees/NewRegistration/Inventory" element={<InventoryForm/>}/>
     </Routes>
   );

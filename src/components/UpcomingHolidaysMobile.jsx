@@ -12,49 +12,56 @@ import {
 // import independanceDay from "../assets/independance.jpg";
 // import ganeshChaturthi from "../assets/ganeshchaturthi.jpg";
 // import gandhiJayanti from "../assets/gandhijayanti.jpg";
-import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { useSelector } from "react-redux";
-
-
 
 export default function UpcomingHolidaysMobile() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const Holidays = useSelector((state) => state.holidays.annualLeaves);
-  
-  
+
   const formatDate = (dateString) => {
     const [year, month, day] = dateString.split("-");
-    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-  ];
-  
-  return `${day} ${monthNames[parseInt(month, 10) - 1]} ${year}`;
-};
+    const monthNames = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
 
+    return `${day} ${monthNames[parseInt(month, 10) - 1]} ${year}`;
+  };
 
-const handleNext = () => {
-  setCurrentIndex((prevIndex) =>
-  prevIndex === Holidays.length - 1 ? 0 : prevIndex + 1
-);
-};
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === Holidays.length - 1 ? 0 : prevIndex + 1
+    );
+  };
 
-const handlePrevious = () => {
-  setCurrentIndex((prevIndex) =>
-  prevIndex === 0 ? Holidays.length - 1 : prevIndex - 1
-);
-};
-// Get the current date
-const currentDate = new Date();
+  const handlePrevious = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? Holidays.length - 1 : prevIndex - 1
+    );
+  };
+  // Get the current date
+  const currentDate = new Date();
 
-// Filter holidays that occur after the current date
-const upcomingHolidays = Holidays.filter((holiday) => {
-  const holidayDate = new Date(holiday.date);
-  return holidayDate > currentDate;
-});
-const currentHoliday = upcomingHolidays[currentIndex];
-const showPreviousButton = currentIndex !== 0 && upcomingHolidays.length > 1;
-const showNextButton = currentIndex!==upcomingHolidays.length-1;
+  // Filter holidays that occur after the current date
+  const upcomingHolidays = Holidays.filter((holiday) => {
+    const holidayDate = new Date(holiday.date);
+    return holidayDate > currentDate;
+  });
+  const currentHoliday = upcomingHolidays[currentIndex];
+  const showPreviousButton = currentIndex !== 0 && upcomingHolidays.length > 1;
+  const showNextButton = currentIndex !== upcomingHolidays.length - 1;
 
   return (
     <>
@@ -66,7 +73,12 @@ const showNextButton = currentIndex!==upcomingHolidays.length-1;
                 <NavigateBeforeIcon />
               </IconButton>
             )}
-            <Stack direction="row" alignItems={"center"} justifyContent={"center"} sx={{ width: "80%" }}>
+            <Stack
+              direction="row"
+              alignItems={"center"}
+              justifyContent={"center"}
+              sx={{ width: "80%" }}
+            >
               <Avatar
                 alt={currentHoliday.occasion}
                 src={currentHoliday.img}
@@ -76,15 +88,16 @@ const showNextButton = currentIndex!==upcomingHolidays.length-1;
                 <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
                   {currentHoliday.occasion}
                 </Typography>
-                <Typography variant="body1">{formatDate(currentHoliday.date)}</Typography>
+                <Typography variant="body1">
+                  {formatDate(currentHoliday.date)}
+                </Typography>
               </Stack>
             </Stack>
-            {showNextButton && 
-            <IconButton disableRipple size="small" onClick={handleNext}>
-            <NavigateNextIcon />
-          </IconButton>
-            }
-            
+            {showNextButton && (
+              <IconButton disableRipple size="small" onClick={handleNext}>
+                <NavigateNextIcon />
+              </IconButton>
+            )}
           </Stack>
         </Card>
       </Grid>
