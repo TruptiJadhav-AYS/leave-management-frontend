@@ -18,9 +18,12 @@ import { useFormik } from "formik";
 import CheckIcon from "@mui/icons-material/Check";
 import {useDispatch} from 'react-redux'
 import addEmployee from "../Store/action/AddEmployeeAction";
+import { useSelector } from "react-redux";
 
 export default function EmployeeRegistrationForm() {
   const responsive = UseReponsive();
+  const InventoryList=useSelector((state) => state.Inventory.InventoryListItems)
+  console.log("uuuuuuuu",InventoryList)
   let dispatch=useDispatch()
 
   const [clickedBtnID, setClickedBtnID] = useState("");
@@ -104,9 +107,9 @@ export default function EmployeeRegistrationForm() {
   const errors = formik.errors;
 
   console.log(formik.values);
-  function onAddInventoryClick(){
-    navigate("/Employee/Employees/NewRegistration/Inventory")
-  }
+  // function onAddInventoryClick(){
+  //   navigate("/Employee/Employees/NewRegistration/Inventory")
+  // }
 
   return (
     <Grid container justifyContent={"center"} width="100%" pt={responsive.isMobile ? 0 : 3}>
@@ -459,12 +462,51 @@ export default function EmployeeRegistrationForm() {
                   )}
                 </Stack>
               </Grid>
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={6}
+                lg={6}
+                sx={{ display: "flex", justifyContent: "space-between" }}
+                height={responsive.isMobile ? "10vh" : "11vh"}
+              >
+                <Stack width={"100%"}>
+                  <Typography variant="body2"> ASSIGN INVENTORY </Typography>
+                  <Select
+                      value={formik.values.category}
+                      name="assignInventory"
+                      size="small"
+                      labelId="assignInventory"
+                      // onBlur={formik.handleBlur}
+                      // onChange={formik.handleChange}
+                      sx={{
+                        "& fieldset": {
+                          borderColor: "rgba(204, 204, 204, 0.5)",
+                          borderWidth: "2px",
+                        },
+                        "&:hover": {
+                          "&& fieldset": {
+                            border: "2px solid rgba(204, 204, 204, 0.5)",
+                          },
+                        },
+                      }}
+                    >
+                      {InventoryList.map((inventory) => (
+                        <MenuItem key={inventory.id} value={inventory.name}>
+                          {inventory.name} - {inventory.category} - {inventory.serialNo}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                </Stack>
+              </Grid>
+
 
               </Grid>
 
               <br />
               <Grid container sx={{mt: responsive.isMobile ? 1.5: 1.5,rowGap:2 }}>
-              <Button
+              {/* <Button
                 variant="outlined"
                 onClick={
                   onAddInventoryClick
@@ -475,7 +517,7 @@ export default function EmployeeRegistrationForm() {
                 }}
               >
                 Assign Inventory
-              </Button>
+              </Button> */}
               <Button
                 type="submit"
                 variant="contained"
