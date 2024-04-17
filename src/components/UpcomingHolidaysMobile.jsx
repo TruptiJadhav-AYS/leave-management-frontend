@@ -54,6 +54,7 @@ const upcomingHolidays = Holidays.filter((holiday) => {
 });
 const currentHoliday = upcomingHolidays[currentIndex];
 const showPreviousButton = currentIndex !== 0 && upcomingHolidays.length > 1;
+const showNextButton = currentIndex!==upcomingHolidays.length-1;
 
   return (
     <>
@@ -78,9 +79,12 @@ const showPreviousButton = currentIndex !== 0 && upcomingHolidays.length > 1;
                 <Typography variant="body1">{formatDate(currentHoliday.date)}</Typography>
               </Stack>
             </Stack>
+            {showNextButton && 
             <IconButton disableRipple size="small" onClick={handleNext}>
-              <NavigateNextIcon />
-            </IconButton>
+            <NavigateNextIcon />
+          </IconButton>
+            }
+            
           </Stack>
         </Card>
       </Grid>
