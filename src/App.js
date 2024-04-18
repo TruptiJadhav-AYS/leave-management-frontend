@@ -33,11 +33,6 @@ const employee = [
 
 const isTokenValid = () => {
   const token = localStorage.getItem("authToken");
-    // console.log(token)
-  if (!token) {
-    return false;
-  }
-
   try {
     // Decode the token
     const decodedToken = jwtDecode(token);
