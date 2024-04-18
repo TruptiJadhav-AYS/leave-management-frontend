@@ -5,9 +5,10 @@ import { Route, Routes } from "react-router-dom";
 import LoginPage from "./components/LoginPage";
 import { useState } from "react";
 import ForgetPasswordPage from "./components/forgetPasswordPage";
+import {jwtDecode} from 'jwt-decode';
 import ResetPasswordPage from "./components/ResetPasswordPage";
-import SwaggerUI from "swagger-ui-react";
-import 'swagger-ui-react/swagger-ui.css'
+// import SwaggerUI from "swagger-ui-react";
+import "swagger-ui-react/swagger-ui.css";
 
 const myTheme = createTheme({
   satus: {
@@ -23,26 +24,60 @@ const myTheme = createTheme({
   },
 });
 
-const employee=[
-  {name:"Pratiksha",email:"pratiksha@gmail.com",role:"Admin"},
-  {name:"Trupti",email:"trupti@gmail.com",role:"Manager"},
-  {name:"Pruthvi",email:"pruthvi@gmail.com",role:"Employee"}
-] 
+const employee = [
+  { name: "Pratiksha", email: "pratiksha@gmail.com", role: "Admin" },
+  { name: "Trupti", email: "trupti@gmail.com", role: "Manager" },
+  { name: "Pruthvi", email: "pruthvi@gmail.com", role: "Employee" },
+];
+
+
+const isTokenValid = () => {
+  const token = localStorage.getItem("authToken");
+    // console.log(token)
+  if (!token) {
+    return false;
+  }
+
+  try {
+    // Decode the token
+    const decodedToken = jwtDecode(token);
+
+    // Check if the token is expired
+    const currentTime = Date.now() / 1000; // Convert to seconds
+    if (decodedToken.exp && decodedToken.exp < currentTime) {
+      return false;
+    }
+
+    // Additional validation logic if needed (e.g., checking claims)
+
+    return true; // Token is valid
+  } catch (error) {
+    console.error('Error decoding or validating token:', error);
+    return false; // Token is invalid due to decoding or validation error
+  }
+};
 
 function App() {
   const [routeStatus, setRouteStatus] = useState(false);
-  const [forgetRouteStatus, setForgetRouteStatus]=useState(false)
-  const [resetRouteStatus, setResetRouteStatus]=useState(false)
+  const [forgetRouteStatus, setForgetRouteStatus] = useState(false);
+  const [resetRouteStatus, setResetRouteStatus] = useState(false);
   const [logedInUser, setLogedInUser] = useState("");
 
-  const findRoleOfUser=()=>{
-    let emp=employee.find((employee)=> employee.email===logedInUser)
-    if(emp){
-    return emp.role
-    }
-  }
+  // function isAuthenticated() {
+    // localStorage.removeItem("authToken")
+    const token = localStorage.getItem("authToken");
+    console.log(token)
+  //   return token;
+  // }
 
-  let role =findRoleOfUser();
+  const findRoleOfUser = () => {
+    let emp = employee.find((employee) => employee.email === logedInUser);
+    if (emp) {
+      return emp.role;
+    }
+  };
+
+  let role = findRoleOfUser();
 
   function onSignIn(email) {
     setLogedInUser(email);
@@ -67,28 +102,42 @@ function App() {
           <Route
             path="/"
             element={
-              <LoginPage onSignIn={onSignIn} onSignInClick={onSignInClick} onSubmitClick={onSubmitClick}/>
+              <LoginPage
+                onSignIn={onSignIn}
+                onSignInClick={onSignInClick}
+                onSubmitClick={onSubmitClick}
+              />
             }
-            
           />
-          {forgetRouteStatus && <Route path="/ForgetPassword" element={<ForgetPasswordPage onSignIn={onSignIn} onSignInClick={onSignInClick} onResetClick={onResetClick}/>}/>}
-          {resetRouteStatus && <Route path="/ResetPassword" element={<ResetPasswordPage/>}/>}
-          {routeStatus && (
+          {forgetRouteStatus && (
             <Route
-              path="/Employee/*"
-              element={<Display logedInUser={logedInUser} />}
+              path="/ForgetPassword"
+              element={
+                <ForgetPasswordPage
+                  onSignIn={onSignIn}
+                  onSignInClick={onSignInClick}
+                  onResetClick={onResetClick}
+                />
+              }
             />
           )}
+          {resetRouteStatus && (
+            <Route path="/ResetPassword" element={<ResetPasswordPage />} />
+          )}
+          {/* {routeStatus && ( */}
+          {/* {token!=== ? ( */}
+            <Route
+              path="/Employee/*"
+              element={isTokenValid() ? <Display logedInUser={logedInUser}/> : <></>}
+            />
+          {/* ) : (
+            <></>
+          )} */}
+          {/* )} */}
         </Routes>
-        
       </div>
-      <>
-      <SwaggerUI url="api/json"></SwaggerUI>
-      </>
     </ThemeProvider>
-    
   );
 }
 
 export default App;
-
