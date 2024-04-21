@@ -14,14 +14,25 @@ import ListItem from "@mui/material/ListItem";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useSelector,useDispatch,} from "react-redux";
 import { setSelectedEmp } from "../Store/slice/EmployeeSlice";
+import { useGetEmployeesQuery } from '../Store/slice/apiSlice';
 
 export default function EmployeeList({onAddOrEdit}) {
   const Navigate = useNavigate();
   const [searchText, setsearchText] = useState("");
-  const Employees = useSelector((state) => state.employees.Employees);
+  const { data: employees} = useGetEmployeesQuery();
+  // useEffect(() => {
+    console.log("employees:", employees);
+  //   console.log("error:", error);
+  //   console.log("isLoading:", isLoading);
+  // }, [employees, error, isLoading]);
+
+
+
+  // const Employees = useSelector((state) => state.employees.Employees);
+  const Employees=employees;
   const dispatch=useDispatch()
   
   function handleSearchText(event) {

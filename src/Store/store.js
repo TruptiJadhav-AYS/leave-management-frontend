@@ -7,6 +7,7 @@ import InventorySlice from './slice/InventorySlice'
 import PendingRequestsSlice from './slice/PendingRequestsSlice'
 import CategorySlice from "./slice/CategorySlice"
 import UserSlice from "./slice/UserSlice"
+import employeeApi from "./slice/apiSlice"
 
 export const store = configureStore({
   reducer: {
@@ -17,7 +18,11 @@ export const store = configureStore({
     Project : ProjectsSlice,
     Inventory : InventorySlice,
     PendingRequests: PendingRequestsSlice,
-    users:UserSlice
+    users:UserSlice,
+    [employeeApi.reducerPath]: employeeApi.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(employeeApi.middleware),
+
 })
 
