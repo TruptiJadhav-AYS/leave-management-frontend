@@ -17,21 +17,33 @@ import SearchIcon from "@mui/icons-material/Search";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedEmp } from "../Store/slice/EmployeeSlice";
+import { useGetEmployeesQuery } from '../Store/slice/apiSlice';
+import { CircularProgress } from "@mui/material";
 
 export default function EmployeeList({onAddOrEdit}) {
   const Navigate = useNavigate();
   const [searchText, setsearchText] = useState("");
-  const Employees = useSelector((state) => state.employees.Employees);
+  // const Employees = useSelector((state) => state.employees.Employees);
   const dispatch=useDispatch()
+  const { data: employees,isLoading,isError} = useGetEmployeesQuery();
 
   function handleSearchText(event) {
     setsearchText(event.target.value);
   }
 
+  const Employees= employees || [];
+
+  if (isLoading) {
+    return <CircularProgress />; 
+  }
+
+  if (isError) {
+    return <div>Error fetching data</div>;
+  }
+
   const FilterArray = Employees.filter((contact) =>
     contact.name.toLowerCase().includes(searchText.toLowerCase())
   );
-
   return (
     <Paper sx={{ height: "100%", mt: "4%"}}>
       <Grid

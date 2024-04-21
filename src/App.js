@@ -36,7 +36,8 @@ const isTokenValid = () => {
   try {
     // Decode the token
     const decodedToken = jwtDecode(token);
-
+    let logedInId=decodedToken.id
+    console.log(logedInId)
     // Check if the token is expired
     const currentTime = Date.now() / 1000; // Convert to seconds
     if (decodedToken.exp && decodedToken.exp < currentTime) {

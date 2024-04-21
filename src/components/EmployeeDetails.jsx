@@ -12,9 +12,11 @@ import Avatar from "@mui/material/Avatar";
 import { useDispatch } from "react-redux";
 import deleteEmployee from "../Store/action/DeleteEmployee";
 import { useState } from "react";
+import { useGetEmployeesQuery } from '../Store/slice/apiSlice';
 
 export default function EmployeeDetails({ onAddOrEdit }) {
-  const Employees = useSelector((state) => state.employees.Employees);
+  // const Employees = useSelector((state) => state.employees.Employees);
+  const { data: Employees,isLoading,isError} = useGetEmployeesQuery();
   const selectedEmp = useSelector((state) => state.employees.selectedEmp);
   let [deleteDialogue,setdeleteDialogue]=useState()
   const dispatch = useDispatch();
@@ -22,6 +24,8 @@ export default function EmployeeDetails({ onAddOrEdit }) {
   const Navigate = useNavigate();
 
   const index = Employees.findIndex((contact) => contact.id === selectedEmp);
+  let manager=Employees.findIndex((emp) => emp.manager_id === Employees[index].id)
+  let manager_name=manager.name
 
   return (
     <Box
@@ -89,7 +93,7 @@ export default function EmployeeDetails({ onAddOrEdit }) {
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
               <Typography variant="caption" fontWeight={"600"}>
-                Phone No : {Employees[index].mobile_no}
+                Phone No : {Employees[index].mobile_number}
               </Typography>
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
