@@ -32,8 +32,8 @@ export default function Dashboard() {
 
         <Grid container columnSpacing={1} mt={1}>
           {
-          // (role === "Admin" || role === "Manager") &&
-           (responsive.isDesktop||responsive.isLaptop||responsive.isTablet) ? (
+          // (role === "Admin" || role === "Manager") && 
+          (responsive.isDesktop||responsive.isLaptop||responsive.isTablet) ? (
             <Grid item sm={9} md={9} lg={9}>
               <PendingReq />
             </Grid>
@@ -45,7 +45,9 @@ export default function Dashboard() {
             </Grid>
           )}
 
-          {/* {(responsive.isDesktop || responsive.isLaptop || responsive.isTablet) && (role==="Admin" || role==="Manager")? ( */}
+          {(responsive.isDesktop || responsive.isLaptop || responsive.isTablet) 
+          // && (role==="Admin" || role==="Manager")
+          ? (
           <Grid
             item
             sm={3}
@@ -53,14 +55,15 @@ export default function Dashboard() {
             lg={3}
           >
             <UpcomingHolidaysDesktop />
-          </Grid>
-          {/* ) : */}
-          {/* (responsive.isDesktop || responsive.isLaptop || responsive.isTablet) && (role==="Employee")&&
+          </Grid>) :
+          (responsive.isDesktop || responsive.isLaptop || responsive.isTablet) && 
+          // (role==="Employee")&&
           (
             <Grid item sm={5.5} md={5.5} lg={5.5}>
               <UpcomingHolidaysDesktop />
             </Grid>
-          )} */}
+          )} 
+          
 
           {/* Approver Card-"For Employee"  */}
           {/* {role !== "Admin" && role !== "Manager" && (
