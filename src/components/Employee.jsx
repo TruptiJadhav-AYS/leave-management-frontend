@@ -14,18 +14,41 @@ import ListItem from "@mui/material/ListItem";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useSelector,useDispatch,} from "react-redux";
 import { setSelectedEmp } from "../Store/slice/EmployeeSlice";
+import { useGetEmployeesQuery } from '../Store/slice/apiSlice';
+import { CircularProgress } from "@mui/material";
 
-export default function EmployeeList() {
+export default function EmployeeList({onAddOrEdit}) {
   const Navigate = useNavigate();
   const [searchText, setsearchText] = useState("");
-  const Employees = useSelector((state) => state.employees.Employees);
   const dispatch=useDispatch()
+  const { data: employees,isLoading,isError} = useGetEmployeesQuery();
+
+  // useEffect(() => {
+    console.log("employees:", employees);
+  //   console.log("error:", error);
+  //   console.log("isLoading:", isLoading);
+  // }, [employees, error, isLoading]);
+
+  // const Employees = useSelector((state) => state.employees.Employees);
+  const Employees= employees || [];
   
   function handleSearchText(event) {
     setsearchText(event.target.value);
+  }
+
+  if (isLoading) {
+    return (
+    <Grid justifyContent={"center"} alignItems={"center"}>
+    <CircularProgress />
+    </Grid>
+  ); 
+  }
+
+  if (isError) {
+    return <div>Error fetching data</div>;
   }
 
   const FilterArray = Employees.filter((contact) =>
@@ -33,7 +56,7 @@ export default function EmployeeList() {
   );
 
   return (
-    <Paper height={"90vh"}>
+    <Paper style={{height:"100%"}}>
       <Grid
         container
         sx={{
@@ -75,7 +98,8 @@ export default function EmployeeList() {
               color: "black",
             }}
             onClick={() => {
-              Navigate("/Employee/Employees/NewRegistration");
+              onAddOrEdit("add");
+              Navigate("/Employee/Employees/EmployeeDetailsForm")
             }}
           >
             <AddIcon />
@@ -101,6 +125,7 @@ export default function EmployeeList() {
         >
           {FilterArray.map((contact, index) => (
             <Button
+              key={index}
               onClick={() => {
                 dispatch(setSelectedEmp(contact.id))
                 Navigate(`/Employee/${contact.id}`);

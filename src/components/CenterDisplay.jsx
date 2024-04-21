@@ -4,28 +4,37 @@ import Holidays from "./Holidays";
 import History from "./History";
 import UseReponsive from "../hooks/UseResponsive";
 import EmployeeList from "./Employee";
-import EmployeeRegistrationForm from "./EmployeeRegistrationForm";
 import Dashboard from "./Dashboard";
-import ProjectOnboardForm from "./ProjectOnboardForm";
+import ProjectOnboardForm from "./ProjectForm";
 import ProjectList from "./ProjectList";
-import EditEmployeeForm from "./EditEmployeeForm";
+import EmloyeeDetailForm from "./EmloyeeForm";
 import InventoryForm from "./InventoryForm";
-import EditProjectForm from "./EditProjectForm";
 import EmployeeMobile from "./EmployeeMobile";
 import HistoryMobile from "./HistoryMobile";
 import InventoryList from "./InventoryList";
 import ProjectMbList from "./ProjectMobileView";
 import InventoryListMb from "./InventoryListMb";
-import { useSelector } from "react-redux";
-import EmployeeDetails from "./EmployeeDetails"
-import AddHolidayForm from "./AddHolidayForm"
+import EmployeeDetails from "./EmployeeDetails";
+import { useState } from "react";
+import AddHolidayForm from "./AddHolidayForm";
+import ProjectDetails from "./ProjectDetails";
 
 export default function CenterDisplay() {
-  const role=useSelector((state)=>state.employees.userRole)
+  let [addOrEditForm, setAddOrEditForm] = useState();
+  let [projectAddOrEdit, setProjectAddOrEdit] = useState();
+
+  function onProjectAddOrEdit(form) {
+    setProjectAddOrEdit(form);
+  }
+
+  function onAddOrEdit(form) {
+    setAddOrEditForm(form);
+  }
+
   let responsive = UseReponsive();
   return (
     <Routes>
-      <Route path="/" element={<Dashboard  />} />
+      <Route path="/" element={<Dashboard />} />
       <Route path="/ApplyLeave" element={<LeaveReqForm />} />
       <Route
         path="/History"
@@ -37,35 +46,55 @@ export default function CenterDisplay() {
           )
         }
       />
-      <Route path="/Holidays" element={<Holidays role={role}/>} />
-      <Route path="/Holidays/AddHoliday" element={<AddHolidayForm/>}/>
+      <Route path="/Holidays" element={<Holidays />} />
+      <Route path="/Holidays/AddHoliday" element={<AddHolidayForm />} />
       <Route
         path="/Employees"
-        element={responsive.isMobile ? <EmployeeMobile /> : <EmployeeList />}
+        element={
+          responsive.isMobile ? (
+            <EmployeeMobile onAddOrEdit={onAddOrEdit} />
+          ) : (
+            <EmployeeList onAddOrEdit={onAddOrEdit} />
+          )
+        }
       />
 
-      <Route path="/:id"
-      element={<EmployeeDetails/>}
+      <Route
+        path="/:id"
+        element={<EmployeeDetails onAddOrEdit={onAddOrEdit} />}
       />
 
       <Route
         path="/InventoryList"
         element={responsive.isMobile ? <InventoryListMb /> : <InventoryList />}
       />
-
       <Route
-        path="/Employees/NewRegistration"
-        element={<EmployeeRegistrationForm />}
+        path="/Employees/EmployeeDetailsForm"
+        element={<EmloyeeDetailForm addOrEditForm={addOrEditForm} />}
       />
-      <Route path="/Employees/EditEmployee/:id" element={<EditEmployeeForm />} />
       <Route
         path="/Projects"
-        element={responsive.isMobile ? <ProjectMbList /> : <ProjectList />}
+        element={
+          responsive.isMobile ? (
+            <ProjectMbList onProjectAddOrEdit={onProjectAddOrEdit} />
+          ) : (
+            <ProjectList onProjectAddOrEdit={onProjectAddOrEdit} />
+          )
+        }
       />
-      <Route path="/Projects/OnboardProject" element={<ProjectOnboardForm />} />
-      <Route path="/Projects/EditProject" element={<EditProjectForm/>}/>
-      <Route path="/Employees/EditForm/Inventory" element={<InventoryForm/>}/>
-      <Route path="/Employees/NewRegistration/Inventory" element={<InventoryForm/>}/>
+      <Route
+        path="/Projects/OnboardProject"
+        element={<ProjectOnboardForm projectAddOrEdit={projectAddOrEdit} />}
+      />
+      <Route path="/Inventory/AddInventory" element={<InventoryForm />} />
+      <Route
+        path="/Employees/NewRegistration/Inventory"
+        element={<InventoryForm />}
+      />
+      <Route
+        path="Projects/:Id"
+        element={<ProjectDetails onProjectAddOrEdit={onProjectAddOrEdit} />}
+      />
     </Routes>
   );
 }

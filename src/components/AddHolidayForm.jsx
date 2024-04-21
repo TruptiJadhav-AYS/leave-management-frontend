@@ -31,11 +31,6 @@ export default function AddHolidayForm() {
     setClickedBtnID(id);
   }
   const navigate = useNavigate();
-  function formatDate(dateStr) {
-    // Assuming dateStr is in "YYYY-MM-DD" format
-    const parts = dateStr.split('-'); // split the date into an array [YYYY, MM, DD]
-    return `${parts[2]}-${parts[1]}-${parts[0]}`; // rearrange to "DD-MM-YYYY"
-}
 
   const formik = useFormik({
     initialValues: {

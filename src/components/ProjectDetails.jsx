@@ -10,22 +10,18 @@ import {
 } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import { useDispatch } from "react-redux";
-import deleteEmployee from "../Store/action/DeleteEmployee";
 import { useState } from "react";
-import { useGetEmployeesQuery } from '../Store/slice/apiSlice';
+import deleteProjectAction from "../Store/action/DeleteProjectAction";
 
-export default function EmployeeDetails({ onAddOrEdit }) {
-  // const Employees = useSelector((state) => state.employees.Employees);
-  const { data: Employees,isLoading,isError} = useGetEmployeesQuery();
-  const selectedEmp = useSelector((state) => state.employees.selectedEmp);
+export default function ProjectDetails({ onProjectAddOrEdit }) {
+  const Projects =useSelector(state=>state.Project.Projects)
+  const selectedProject = useSelector((state) => state.Project.selectedProject);
   let [deleteDialogue,setdeleteDialogue]=useState()
   const dispatch = useDispatch();
 
   const Navigate = useNavigate();
 
-  const index = Employees.findIndex((contact) => contact.id === selectedEmp);
-  let manager=Employees.findIndex((emp) => emp.manager_id === Employees[index].id)
-  let manager_name=manager.name
+  const index = Projects.findIndex((project) => project.Id === selectedProject);
 
   return (
     <Box
@@ -37,7 +33,7 @@ export default function EmployeeDetails({ onAddOrEdit }) {
         top: "10%",
       }}
     >
-      <Card elevation={2}>
+      <Card elevation={2} sx={{minHeight:"89.5vh"}}>
         <Grid display={"flex"} justifyContent={"space-between"} mx={2}>
           <Typography
             variant="h5"
@@ -47,20 +43,20 @@ export default function EmployeeDetails({ onAddOrEdit }) {
             mt={3}
             width="100%"
           >
-            Employee Details
+            Project Details
           </Typography>
           <Button
             onClick={() => {
-              onAddOrEdit("edit");
-              Navigate("/Employee/Employees/EmployeeDetailsForm");
+              onProjectAddOrEdit("edit");
+              Navigate("/Employee/Projects/OnboardProject");
             }}
           >
             edit
           </Button>
           <Button
             onClick={() => {
-              dispatch(deleteEmployee());
-              Navigate("/Employee/Employees");             
+              dispatch(deleteProjectAction());
+              Navigate("/Employee/Projects");             
             }}
           >
             Delete
@@ -74,11 +70,8 @@ export default function EmployeeDetails({ onAddOrEdit }) {
             columnGap={12}
           >
             <Grid item lg={12} md={12} xs={12} sm={12}>
-              <Avatar sx={{ width: 124, height: 124 }} />
-            </Grid>
-            <Grid item lg={12} md={12} xs={12} sm={12}>
               <Typography variant="body1" mt={8} fontWeight={"700"}>
-                Name : {Employees[index].name}
+                Project Name : {Projects[index].Name}
               </Typography>
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
@@ -88,37 +81,22 @@ export default function EmployeeDetails({ onAddOrEdit }) {
                 align="left"
                 // justifyContent={"left"}
               >
-                Email : {Employees[index].email}
+                Project Manager : {Projects[index].Project_Manager}
               </Typography>
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
-              <Typography variant="caption" fontWeight={"600"}>
-                Phone No : {Employees[index].mobile_number}
-              </Typography>
-            </Grid>
-            <Grid item lg={12} md={12} xs={12} sm={12}>
-              <Typography variant="caption" fontWeight={"600"} align="left">
-                Date Of Birth : {Employees[index].dob}
+              <Typography variant="caption" fontWeight={"600"}>        
+                Start Date : {Projects[index].Start_date}
               </Typography>
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
               <Typography variant="caption" fontWeight={"600"} align="left">
-                Gender : {Employees[index].gender}
+                Description : {Projects[index].Description}
               </Typography>
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
-              <Typography variant="caption" fontWeight={"600"}>
-                Department : {Employees[index].department}
-              </Typography>
-            </Grid>
-            <Grid item lg={12} md={12} xs={12} sm={12}>
-              <Typography variant="caption" fontWeight={"600"}>
-                Manager Name : {Employees[index].manager}
-              </Typography>
-            </Grid>
-            <Grid item lg={12} md={12} xs={12} sm={12}>
-              <Typography variant="caption" fontWeight={"600"}>
-                Role : {Employees[index].role}
+              <Typography variant="caption" fontWeight={"600"} align="left">
+                Status : {Projects[index].Status}
               </Typography>
             </Grid>
           </Grid>

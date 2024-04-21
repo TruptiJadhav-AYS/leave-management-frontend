@@ -1,21 +1,11 @@
-import { Paper, Grid } from "@mui/material";
+import { Paper, Grid, TextField, Button, Typography, Container, Card, CardContent } from "@mui/material";
 import backgroundImage from "../assets/bg_loginpage.jpg";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logoImage from "../assets/ays_logo.jpg";
-import findRole from "../Store/action/FindRoleAction";
-import findLogedInEmployee  from "../Store/action/FindLoggedInEmployee";
-import { useDispatch } from "react-redux";
-
-import {
-  TextField,
-  Button,
-  Typography,
-  Container,
-  Card,
-  CardContent,
-} from "@mui/material";
-import { useSelector } from "react-redux";
+import { login,isAuthenticated } from "../api/auth";
+import { useDispatch, useSelector } from "react-redux";
+// import isAuthenticated from ".."
 
 function LoginPage(props) {
   const [email, setEmail] = useState("");
@@ -23,10 +13,11 @@ function LoginPage(props) {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate();
-  const dispatch=useDispatch()
+  const dispatch = useDispatch();
 
-  const users=useSelector((state) => state.users.Users)
-  // const role=useSelector((state)=>state.employees.userRole)
+  const users = useSelector((state) => state.users.Users);
+
+  
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -37,12 +28,13 @@ function LoginPage(props) {
     setPassword(event.target.value);
     setPasswordError("");
   };
-  const handleForgetClick=()=>{
-    navigate("/ForgetPassword")
-    props.onSubmitClick(true)
-  }
 
-  const handleSubmit = (event) => {
+  const handleForgetClick = () => {
+    navigate("/ForgetPassword");
+    props.onSubmitClick(true);
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setEmailError("");
     setPasswordError("");
@@ -50,23 +42,27 @@ function LoginPage(props) {
 
     if (!email) {
       setEmailError("Please enter email");
+      return;
     }
     if (!password) {
       setPasswordError("Please enter a password");
-    } else if (!userByEmail) {
-      setPasswordError("Invalid Email or Password");
       return;
-    } else if (userByEmail.password !== password) {
-      setPasswordError("Invalid email or password");
-    } else {
-      dispatch(findRole(userByEmail.id))
-      dispatch(findLogedInEmployee(userByEmail.id))
-      navigate("/Employee");
-      console.log("Login successful", userByEmail);
-      props.onSignInClick(true);
-      props.onSignIn(email);
     }
+    let authuser=isAuthenticated();
+    console.log(authuser)
 
+    try {
+      const auth = await login({ email, password });
+      if (auth) {
+        console.log("helloooooooooo");
+        navigate("/Employee");
+        console.log("Login successful", email);
+        props.onSignIn(email);
+      }
+    } catch (error) {
+      console.error("Error occurred during login:", error);
+      // Handle login error if needed
+    }
   };
 
   return (
@@ -91,10 +87,10 @@ function LoginPage(props) {
           />
         </Grid>
         <Grid item xs={7} sm={3.5} md={2} lg={2} mt={2} textAlign={"left"}>
-          <Typography fontSize={30} fontWeight={"bold"}  color={"darkblue"}>
+          <Typography fontSize={30} fontWeight={"bold"} color={"darkblue"}>
             AYS
           </Typography>
-          <Typography fontSize={20} fontWeight={"bold"} >
+          <Typography fontSize={20} fontWeight={"bold"}>
             Software Solution
           </Typography>
         </Grid>
@@ -140,7 +136,17 @@ function LoginPage(props) {
               </Grid>
               <Grid container gap={2} mt={2}>
                 <Grid item xs={12} textAlign={"left"}>
-                  <Button disableRipple sx={{"&:hover" :{backgroundColor:"transparent"} ,cursor: "pointer" ,textTransform: "none"}} onClick={handleForgetClick}>Forget password?</Button>
+                  <Button
+                    disableRipple
+                    sx={{
+                      "&:hover": { backgroundColor: "transparent" },
+                      cursor: "pointer",
+                      textTransform: "none",
+                    }}
+                    onClick={handleForgetClick}
+                  >
+                    Forget password?
+                  </Button>
                 </Grid>
                 <Grid item xs={12}>
                   <Button
@@ -161,4 +167,5 @@ function LoginPage(props) {
     </Paper>
   );
 }
+
 export default LoginPage;

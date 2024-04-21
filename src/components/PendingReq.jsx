@@ -16,7 +16,7 @@ import {
 import {useSelector} from 'react-redux'
 
 const handleAccept = (name) => {
-  console.log("Accepted", name);
+  console.log("Approved", name);
 };
 
 const handleReject = (name) => {
