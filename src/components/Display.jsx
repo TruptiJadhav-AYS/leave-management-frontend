@@ -19,10 +19,13 @@ import MailIcon from "@mui/icons-material/Mail";
 import CallIcon from "@mui/icons-material/Call";
 import Profile from "../assets/profile.jpg"
 import { useSelector } from "react-redux";
+import { useGetEmployeesQuery } from '../Store/slice/apiSlice';
 
-function AccountMenu() {
-  const role=useSelector((state)=>state.employees.userRole)
-  const logedInUser=useSelector((state)=>state.employees.logedInEmp)
+function AccountMenu({LogedInEmployee}) {
+
+  const LogedInEmployeeDetails = LogedInEmployee;
+  // console.log("1111111111111",LogedInEmployeeDetails.id)
+
   const [anchorEl, setAnchorEl] = useState(null);
   const [logoutClick, setLogoutClick] = useState(false);
   const open = Boolean(anchorEl);
@@ -38,6 +41,11 @@ function AccountMenu() {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleViewProfile = () => {
+    // Navigate(`/Employee/${LogedInEmployeeDetails.id}`); // Replace with your profile route
+    console.log("HandleViewProfile")
   };
 
   return (
@@ -92,37 +100,22 @@ function AccountMenu() {
           >
             <Avatar style={{ width: "60px", height: "60px" }} src={Profile}/>
             <Typography fontWeight={"bold"} mt={1} >
-              {role === "Admin"
-                ? "Pratiksha Nimbalkar"
-                : role === "Manager"
-                ? "Trupti Jadhav"
-                : " Pruthviraj Suryavanshi"}
-            </Typography>
-            <Typography variant="subTitle">
-              {role === "Admin"
-                ? "Admin"
-                : role === "Manager"
-                ? "Project Manager"
-                : "Developer"}
+              {LogedInEmployeeDetails.name}
             </Typography>
             <Box display={"flex"} gap={0.5} mt={1} flexDirection={"row"}>
               <MailIcon />
               <Typography color="textSecondary">
-               {logedInUser.email}
+               {LogedInEmployeeDetails.email} 
               </Typography>
             </Box>
             <Box  display="flex">
               <CallIcon />
-              <Typography color="textSecondary">+91 8356789870</Typography>
+              <Typography color="textSecondary">{LogedInEmployeeDetails.mobile_number}</Typography>
             </Box>
-            <MenuItem
-              onClick={() => onLogoutClick()}
-              disableRipple
-              sx={{ mt: 3,color:"red"}}
-            >
-                <Logout fontSize="small" sx={{ color: 'red' ,mr:1}}/>
-              Logout
-            </MenuItem>
+            <Box display="flex">
+            <MenuItem onClick={handleViewProfile}>View Profile</MenuItem>
+          <MenuItem onClick={onLogoutClick}>Logout</MenuItem>
+            </Box>
           </Box>
         </Menu>
       ) : (
@@ -134,9 +127,22 @@ function AccountMenu() {
 
 const drawerWidth = 240;
 
-export default function Display() {
-  const role=useSelector((state)=>state.employees.userRole)
-  const logedInUser=useSelector((state)=>state.employees.logedInEmp)
+export default function Display(props) {
+
+  const logedInUser = props.logedInUser? props.logedInUser : null
+  console.log("0000000",logedInUser)
+
+  const { data: employees,isLoading,isError} = useGetEmployeesQuery();
+  const Employees= employees || [];
+  console.log("12345",Employees)
+
+  let LogedInEmployee = {};
+
+  if(Employees.length >=1 ){
+    LogedInEmployee = Employees.find(employee => employee.email === logedInUser);
+    console.log("555555555555555",LogedInEmployee)
+  }
+
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -188,15 +194,14 @@ export default function Display() {
           >
 
               <Typography fontSize={"18px"} noWrap component="div">
-                {logedInUser.name}
+                {LogedInEmployee.name}
               </Typography>
 
-            <AccountMenu   />
+            <AccountMenu  LogedInEmployee={LogedInEmployee} />
           </Stack>
         </Stack>
       </AppBar>
       <Box
-        // component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
       >
         <Drawer

@@ -20,9 +20,7 @@ export default function EmployeeDetails({ onAddOrEdit }) {
   const selectedEmp = useSelector((state) => state.employees.selectedEmp);
   let [deleteDialogue,setdeleteDialogue]=useState()
   const dispatch = useDispatch();
-
   const Navigate = useNavigate();
-
   const index = Employees.findIndex((contact) => contact.id === selectedEmp);
   let manager=Employees.findIndex((emp) => emp.manager_id === Employees[index].id)
   let manager_name=manager.name
