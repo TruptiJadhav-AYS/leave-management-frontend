@@ -1,5 +1,5 @@
 export const BACKEND_URL = "http://localhost:3001"
- let ACCESS_TOKEN;
+//  let ACCESS_TOKEN;
 
 // function generateHeaders(){
 //     return {"Authorization":`Bearer ${ACCESS_TOKEN}` }

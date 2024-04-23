@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import logoImage from "../assets/ays_logo.jpg";
 import { login,isAuthenticated } from "../api/auth";
 import { useDispatch, useSelector } from "react-redux";
+import { getLogedInEmp } from "../Store/slice/EmployeeSlice";
+import findLogedInEmployee from "../Store/action/FindLoggedInEmployee";
 // import isAuthenticated from ".."
 
 function LoginPage(props) {
@@ -54,13 +56,15 @@ function LoginPage(props) {
     try {
       const auth = await login({ email, password });
       if (auth) {
-        console.log("helloooooooooo");
+        // console.log("helloooooooooo");
         navigate("/Employee");
+        dispatch(findLogedInEmployee(email))
         console.log("Login successful", email);
         props.onSignIn(email);
       }
     } catch (error) {
       console.error("Error occurred during login:", error);
+      setPasswordError("Invalid email or password")
       // Handle login error if needed
     }
   };

@@ -18,10 +18,13 @@ import EmployeeDetails from "./EmployeeDetails";
 import { useState } from "react";
 import AddHolidayForm from "./AddHolidayForm";
 import ProjectDetails from "./ProjectDetails";
+import ViewProfile from "./ViewProfile";
 
-export default function CenterDisplay() {
+export default function CenterDisplay({logedInUser}) {
   let [addOrEditForm, setAddOrEditForm] = useState();
   let [projectAddOrEdit, setProjectAddOrEdit] = useState();
+
+  // console.log(logedInUser)
 
   function onProjectAddOrEdit(form) {
     setProjectAddOrEdit(form);
@@ -82,6 +85,8 @@ export default function CenterDisplay() {
           )
         }
       />
+
+      <Route path="/Profile" element={ logedInUser ? <ViewProfile logedInUser={logedInUser}/> : <></>} />
       <Route
         path="/Projects/OnboardProject"
         element={<ProjectOnboardForm projectAddOrEdit={projectAddOrEdit} />}

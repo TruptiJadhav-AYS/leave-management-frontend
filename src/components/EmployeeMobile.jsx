@@ -17,7 +17,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedEmp } from "../Store/slice/EmployeeSlice";
-import { useGetEmployeesQuery } from '../Store/slice/apiSlice';
+import { useGetEmployeesQuery } from '../Store/slice/apiEmployeeSlice';
 import { CircularProgress } from "@mui/material";
 
 export default function EmployeeList({onAddOrEdit}) {

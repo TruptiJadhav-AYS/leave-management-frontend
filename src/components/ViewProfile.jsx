@@ -12,20 +12,24 @@ import Avatar from "@mui/material/Avatar";
 import { useDispatch } from "react-redux";
 import deleteEmployee from "../Store/action/DeleteEmployee";
 import { useState } from "react";
-import { useDeleteEmployeeMutation, useGetEmployeesQuery } from '../Store/slice/apiEmployeeSlice';
+// import { useDeleteEmployeeMutation, useGetEmployeesQuery } from '../Store/slice/apiEmployeeSlice';
+import { useGetEmployeesQuery } from "../Store/slice/apiEmployeeSlice";
 
-export default function EmployeeDetails({ onAddOrEdit }) {
+export default function ViewProfile({ onAddOrEdit, logedInUser }) {
   // const Employees = useSelector((state) => state.employees.Employees);
   const { data: Employees,isLoading,isError} = useGetEmployeesQuery();
-  const selectedEmp = useSelector((state) => state.employees.selectedEmp);
-  console.log(typeof selectedEmp)
+//   const selectedEmp = useSelector((state) => state.employees.selectedEmp);
+//   console.log(typeof selectedEmp)
   // let [deleteDialogue,setdeleteDialogue]=useState()
-  const [deleteEmployee] = useDeleteEmployeeMutation();
+//   const [deleteEmployee] = useDeleteEmployeeMutation();
   const dispatch = useDispatch();
   const Navigate = useNavigate();
-  const index = Employees.findIndex((contact) => contact.id === selectedEmp);
-  let manager=Employees.findIndex((emp) => emp.manager_id === Employees[index].id)
-  let manager_name=manager.name
+  console.log(logedInUser)
+  console.log(Employees)
+//   const index = Employees.findIndex((contact) => contact.id === selectedEmp);
+//   let manager=Employees.findIndex((emp) => emp.manager_id === Employees[index].id)
+//   let manager_name=manager.name
+    const index = Employees.findIndex((contact) => contact.email === logedInUser );
 
   return (
     <Box
@@ -40,32 +44,15 @@ export default function EmployeeDetails({ onAddOrEdit }) {
       <Card elevation={2}>
         <Grid display={"flex"} justifyContent={"space-between"} mx={2}>
           <Typography
-            variant="h5"
+            variant="h4"
             display="flex"
             justifyContent="left"
             alignItems={"left"}
             mt={3}
             width="100%"
           >
-            Employee Details
+            Profile
           </Typography>
-          <Button
-            onClick={() => {
-              onAddOrEdit("edit");
-              Navigate("/Employee/Employees/EmployeeDetailsForm");
-            }}
-          >
-            edit
-          </Button>
-          <Button
-            onClick={() => {
-              // dispatch(deleteEmployee());
-              deleteEmployee(selectedEmp)
-              Navigate("/Employee/Employees");             
-            }}
-          >
-            Delete
-          </Button>
         </Grid>
         <CardContent>
           <Grid
