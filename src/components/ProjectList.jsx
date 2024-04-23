@@ -22,16 +22,17 @@ import SearchIcon from "@mui/icons-material/Search";
 import { useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectProject } from "../Store/slice/ProjectsSlice";
+import { useGetProjectsQuery} from "../Store/slice/apiProjectSlice";
 
 const columns = [
-  { id: "Name", label: "Name", minWidth: 120 },
+  { id: "name", label: "Name", minWidth: 120 },
   {
-    id: "Project_Manager",
+    id: "manager_name",
     label: "Project Manager",
     minWidth: 90,
   },
   {
-    id: "Start_date",
+    id: "startDate",
     label: "Start Date",
     minWidth: 90,
   },
@@ -41,21 +42,24 @@ const columns = [
   //   minWidth: 90,
   // },
   {
-    id: "Status",
+    id: "status",
     label: "Status",
     minWidth: 80,
   },
 ];
 
 export default function ProjectList({ onProjectAddOrEdit }) {
-  const Projects = useSelector((state) => state.Project.Projects);
+  // const Projects = useSelector((state) => state.Project.Projects);
+  const { data: project,isLoading}=useGetProjectsQuery()
+  console.log(project)
+  const Projects=project ||[];
   const selectedProject = useSelector((state) => state.Project.selectedProject);
   console.log("selected project", selectedProject);
   const dispatch = useDispatch();
   const Navigate = useNavigate();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [sortedBy, setSortedBy] = useState("Name"); // Track sorted column
+  const [sortedBy, setSortedBy] = useState("name"); // Track sorted column
   const [sortOrder, setSortOrder] = useState("asc"); // Track sort order
 
   const [searchText, setsearchText] = useState("");
@@ -97,7 +101,7 @@ export default function ProjectList({ onProjectAddOrEdit }) {
   };
 
   const FilterArray = sortedRows.filter((project) =>
-    project.Name.toLowerCase().includes(searchText.toLowerCase())
+    project.name.toLowerCase().includes(searchText.toLowerCase())
   );
 
   return (
@@ -156,12 +160,12 @@ export default function ProjectList({ onProjectAddOrEdit }) {
                     <Typography fontWeight={550} fontSize={"16px"}>
                       {column.label}
                     </Typography>
-                    {column.label === "Name" ? (
+                    {column.label === "name" ? (
                       <Button
                         disableRipple
                         size="small"
                         onClick={
-                          column.id === "Name"
+                          column.id === "name"
                             ? () => handleSortClick(column.id)
                             : undefined
                         }
@@ -199,8 +203,8 @@ export default function ProjectList({ onProjectAddOrEdit }) {
                   ml={2}
                   sx={{ cursor: "pointer" }}
                   onClick={() => {
-                    dispatch(selectProject(row.Id));
-                    Navigate(`/Employee/Projects/${row.Id}`);
+                    dispatch(selectProject(row.id));
+                    Navigate(`/Employee/Projects/${row.id}`);
                   }}
                 >
                   {columns.map((column, index) => {

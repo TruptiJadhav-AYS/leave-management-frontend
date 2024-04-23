@@ -22,14 +22,14 @@ export const store = configureStore({
     PendingRequests: PendingRequestsSlice,
     users:UserSlice,
     [employeeApi.reducerPath]: employeeApi.reducer,
-    // [projectApi.reducerPath]: projectApi.reducer,
+    [projectApi.reducerPath]: projectApi.reducer,
     [holidaysApi.reducerPath]: holidaysApi.reducer,
   },
   
   middleware: (getDefaultMiddleware) =>
   getDefaultMiddleware()
     .concat(employeeApi.middleware)
-    // .concat(projectApi.middleware)
-    .concat(holidaysApi.middleware),
+    .concat(projectApi.middleware)
+    .concat(holidaysApi.middleware)
 })
 

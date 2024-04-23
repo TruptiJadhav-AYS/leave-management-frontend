@@ -13,7 +13,6 @@ const employeeApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    // console.log(builder)
     getEmployees: builder.query({
       query: () => '/employees',
     }),
@@ -27,7 +26,7 @@ const employeeApi = createApi({
     updateEmployee: builder.mutation({
       query: ({ employeeId, ...updateData }) => ({
         url: `/employees/${employeeId}`,
-        method: 'PUT',  // or 'PATCH' if partially updating the data
+        method: 'PUT',  
         body: updateData,
       }),
     }),

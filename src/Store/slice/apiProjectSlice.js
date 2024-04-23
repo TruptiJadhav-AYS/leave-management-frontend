@@ -14,10 +14,30 @@ const projectApi = createApi({
   }),
   endpoints: (builder) => ({
     getProjects: builder.query({
-      query: () => '/projects',
+      query: () => '/project',
     }),
+    addEmployee: builder.mutation({
+        query: (newProject) => ({
+          url: '/project',
+          method: 'POST',
+          body: newProject,
+        }),
+      }),
+      updateEmployee: builder.mutation({
+        query: ({ projectId, ...updateData }) => ({
+          url: `/employees/${projectId}`,
+          method: 'PATCH',  
+          body: updateData,
+        }),
+      }),
+    //   deleteEmployee: builder.mutation({
+    //     query: (projectId) => ({
+    //       url: `/project/${projectId}`,
+    //       method: 'DELETE',
+    //     }),
+    //   })
   }),
 });
 
-export const { useGetprojectsQuery } = projectApi;
+export const { useGetProjectsQuery} = projectApi;
 export default projectApi;

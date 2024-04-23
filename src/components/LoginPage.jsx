@@ -4,7 +4,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logoImage from "../assets/ays_logo.jpg";
 import { login,isAuthenticated } from "../api/auth";
-import { useDispatch, useSelector } from "react-redux";
+// import { 
+  // useDispatch, 
+  // useSelector } from "react-redux";
 // import isAuthenticated from ".."
 
 function LoginPage(props) {
@@ -13,9 +15,9 @@ function LoginPage(props) {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const users = useSelector((state) => state.users.Users);
+  // const users = useSelector((state) => state.users.Users);
 
   
 
@@ -38,7 +40,7 @@ function LoginPage(props) {
     event.preventDefault();
     setEmailError("");
     setPasswordError("");
-    const userByEmail = users.find((user) => user.email === email);
+    // const userByEmail = users.find((user) => user.email === email);
 
     if (!email) {
       setEmailError("Please enter email");
