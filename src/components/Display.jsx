@@ -19,12 +19,12 @@ import MailIcon from "@mui/icons-material/Mail";
 import CallIcon from "@mui/icons-material/Call";
 import Profile from "../assets/profile.jpg"
 import { useSelector } from "react-redux";
-import { useGetEmployeesQuery } from '../Store/slice/apiSlice';
+import { useGetEmployeesQuery } from "../Store/slice/apiEmployeeSlice";
 
 function AccountMenu({LogedInEmployee}) {
 
   const LogedInEmployeeDetails = LogedInEmployee;
-  // console.log("1111111111111",LogedInEmployeeDetails.id)
+  console.log("1111111111111",LogedInEmployeeDetails.id)
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [logoutClick, setLogoutClick] = useState(false);
@@ -34,6 +34,7 @@ function AccountMenu({LogedInEmployee}) {
 
   const onLogoutClick = () => {
     setLogoutClick(true);
+    Navigate("/");
     localStorage.removeItem("authToken");
   };
 
@@ -45,7 +46,7 @@ function AccountMenu({LogedInEmployee}) {
   };
 
   const handleViewProfile = () => {
-    // Navigate(`/Employee/${LogedInEmployeeDetails.id}`); // Replace with your profile route
+    Navigate(`/Employee/Profile`) // Replace with your profile route
     console.log("HandleViewProfile")
   };
 
@@ -120,7 +121,7 @@ function AccountMenu({LogedInEmployee}) {
           </Box>
         </Menu>
       ) : (
-        logoutClick && Navigate("/")
+        logoutClick
       )}
     </Box>
   );
@@ -139,7 +140,7 @@ export default function Display(props) {
 
   let LogedInEmployee = {};
 
-  if(Employees.length >=1 ){
+  if(Employees.length>0){
     LogedInEmployee = Employees.find(employee => employee.email === logedInUser);
     console.log("555555555555555",LogedInEmployee)
   }
@@ -240,7 +241,7 @@ export default function Display(props) {
       <Grid container direction={"row"}>
         <Toolbar/>
         <Box bgcolor={"#f5f5f5"} sx={{ width: "100%", height: "90vh" }}>
-          <CenterDisplay  />
+          <CenterDisplay logedInUser={logedInUser} />
         </Box>
       </Grid>
     </Box>
