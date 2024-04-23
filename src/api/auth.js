@@ -1,5 +1,5 @@
 import axios from "axios";
-import {BACKEND_URL,setAccessToken} from "./const"
+import {BACKEND_URL} from "./const"
 
 // const BASE_URL = `${BACKEND_URL}/auth`
 

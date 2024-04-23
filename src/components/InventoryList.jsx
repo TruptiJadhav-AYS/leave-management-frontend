@@ -92,7 +92,7 @@ export default function InventoryList() {
             Navigate("/Employee/Inventory/AddInventory");
           }}
         >
-          Add Inventory
+          Inventory
           <AddIcon />
         </Button>
       </Box>

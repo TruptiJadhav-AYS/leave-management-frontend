@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-const employeeApi = createApi({
-  reducerPath: 'employeeApi',
+const projectApi = createApi({
+  reducerPath: 'projectApi',
   baseQuery: fetchBaseQuery({
     baseUrl: 'http://localhost:3001',
     prepareHeaders: (headers, { getState }) => {
@@ -13,11 +13,11 @@ const employeeApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getEmployees: builder.query({
-      query: () => '/employees',
+    getProjects: builder.query({
+      query: () => '/projects',
     }),
   }),
 });
 
-export const { useGetEmployeesQuery } = employeeApi;
-export default employeeApi;
+export const { useGetprojectsQuery } = projectApi;
+export default projectApi;

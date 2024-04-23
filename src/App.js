@@ -24,11 +24,11 @@ const myTheme = createTheme({
   },
 });
 
-const employee = [
-  { name: "Pratiksha", email: "pratiksha@gmail.com", role: "Admin" },
-  { name: "Trupti", email: "trupti@gmail.com", role: "Manager" },
-  { name: "Pruthvi", email: "pruthvi@gmail.com", role: "Employee" },
-];
+// const employee = [
+//   { name: "Pratiksha", email: "pratiksha@gmail.com", role: "Admin" },
+//   { name: "Trupti", email: "trupti@gmail.com", role: "Manager" },
+//   { name: "Pruthvi", email: "pruthvi@gmail.com", role: "Employee" },
+// ];
 
 
 const isTokenValid = () => {
@@ -54,7 +54,7 @@ const isTokenValid = () => {
 };
 
 function App() {
-  const [routeStatus, setRouteStatus] = useState(false);
+  // const [routeStatus, setRouteStatus] = useState(false);
   const [forgetRouteStatus, setForgetRouteStatus] = useState(false);
   const [resetRouteStatus, setResetRouteStatus] = useState(false);
   const [logedInUser, setLogedInUser] = useState("");
@@ -67,21 +67,21 @@ function App() {
   // }
 
   const findRoleOfUser = () => {
-    let emp = employee.find((employee) => employee.email === logedInUser);
-    if (emp) {
-      return emp.role;
-    }
+    // let emp = employee.find((employee) => employee.email === logedInUser);
+    // if (emp) {
+    //   return emp.role;
+    // }
   };
 
-  let role = findRoleOfUser();
+  // let role = findRoleOfUser();
 
   function onSignIn(email) {
     setLogedInUser(email);
   }
 
-  function onSignInClick(flag) {
-    setRouteStatus(flag);
-  }
+  // function onSignInClick(flag) {
+  //   // setRouteStatus(flag);
+  // }
 
   function onSubmitClick(flag) {
     setForgetRouteStatus(flag);
@@ -100,7 +100,7 @@ function App() {
             element={
               <LoginPage
                 onSignIn={onSignIn}
-                onSignInClick={onSignInClick}
+                // onSignInClick={onSignInClick}
                 onSubmitClick={onSubmitClick}
               />
             }
@@ -111,7 +111,7 @@ function App() {
               element={
                 <ForgetPasswordPage
                   onSignIn={onSignIn}
-                  onSignInClick={onSignInClick}
+                  // onSignInClick={onSignInClick}
                   onResetClick={onResetClick}
                 />
               }

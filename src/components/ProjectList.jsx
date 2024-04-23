@@ -20,10 +20,8 @@ import SearchIcon from "@mui/icons-material/Search";
 // import EditIcon from "@mui/icons-material/Edit";
 // import DeleteIcon from "@mui/icons-material/Delete";
 import { useState, useMemo } from "react";
-import {useSelector,useDispatch} from 'react-redux'
+import { useSelector, useDispatch } from "react-redux";
 import { selectProject } from "../Store/slice/ProjectsSlice";
-
-
 
 const columns = [
   { id: "Name", label: "Name", minWidth: 120 },
@@ -49,10 +47,10 @@ const columns = [
   },
 ];
 
-export default function ProjectList({onProjectAddOrEdit}) {
-  const Projects =useSelector(state=>state.Project.Projects)
-  const selectedProject=useSelector(state=>state.Project.selectedProject)
-  console.log("selected project",selectedProject)
+export default function ProjectList({ onProjectAddOrEdit }) {
+  const Projects = useSelector((state) => state.Project.Projects);
+  const selectedProject = useSelector((state) => state.Project.selectedProject);
+  console.log("selected project", selectedProject);
   const dispatch = useDispatch();
   const Navigate = useNavigate();
   const [page, setPage] = useState(0);
@@ -99,12 +97,19 @@ export default function ProjectList({onProjectAddOrEdit}) {
   };
 
   const FilterArray = sortedRows.filter((project) =>
-  project.Name.toLowerCase().includes(searchText.toLowerCase())
-);
+    project.Name.toLowerCase().includes(searchText.toLowerCase())
+  );
 
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden", minHeight: "100%", height:"100%" }}>
-      <Box display={"flex"} justifyContent={"space-between"}  m={1}>
+    <Paper
+      sx={{
+        width: "100%",
+        overflow: "hidden",
+        minHeight: "100%",
+        height: "100%",
+      }}
+    >
+      <Box display={"flex"} justifyContent={"space-between"} m={1}>
         <Box
           sx={{
             display: "flex",
@@ -126,7 +131,7 @@ export default function ProjectList({onProjectAddOrEdit}) {
           variant="contained"
           sx={{ borderRadius: "50px", textTransform: "none" }}
           onClick={() => {
-            onProjectAddOrEdit("add")
+            onProjectAddOrEdit("add");
             Navigate("/Employee/Projects/OnboardProject");
           }}
         >
@@ -145,11 +150,11 @@ export default function ProjectList({onProjectAddOrEdit}) {
                 <TableCell
                   key={column.id}
                   align={column.align}
-                  sx={{ color: "primary.main", minWidth: column.minWidth}}
+                  sx={{ color: "primary.main", minWidth: column.minWidth }}
                 >
                   <Stack direction={"row"} alignItems={"center"}>
                     <Typography fontWeight={550} fontSize={"16px"}>
-                    {column.label}
+                      {column.label}
                     </Typography>
                     {column.label === "Name" ? (
                       <Button
@@ -181,22 +186,34 @@ export default function ProjectList({onProjectAddOrEdit}) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {FilterArray
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.Name} ml={2} sx={{cursor:"pointer"}}  onClick={()=>{dispatch(selectProject(row.Id));Navigate(`/Employee/Projects/${row.Id}`)}}>
-                    {columns.map((column,index) => {
-                      const value = row[column.id];
-                      return ( 
-                        <TableCell key={index} align={column.align} >
-                          {value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
+            {FilterArray.slice(
+              page * rowsPerPage,
+              page * rowsPerPage + rowsPerPage
+            ).map((row) => {
+              return (
+                <TableRow
+                  hover
+                  role="checkbox"
+                  tabIndex={-1}
+                  key={row.Name}
+                  ml={2}
+                  sx={{ cursor: "pointer" }}
+                  onClick={() => {
+                    dispatch(selectProject(row.Id));
+                    Navigate(`/Employee/Projects/${row.Id}`);
+                  }}
+                >
+                  {columns.map((column, index) => {
+                    const value = row[column.id];
+                    return (
+                      <TableCell key={index} align={column.align}>
+                        {value}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>
