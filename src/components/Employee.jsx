@@ -192,7 +192,7 @@ import SearchIcon from "@mui/icons-material/Search";
 // import VisibilityIcon from "@mui/icons-material/Visibility";
 // import EditIcon from "@mui/icons-material/Edit";
 // import DeleteIcon from "@mui/icons-material/Delete";
-import { useState, useMemo } from "react";
+import { useState, useMemo,useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 // import { selectProject } from "../Store/slice/ProjectsSlice";
 import { setSelectedEmp } from "../Store/slice/EmployeeSlice";
@@ -227,25 +227,33 @@ const columns = [
 ];
 
 export default function EmployeeList({ onAddOrEdit }) {
+  const [searchText, setsearchText] = useState("");
   //   const Projects = useSelector((state) => state.Project.Projects);
-  const {
-    data: employees,
-    isLoading,
-    isError,
-    isSuccess,
-  } = useGetEmployeesQuery();
-  console.log(isSuccess)
+  const { data: Employees, isLoading, isError, isSuccess } = useGetEmployeesQuery();
+  // const [searchText, setSearchText] = useState("");
+  // const [page, setPage] = useState(0);
+  // const [rowsPerPage, setRowsPerPage] = useState(10);
+  // const [sortedBy, setSortedBy] = useState("name");
+  // const [sortOrder, setSortOrder] = useState("asc");
+  const [filteredEmployees, setFilteredEmployees] = useState([]); // New state for filtered employees
+  // const Navigate = useNavigate();
+  const employees=Employees || [];
 
-  //   // useEffect(() => {
-  //     console.log("employees:", employees);
-  //   console.log("error:", error);
-  //   console.log("isLoading:", isLoading);
-  // }, [employees, error, isLoading]);
-  // const employees = useSelector(state => state.employee.Employees);
+  useEffect(() => {
+    // Update filteredEmployees when employees data changes
+    if (isSuccess) {
+      setFilteredEmployees(employees || []);
+    }
+  }, [isSuccess, employees]);
 
-  // const Employee = useSelector((state) => state.rootReducer.employees);
-  const Employees = employees || [];
-  
+  useEffect(() => {
+    // Filter employees based on search text when it changes
+    setFilteredEmployees(
+      employees.filter((employee) =>
+        employee.name.toLowerCase().includes(searchText.toLowerCase())
+      )
+    );
+  }, [searchText, employees]);
   // console.log(Employees)
   //   const selectedProject = useSelector((state) => state.Project.selectedProject);
 
@@ -257,7 +265,6 @@ export default function EmployeeList({ onAddOrEdit }) {
   const [sortedBy, setSortedBy] = useState("name"); // Track sorted column
   const [sortOrder, setSortOrder] = useState("asc"); // Track sort order
 
-  const [searchText, setsearchText] = useState("");
 
   function handleSearchText(event) {
     setsearchText(event.target.value);
@@ -266,7 +273,7 @@ export default function EmployeeList({ onAddOrEdit }) {
 
   const sortedRows = useMemo(() => {
     // Sort rows based on sortedBy and sortOrder
-    return Employees.slice().sort((a, b) => {
+    return employees.slice().sort((a, b) => {
       const valueA = a[sortedBy];
       const valueB = b[sortedBy];
 
@@ -295,9 +302,9 @@ export default function EmployeeList({ onAddOrEdit }) {
     setPage(0);
   };
 
-  const FilterArray = sortedRows.filter((Employee) =>
-    Employee.name.toLowerCase().includes(searchText.toLowerCase())
-  );
+  // const FilterArray = sortedRows.filter((Employee) =>
+  //   Employee.name.toLowerCase().includes(searchText.toLowerCase())
+  // );
 
   return (
     <Paper
@@ -385,8 +392,9 @@ export default function EmployeeList({ onAddOrEdit }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {isSuccess &&
-              FilterArray.slice(
+            {
+            // isSuccess &&
+              filteredEmployees.slice(
                 page * rowsPerPage,
                 page * rowsPerPage + rowsPerPage
               ).map((row) => {
@@ -414,14 +422,15 @@ export default function EmployeeList({ onAddOrEdit }) {
                     })}
                   </TableRow>
                 );
-              })}
+              })
+              }
           </TableBody>
         </Table>
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[5, 10, 20, 100]}
         component="div"
-        count={Employees.length}
+        count={employees.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
