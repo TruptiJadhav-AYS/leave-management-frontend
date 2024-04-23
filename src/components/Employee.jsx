@@ -242,7 +242,7 @@ export default function EmployeeList({ onAddOrEdit }) {
   useEffect(() => {
     // Update filteredEmployees when employees data changes
     if (isSuccess) {
-      setFilteredEmployees(employees || []);
+      setFilteredEmployees(employees);
     }
   }, [isSuccess, employees]);
 

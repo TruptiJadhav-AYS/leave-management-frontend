@@ -23,11 +23,13 @@ export const store = configureStore({
     users:UserSlice,
     [employeeApi.reducerPath]: employeeApi.reducer,
     // [projectApi.reducerPath]: projectApi.reducer,
-    // [holidaysApi.reducerPath]: holidaysApi.reducer,
+    [holidaysApi.reducerPath]: holidaysApi.reducer,
   },
+  
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(employeeApi.middleware),
-    
-
+  getDefaultMiddleware()
+    .concat(employeeApi.middleware)
+    // .concat(projectApi.middleware)
+    .concat(holidaysApi.middleware),
 })
 
