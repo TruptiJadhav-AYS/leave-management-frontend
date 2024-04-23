@@ -12,13 +12,15 @@ import Avatar from "@mui/material/Avatar";
 import { useDispatch } from "react-redux";
 import deleteEmployee from "../Store/action/DeleteEmployee";
 import { useState } from "react";
-import { useGetEmployeesQuery } from '../Store/slice/apiSlice';
+import { useDeleteEmployeeMutation, useGetEmployeesQuery } from '../Store/slice/apiEmployeeSlice';
 
 export default function EmployeeDetails({ onAddOrEdit }) {
   // const Employees = useSelector((state) => state.employees.Employees);
   const { data: Employees,isLoading,isError} = useGetEmployeesQuery();
   const selectedEmp = useSelector((state) => state.employees.selectedEmp);
-  let [deleteDialogue,setdeleteDialogue]=useState()
+  console.log(typeof selectedEmp)
+  // let [deleteDialogue,setdeleteDialogue]=useState()
+  const [deleteEmployee] = useDeleteEmployeeMutation();
   const dispatch = useDispatch();
   const Navigate = useNavigate();
   const index = Employees.findIndex((contact) => contact.id === selectedEmp);
@@ -57,7 +59,8 @@ export default function EmployeeDetails({ onAddOrEdit }) {
           </Button>
           <Button
             onClick={() => {
-              dispatch(deleteEmployee());
+              // dispatch(deleteEmployee());
+              deleteEmployee(selectedEmp)
               Navigate("/Employee/Employees");             
             }}
           >

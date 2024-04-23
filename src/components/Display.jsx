@@ -34,6 +34,7 @@ function AccountMenu({LogedInEmployee}) {
 
   const onLogoutClick = () => {
     setLogoutClick(true);
+    localStorage.removeItem("authToken");
   };
 
   const handleClick = (event) => {

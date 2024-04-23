@@ -22,11 +22,26 @@ import { useSelector } from "react-redux";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
+import { useAddEmployeeMutation, useGetEmployeesQuery, useUpdateEmployeeMutation } from "../Store/slice/apiEmployeeSlice";
 
 export default function EmloyeeDetailForm({ addOrEditForm }) {
-  let { Employees } = useSelector((state) => state.employees);
+  // let { Employees } = useSelector((state) => state.employees);
+  const {
+    data: employees
+  } = useGetEmployeesQuery();
+  // console.log(isSuccess)
+
+  //   // useEffect(() => {
+  //     console.log("employees:", employees);
+  //   console.log("error:", error);
+  //   console.log("isLoading:", isLoading);
+  // }, [employees, error, isLoading]);
+  // const employees = useSelector(state => state.employee.Employees);
+
+  // const Employee = useSelector((state) => state.rootReducer.employees);
+  const Employees = employees || [];
   let { selectedEmp } = useSelector((state) => state.employees);
-  let managerList = [];
+  let managerList = ["Pratiksha","Pruthvi","Trupti"];
   let departmentList=["Human Resource","Support","Developement","Finance"]
 
   for (let i in Employees) {
@@ -53,11 +68,11 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
             : ""
           : ""
         : "",
-    mobile_no:
+    mobile_number:
       addOrEditForm === "edit"
         ? selectedEmp
-          ? Employees[selectedEmpIndex].mobile_no
-            ? Employees[selectedEmpIndex].mobile_no
+          ? Employees[selectedEmpIndex].mobile_number
+            ? Employees[selectedEmpIndex].mobile_number
             : ""
           : ""
         : "",
@@ -98,7 +113,10 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
   const responsive = UseReponsive();
   const [clickedBtnID, setClickedBtnID] = useState("");
   let [onBoardSuccess, setOnBoardSuccess] = useState(false);
-  let dispatch = useDispatch();
+  const [addEmp] = useAddEmployeeMutation();
+  const [updateEmployee] = useUpdateEmployeeMutation();
+  // console.log(isLoading)
+  // let dispatch = useDispatch();
   const InventoryList=useSelector((state) => state.Inventory.InventoryListItems)
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -119,7 +137,7 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
         .matches(emailRegex, "Invalid email format")
         .required("email is required."),
 
-      mobile_no: Yup.number()
+      mobile_number: Yup.number()
         .test(
           "len",
           "contact no should contain only 10 characters.",
@@ -130,7 +148,7 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
             return String(value).length === 10;
           }
         )
-        .required("contact no is required."),
+        .required("Contact no is required."),
 
       dob: Yup.date()
         .min("1950-01-01", "Birthdate should be after 1950-01-01")
@@ -140,22 +158,27 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
         )
         .required("Date of birth is required."),
 
-      department: Yup.string().required("department is mandatory."),
-
+      // department: Yup.string().required("Department is mandatory."),
+      // manager: Yup.string().required("Manager is mandatory."),
       gender: Yup.string().required("gender is required."),
     }),
 
     onSubmit: (values) => {
-      
+      // addEmployee(values);
+      console.log(values)
       {
         addOrEditForm === "add"
-          ? dispatch(addEmployee(values))
-          : dispatch(editEmployee(values));
+          // ? dispatch(addEmployee(values))
+          ? addEmp(values)
+
+          : updateEmployee(selectedEmp,values);
       }
+      // console.log(values)
       setOnBoardSuccess(true);
       setTimeout(() => {
         navigate("/Employee/Employees");
       }, 1000);
+      console.log(values)
     },
   });
 
@@ -209,7 +232,7 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
                   height={responsive.isMobile ? "13vh" : "11vh"}
                 >
                   <Stack width={"100%"}>
-                    <Typography variant="body2"> NAME</Typography>
+                    <Typography variant="body2">NAME</Typography>
                     <InputBase
                       placeholder=" Name"
                       type="text"
@@ -324,24 +347,24 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
                       type="tel"
                       pattern="[0-9]*"
                       maxLength={10}
-                      name="mobile_no"
+                      name="mobile_number"
                       placeholder=" Phone Number"
                       sx={{
                         border:
-                          clickedBtnID === "Contact"
+                          clickedBtnID === "mobile_number"
                             ? "2px solid blue"
                             : "2px solid  rgba(204, 204, 204, 0.5)",
                         height: "40px",
                         borderRadius: 1,
                       }}
-                      onClick={() => handleClick("Contact")}
+                      onClick={() => handleClick("mobile_number")}
                       onChange={formik.handleChange}
-                      value={formik.values.mobile_no}
+                      value={formik.values.mobile_number}
                       onBlur={formik.handleBlur}
                     />
-                    {formik.touched.mobile_no && errors.mobile_no && (
+                    {formik.touched.mobile_number && errors.mobile_number && (
                       <Typography variant="caption" color="error">
-                        {errors.mobile_no}
+                        {errors.mobile_number}
                       </Typography>
                     )}
                   </Stack>
@@ -440,8 +463,14 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
                         </MenuItem>
                       ))}
                     </Select>
+                    {formik.touched.manager && errors.manager && (
+                      <Typography variant="caption" color="error">
+                        {errors.manager}
+                      </Typography>
+                    )}
                   </Stack>
                 </Grid>
+                
               </Grid>
               <br />
               <Grid container mt={responsive.isMobile ? 5 : 0} spacing={1}>
