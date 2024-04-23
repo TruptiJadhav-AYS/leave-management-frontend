@@ -24,7 +24,7 @@ export default function CenterDisplay({logedInUser}) {
   let [addOrEditForm, setAddOrEditForm] = useState();
   let [projectAddOrEdit, setProjectAddOrEdit] = useState();
 
-  console.log(logedInUser)
+  // console.log(logedInUser)
 
   function onProjectAddOrEdit(form) {
     setProjectAddOrEdit(form);

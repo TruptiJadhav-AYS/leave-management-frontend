@@ -23,17 +23,15 @@ import { useGetEmployeesQuery } from "../Store/slice/apiEmployeeSlice";
 
 function AccountMenu({LogedInEmployee}) {
 
-  const LogedInEmployeeDetails = LogedInEmployee;
-  console.log("1111111111111",LogedInEmployeeDetails.id)
+  // const LogedInEmployee = LogedInEmployee;
+  // console.log("1111111111111",LogedInEmployeeDetails.id)
 
   const [anchorEl, setAnchorEl] = useState(null);
-  const [logoutClick, setLogoutClick] = useState(false);
   const open = Boolean(anchorEl);
 
   let Navigate = useNavigate();
 
   const onLogoutClick = () => {
-    setLogoutClick(true);
     Navigate("/");
     localStorage.removeItem("authToken");
   };
@@ -47,7 +45,6 @@ function AccountMenu({LogedInEmployee}) {
 
   const handleViewProfile = () => {
     Navigate(`/Employee/Profile`) // Replace with your profile route
-    console.log("HandleViewProfile")
   };
 
   return (
@@ -102,17 +99,17 @@ function AccountMenu({LogedInEmployee}) {
           >
             <Avatar style={{ width: "60px", height: "60px" }} src={Profile}/>
             <Typography fontWeight={"bold"} mt={1} >
-              {LogedInEmployeeDetails.name}
+              {LogedInEmployee.name}
             </Typography>
             <Box display={"flex"} gap={0.5} mt={1} flexDirection={"row"}>
               <MailIcon />
               <Typography color="textSecondary">
-               {LogedInEmployeeDetails.email} 
+               {LogedInEmployee.email} 
               </Typography>
             </Box>
             <Box  display="flex">
               <CallIcon />
-              <Typography color="textSecondary">{LogedInEmployeeDetails.mobile_number}</Typography>
+              <Typography color="textSecondary">{LogedInEmployee.mobile_number}</Typography>
             </Box>
             <Box display="flex">
             <MenuItem onClick={handleViewProfile}>View Profile</MenuItem>
@@ -121,7 +118,7 @@ function AccountMenu({LogedInEmployee}) {
           </Box>
         </Menu>
       ) : (
-        logoutClick
+        <></>
       )}
     </Box>
   );
@@ -132,17 +129,17 @@ const drawerWidth = 240;
 export default function Display(props) {
 
   const logedInUser = props.logedInUser? props.logedInUser : null
-  console.log("0000000",logedInUser)
+  // console.log("0000000",logedInUser)
 
   const { data: employees,isLoading,isError} = useGetEmployeesQuery();
   const Employees= employees || [];
-  console.log("12345",Employees)
+  // console.log("12345",Employees)
 
   let LogedInEmployee = {};
 
   if(Employees.length>0){
     LogedInEmployee = Employees.find(employee => employee.email === logedInUser);
-    console.log("555555555555555",LogedInEmployee)
+    // console.log("555555555555555",LogedInEmployee)
   }
 
 
