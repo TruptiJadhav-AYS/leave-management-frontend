@@ -19,18 +19,20 @@ import MailIcon from "@mui/icons-material/Mail";
 import CallIcon from "@mui/icons-material/Call";
 import Profile from "../assets/profile.jpg"
 import { useSelector } from "react-redux";
+import { useGetEmployeesQuery } from "../Store/slice/apiEmployeeSlice";
 
-function AccountMenu() {
-  const role=useSelector((state)=>state.employees.userRole)
-  const logedInUser=useSelector((state)=>state.employees.logedInEmp)
+function AccountMenu({LogedInEmployee}) {
+
+  // const LogedInEmployee = LogedInEmployee;
+  // console.log("1111111111111",LogedInEmployeeDetails.id)
+
   const [anchorEl, setAnchorEl] = useState(null);
-  const [logoutClick, setLogoutClick] = useState(false);
   const open = Boolean(anchorEl);
 
   let Navigate = useNavigate();
 
   const onLogoutClick = () => {
-    setLogoutClick(true);
+    Navigate("/");
     localStorage.removeItem("authToken");
   };
 
@@ -39,6 +41,10 @@ function AccountMenu() {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleViewProfile = () => {
+    Navigate(`/Employee/Profile`) // Replace with your profile route
   };
 
   return (
@@ -93,41 +99,26 @@ function AccountMenu() {
           >
             <Avatar style={{ width: "60px", height: "60px" }} src={Profile}/>
             <Typography fontWeight={"bold"} mt={1} >
-              {role === "Admin"
-                ? "Pratiksha Nimbalkar"
-                : role === "Manager"
-                ? "Trupti Jadhav"
-                : " Pruthviraj Suryavanshi"}
-            </Typography>
-            <Typography variant="subTitle">
-              {role === "Admin"
-                ? "Admin"
-                : role === "Manager"
-                ? "Project Manager"
-                : "Developer"}
+              {LogedInEmployee.name}
             </Typography>
             <Box display={"flex"} gap={0.5} mt={1} flexDirection={"row"}>
               <MailIcon />
               <Typography color="textSecondary">
-               {logedInUser.email}
+               {LogedInEmployee.email} 
               </Typography>
             </Box>
             <Box  display="flex">
               <CallIcon />
-              <Typography color="textSecondary">+91 8356789870</Typography>
+              <Typography color="textSecondary">{LogedInEmployee.mobile_number}</Typography>
             </Box>
-            <MenuItem
-              onClick={() => onLogoutClick()}
-              disableRipple
-              sx={{ mt: 3,color:"red"}}
-            >
-                <Logout fontSize="small" sx={{ color: 'red' ,mr:1}}/>
-              Logout
-            </MenuItem>
+            <Box display="flex">
+            <MenuItem onClick={handleViewProfile}>View Profile</MenuItem>
+          <MenuItem onClick={onLogoutClick}>Logout</MenuItem>
+            </Box>
           </Box>
         </Menu>
       ) : (
-        logoutClick && Navigate("/")
+        <></>
       )}
     </Box>
   );
@@ -135,9 +126,22 @@ function AccountMenu() {
 
 const drawerWidth = 240;
 
-export default function Display() {
-  const role=useSelector((state)=>state.employees.userRole)
-  const logedInUser=useSelector((state)=>state.employees.logedInEmp)
+export default function Display(props) {
+
+  const logedInUser = props.logedInUser? props.logedInUser : null
+  // console.log("0000000",logedInUser)
+
+  const { data: employees,isLoading,isError} = useGetEmployeesQuery();
+  const Employees= employees || [];
+  // console.log("12345",Employees)
+
+  let LogedInEmployee = {};
+
+  if(Employees.length>0){
+    LogedInEmployee = Employees.find(employee => employee.email === logedInUser);
+    // console.log("555555555555555",LogedInEmployee)
+  }
+
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -189,15 +193,14 @@ export default function Display() {
           >
 
               <Typography fontSize={"18px"} noWrap component="div">
-                {logedInUser.name}
+                {LogedInEmployee.name}
               </Typography>
 
-            <AccountMenu   />
+            <AccountMenu  LogedInEmployee={LogedInEmployee} />
           </Stack>
         </Stack>
       </AppBar>
       <Box
-        // component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
       >
         <Drawer
@@ -235,7 +238,7 @@ export default function Display() {
       <Grid container direction={"row"}>
         <Toolbar/>
         <Box bgcolor={"#f5f5f5"} sx={{ width: "100%", height: "90vh" }}>
-          <CenterDisplay  />
+          <CenterDisplay logedInUser={logedInUser} />
         </Box>
       </Grid>
     </Box>
