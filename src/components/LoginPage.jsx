@@ -4,10 +4,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logoImage from "../assets/ays_logo.jpg";
 import { login,isAuthenticated } from "../api/auth";
-// import { 
-  // useDispatch, 
-  // useSelector } from "react-redux";
-// import isAuthenticated from ".."
 
 function LoginPage(props) {
   const [email, setEmail] = useState("");

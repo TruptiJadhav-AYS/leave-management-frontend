@@ -11,7 +11,7 @@ import {
   Box,
 } from "@mui/material";
 import Card from "@mui/material/Card";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import UseReponsive from "../hooks/UseResponsive";
 import CheckIcon from "@mui/icons-material/Check";
@@ -23,6 +23,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import { useAddEmployeeMutation, useGetEmployeesQuery, useUpdateEmployeeMutation } from "../Store/slice/apiEmployeeSlice";
+import { useGetDepartmentsQuery } from "../Store/slice/apiDepartmentSlice";
 
 export default function EmloyeeDetailForm({ addOrEditForm }) {
   // let { Employees } = useSelector((state) => state.employees);
@@ -113,8 +114,19 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
   const responsive = UseReponsive();
   const [clickedBtnID, setClickedBtnID] = useState("");
   let [onBoardSuccess, setOnBoardSuccess] = useState(false);
+  const [Department,setDepartment]=useState([])
   const [addEmp] = useAddEmployeeMutation();
   const [updateEmployee] = useUpdateEmployeeMutation();
+  const {data:department,isSuccess}=useGetDepartmentsQuery()
+  const dept=department || []
+  console.log(Department)
+
+  useEffect(() => {
+    // Update filteredEmployees when employees data changes
+    if (isSuccess) {
+      setDepartment(dept);
+    }
+  }, [isSuccess, dept]);
   // console.log(isLoading)
   // let dispatch = useDispatch();
   const InventoryList=useSelector((state) => state.Inventory.InventoryListItems)
@@ -408,9 +420,9 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
                       value={formik.values.department}
                       onBlur={formik.handleBlur}
                     >
-                      {departmentList.map((department,index) => (
+                      {Department.map((department,index) => (
                         <MenuItem key={index} value={department}>
-                          {department}
+                          {department.department_name}
                         </MenuItem>
                       ))}
                     </Select>

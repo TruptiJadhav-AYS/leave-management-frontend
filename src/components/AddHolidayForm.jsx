@@ -53,6 +53,10 @@ export default function AddHolidayForm() {
     }),
     onSubmit: (values) => {
       console.log(values);
+      const formData = new FormData();
+      if (image) {
+        formData.append("image", image);
+      }
       // dispatch(addholiday(values));
       console.log(image);
       addholiday(values, image);
@@ -62,6 +66,27 @@ export default function AddHolidayForm() {
       }, 1000);
     },
   });
+
+  // function handleFileChange(event) {
+  //   const file = event.target.files[0];
+  //   if (!file) {
+  //     console.log("No file chosen");
+  //     return;
+  //   }
+  
+  //   const reader = new FileReader();
+  //   reader.onload = function(evt) {
+  //     if (evt.target.readyState === FileReader.DONE) {
+  //       const arrayBuffer = evt.target.result;
+  //       const array = new Uint8Array(arrayBuffer);
+  //       console.log("Array:", array);
+  //       // Now you can handle this array as needed, e.g., sending to server or processing
+  //     }
+  //   };
+  
+  //   reader.readAsArrayBuffer(file);
+  //   setImage(reader.readAsArrayBuffer(file));
+  // }
 
   const errors = formik.errors;
 

@@ -20,9 +20,11 @@ import CallIcon from "@mui/icons-material/Call";
 import Profile from "../assets/profile.jpg"
 import { useSelector } from "react-redux";
 
-function AccountMenu() {
-  const role=useSelector((state)=>state.employees.userRole)
-  const logedInUser=useSelector((state)=>state.employees.logedInEmp)
+function AccountMenu({LogedInEmployee}) {
+
+  // const LogedInEmployee = LogedInEmployee;
+  // console.log("1111111111111",LogedInEmployeeDetails.id)
+
   const [anchorEl, setAnchorEl] = useState(null);
   const [logoutClick, setLogoutClick] = useState(false);
   const open = Boolean(anchorEl);
@@ -93,23 +95,23 @@ function AccountMenu() {
           >
             <Avatar style={{ width: "60px", height: "60px" }} src={Profile}/>
             <Typography fontWeight={"bold"} mt={1} >
-              {role === "Admin"
+              {/* {role === "Admin"
                 ? "Pratiksha Nimbalkar"
                 : role === "Manager"
                 ? "Trupti Jadhav"
-                : " Pruthviraj Suryavanshi"}
+                : " Pruthviraj Suryavanshi"} */}
             </Typography>
             <Typography variant="subTitle">
-              {role === "Admin"
+              {/* {role === "Admin"
                 ? "Admin"
                 : role === "Manager"
                 ? "Project Manager"
-                : "Developer"}
+                : "Developer"} */}
             </Typography>
             <Box display={"flex"} gap={0.5} mt={1} flexDirection={"row"}>
               <MailIcon />
               <Typography color="textSecondary">
-               {logedInUser.email}
+               {/* {logedInUser.email} */}
               </Typography>
             </Box>
             <Box  display="flex">

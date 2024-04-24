@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-const employeeApi = createApi({
-  reducerPath: 'employeeApi',
+const departmentApi = createApi({
+  reducerPath: 'departmentApi',
   baseQuery: fetchBaseQuery({
     baseUrl: 'http://localhost:3001',
     prepareHeaders: (headers, { getState }) => {
@@ -13,18 +13,12 @@ const employeeApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getEmployees: builder.query({
-      query: () => '/employees',
-    }),
-    addEmployee: builder.mutation({
-      query: (newEmployee) => ({
-        url: '/employees',
-        method: 'POST',
-        body: newEmployee,
-      }),
+    getDepartments: builder.query({
+      query: () => '/department',
     }),
   }),
+  
 });
 
-export const { useGetEmployeesQuery, useAddEmployeeMutation } = employeeApi;
-export default employeeApi;
+export const { useGetDepartmentsQuery } = departmentApi;
+export default departmentApi;
