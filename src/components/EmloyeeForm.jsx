@@ -173,7 +173,7 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
 
           : updateEmployee(selectedEmp,values);
       }
-      console.log(selectedEmp,values)
+      // console.log(values)
       setOnBoardSuccess(true);
       setTimeout(() => {
         navigate("/Employee/Employees");
