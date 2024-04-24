@@ -31,5 +31,6 @@ export const store = configureStore({
     .concat(employeeApi.middleware)
     .concat(projectApi.middleware)
     .concat(holidaysApi.middleware)
+    
 })
 

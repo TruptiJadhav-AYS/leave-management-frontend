@@ -16,6 +16,11 @@ const employeeApi = createApi({
     getEmployees: builder.query({
       query: () => '/employees',
     }),
+
+    getEmployeesById: builder.query({
+      query: (employeeId) => `/employees/employee/${employeeId}`,
+    }),
+
     addEmployee: builder.mutation({
       query: (newEmployee) => ({
         url: '/employees',
@@ -40,5 +45,5 @@ const employeeApi = createApi({
   
 });
 
-export const { useGetEmployeesQuery,useAddEmployeeMutation,useDeleteEmployeeMutation,useUpdateEmployeeMutation } = employeeApi;
+export const { useGetEmployeesQuery,useGetEmployeesByIdQuery,useAddEmployeeMutation,useUpdateEmployeeMutation, useDeleteEmployeeMutation } = employeeApi;
 export default employeeApi;
