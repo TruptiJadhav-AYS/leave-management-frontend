@@ -16,13 +16,13 @@ import UseReponsive from "../hooks/UseResponsive";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import CheckIcon from "@mui/icons-material/Check";
-import FileUploadIcon from "@mui/icons-material/FileUpload";
-import {useDispatch} from 'react-redux'
+// import FileUploadIcon from "@mui/icons-material/FileUpload";
+import { useDispatch } from "react-redux";
 import addHol from "../Store/action/AddHolidayAction";
 
 export default function AddHolidayForm() {
   const responsive = UseReponsive();
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
 
   const [clickedBtnID, setClickedBtnID] = useState("");
   const [onBoardSuccess, setOnBoardSuccess] = useState(false);
@@ -31,33 +31,27 @@ export default function AddHolidayForm() {
     setClickedBtnID(id);
   }
   const navigate = useNavigate();
-  function formatDate(dateStr) {
-    // Assuming dateStr is in "YYYY-MM-DD" format
-    const parts = dateStr.split('-'); // split the date into an array [YYYY, MM, DD]
-    return `${parts[2]}-${parts[1]}-${parts[0]}`; // rearrange to "DD-MM-YYYY"
-}
 
   const formik = useFormik({
     initialValues: {
-    //   holidayName: "",
-    occasion: "",
+      //   holidayName: "",
+      occasion: "",
       date: "",
       day: "",
       img: "",
     },
     validationSchema: Yup.object({
-    //   holidayName: Yup.string().required("Holiday Name is required."),
-    occasion: Yup.string().required("Occassion is required."),
+      //   holidayName: Yup.string().required("Holiday Name is required."),
+      occasion: Yup.string().required("Occassion is required."),
       date: Yup.date().required("Please select a date"),
       // toDate: Yup.date().required("Please select a date"),
       day: Yup.string().required("Day is required."),
-    //   image: Yup.string().required("Image is required."),
+      //   image: Yup.string().required("Image is required."),
     }),
     onSubmit: (values) => {
-      
-console.log(values)
-    dispatch(addHol(values))
-    
+      console.log(values);
+      dispatch(addHol(values));
+
       setOnBoardSuccess(true);
       setTimeout(() => {
         navigate("/Employee/Holidays");
@@ -80,48 +74,12 @@ console.log(values)
       >
         <Card elevation={1}>
           <CardContent>
-            <form
-            onSubmit={formik.handleSubmit}
-            >
+            <form onSubmit={formik.handleSubmit}>
               <Typography color={"primary"} variant="h5" mb={2}>
                 Add Holidays
               </Typography>
 
               <Grid container spacing={1}>
-                {/* <Grid
-                  item
-                  xs={12}
-                  sm={6}
-                  md={6}
-                  lg={6}
-                  height={responsive.isMobile ? "14vh" : "11vh"}
-                >
-                  <Stack width={"100%"}>
-                    <Typography variant="body2"> HOLIDAY NAME</Typography>
-                    <InputBase
-                      placeholder="Holiday Name"
-                      type="text"
-                      name="holidayName"
-                      sx={{
-                        border:
-                          clickedBtnID === "holidayName"
-                            ? "2px solid blue"
-                            : "2px solid rgba(204, 204, 204, 0.5)",
-                        height: "40px",
-                        borderRadius: 1,
-                      }}
-                      onClick={() => handleClick("holidayName")}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.holidayName}
-                    />
-                    {formik.touched.holidayName && errors.holidayName && (
-                      <Typography variant="caption" color="error">
-                        {errors.holidayName}
-                      </Typography>
-                    )}
-                  </Stack>
-                </Grid> */}
                 <Grid
                   item
                   xs={12}
@@ -192,7 +150,6 @@ console.log(values)
               </Grid>
               <br />
               <Grid container spacing={1}>
-                
                 <Grid
                   item
                   xs={12}
@@ -245,9 +202,15 @@ console.log(values)
                   sm={6}
                   height={responsive.isMobile ? "17vh" : "15vh"}
                 >
-                  <Typography variant="body2" mb={0.5}>IMAGE</Typography>
-                  
-                  <Button variant="outlined" sx={{textTransform:"none"}}><FileUploadIcon/>Upload Image</Button>
+                  <Typography variant="body2" mb={0.5}>
+                    IMAGE
+                  </Typography>
+                  <input
+                    type="file"
+                    // onChange={handleFileChange}
+                    accept="image/*"
+                  />
+                  {/* <Button variant="outlined" sx={{textTransform:"none"}}><FileUploadIcon/>Upload Image</Button> */}
 
                   {formik.touched.img && errors.img && (
                     <Typography variant="caption" color="error">
@@ -256,7 +219,7 @@ console.log(values)
                   )}
                 </Grid>
               </Grid>
-              
+
               <Button
                 type="submit"
                 variant="contained"

@@ -1,8 +1,4 @@
-import  { addEmp ,editEmp,getRole,getLogedInEmp} from "../slice/EmployeeSlice";
-
-
-
-
+import  { addEmp } from "../slice/EmployeeSlice";
 
 function addEmployee(obj){
     return(dispatch,getState)=>{

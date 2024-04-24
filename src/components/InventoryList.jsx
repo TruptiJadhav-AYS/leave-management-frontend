@@ -19,6 +19,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import { useState } from "react";
 // import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useDispatch } from "react-redux";
+import deleteInventory from "../Store/action/DeleteInventoryAction";
 
 const columns = [
   { id: "name", label: "Name", minWidth: 180 },
@@ -34,6 +36,7 @@ export default function InventoryList() {
   const InventoryListItems = useSelector(state=>state.Inventory.InventoryListItems)
   console.log("****************", InventoryListItems)
   const Navigate = useNavigate();
+  const dispatch =useDispatch()
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
@@ -86,10 +89,10 @@ export default function InventoryList() {
           variant="contained"
           sx={{ borderRadius: "50px", textTransform: "none" }}
           onClick={() => {
-            Navigate("/Employee/Employees/EditForm/Inventory");
+            Navigate("/Employee/Inventory/AddInventory");
           }}
         >
-          Add Inventory
+          Inventory
           <AddIcon />
         </Button>
       </Box>
@@ -117,29 +120,35 @@ export default function InventoryList() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {FilterArray
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((InventoryListItem,index) => {
-                console.log("yuyyuuyyyggg",index)
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={index} sx={{cursor:"pointer"}} >
-                    {columns.map((column) => {
-                      const value = InventoryListItem[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {value}
-                        </TableCell>
-                      );
-                    })}
-                    <TableCell align="center">
-                      <Stack direction="row">
-                        <DeleteIcon sx={{ cursor: "pointer" }} />
-                      </Stack>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-          </TableBody>
+  {FilterArray.map((inventory, index) => {
+    return (
+      <TableRow
+        hover
+        role="checkbox"
+        tabIndex={-1}
+        key={index}
+        sx={{ cursor: "pointer" }}
+      >
+        {columns.map((column) => {
+          const value = inventory[column.id];
+          return (
+            <TableCell key={column.id} align={column.align}>
+              {value}
+            </TableCell>
+          );
+        })}
+        <TableCell align="center">
+          <Stack direction="row">
+            <DeleteIcon
+              sx={{ cursor: "pointer" }}
+              onClick={() => dispatch(deleteInventory(inventory.id))}
+            />
+          </Stack>
+        </TableCell>
+      </TableRow>
+    );
+  })}
+</TableBody>
         </Table>
       </TableContainer>
       <TablePagination

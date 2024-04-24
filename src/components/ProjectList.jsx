@@ -16,23 +16,23 @@ import AddIcon from "@mui/icons-material/Add";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import SearchIcon from "@mui/icons-material/Search";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
+// import VisibilityIcon from "@mui/icons-material/Visibility";
+// import EditIcon from "@mui/icons-material/Edit";
+// import DeleteIcon from "@mui/icons-material/Delete";
 import { useState, useMemo } from "react";
-import {useSelector} from 'react-redux'
-
-
+import { useSelector, useDispatch } from "react-redux";
+import { selectProject } from "../Store/slice/ProjectsSlice";
+import { useGetProjectsQuery} from "../Store/slice/apiProjectSlice";
 
 const columns = [
-  { id: "Name", label: "Name", minWidth: 120 },
+  { id: "name", label: "Name", minWidth: 120 },
   {
-    id: "Project_Manager",
+    id: "manager_name",
     label: "Project Manager",
     minWidth: 90,
   },
   {
-    id: "Start_date",
+    id: "startDate",
     label: "Start Date",
     minWidth: 90,
   },
@@ -42,19 +42,24 @@ const columns = [
   //   minWidth: 90,
   // },
   {
-    id: "Status",
+    id: "status",
     label: "Status",
     minWidth: 80,
   },
 ];
 
-export default function ProjectList() {
-  const Projects =useSelector(state=>state.Project.Projects)
-  // console.log("Projectsssssssssssssssssssssssssssss" , Projects)
+export default function ProjectList({ onProjectAddOrEdit }) {
+  // const Projects = useSelector((state) => state.Project.Projects);
+  const { data: project,isLoading}=useGetProjectsQuery()
+  console.log(project)
+  const Projects=project ||[];
+  const selectedProject = useSelector((state) => state.Project.selectedProject);
+  console.log("selected project", selectedProject);
+  const dispatch = useDispatch();
   const Navigate = useNavigate();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [sortedBy, setSortedBy] = useState("Name"); // Track sorted column
+  const [sortedBy, setSortedBy] = useState("name"); // Track sorted column
   const [sortOrder, setSortOrder] = useState("asc"); // Track sort order
 
   const [searchText, setsearchText] = useState("");
@@ -94,17 +99,21 @@ export default function ProjectList() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-  const handleEditClick = () => {
-    Navigate("/Employee/Projects/EditProject");
-  };
 
   const FilterArray = sortedRows.filter((project) =>
-  project.Name.toLowerCase().includes(searchText.toLowerCase())
-);
+    project.name.toLowerCase().includes(searchText.toLowerCase())
+  );
 
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden", minHeight: "100%", height:"100%" }}>
-      <Box display={"flex"} justifyContent={"space-between"}  m={1}>
+    <Paper
+      sx={{
+        width: "100%",
+        overflow: "hidden",
+        minHeight: "100%",
+        height: "100%",
+      }}
+    >
+      <Box display={"flex"} justifyContent={"space-between"} m={1}>
         <Box
           sx={{
             display: "flex",
@@ -126,6 +135,7 @@ export default function ProjectList() {
           variant="contained"
           sx={{ borderRadius: "50px", textTransform: "none" }}
           onClick={() => {
+            onProjectAddOrEdit("add");
             Navigate("/Employee/Projects/OnboardProject");
           }}
         >
@@ -139,23 +149,23 @@ export default function ProjectList() {
       >
         <Table stickyHeader>
           <TableHead>
-            <TableRow >
+            <TableRow>
               {columns.map((column) => (
                 <TableCell
                   key={column.id}
                   align={column.align}
-                  sx={{ color: "primary.main", minWidth: column.minWidth}}
+                  sx={{ color: "primary.main", minWidth: column.minWidth }}
                 >
                   <Stack direction={"row"} alignItems={"center"}>
                     <Typography fontWeight={550} fontSize={"16px"}>
-                    {column.label}
+                      {column.label}
                     </Typography>
-                    {column.label === "Name" ? (
+                    {column.label === "name" ? (
                       <Button
                         disableRipple
                         size="small"
                         onClick={
-                          column.id === "Name"
+                          column.id === "name"
                             ? () => handleSortClick(column.id)
                             : undefined
                         }
@@ -180,32 +190,34 @@ export default function ProjectList() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {FilterArray
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.Name} ml={2} sx={{cursor:"pointer"}}>
-                    {columns.map((column,index) => {
-                      const value = row[column.id];
-                      return ( 
-                        <TableCell key={index} align={column.align} >
-                          {value}
-                        </TableCell>
-                      );
-                    })}
-                    {/* <TableCell>
-                      <Box sx={{ display: "flex", gap: 1 }}>
-                        <VisibilityIcon sx={{ cursor: "pointer" }} />
-                        <EditIcon
-                          onClick={handleEditClick}
-                          sx={{ cursor: "pointer" }}
-                        />
-                        <DeleteIcon sx={{ cursor: "pointer" }} />
-                      </Box>
-                    </TableCell> */}
-                  </TableRow>
-                );
-              })}
+            {FilterArray.slice(
+              page * rowsPerPage,
+              page * rowsPerPage + rowsPerPage
+            ).map((row) => {
+              return (
+                <TableRow
+                  hover
+                  role="checkbox"
+                  tabIndex={-1}
+                  key={row.Name}
+                  ml={2}
+                  sx={{ cursor: "pointer" }}
+                  onClick={() => {
+                    dispatch(selectProject(row.id));
+                    Navigate(`/Employee/Projects/${row.id}`);
+                  }}
+                >
+                  {columns.map((column, index) => {
+                    const value = row[column.id];
+                    return (
+                      <TableCell key={index} align={column.align}>
+                        {value}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>

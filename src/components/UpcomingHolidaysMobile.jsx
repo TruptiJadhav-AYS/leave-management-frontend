@@ -7,56 +7,38 @@ import {
   Stack,
   IconButton,
 } from "@mui/material";
-import eid from "../assets/eid.jpg";
-import mayday from "../assets/mayday.jpg";
-import independanceDay from "../assets/independance.jpg";
-import ganeshChaturthi from "../assets/ganeshchaturthi.jpg";
-import gandhiJayanti from "../assets/gandhijayanti.jpg";
-import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-
-const Holidays = [
-  { date: "11/04/2024",
-    day: "Thursday",
-    occasion: "Eid e milad", 
-    img: eid },
-  { date: "01/05/2024", 
-    day: "Wednesday", 
-    occasion: "Labour Day", 
-    img: mayday },
-  {
-    date: "15/08/2024",
-    day: "Thursday",
-    occasion: "Independence Day",
-    img: independanceDay,
-  },
-  {
-    date: "07/09/2024",
-    day: "Saturday",
-    occasion: "Ganesh Chaturthi",
-    img: ganeshChaturthi,
-  },
-  {
-    date: "02/10/2024",
-    day: "Wednesday",
-    occasion: "Gandhi Jayanti",
-    img: gandhiJayanti,
-  },
-];
+// import eid from "../assets/eid.jpg";
+// import mayday from "../assets/mayday.jpg";
+// import independanceDay from "../assets/independance.jpg";
+// import ganeshChaturthi from "../assets/ganeshchaturthi.jpg";
+// import gandhiJayanti from "../assets/gandhijayanti.jpg";
+import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import { useSelector } from "react-redux";
 
 export default function UpcomingHolidaysMobile() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const currentHoliday = Holidays[currentIndex];
+  const Holidays = useSelector((state) => state.holidays.annualLeaves);
 
- const formatDate = (dateString) => {
-  const [day, month, year] = dateString.split('/');
-  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-  ];
+  const formatDate = (dateString) => {
+    const [year, month, day] = dateString.split("-");
+    const monthNames = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
 
-  return `${day} ${monthNames[parseInt(month, 10) - 1]} ${year}`;
-};
-
+    return `${day} ${monthNames[parseInt(month, 10) - 1]} ${year}`;
+  };
 
   const handleNext = () => {
     setCurrentIndex((prevIndex) =>
@@ -69,16 +51,34 @@ export default function UpcomingHolidaysMobile() {
       prevIndex === 0 ? Holidays.length - 1 : prevIndex - 1
     );
   };
+  // Get the current date
+  const currentDate = new Date();
+
+  // Filter holidays that occur after the current date
+  const upcomingHolidays = Holidays.filter((holiday) => {
+    const holidayDate = new Date(holiday.date);
+    return holidayDate > currentDate;
+  });
+  const currentHoliday = upcomingHolidays[currentIndex];
+  const showPreviousButton = currentIndex !== 0 && upcomingHolidays.length > 1;
+  const showNextButton = currentIndex !== upcomingHolidays.length - 1;
 
   return (
     <>
       <Grid item width="100%" mt={1} alignItems={"center"}>
         <Card sx={{ width: "100%", py: 1.5, borderRadius: "10px" }}>
           <Stack direction={"row"} justifyContent="space-around">
-            <IconButton disableRipple size="small" onClick={handlePrevious}>
-              <NavigateBeforeIcon />
-            </IconButton>
-            <Stack direction="row" alignItems={"center"} justifyContent={"center"} sx={{ width: "80%" }}>
+            {showPreviousButton && (
+              <IconButton disableRipple size="small" onClick={handlePrevious}>
+                <NavigateBeforeIcon />
+              </IconButton>
+            )}
+            <Stack
+              direction="row"
+              alignItems={"center"}
+              justifyContent={"center"}
+              sx={{ width: "80%" }}
+            >
               <Avatar
                 alt={currentHoliday.occasion}
                 src={currentHoliday.img}
@@ -88,12 +88,16 @@ export default function UpcomingHolidaysMobile() {
                 <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
                   {currentHoliday.occasion}
                 </Typography>
-                <Typography variant="body1">{formatDate(currentHoliday.date)}</Typography>
+                <Typography variant="body1">
+                  {formatDate(currentHoliday.date)}
+                </Typography>
               </Stack>
             </Stack>
-            <IconButton disableRipple size="small" onClick={handleNext}>
-              <NavigateNextIcon />
-            </IconButton>
+            {showNextButton && (
+              <IconButton disableRipple size="small" onClick={handleNext}>
+                <NavigateNextIcon />
+              </IconButton>
+            )}
           </Stack>
         </Card>
       </Grid>
