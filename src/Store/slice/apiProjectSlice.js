@@ -1,43 +1,48 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const projectApi = createApi({
-  reducerPath: 'projectApi',
+  reducerPath: "projectApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:3001',
+    baseUrl: "http://localhost:3001",
     prepareHeaders: (headers, { getState }) => {
-      const token = localStorage.getItem('authToken');
+      const token = localStorage.getItem("authToken");
       if (token) {
-        headers.set('Authorization', `Bearer ${token}`);
+        headers.set("Authorization", `Bearer ${token}`);
       }
       return headers;
     },
   }),
+
   endpoints: (builder) => ({
     getProjects: builder.query({
-      query: () => '/project',
+      query: () => "/project",
     }),
+
+    getProjectById: builder.query({
+      query: (projectId) => `/project/${projectId}`,
+    }),
+
     addProject: builder.mutation({
-        query: (newProject) => ({
-          url: '/project',
-          method: 'POST',
-          body: newProject,
-        }),
+      query: (newProject) => ({
+        url: "/project",
+        method: "POST",
+        body: newProject,
       }),
-      updateProject: builder.mutation({
-        query: ({ projectId, ...updateData }) => ({
-          url: `/employees/${projectId}`,
-          method: 'PATCH',  
-          body: updateData,
-        }),
+    }),
+
+    deleteProject: builder.mutation({
+      query: (projectId) => ({
+        url: `/project/${projectId}`,
+        method: "DELETE",
       }),
-    //   deleteEmployee: builder.mutation({
-    //     query: (projectId) => ({
-    //       url: `/project/${projectId}`,
-    //       method: 'DELETE',
-    //     }),
-    //   })
+    }),
   }),
 });
 
-export const { useGetProjectsQuery,useAddProjectMutation} = projectApi;
+export const {
+  useGetProjectsQuery,
+  useAddProjectMutation,
+  useDeleteProjectMutation,
+  useGetProjectByIdQuery,
+} = projectApi;
 export default projectApi;

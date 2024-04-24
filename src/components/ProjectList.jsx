@@ -1,6 +1,14 @@
 import * as React from "react";
 import Paper from "@mui/material/Paper";
-import { Box, Button, Divider, InputBase, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Divider,
+  Grid,
+  InputBase,
+  Typography,
+} from "@mui/material";
 import {
   TableBody,
   TableCell,
@@ -22,7 +30,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectProject } from "../Store/slice/ProjectsSlice";
-import { useGetProjectsQuery} from "../Store/slice/apiProjectSlice";
+import { useGetProjectsQuery } from "../Store/slice/apiProjectSlice";
 
 const columns = [
   { id: "name", label: "Name", minWidth: 120 },
@@ -50,9 +58,9 @@ const columns = [
 
 export default function ProjectList({ onProjectAddOrEdit }) {
   // const Projects = useSelector((state) => state.Project.Projects);
-  const { data: project,isLoading}=useGetProjectsQuery()
-  console.log(project)
-  const Projects=project ||[];
+  const { data: project, isLoading, isError } = useGetProjectsQuery();
+  console.log(project);
+  const Projects = project || [];
   const selectedProject = useSelector((state) => state.Project.selectedProject);
   console.log("selected project", selectedProject);
   const dispatch = useDispatch();
@@ -84,6 +92,17 @@ export default function ProjectList({ onProjectAddOrEdit }) {
       }
     });
   }, [sortedBy, sortOrder]);
+
+  if (isLoading) {
+    return (
+      <Grid>
+        <CircularProgress />
+      </Grid>
+    );
+  }
+  if (isError) {
+    return <></>;
+  }
 
   const handleSortClick = (columnId) => {
     const isAscending = sortedBy === columnId && sortOrder === "asc";
@@ -199,7 +218,7 @@ export default function ProjectList({ onProjectAddOrEdit }) {
                   hover
                   role="checkbox"
                   tabIndex={-1}
-                  key={row.Name}
+                  key={row.name}
                   ml={2}
                   sx={{ cursor: "pointer" }}
                   onClick={() => {

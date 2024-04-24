@@ -13,6 +13,7 @@ import holidaysApi from './slice/apiHolidaySlice'
 import forgotApi from './slice/apiForgetPassword'
 import categoryApi from './slice/apiCategorySlice'
 import inventoryApi from './slice/apiInventorySlice'
+import departmentApi from './slice/apiDepartmentSlice'
 
 export const store = configureStore({
   reducer: {
@@ -30,6 +31,7 @@ export const store = configureStore({
     [forgotApi.reducerPath]:forgotApi.reducer,
     [categoryApi.reducerPath]:categoryApi.reducer,
     [inventoryApi.reducerPath]:inventoryApi.reducer,
+    [departmentApi.reducerPath]:departmentApi.reducer,
   },
   
   middleware: (getDefaultMiddleware) =>
@@ -40,5 +42,6 @@ export const store = configureStore({
     .concat(forgotApi.middleware)
     .concat(categoryApi.middleware)
     .concat(inventoryApi.middleware)
+    .concat(departmentApi.middleware)
 })
 

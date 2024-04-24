@@ -12,22 +12,34 @@ import Avatar from "@mui/material/Avatar";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import deleteProjectAction from "../Store/action/DeleteProjectAction";
-import { useGetProjectsQuery } from "../Store/slice/apiProjectSlice";
+import { useGetProjectByIdQuery } from "../Store/slice/apiProjectSlice";
 
 export default function ProjectDetails({ onProjectAddOrEdit }) {
-  // const Projects =useSelector(state=>state.Project.Projects)
-  const { data: project,isLoading}=useGetProjectsQuery()
-  console.log(project)
-  const Projects=project ||[];
-  console.log(Projects)
   const selectedProject = useSelector((state) => state.Project.selectedProject);
-  let [deleteDialogue,setdeleteDialogue]=useState()
+
+  const {
+    data: projects,
+    isLoading,
+    isError,
+  } = useGetProjectByIdQuery(selectedProject);
+
+  console.log("pppp", projects);
+
+  let [deleteDialogue, setdeleteDialogue] = useState();
   const dispatch = useDispatch();
 
   const Navigate = useNavigate();
+  if (isLoading) {
+    return <></>;
+  }
+  if (isError) {
+    return <></>;
+  }
+  const Projects = projects || {};
 
   const index = Projects.findIndex((project) => project.id === selectedProject);
 
+  console.log(Projects[index]);
   return (
     <Box
       sx={{
@@ -38,7 +50,7 @@ export default function ProjectDetails({ onProjectAddOrEdit }) {
         top: "10%",
       }}
     >
-      <Card elevation={2} sx={{minHeight:"89.5vh"}}>
+      <Card elevation={2} sx={{ minHeight: "89.5vh" }}>
         <Grid display={"flex"} justifyContent={"space-between"} mx={2}>
           <Typography
             variant="h5"
@@ -61,7 +73,7 @@ export default function ProjectDetails({ onProjectAddOrEdit }) {
           <Button
             onClick={() => {
               dispatch(deleteProjectAction());
-              Navigate("/Employee/Projects");             
+              Navigate("/Employee/Projects");
             }}
           >
             Delete
@@ -90,7 +102,7 @@ export default function ProjectDetails({ onProjectAddOrEdit }) {
               </Typography>
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
-              <Typography variant="caption" fontWeight={"600"}>        
+              <Typography variant="caption" fontWeight={"600"}>
                 Start Date : {Projects[index].startDate}
               </Typography>
             </Grid>
