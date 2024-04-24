@@ -37,7 +37,7 @@ const isTokenValid = () => {
     // Decode the token
     const decodedToken = jwtDecode(token);
     let logedInId=decodedToken.id
-    console.log(logedInId)
+    // console.log(decodedToken)
     // Check if the token is expired
     const currentTime = Date.now() / 1000; // Convert to seconds
     if (decodedToken.exp && decodedToken.exp < currentTime) {
@@ -61,8 +61,8 @@ function App() {
 
   // function isAuthenticated() {
     // localStorage.removeItem("authToken")
-    const token = localStorage.getItem("authToken");
-    console.log(token)
+    // const token = localStorage.getItem("authToken");
+    // console.log(token)
   //   return token;
   // }
 
