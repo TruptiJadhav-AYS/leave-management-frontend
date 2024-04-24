@@ -193,7 +193,7 @@ export default function Display(props) {
           >
 
               <Typography fontSize={"18px"} noWrap component="div">
-                {LogedInEmployee.name}
+                {/* {LogedInEmployee.name} */}
               </Typography>
 
             <AccountMenu  LogedInEmployee={LogedInEmployee} />
