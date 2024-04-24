@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import logoImage from "../assets/ays_logo.jpg";
 import { login,isAuthenticated } from "../api/auth";
 
-
 function LoginPage(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -55,7 +54,7 @@ function LoginPage(props) {
       if (auth) {
         // console.log("helloooooooooo");
         navigate("/Employee");
-        dispatch(findLogedInEmployee(email))
+        // dispatch(findLogedInEmployee(email))
         console.log("Login successful", email);
         props.onSignIn(email);
       }

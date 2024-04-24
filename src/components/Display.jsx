@@ -19,7 +19,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import CallIcon from "@mui/icons-material/Call";
 import Profile from "../assets/profile.jpg"
 import { useSelector } from "react-redux";
-import { useGetEmployeesQuery } from "../Store/slice/apiEmployeeSlice";
+import { useGetEmployeesQuery } from '../Store/slice/apiEmployeeSlice';
 
 function AccountMenu({LogedInEmployee}) {
 
