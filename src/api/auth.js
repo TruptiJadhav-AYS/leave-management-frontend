@@ -1,9 +1,6 @@
 import axios from "axios";
 import {BACKEND_URL} from "./const"
 
-// const BASE_URL = `${BACKEND_URL}/auth`
-
-
 export function login(data) {
   return new Promise((resolve, reject) => {
     axios.post(`${BACKEND_URL}/auth/login`, data)

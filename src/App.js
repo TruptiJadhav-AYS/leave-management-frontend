@@ -7,7 +7,8 @@ import { useState } from "react";
 import ForgetPasswordPage from "./components/forgetPasswordPage";
 import {jwtDecode} from 'jwt-decode';
 import ResetPasswordPage from "./components/ResetPasswordPage";
-// import SwaggerUI from "swagger-ui-react";
+import { setRole } from "./Store/slice/EmployeeSlice";
+import { useDispatch } from "react-redux";
 import "swagger-ui-react/swagger-ui.css";
 
 const myTheme = createTheme({
@@ -24,32 +25,22 @@ const myTheme = createTheme({
   },
 });
 
-// const employee = [
-//   { name: "Pratiksha", email: "pratiksha@gmail.com", role: "Admin" },
-//   { name: "Trupti", email: "trupti@gmail.com", role: "Manager" },
-//   { name: "Pruthvi", email: "pruthvi@gmail.com", role: "Employee" },
-// ];
-
+let role;
 
 const isTokenValid = () => {
   const token = localStorage.getItem("authToken");
   try {
-    // Decode the token
     const decodedToken = jwtDecode(token);
-    let logedInId=decodedToken.id
-    // console.log(decodedToken)
-    // Check if the token is expired
+    role=decodedToken.role
     const currentTime = Date.now() / 1000; // Convert to seconds
     if (decodedToken.exp && decodedToken.exp < currentTime) {
       return false;
     }
 
-    // Additional validation logic if needed (e.g., checking claims)
-
-    return true; // Token is valid
+    return true; 
   } catch (error) {
     console.error('Error decoding or validating token:', error);
-    return false; // Token is invalid due to decoding or validation error
+    return false; 
   }
 };
 
@@ -58,7 +49,8 @@ function App() {
   const [forgetRouteStatus, setForgetRouteStatus] = useState(false);
   const [resetRouteStatus, setResetRouteStatus] = useState(false);
   const [logedInUser, setLogedInUser] = useState("");
-
+  const dispatch=useDispatch()
+  dispatch(setRole(role))
   // function isAuthenticated() {
     // localStorage.removeItem("authToken")
     // const token = localStorage.getItem("authToken");

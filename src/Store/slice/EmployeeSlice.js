@@ -152,7 +152,7 @@ const EmployeeSlice = createSlice({
     editEmp: (state, action) => {
       state.Employees = action.payload;
     },
-    getRole: (state, action) => {
+    setRole: (state, action) => {
       state.userRole = action.payload;
     },
     setSelectedEmp: (state, action) => {
@@ -167,7 +167,7 @@ const EmployeeSlice = createSlice({
 export const {
   addEmp,
   editEmp,
-  getRole,
+  setRole,
   getLogedInEmp,
   setSelectedEmp,
   deleteEmp,

@@ -99,7 +99,7 @@ export default function Holidays() {
             <Typography>{formatDate(holiday.date)}</Typography>
             <Typography sx={{ mb: 1 }}>{holiday.day}</Typography>
             {hoverIndex === index && (
-              // role === "Admin" &&
+              role === "Admin" &&
               <IconButton
                 sx={{ position: "absolute", top: 0, right: 0 }}
                 onClick={() => {
@@ -112,7 +112,7 @@ export default function Holidays() {
           </Paper>
         </Grid>
       ))}
-      {/* {role === "Admin"  && ( */}
+      {role === "Admin"  && (
       <Box width={"100%"} display={"flex"} justifyContent={"right"}>
         <IconButton
           color="primary"
@@ -122,7 +122,7 @@ export default function Holidays() {
           <AddCircleIcon sx={{ width: "40px", height: "40px" }} />
         </IconButton>
       </Box>
-      {/* )} */}
+       )} 
     </Grid>
   );
 }

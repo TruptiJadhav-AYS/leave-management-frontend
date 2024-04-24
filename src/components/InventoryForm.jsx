@@ -7,8 +7,6 @@ import { useNavigate } from "react-router-dom";
 import UseResponsive from "../hooks/UseResponsive";
 import CheckIcon from "@mui/icons-material/Check";
 import AddIcon from "@mui/icons-material/Add";
-import { useDispatch } from "react-redux";
-import { addCategoryNew } from "../Store/action/AddCategory"; // Assuming you have an action creator for adding a category
 import { useAddInventoryMutation } from "../Store/slice/apiInventorySlice";
 import { useAddCategoryMutation, useGetAllCategoryQuery } from "../Store/slice/apiCategorySlice";
 
@@ -24,7 +22,6 @@ export default function InventoryForm() {
   const [onCategorySuccess, setOnCategorySuccess] = useState(false);
   const [newCategory, setNewCategory] = useState("");
   const [showAddCategoryField, setShowAddCategoryField] = useState(false);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { data: categoryList, isError, refetch: refetchCategoryList } = useGetAllCategoryQuery();
@@ -43,7 +40,7 @@ export default function InventoryForm() {
           navigate("/Employee/InventoryList");
         }, 1000);
       } catch (error) {
-        // Handle error
+        
       }
     },
   });
@@ -63,10 +60,9 @@ export default function InventoryForm() {
         await addCategory(categoryData);
         setOnCategorySuccess(true);
         setShowAddCategoryField(false);
-        // Refetch category list to reflect the newly added category
         await refetchCategoryList();
-      } catch (error) {
-        // Handle error
+      } catch (refetchCategoryListerror) {
+
       }
     }
   };
@@ -131,6 +127,7 @@ export default function InventoryForm() {
                     )}
                   </Stack>
                 </Grid>
+                {/* Serial No Input */}
                 <Grid
                   item
                   xs={12}

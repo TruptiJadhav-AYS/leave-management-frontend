@@ -191,7 +191,7 @@ export default function Display() {
           >
 
               <Typography fontSize={"18px"} noWrap component="div">
-                {logedInUser.name}
+                {/* {LogedInEmployee.name} */}
               </Typography>
 
             <AccountMenu   />
