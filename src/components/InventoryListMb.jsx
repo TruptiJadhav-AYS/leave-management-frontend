@@ -14,23 +14,21 @@ import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useGetInventoryQuery } from "../Store/slice/apiInventorySlice";
 
 export default function InventoryListMb() {
-  const InventoryList = useSelector(state=>state.Inventory.InventoryListItems)
+  const {data:InventoryList} = useGetInventoryQuery()
   const Navigate = useNavigate();
   const [searchText, setsearchText] = useState("");
 
   function handleSearchText(event) {
     setsearchText(event.target.value);
   }
-  // console.log(searchText);
 
   const FilterArray = InventoryList.filter((inventory) =>
-    inventory.category.toLowerCase().includes(searchText.toLowerCase())
+    inventory.category.name.toLowerCase().includes(searchText.toLowerCase())
   );
 
-  // console.log("filtered array : ", FilterArray);
   return (
     <Paper sx={{ height: "100%", mt: "5%" }}>
       <Grid
@@ -123,7 +121,7 @@ export default function InventoryListMb() {
                             fontWeight: "30",
                           }}
                         >
-                          {inventory.category}
+                          {inventory.category.name}
                         </Typography>
                         <Typography
                           variant="caption"
@@ -140,7 +138,7 @@ export default function InventoryListMb() {
                           variant="caption"
                           sx={{ textTransform: "none", color: "black" }}
                         >
-                          {inventory.serialNo}
+                          {inventory.serial_number}
                         </Typography>
                       </Grid>
                     </Grid>

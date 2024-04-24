@@ -32,13 +32,13 @@ export default function Dashboard() {
 
         <Grid container columnSpacing={1} mt={1}>
           {
-          // (role === "Admin" || role === "Manager") && 
+          (role === "Admin" || role === "Manager") && 
           (responsive.isDesktop||responsive.isLaptop||responsive.isTablet) ? (
             <Grid item sm={9} md={9} lg={9}>
               <PendingReq />
             </Grid>
           ) : 
-          // (role === "Admin" || role === "Manager") &&
+          (role === "Admin" || role === "Manager") &&
           (responsive.isMobile)&& (
             <Grid item xs={12}>
               <PendingReqMobile />
@@ -46,7 +46,7 @@ export default function Dashboard() {
           )}
 
           {(responsive.isDesktop || responsive.isLaptop || responsive.isTablet) 
-          // && (role==="Admin" || role==="Manager")
+          && (role==="Admin" || role==="Manager")
           ? (
           <Grid
             item
@@ -57,7 +57,7 @@ export default function Dashboard() {
             <UpcomingHolidaysDesktop />
           </Grid>) :
           (responsive.isDesktop || responsive.isLaptop || responsive.isTablet) && 
-          // (role==="Employee")&&
+          (role==="Employee")&&
           (
             <Grid item sm={5.5} md={5.5} lg={5.5}>
               <UpcomingHolidaysDesktop />
@@ -66,7 +66,7 @@ export default function Dashboard() {
           
 
           {/* Approver Card-"For Employee"  */}
-          {/* {role !== "Admin" && role !== "Manager" && (
+          {role !== "Admin" && role !== "Manager" && (
             <Grid
               item
               xs={12}
@@ -82,7 +82,7 @@ export default function Dashboard() {
                 <LeavePolicy />
               </Grid>
             </Grid>
-          )} */}
+          )}
         </Grid>
       </Grid>
     </Grid>

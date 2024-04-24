@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import UseResponsive from "../hooks/UseResponsive";
 import CheckIcon from "@mui/icons-material/Check";
 import AddIcon from "@mui/icons-material/Add";
-import { useDispatch } from "react-redux";
 import { useAddInventoryMutation } from "../Store/slice/apiInventorySlice";
 import { useAddCategoryMutation, useGetAllCategoryQuery } from "../Store/slice/apiCategorySlice";
 
@@ -41,7 +40,7 @@ export default function InventoryForm() {
           navigate("/Employee/InventoryList");
         }, 1000);
       } catch (error) {
-        // Handle error
+        
       }
     },
   });
@@ -61,10 +60,9 @@ export default function InventoryForm() {
         await addCategory(categoryData);
         setOnCategorySuccess(true);
         setShowAddCategoryField(false);
-        // Refetch category list to reflect the newly added category
         await refetchCategoryList();
       } catch (refetchCategoryListerror) {
-        // Handle error
+
       }
     }
   };

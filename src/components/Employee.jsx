@@ -246,6 +246,8 @@ export default function EmployeeList({ onAddOrEdit }) {
     }
   }, [isSuccess, employees]);
 
+  console.log(employees)
+
   useEffect(() => {
     // Filter employees based on search text when it changes
     setFilteredEmployees(
