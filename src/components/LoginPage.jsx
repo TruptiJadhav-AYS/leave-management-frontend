@@ -54,7 +54,6 @@ function LoginPage(props) {
       if (auth) {
         // console.log("helloooooooooo");
         navigate("/Employee");
-        // dispatch(findLogedInEmployee(email))
         console.log("Login successful", email);
         props.onSignIn(email);
       }
