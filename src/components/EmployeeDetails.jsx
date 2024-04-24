@@ -16,15 +16,15 @@ import { useDeleteEmployeeMutation, useGetEmployeesQuery } from '../Store/slice/
 
 export default function EmployeeDetails({ onAddOrEdit }) {
   // const Employees = useSelector((state) => state.employees.Employees);
-  const { data: Employees,isLoading,isError} = useGetEmployeesQuery();
+  const { data: Employees} = useGetEmployeesQuery();
   const selectedEmp = useSelector((state) => state.employees.selectedEmp);
   // let [deleteDialogue,setdeleteDialogue]=useState()
   const [deleteEmployee] = useDeleteEmployeeMutation();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const Navigate = useNavigate();
-  const index = Employees.findIndex((contact) => contact.id === selectedEmp);
-  let manager=Employees.findIndex((emp) => emp.manager_id === Employees[index].id)
-  let manager_name=manager.name
+  const index = Employees.findIndex((emp) => emp.id === selectedEmp);
+  // let manager=Employees.findIndex((emp) => emp.manager_id === Employees[index].id)
+  // let manager_name=manager.name
 
   return (
     <Box

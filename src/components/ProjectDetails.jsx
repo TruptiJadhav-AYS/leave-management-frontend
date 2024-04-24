@@ -12,30 +12,31 @@ import Avatar from "@mui/material/Avatar";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import deleteProjectAction from "../Store/action/DeleteProjectAction";
-import { useGetProjectByIdQuery } from "../Store/slice/apiProjectSlice";
+import { useGetProjectByIdQuery, useGetProjectsQuery } from "../Store/slice/apiProjectSlice";
 
 export default function ProjectDetails({ onProjectAddOrEdit }) {
   const selectedProject = useSelector((state) => state.Project.selectedProject);
+  const { data: project,isSuccess } = useGetProjectsQuery();
+  const Projects = project || [];
+  // const {
+  //   data: projects,
+  //   isLoading,
+  //   isError,
+  // } = useGetProjectByIdQuery(selectedProject);
 
-  const {
-    data: projects,
-    isLoading,
-    isError,
-  } = useGetProjectByIdQuery(selectedProject);
+  console.log("pppp", Projects);
 
-  console.log("pppp", projects);
-
-  let [deleteDialogue, setdeleteDialogue] = useState();
+  // let [deleteDialogue, setdeleteDialogue] = useState();
   const dispatch = useDispatch();
 
   const Navigate = useNavigate();
-  if (isLoading) {
-    return <></>;
-  }
-  if (isError) {
-    return <></>;
-  }
-  const Projects = projects || {};
+  // if (isLoading) {
+  //   return <></>;
+  // }
+  // if (isError) {
+  //   return <></>;
+  // }
+  // const Projects = projects || {};
 
   const index = Projects.findIndex((project) => project.id === selectedProject);
 
