@@ -15,6 +15,7 @@ const employeeApi = createApi({
   endpoints: (builder) => ({
     getEmployees: builder.query({
       query: () => '/employees',
+      providesTags: [{ data: 'Employees' }],
     }),
 
     getEmployeesById: builder.query({
@@ -27,6 +28,7 @@ const employeeApi = createApi({
         method: 'POST',
         body: newEmployee,
       }),
+      invalidatesTags:[{ data: 'Employees' }]
     }),
     updateEmployee: builder.mutation({
       query: ({ employeeId, ...updateData }) => ({
@@ -34,12 +36,14 @@ const employeeApi = createApi({
         method: 'PUT',  
         body: updateData,
       }),
+      invalidatesTags:[{ data: 'Employees' }]
     }),
     deleteEmployee: builder.mutation({
       query: (employeeId) => ({
         url: `/employees/${employeeId}`,
         method: 'DELETE',
       }),
+      invalidatesTags:[{ data: 'Employees' }]
     })
   }),
   
