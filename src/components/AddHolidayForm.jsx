@@ -16,13 +16,16 @@ import UseReponsive from "../hooks/UseResponsive";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import CheckIcon from "@mui/icons-material/Check";
-// import FileUploadIcon from "@mui/icons-material/FileUpload";
+import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { useDispatch } from "react-redux";
 import addHol from "../Store/action/AddHolidayAction";
+import { useAddHolidayMutation } from "../Store/slice/apiHolidaySlice";
 
 export default function AddHolidayForm() {
   const responsive = UseReponsive();
   const dispatch = useDispatch();
+  const [addholiday] = useAddHolidayMutation();
+  const [image, setImage] = useState(null);
 
   const [clickedBtnID, setClickedBtnID] = useState("");
   const [onBoardSuccess, setOnBoardSuccess] = useState(false);
@@ -38,7 +41,7 @@ export default function AddHolidayForm() {
       occasion: "",
       date: "",
       day: "",
-      img: "",
+      // img: null,
     },
     validationSchema: Yup.object({
       //   holidayName: Yup.string().required("Holiday Name is required."),
@@ -46,12 +49,13 @@ export default function AddHolidayForm() {
       date: Yup.date().required("Please select a date"),
       // toDate: Yup.date().required("Please select a date"),
       day: Yup.string().required("Day is required."),
-      //   image: Yup.string().required("Image is required."),
+      // image: Yup.string().required("Image is required."),
     }),
     onSubmit: (values) => {
       console.log(values);
-      dispatch(addHol(values));
-
+      // dispatch(addholiday(values));
+      console.log(image);
+      addholiday(values, image);
       setOnBoardSuccess(true);
       setTimeout(() => {
         navigate("/Employee/Holidays");
@@ -60,6 +64,12 @@ export default function AddHolidayForm() {
   });
 
   const errors = formik.errors;
+
+  const handleFileChange = (event) => {
+    // formik.setFieldValue("img", event.currentTarget.files[0]);
+    setImage(event.currentTarget.files[0]);
+    console.log("&&&&&&&", event.currentTarget.files);
+  };
 
   return (
     <Grid container justifyContent={"center"} width="100%" pt={3}>
@@ -80,6 +90,40 @@ export default function AddHolidayForm() {
               </Typography>
 
               <Grid container spacing={1}>
+                {/* <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  md={6}
+                  lg={6}
+                  height={responsive.isMobile ? "14vh" : "11vh"}
+                >
+                  <Stack width={"100%"}>
+                    <Typography variant="body2"> HOLIDAY NAME</Typography>
+                    <InputBase
+                      placeholder="Holiday Name"
+                      type="text"
+                      name="holidayName"
+                      sx={{
+                        border:
+                          clickedBtnID === "holidayName"
+                            ? "2px solid blue"
+                            : "2px solid rgba(204, 204, 204, 0.5)",
+                        height: "40px",
+                        borderRadius: 1,
+                      }}
+                      onClick={() => handleClick("holidayName")}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.holidayName}
+                    />
+                    {formik.touched.holidayName && errors.holidayName && (
+                      <Typography variant="caption" color="error">
+                        {errors.holidayName}
+                      </Typography>
+                    )}
+                  </Stack>
+                </Grid> */}
                 <Grid
                   item
                   xs={12}
@@ -207,7 +251,10 @@ export default function AddHolidayForm() {
                   </Typography>
                   <input
                     type="file"
-                    // onChange={handleFileChange}
+                    onChange={(event) => {
+                      // formik.setFieldValue("img", event.currentTarget.files[0]);
+                      handleFileChange(event);
+                    }}
                     accept="image/*"
                   />
                   {/* <Button variant="outlined" sx={{textTransform:"none"}}><FileUploadIcon/>Upload Image</Button> */}

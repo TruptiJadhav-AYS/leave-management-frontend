@@ -28,7 +28,7 @@ const holidaysApi = createApi({
   }),
 });
 
-export const { useGetHolidaysQuery } = holidaysApi;
+export const { useGetHolidaysQuery, useAddHolidayMutation } = holidaysApi;
 export default holidaysApi;
 
 function formData(data1, file) {
