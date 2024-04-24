@@ -229,15 +229,14 @@ const columns = [
 export default function EmployeeList({ onAddOrEdit }) {
   const [searchText, setsearchText] = useState("");
   //   const Projects = useSelector((state) => state.Project.Projects);
-  const { data: Employees, isLoading, isError, isSuccess } = useGetEmployeesQuery();
+  const { data: Employees, isSuccess } = useGetEmployeesQuery();
   // const [searchText, setSearchText] = useState("");
-  // const [page, setPage] = useState(0);
-  // const [rowsPerPage, setRowsPerPage] = useState(10);
   // const [sortedBy, setSortedBy] = useState("name");
   // const [sortOrder, setSortOrder] = useState("asc");
   const [filteredEmployees, setFilteredEmployees] = useState([]); // New state for filtered employees
   // const Navigate = useNavigate();
   const employees=Employees || [];
+  console.log(employees)
 
   useEffect(() => {
     // Update filteredEmployees when employees data changes
@@ -414,9 +413,11 @@ export default function EmployeeList({ onAddOrEdit }) {
                   >
                     {columns.map((column, index) => {
                       const value = row[column.id];
+                      // console.log(value)
                       return (
                         <TableCell key={index} align={column.align}>
-                          {value}
+                         {((column.id === "manager") && value) ? value.name : ((column.id === "department" && value) ? value.department_name : value)}
+
                         </TableCell>
                       );
                     })}

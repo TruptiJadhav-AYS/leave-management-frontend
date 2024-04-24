@@ -53,13 +53,13 @@ export default function AddHolidayForm() {
     }),
     onSubmit: (values) => {
       console.log(values);
-      const formData = new FormData();
-      if (image) {
-        formData.append("image", image);
-      }
+      // const formData = new FormData();
+      // if (image) {
+      //   formData.append("image", image);
+      // }
       // dispatch(addholiday(values));
       console.log(image);
-      addholiday(values, image);
+      addholiday({data1:values, file:image});
       setOnBoardSuccess(true);
       setTimeout(() => {
         navigate("/Employee/Holidays");

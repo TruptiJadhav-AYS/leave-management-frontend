@@ -16,6 +16,7 @@ const holidaysApi = createApi({
   endpoints: (builder) => ({
     getHolidays: builder.query({
       query: () => "/holidays",
+      providesTags: [{ data: 'Holidays' }],
     }),
 
     addHoliday: builder.mutation({
@@ -23,6 +24,11 @@ const holidaysApi = createApi({
         url: "/holidays/upload",
         method: "POST",
         body: formData(data1, file),
+        prepareHeaders:(headers)=>{
+            headers.set('Content-Type','multipart/form-data')
+            return headers;
+        },
+        invalidatesTags: [{ data: 'Holidays' }],
       }),
     }),
   }),
