@@ -18,7 +18,6 @@ export default function EmployeeDetails({ onAddOrEdit }) {
   // const Employees = useSelector((state) => state.employees.Employees);
   const { data: Employees,isLoading,isError} = useGetEmployeesQuery();
   const selectedEmp = useSelector((state) => state.employees.selectedEmp);
-  console.log(typeof selectedEmp)
   // let [deleteDialogue,setdeleteDialogue]=useState()
   const [deleteEmployee] = useDeleteEmployeeMutation();
   const dispatch = useDispatch();

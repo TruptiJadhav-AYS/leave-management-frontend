@@ -19,10 +19,12 @@ import CheckIcon from "@mui/icons-material/Check";
 import addProjectAction from "../Store/action/AddProjectAction";
 import { useDispatch, useSelector } from "react-redux";
 import editProjectAction from "../Store/action/EditProjectAction";
+import { useAddProjectMutation } from "../Store/slice/apiProjectSlice";
 
-export default function ProjectOnboardForm({projectAddOrEdit}) {
+export default function ProjectOnboardForm({ projectAddOrEdit }) {
   const responsive = UseReponsive();
   const [clickedBtnID, setClickedBtnID] = useState("");
+  const [addProject] = useAddProjectMutation();
   const [onSuccess, setSuccess] = useState(false);
   const dispatch = useDispatch();
   const Projects = useSelector((state) => state.Project.Projects);
@@ -30,11 +32,11 @@ export default function ProjectOnboardForm({projectAddOrEdit}) {
   const index = Projects.findIndex((project) => project.Id === selectedProject);
 
   let { Employees } = useSelector((state) => state.employees);
-  let projectManagerList=[]
+  let projectManagerList = [];
 
   for (let i in Employees) {
     if (Employees[i].name) {
-      projectManagerList.push(Employees[i].name); 
+      projectManagerList.push(Employees[i].name);
     }
   }
 
@@ -46,53 +48,61 @@ export default function ProjectOnboardForm({projectAddOrEdit}) {
 
   const formik = useFormik({
     initialValues: {
-      Name: projectAddOrEdit === "edit"
-      ? selectedProject
-        ? Projects[index].Name
-          ? Projects[index].Name
-          : ""
-        : ""
-      : "",
-      Project_Manager:  projectAddOrEdit === "edit"
-      ? selectedProject
-        ? Projects[index].Project_Manager
-          ? Projects[index].Project_Manager
-          : ""
-        : ""
-      : "",
-      Start_date: projectAddOrEdit === "edit"
-      ? selectedProject
-        ? Projects[index].Start_date
-          ? Projects[index].Start_date
-          : ""
-        : ""
-      : "",
-      Status: projectAddOrEdit === "edit"
-      ? selectedProject
-        ? Projects[index].Status
-          ? Projects[index].Status
-          : ""
-        : ""
-      : "",
-      Description: projectAddOrEdit === "edit"
-      ? selectedProject
-        ? Projects[index].Description
-          ? Projects[index].Description
-          : ""
-        : ""
-      : "",
+      name:
+        projectAddOrEdit === "edit"
+          ? selectedProject
+            ? Projects[index].name
+              ? Projects[index].name
+              : ""
+            : ""
+          : "",
+      manager_name:
+        projectAddOrEdit === "edit"
+          ? selectedProject
+            ? Projects[index].manager_name
+              ? Projects[index].manager_name
+              : ""
+            : ""
+          : "",
+      startDate:
+        projectAddOrEdit === "edit"
+          ? selectedProject
+            ? Projects[index].startDate
+              ? Projects[index].startDate
+              : ""
+            : ""
+          : "",
+      status:
+        projectAddOrEdit === "edit"
+          ? selectedProject
+            ? Projects[index].status
+              ? Projects[index].status
+              : ""
+            : ""
+          : "",
+      description:
+        projectAddOrEdit === "edit"
+          ? selectedProject
+            ? Projects[index].description
+              ? Projects[index].description
+              : ""
+            : ""
+          : "",
     },
     validationSchema: Yup.object({
-      Name: Yup.string().required("Project Name is required."),
-      Project_Manager: Yup.string().required("Manager Name is required."),
-      Start_date: Yup.date().required("Please select a date"),
-      Status: Yup.string().required("Project status is required."),
-      Description:Yup.string()
+      name: Yup.string().required("Project Name is required."),
+      manager_name: Yup.string().required("Manager Name is required."),
+      startDate: Yup.date().required("Please select a date"),
+      status: Yup.string().required("Project status is required."),
+      description: Yup.string(),
     }),
     onSubmit: (values) => {
-      console.log(values)
-      {projectAddOrEdit==="add" ?
-      dispatch(addProjectAction(values)) : dispatch(editProjectAction(values))}
+      console.log(values);
+      {
+        projectAddOrEdit === "add"
+          ? addProject(values)
+          : dispatch(editProjectAction(values));
+      }
       setSuccess(true);
       setTimeout(() => {
         navigate("/Employee/Projects");
@@ -101,7 +111,7 @@ export default function ProjectOnboardForm({projectAddOrEdit}) {
   });
 
   const errors = formik.errors;
-  
+
   const MenuProps = {
     PaperProps: {
       style: {
@@ -126,8 +136,9 @@ export default function ProjectOnboardForm({projectAddOrEdit}) {
           <CardContent>
             <form onSubmit={formik.handleSubmit}>
               <Typography color={"primary"} variant="h5" mb={2}>
-                {projectAddOrEdit==="add" ?
-                "Add Project" : "Edit Project Details"}
+                {projectAddOrEdit === "add"
+                  ? "Add Project"
+                  : "Edit Project Details"}
               </Typography>
 
               <Grid container spacing={1}>
@@ -192,11 +203,12 @@ export default function ProjectOnboardForm({projectAddOrEdit}) {
                       onBlur={formik.handleBlur}
                       value={formik.values.Project_Manager}
                     /> */}
-                    <Select name="Project_Manager"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.Project_Manager}
-                    size="small"
+                    <Select
+                      name="Project_Manager"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.Project_Manager}
+                      size="small"
                       sx={{
                         "& fieldset": {
                           borderColor: "rgba(204, 204, 204, 0.5)",
@@ -212,7 +224,7 @@ export default function ProjectOnboardForm({projectAddOrEdit}) {
                       }}
                       MenuProps={MenuProps}
                     >
-                    {projectManagerList.map((manager,index) => (
+                      {projectManagerList.map((manager, index) => (
                         <MenuItem key={index} value={manager}>
                           {manager}
                         </MenuItem>
@@ -307,7 +319,6 @@ export default function ProjectOnboardForm({projectAddOrEdit}) {
               </Grid>
               <br />
               <Grid container spacing={1}>
-
                 <Grid
                   item
                   xs={12}
@@ -345,8 +356,7 @@ export default function ProjectOnboardForm({projectAddOrEdit}) {
                 variant="contained"
                 sx={{ textTransform: "none", mt: 2 }}
               >
-                {projectAddOrEdit==="add" ?
-                "Onboard Project" : "Submit"}
+                {projectAddOrEdit === "add" ? "Onboard Project" : "Submit"}
               </Button>
             </form>
           </CardContent>
@@ -357,8 +367,9 @@ export default function ProjectOnboardForm({projectAddOrEdit}) {
             sx={{ height: "50px", mt: "10px" }}
             severity="success"
           >
-            {projectAddOrEdit==="add" ? "Project added successfully." : "Project Edited Successfully"}
-            
+            {projectAddOrEdit === "add"
+              ? "Project added successfully."
+              : "Project Edited Successfully"}
           </Alert>
         )}
       </Stack>

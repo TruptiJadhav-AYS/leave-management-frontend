@@ -13,10 +13,14 @@ const employeeApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    // console.log(builder)
     getEmployees: builder.query({
       query: () => '/employees',
     }),
+
+    getEmployeesById: builder.query({
+      query: (employeeId) => `/employees/employee/${employeeId}`,
+    }),
+
     addEmployee: builder.mutation({
       query: (newEmployee) => ({
         url: '/employees',
@@ -27,7 +31,7 @@ const employeeApi = createApi({
     updateEmployee: builder.mutation({
       query: ({ employeeId, ...updateData }) => ({
         url: `/employees/${employeeId}`,
-        method: 'PUT',  // or 'PATCH' if partially updating the data
+        method: 'PUT',  
         body: updateData,
       }),
     }),
@@ -41,5 +45,5 @@ const employeeApi = createApi({
   
 });
 
-export const { useGetEmployeesQuery,useAddEmployeeMutation,useDeleteEmployeeMutation,useUpdateEmployeeMutation } = employeeApi;
+export const { useGetEmployeesQuery,useGetEmployeesByIdQuery,useAddEmployeeMutation,useUpdateEmployeeMutation, useDeleteEmployeeMutation } = employeeApi;
 export default employeeApi;

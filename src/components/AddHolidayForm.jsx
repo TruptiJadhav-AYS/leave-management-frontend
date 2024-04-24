@@ -16,7 +16,7 @@ import UseReponsive from "../hooks/UseResponsive";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import CheckIcon from "@mui/icons-material/Check";
-import FileUploadIcon from "@mui/icons-material/FileUpload";
+// import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { useDispatch } from "react-redux";
 import addHol from "../Store/action/AddHolidayAction";
 
@@ -80,40 +80,6 @@ export default function AddHolidayForm() {
               </Typography>
 
               <Grid container spacing={1}>
-                {/* <Grid
-                  item
-                  xs={12}
-                  sm={6}
-                  md={6}
-                  lg={6}
-                  height={responsive.isMobile ? "14vh" : "11vh"}
-                >
-                  <Stack width={"100%"}>
-                    <Typography variant="body2"> HOLIDAY NAME</Typography>
-                    <InputBase
-                      placeholder="Holiday Name"
-                      type="text"
-                      name="holidayName"
-                      sx={{
-                        border:
-                          clickedBtnID === "holidayName"
-                            ? "2px solid blue"
-                            : "2px solid rgba(204, 204, 204, 0.5)",
-                        height: "40px",
-                        borderRadius: 1,
-                      }}
-                      onClick={() => handleClick("holidayName")}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.holidayName}
-                    />
-                    {formik.touched.holidayName && errors.holidayName && (
-                      <Typography variant="caption" color="error">
-                        {errors.holidayName}
-                      </Typography>
-                    )}
-                  </Stack>
-                </Grid> */}
                 <Grid
                   item
                   xs={12}

@@ -10,6 +10,7 @@ import UserSlice from "./slice/UserSlice"
 import employeeApi from "./slice/apiEmployeeSlice"
 import projectApi from './slice/apiProjectSlice'
 import holidaysApi from './slice/apiHolidaySlice'
+import forgotApi from './slice/apiForgetPassword'
 
 export const store = configureStore({
   reducer: {
@@ -22,14 +23,16 @@ export const store = configureStore({
     PendingRequests: PendingRequestsSlice,
     users:UserSlice,
     [employeeApi.reducerPath]: employeeApi.reducer,
-    // [projectApi.reducerPath]: projectApi.reducer,
+    [projectApi.reducerPath]: projectApi.reducer,
     [holidaysApi.reducerPath]: holidaysApi.reducer,
+    [forgotApi.reducerPath]:forgotApi.reducer,
   },
   
   middleware: (getDefaultMiddleware) =>
   getDefaultMiddleware()
     .concat(employeeApi.middleware)
-    // .concat(projectApi.middleware)
-    .concat(holidaysApi.middleware),
+    .concat(projectApi.middleware)
+    .concat(holidaysApi.middleware)
+    .concat(forgotApi.middleware)
 })
 

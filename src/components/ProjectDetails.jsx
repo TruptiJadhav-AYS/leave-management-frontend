@@ -12,16 +12,21 @@ import Avatar from "@mui/material/Avatar";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import deleteProjectAction from "../Store/action/DeleteProjectAction";
+import { useGetProjectsQuery } from "../Store/slice/apiProjectSlice";
 
 export default function ProjectDetails({ onProjectAddOrEdit }) {
-  const Projects =useSelector(state=>state.Project.Projects)
+  // const Projects =useSelector(state=>state.Project.Projects)
+  const { data: project,isLoading}=useGetProjectsQuery()
+  console.log(project)
+  const Projects=project ||[];
+  console.log(Projects)
   const selectedProject = useSelector((state) => state.Project.selectedProject);
   let [deleteDialogue,setdeleteDialogue]=useState()
   const dispatch = useDispatch();
 
   const Navigate = useNavigate();
 
-  const index = Projects.findIndex((project) => project.Id === selectedProject);
+  const index = Projects.findIndex((project) => project.id === selectedProject);
 
   return (
     <Box
@@ -71,7 +76,7 @@ export default function ProjectDetails({ onProjectAddOrEdit }) {
           >
             <Grid item lg={12} md={12} xs={12} sm={12}>
               <Typography variant="body1" mt={8} fontWeight={"700"}>
-                Project Name : {Projects[index].Name}
+                Project Name : {Projects[index].name}
               </Typography>
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
@@ -81,22 +86,22 @@ export default function ProjectDetails({ onProjectAddOrEdit }) {
                 align="left"
                 // justifyContent={"left"}
               >
-                Project Manager : {Projects[index].Project_Manager}
+                Project Manager : {Projects[index].manager_name}
               </Typography>
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
               <Typography variant="caption" fontWeight={"600"}>        
-                Start Date : {Projects[index].Start_date}
+                Start Date : {Projects[index].startDate}
               </Typography>
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
               <Typography variant="caption" fontWeight={"600"} align="left">
-                Description : {Projects[index].Description}
+                Description : {Projects[index].description}
               </Typography>
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
               <Typography variant="caption" fontWeight={"600"} align="left">
-                Status : {Projects[index].Status}
+                Status : {Projects[index].status}
               </Typography>
             </Grid>
           </Grid>
