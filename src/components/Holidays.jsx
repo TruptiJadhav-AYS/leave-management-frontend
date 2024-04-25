@@ -7,7 +7,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import deleteHol from "../Store/action/DeleteHolidayAction";
-import { useGetHolidaysQuery } from "../Store/slice/apiHolidaySlice";
+import { useDeleteHolidayMutation, useGetHolidaysQuery } from "../Store/slice/apiHolidaySlice";
 
 export default function Holidays() {
   const navigate = useNavigate();
@@ -22,6 +22,7 @@ export default function Holidays() {
   // const annualLeaves = useSelector((state) => state.holidays.annualLeaves);
   const { data: holiday, isLoading, isError } = useGetHolidaysQuery();
   const annualLeaves = holiday;
+  const [deleteHoliday]=useDeleteHolidayMutation()
 
   // const suttya = annualLeaves.holidays || [];
   const suttya = annualLeaves ? annualLeaves.holidays || [] : [];
@@ -101,7 +102,8 @@ export default function Holidays() {
               <IconButton
                 sx={{ position: "absolute", top: 0, right: 0 }}
                 onClick={() => {
-                  handledeleteHolidayClick(holiday.id);
+                  // handledeleteHolidayClick(holiday.id);
+                  deleteHoliday(holiday.id)
                 }}
               >
                 <DeleteIcon />

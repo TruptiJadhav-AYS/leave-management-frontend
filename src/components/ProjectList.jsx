@@ -27,7 +27,7 @@ import SearchIcon from "@mui/icons-material/Search";
 // import VisibilityIcon from "@mui/icons-material/Visibility";
 // import EditIcon from "@mui/icons-material/Edit";
 // import DeleteIcon from "@mui/icons-material/Delete";
-import { useState, useMemo } from "react";
+import { useState, useMemo,useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectProject } from "../Store/slice/ProjectsSlice";
 import { useGetProjectsQuery } from "../Store/slice/apiProjectSlice";
@@ -57,6 +57,7 @@ const columns = [
 ];
 
 export default function ProjectList({ onProjectAddOrEdit }) {
+  const [filteredProjects, setFilteredEmployees] = useState([]); // New state for filtered employees
   // const Projects = useSelector((state) => state.Project.Projects);
   const { data: project, isLoading, isError } = useGetProjectsQuery();
   const Projects = project || [];
@@ -66,48 +67,75 @@ export default function ProjectList({ onProjectAddOrEdit }) {
   const Navigate = useNavigate();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [sortedBy, setSortedBy] = useState("name"); // Track sorted column
-  const [sortOrder, setSortOrder] = useState("asc"); // Track sort order
-
+  
   const [searchText, setsearchText] = useState("");
-
+  
   function handleSearchText(event) {
     setsearchText(event.target.value);
   }
+
+  useEffect(() => {
+    // Update filteredEmployees when employees data changes
+    if (isSuccess) {
+      setFilteredEmployees(Projects);
+    }
+  }, [isSuccess, Projects]);
+  useEffect(() => {
+    // Filter employees based on search text when it changes
+    setFilteredEmployees(
+      Projects.filter((employee) =>
+        employee.name.toLowerCase().includes(searchText.toLowerCase())
+      )
+    );
+  }, [searchText, Projects]);
+  // const [sortOrder, setSortOrder] = useState(""); // Track sort order
+  // const [sortedBy, setSortedBy] = useState("name"); // Track sorted column
   // console.log(searchText);
 
-  const sortedRows = useMemo(() => {
-    // Sort rows based on sortedBy and sortOrder
-    return Projects.slice().sort((a, b) => {
-      const valueA = a[sortedBy];
-      const valueB = b[sortedBy];
+  // const sortedRows = useMemo(() => {
+  //   // Sort rows based on sortedBy and sortOrder
+  //   return Projects.slice().sort((a, b) => {
+  //     const valueA = a[sortedBy];
+  //     const valueB = b[sortedBy];
 
-      if (typeof valueA === "string") {
-        return sortOrder === "asc"
-          ? valueA.localeCompare(valueB)
-          : valueB.localeCompare(valueA);
-      } else {
-        return sortOrder === "asc" ? valueA - valueB : valueB - valueA;
-      }
-    });
-  }, [sortedBy, sortOrder]);
+  //     if (typeof valueA === "string") {
+  //       return sortOrder === "asc"
+  //         ? valueA.localeCompare(valueB)
+  //         : valueB.localeCompare(valueA);
+  //     } else {
+  //       return sortOrder === "asc" ? valueA - valueB : valueB - valueA;
+  //     }
+  //   });
+  // }, [sortedBy, sortOrder]);
 
-  if (isLoading) {
-    return (
-      <Grid>
-        <CircularProgress />
-      </Grid>
-    );
-  }
-  if (isError) {
-    return <></>;
-  }
+  // if (isLoading) {
+  //   return (
+  //     <Grid>
+  //       <CircularProgress />
+  //     </Grid>
+  //   );
+  // }
+  // if (isError) {
+  //   return <></>;
+  // }
 
-  const handleSortClick = (columnId) => {
-    const isAscending = sortedBy === columnId && sortOrder === "asc";
-    setSortedBy(columnId);
-    setSortOrder(isAscending ? "desc" : "asc");
-  };
+  // const handleSortClick = (columnId) => {
+  //   const isAscending = sortedBy === columnId && sortOrder === "asc";
+  //   setSortedBy(columnId);
+  //   setSortOrder(isAscending ? "desc" : "asc");
+  // };
+
+  // const { data: Employees, isSuccess } = useGetEmployeesQuery();
+  // const [searchText, setSearchText] = useState("");
+  // const [sortedBy, setSortedBy] = useState("name");
+  // const [sortOrder, setSortOrder] = useState("asc");
+  // const Navigate = useNavigate();
+  // const employees=Employees || [];
+  // console.log(employees)
+
+  
+
+  
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -118,9 +146,9 @@ export default function ProjectList({ onProjectAddOrEdit }) {
     setPage(0);
   };
 
-  const FilterArray = sortedRows.filter((project) =>
-    project.name.toLowerCase().includes(searchText.toLowerCase())
-  );
+  // const FilterArray = sortedRows.filter((project) =>
+  //   project.name.toLowerCase().includes(searchText.toLowerCase())
+  // );
 
   return (
     <Paper
@@ -178,7 +206,7 @@ export default function ProjectList({ onProjectAddOrEdit }) {
                     <Typography fontWeight={550} fontSize={"16px"}>
                       {column.label}
                     </Typography>
-                    {column.label === "name" ? (
+                    {/* {column.label === "name" ? (
                       <Button
                         disableRipple
                         size="small"
@@ -198,7 +226,7 @@ export default function ProjectList({ onProjectAddOrEdit }) {
                           </>
                         )}
                       </Button>
-                    ) : null}
+                    ) : null} */}
                   </Stack>
                 </TableCell>
               ))}
@@ -208,7 +236,7 @@ export default function ProjectList({ onProjectAddOrEdit }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {FilterArray.slice(
+            {filteredProjects.slice(
               page * rowsPerPage,
               page * rowsPerPage + rowsPerPage
             ).map((row) => {

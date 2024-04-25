@@ -159,7 +159,7 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
       gender: Yup.string().required("Gender is required."),
     }),
 
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       // addEmployee(values);
       {
         addOrEditForm === "add"

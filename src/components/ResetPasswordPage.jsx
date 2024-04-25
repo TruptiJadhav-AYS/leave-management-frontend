@@ -12,13 +12,17 @@ import {
   Card,
   CardContent,
 } from "@mui/material";
+import { useSetResetPasswordMutation } from "../Store/slice/apiForgetPassword";
 
-function ResetPasswordPage(props) {
+function ResetPasswordPage({logedInUser}) {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
+  const [otpError, setOtpError] = useState("");
+  const [otp, setOTP] = useState("");
   const navigate = useNavigate();
+  const [setResetPassword]=useSetResetPasswordMutation()
 
   const handleNewPasswordChange = (event) => {
     setNewPassword(event.target.value);
@@ -34,7 +38,11 @@ function ResetPasswordPage(props) {
     event.preventDefault();
     setPasswordError("");
     setConfirmPasswordError("");
-    if(!newPassword){
+    if(!otp){
+      setOtpError("Please enter OTP")
+      return
+    }
+    else if(!newPassword){
         setPasswordError("Please enter Password");
       return;
     }
@@ -47,7 +55,13 @@ function ResetPasswordPage(props) {
       return;
     }else{
     // console.log("New Password:", newPassword);
-
+      const newobj={
+        "email":logedInUser,
+        "otp":otp,
+        "newPassword":newPassword,
+        "confirmPassword":confirmPassword
+      }
+      setResetPassword(newobj)
     navigate("/");}
   };
 
@@ -95,6 +109,19 @@ function ResetPasswordPage(props) {
                 Reset Password
               </Typography>
               <Grid container spacing={2}>
+              <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    id="otp"
+                    name="otp"
+                    label="OTP"
+                    type="text"
+                    value={otp}
+                    onChange={(e) => setOTP(e.target.value)}
+                    error={Boolean(otpError)}
+                    helperText={otpError}
+                  />
+                </Grid>
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
