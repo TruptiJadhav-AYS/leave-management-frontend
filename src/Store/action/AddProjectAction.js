@@ -2,7 +2,7 @@ import { addProject } from "../slice/ProjectsSlice"
 export default function addProjectAction(obj){
     return(dispatch,getState)=>{
         const {Projects}=getState().Project
-        console.log(Projects)
+
         let updatesProjects=[...Projects]
         
         let temp={

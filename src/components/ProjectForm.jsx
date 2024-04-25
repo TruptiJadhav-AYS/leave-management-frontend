@@ -22,26 +22,30 @@ import editProjectAction from "../Store/action/EditProjectAction";
 import {
   useAddProjectMutation,
   useGetProjectsQuery,
+  useUpdateProjectMutation,
 } from "../Store/slice/apiProjectSlice";
+import { useGetEmployeesQuery } from "../Store/slice/apiEmployeeSlice";
 
 export default function ProjectOnboardForm({ projectAddOrEdit }) {
   const responsive = UseReponsive();
   const [clickedBtnID, setClickedBtnID] = useState("");
   const [addProject] = useAddProjectMutation();
+  const [updateProject] = useUpdateProjectMutation();
+  const { data: employees } = useGetEmployeesQuery();
   const [onSuccess, setSuccess] = useState(false);
   const dispatch = useDispatch();
   const Projects = useSelector((state) => state.Project.Projects);
   const selectedProject = useSelector((state) => state.Project.selectedProject);
   const index = Projects.findIndex((project) => project.Id === selectedProject);
 
-  let { Employees } = useSelector((state) => state.employees);
-  let projectManagerList = [];
+  const Employees = employees || [];
+  // let projectManagerList = [];
 
-  for (let i in Employees) {
-    if (Employees[i].name) {
-      projectManagerList.push(Employees[i].name);
-    }
-  }
+  // for (let i in Employees) {
+  //   if (Employees[i].name) {
+  //     projectManagerList.push(Employees[i].name);
+  //   }
+  // }
 
   function handleClick(id) {
     setClickedBtnID(id);
@@ -100,13 +104,11 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
       description: Yup.string(),
     }),
     onSubmit: (values) => {
-      console.log(values);
       {
         projectAddOrEdit === "add"
           ? addProject(values)
-          : dispatch(editProjectAction(values));
+          : updateProject({id:selectedProject,updatedProjectDetails:values});
       }
-      console.log(values);
       setSuccess(true);
       setTimeout(() => {
         navigate("/Employee/Projects");
@@ -190,23 +192,7 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
                 >
                   <Stack width={"100%"}>
                     <Typography variant="body2"> Manager Name </Typography>
-                    {/* <InputBase
-                      placeholder="Manager Name"
-                      type="text"
-                      name="Project_Manager"
-                      sx={{
-                        border:
-                          clickedBtnID === "Project_Manager"
-                            ? "2px solid blue"
-                            : "2px solid rgba(204, 204, 204, 0.5)",
-                        height: "40px",
-                        borderRadius: 1,
-                      }}
-                      onClick={() => handleClick("Project_Manager")}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.Project_Manager}
-                    /> */}
+                    
                     <Select
                       name="manager_name"
                       onChange={formik.handleChange}
@@ -228,9 +214,9 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
                       }}
                       MenuProps={MenuProps}
                     >
-                      {projectManagerList.map((manager, index) => (
-                        <MenuItem key={index} value={manager}>
-                          {manager}
+                     {Employees.map((emp, index) => (
+                        <MenuItem key={index} value={emp.name}>
+                          {emp.name}
                         </MenuItem>
                       ))}
                     </Select>

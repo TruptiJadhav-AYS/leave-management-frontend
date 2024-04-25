@@ -36,7 +36,6 @@ export default function CenterDisplay({logedInUser}) {
   }
   function handleSelectedEmp(id){
     setSelectedEmpId(id)
-    console.log(selectedEmpId)
   }
 
 

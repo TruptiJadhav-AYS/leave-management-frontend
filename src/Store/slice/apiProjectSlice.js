@@ -36,6 +36,23 @@ const projectApi = createApi({
         method: "DELETE",
       }),
     }),
+
+    assignProject:builder.mutation({
+      query:(projectId)=>({
+        url:"/project/assign_project",
+        method:"POST",
+        body:projectId
+      })
+    }),
+
+    updateProject: builder.mutation({
+      query: ({ id, updatedProjectDetails }) => ({
+        url: `/project/${id}`,
+        method: 'PATCH',
+        body: updatedProjectDetails,
+      }),
+      invalidatesTags: [{ data: 'Project' }]
+    }),
   }),
 });
 
@@ -44,5 +61,7 @@ export const {
   useAddProjectMutation,
   useDeleteProjectMutation,
   useGetProjectByIdQuery,
+  useAssignProjectMutation,
+  useUpdateProjectMutation,
 } = projectApi;
 export default projectApi;

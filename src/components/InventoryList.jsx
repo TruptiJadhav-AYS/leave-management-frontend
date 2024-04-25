@@ -16,7 +16,7 @@ import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
 import { useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {useGetInventoryQuery,useDeleteInventoryMutation} from  "../Store/slice/apiInventorySlice";
+import {useGetListOfInventoeyQuery,useDeleteInventoryMutation} from  "../Store/slice/apiInventorySlice";
 
 const columns = [
   { id: "name", label: "Name", minWidth: 180 },
@@ -29,7 +29,7 @@ const columns = [
 ];
 
 export default function InventoryList() {
-  const {data: inventoryListItems,isLoading,isError }= useGetInventoryQuery()
+  const {data: inventoryListItems,isLoading,isError }= useGetListOfInventoeyQuery()
   const InventoryListItems=inventoryListItems
 
   const [deleteInventory]=useDeleteInventoryMutation()

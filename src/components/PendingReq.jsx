@@ -16,11 +16,11 @@ import {
 import {useSelector} from 'react-redux'
 
 const handleAccept = (name) => {
-  console.log("Approved", name);
+  
 };
 
 const handleReject = (name) => {
-  console.log("Rejected", name);
+  
 };
 export default function PendingReq() {
   const PendingRequestList = useSelector(state=>state.PendingRequests.PendingRequestList)

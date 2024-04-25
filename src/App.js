@@ -32,7 +32,7 @@ const isTokenValid = () => {
   const token = localStorage.getItem("authToken");
   try {
     const decodedToken = jwtDecode(token);
-    // console.log(decodedToken)
+    console.log(token)
     role=decodedToken.role
     id=decodedToken.id
     console.log(decodedToken)
@@ -42,7 +42,6 @@ const isTokenValid = () => {
     }
     return true; 
   } catch (error) {
-    console.error('Error decoding or validating token:', error);
     return false; 
   }
 };

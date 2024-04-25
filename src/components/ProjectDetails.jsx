@@ -18,29 +18,14 @@ export default function ProjectDetails({ onProjectAddOrEdit }) {
   const selectedProject = useSelector((state) => state.Project.selectedProject);
   const { data: project,isSuccess } = useGetProjectsQuery();
   const Projects = project || [];
-  // const {
-  //   data: projects,
-  //   isLoading,
-  //   isError,
-  // } = useGetProjectByIdQuery(selectedProject);
-
-  console.log("pppp", Projects);
 
   let [deleteDialogue, setdeleteDialogue] = useState();
   const dispatch = useDispatch();
 
   const Navigate = useNavigate();
-  // if (isLoading) {
-  //   return <></>;
-  // }
-  // if (isError) {
-  //   return <></>;
-  // }
-  // const Projects = projects || {};
 
   const index = Projects.findIndex((project) => project.id === selectedProject);
 
-  console.log(Projects[index]);
   return (
     <Box
       sx={{
@@ -70,14 +55,6 @@ export default function ProjectDetails({ onProjectAddOrEdit }) {
             }}
           >
             edit
-          </Button>
-          <Button
-            onClick={() => {
-              dispatch(deleteProjectAction());
-              Navigate("/Employee/Projects");
-            }}
-          >
-            Delete
           </Button>
         </Grid>
         <CardContent>

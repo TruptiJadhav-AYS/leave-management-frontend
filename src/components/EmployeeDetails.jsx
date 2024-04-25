@@ -3,28 +3,45 @@ import { useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
+  IconButton,
   Card,
   CardContent,
   Typography,
   Grid,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
 } from "@mui/material";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import Avatar from "@mui/material/Avatar";
 import { useDispatch } from "react-redux";
 import deleteEmployee from "../Store/action/DeleteEmployee";
 import { useState } from "react";
-import { useDeleteEmployeeMutation, useGetEmployeesQuery } from '../Store/slice/apiEmployeeSlice';
+import employeeApi, { useDeleteEmployeeMutation, useGetEmployeesQuery } from '../Store/slice/apiEmployeeSlice';
+import { useGetProjectsQuery,useAssignProjectMutation } from "../Store/slice/apiProjectSlice"; 
 
 export default function EmployeeDetails({ onAddOrEdit }) {
-  // const Employees = useSelector((state) => state.employees.Employees);
-  const { data: Employees} = useGetEmployeesQuery();
+  const { data: Employees,isLoading,isError} = useGetEmployeesQuery();
+  const {data: project}=useGetProjectsQuery()
+  let [selectedProject,setSelectedProject]=useState("")
+  const [assignProject]=useAssignProjectMutation()
+
+  const Project=project || []
   const selectedEmp = useSelector((state) => state.employees.selectedEmp);
-  // let [deleteDialogue,setdeleteDialogue]=useState()
+
   const [deleteEmployee] = useDeleteEmployeeMutation();
-  // const dispatch = useDispatch();
   const Navigate = useNavigate();
-  const index = Employees.findIndex((emp) => emp.id === selectedEmp);
-  // let manager=Employees.findIndex((emp) => emp.manager_id === Employees[index].id)
-  // let manager_name=manager.name
+  const index = Employees.findIndex((contact) => contact.id === selectedEmp);
+
+  function handelAssign(projectId){
+    const projectObj={
+      employeeId:selectedEmp,
+      projectId:projectId
+    }
+    assignProject(projectObj)
+  }
 
   return (
     <Box
@@ -48,23 +65,55 @@ export default function EmployeeDetails({ onAddOrEdit }) {
           >
             Employee Details
           </Typography>
-          <Button
+
+          <FormControl sx={{ m: 1, minWidth: 120 }}>
+          <InputLabel id="demo-simple-select-autowidth-label">Select Project</InputLabel>
+          <Select
+          size="small"
+          onChange={(e)=>setSelectedProject(e.target.value)}
+           sx={{
+            "& fieldset": {
+              borderColor: "rgba(204, 204, 204, 0.5)",
+              borderWidth: "2px",
+            },
+            "&:hover": {
+              "&& fieldset": {
+                border: "2px solid rgba(204, 204, 204, 0.5)",
+              },
+            },
+            height: "50px",
+            width:"200px",
+            mr:"100px",
+            borderRadius: 1,
+          }}
+          >
+            {Project.map((project)=>
+              <MenuItem key={project.id} value={project.id}>
+              {project.name}
+              </MenuItem>
+            )}
+          </Select>
+          </FormControl>
+
+          <Button onClick={()=>handelAssign(selectedProject)}>
+            Assign
+          </Button>
+          <IconButton
             onClick={() => {
               onAddOrEdit("edit");
               Navigate("/Employee/Employees/EmployeeDetailsForm");
             }}
           >
-            edit
-          </Button>
-          <Button
+            <EditIcon/>
+          </IconButton>
+          <IconButton
             onClick={() => {
-              // dispatch(deleteEmployee());
               deleteEmployee(selectedEmp)
               Navigate("/Employee/Employees");             
             }}
           >
-            Delete
-          </Button>
+            <DeleteIcon/>
+          </IconButton>
         </Grid>
         <CardContent>
           <Grid
@@ -108,13 +157,15 @@ export default function EmployeeDetails({ onAddOrEdit }) {
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
               <Typography variant="caption" fontWeight={"600"}>
-                Department : {Employees[index].department}
+                Department : {Employees[index].department?.department_name}
               </Typography>
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
+              {Employees[index].manager && 
               <Typography variant="caption" fontWeight={"600"}>
-                Manager Name : {Employees[index].manager}
+                Manager Name : {Employees[index].manager?.name}
               </Typography>
+              }
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
               <Typography variant="caption" fontWeight={"600"}>

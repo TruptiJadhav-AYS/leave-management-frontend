@@ -216,7 +216,7 @@ const columns = [
     id: "department",
     label: "Department",
     minWidth: 80,
-    align: "center",
+    align: "left",
   },
   // {
   //   id: "Inventory",
@@ -236,7 +236,6 @@ export default function EmployeeList({ onAddOrEdit }) {
   const [filteredEmployees, setFilteredEmployees] = useState([]); // New state for filtered employees
   // const Navigate = useNavigate();
   const employees=Employees || [];
-  console.log(employees)
 
   useEffect(() => {
     // Update filteredEmployees when employees data changes
@@ -244,8 +243,6 @@ export default function EmployeeList({ onAddOrEdit }) {
       setFilteredEmployees(employees);
     }
   }, [isSuccess, employees]);
-
-  console.log(employees)
 
   useEffect(() => {
     // Filter employees based on search text when it changes
@@ -408,7 +405,6 @@ export default function EmployeeList({ onAddOrEdit }) {
                     ml={2}
                     sx={{ cursor: "pointer" }}
                     onClick={() => {
-                      console.log(row.id)
                       dispatch(setSelectedEmp(row.id));
                       Navigate(`/Employee/${row.id}`);
                     }}

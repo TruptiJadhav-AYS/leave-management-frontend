@@ -28,20 +28,16 @@ import {
   useUpdateEmployeeMutation,
 } from "../Store/slice/apiEmployeeSlice";
 import { useGetDepartmentsQuery } from "../Store/slice/apiDepartmentSlice";
+import {useGetInventoryQuery} from  "../Store/slice/apiInventorySlice";
 
 export default function EmloyeeDetailForm({ addOrEditForm }) {
-  // let { Employees } = useSelector((state) => state.employees);
   const { data: employees } = useGetEmployeesQuery();
+  const {data: inventory}=useGetInventoryQuery();
 
   const Employees = employees || [];
+  const InventoryList=inventory || []
+  
   let { selectedEmp } = useSelector((state) => state.employees);
-  let managerList = ["Pratiksha", "Pruthvi", "Trupti"];
-
-  for (let i in Employees) {
-    if (Employees[i].role == "Manager") {
-      managerList.push(Employees[i].name);
-    }
-  }
 
   let selectedEmpIndex = Employees.findIndex((emp) => emp.id === selectedEmp);
   const initialValues = {
@@ -101,6 +97,7 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
             : ""
           : ""
         : "",
+    // inventory_id:""
   };
 
   const responsive = UseReponsive();
@@ -111,16 +108,12 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
   const [updateEmployee] = useUpdateEmployeeMutation();
   const { data: department, isSuccess } = useGetDepartmentsQuery();
   const dept = department || [];
-  console.log(Department);
 
   useEffect(() => {
     if (isSuccess) {
       setDepartment(dept);
     }
   }, [isSuccess, dept]);
-  const InventoryList = useSelector(
-    (state) => state.Inventory.InventoryListItems
-  );
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const today = new Date();
@@ -167,15 +160,12 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
     }),
 
     onSubmit: async (values) => {
-      // addEmployee(values);
-      console.log(values);
       {
         addOrEditForm === "add"
-          ? // ? dispatch(addEmployee(values))
+          ?
             addEmp(values)
-          : updateEmployee(selectedEmp, values);
+          : updateEmployee({id:selectedEmp,updatedEmployeeDetails:values});
       }
-      // console.log(values)
       setOnBoardSuccess(true);
       setTimeout(() => {
         navigate("/Employee/Employees");
@@ -434,7 +424,7 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
                   height={responsive.isMobile ? "1vh" : "11vh"}
                 >
                   <Stack width={"100%"}>
-                    <Typography variant="body2">MANAGER</Typography>
+                    <Typography variant="body2">REPORTING MANAGER</Typography>
 
                     <Select
                       size="small"
@@ -510,47 +500,6 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
                     )}
                   </Stack>
                 </Grid>
-                {/* <Grid
-                item
-                xs={12}
-                sm={6}
-                md={6}
-                lg={6}
-                sx={{ display: "flex", justifyContent: "space-between" }}
-                height={responsive.isMobile ? "10vh" : "11vh"}
-              >
-                <Stack width={"100%"} >
-                  <Typography variant="body2"> ASSIGN INVENTORY </Typography>
-                  <Select
-                      value={formik.values.category}
-                      name="assignInventory"
-                      size="small"
-                      labelId="assignInventory"
-                      // onBlur={formik.handleBlur}
-                      // onChange={formik.handleChange}
-                      sx={{
-                        "& fieldset": {
-                          borderColor: "rgba(204, 204, 204, 0.5)",
-                          borderWidth: "2px",
-                        },
-                        "&:hover": {
-                          "&& fieldset": {
-                            border: "2px solid rgba(204, 204, 204, 0.5)",
-                          },
-                          height:"40px",
-                        },
-                        
-                        
-                      }}
-                    >
-                      {InventoryList.map((inventory) => (
-                        <MenuItem key={inventory.id} value={inventory.name} >
-                          {inventory.name} - {inventory.category} - {inventory.serialNo}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                </Stack>
-              </Grid> */}
                 <Grid
                   item
                   xs={12}
@@ -563,10 +512,11 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
                     <Typography variant="body2">ASSIGN INVENTORY</Typography>
 
                     <Select
-                      // value={formik.values.category}
-                      name="assignInventory"
+                      value={formik.values.inventory_id}
+                      onChange={formik.handleChange}
+                      name="inventory_id"
                       size="small"
-                      labelId="assignInventory"
+                      labelId="inventory_id"
                       sx={{
                         "& fieldset": {
                           borderColor: "rgba(204, 204, 204, 0.5)",
@@ -584,33 +534,17 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
                     >
                       {InventoryList.map(
                         (inventory) =>
-                          inventory.assign === 0 && (
-                            <MenuItem key={inventory.id} value={inventory.name}>
-                              {inventory.name} - {inventory.category} -{" "}
-                              {inventory.serialNo}
+                            <MenuItem key={inventory.id} value={inventory.id}>
+                              {inventory.name} - {inventory.category.name} -{" "}
+                              {inventory.serial_number}
                             </MenuItem>
-                          )
                       )}
                     </Select>
-
-                    {/* {formik.touched.manager && errors.manager && (
-                      <Typography variant="caption" color="error">
-                        {errors.manager}
-                      </Typography>
-                    )} */}
                   </Stack>
                 </Grid>
               </Grid>
 
               <Box pt={responsive.isMobile ? 3 : 0}>
-                {/* <Button
-                  // type="submit"
-                  variant="outlined"
-                  sx={{ textTransform: "none", mt: 2 }}
-                  // onClick={onAddInventoryClick}
-                >
-                  Assign Inventory
-                </Button> */}
                 <Button
                   type="submit"
                   variant="contained"
