@@ -59,10 +59,9 @@ const columns = [
 export default function ProjectList({ onProjectAddOrEdit }) {
   // const Projects = useSelector((state) => state.Project.Projects);
   const { data: project, isLoading, isError } = useGetProjectsQuery();
-  console.log(project);
   const Projects = project || [];
   const selectedProject = useSelector((state) => state.Project.selectedProject);
-  console.log("selected project", selectedProject);
+
   const dispatch = useDispatch();
   const Navigate = useNavigate();
   const [page, setPage] = useState(0);

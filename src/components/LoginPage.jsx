@@ -47,18 +47,15 @@ function LoginPage(props) {
       return;
     }
     let authuser=isAuthenticated();
-    console.log(authuser)
 
     try {
       const auth = await login({ email, password });
       if (auth) {
         // console.log("helloooooooooo");
         navigate("/Employee");
-        console.log("Login successful", email);
         props.onSignIn(email);
       }
     } catch (error) {
-      console.error("Error occurred during login:", error);
       setPasswordError("Invalid email or password")
       // Handle login error if needed
     }

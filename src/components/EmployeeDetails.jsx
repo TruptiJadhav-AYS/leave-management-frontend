@@ -7,24 +7,34 @@ import {
   CardContent,
   Typography,
   Grid,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
 } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import { useDispatch } from "react-redux";
 import deleteEmployee from "../Store/action/DeleteEmployee";
 import { useState } from "react";
 import { useDeleteEmployeeMutation, useGetEmployeesQuery } from '../Store/slice/apiEmployeeSlice';
+import { useGetProjectsQuery,useAssignProjectMutation } from "../Store/slice/apiProjectSlice"; 
 
 export default function EmployeeDetails({ onAddOrEdit }) {
-  // const Employees = useSelector((state) => state.employees.Employees);
   const { data: Employees,isLoading,isError} = useGetEmployeesQuery();
+  const {data: project}=useGetProjectsQuery()
+  let [selectedProject,setSelectedProject]=useState("")
+  const [assignProject]=useAssignProjectMutation()
+
+  const Project=project || []
   const selectedEmp = useSelector((state) => state.employees.selectedEmp);
-  // let [deleteDialogue,setdeleteDialogue]=useState()
+
   const [deleteEmployee] = useDeleteEmployeeMutation();
-  const dispatch = useDispatch();
   const Navigate = useNavigate();
   const index = Employees.findIndex((contact) => contact.id === selectedEmp);
-  let manager=Employees.findIndex((emp) => emp.manager_id === Employees[index].id)
-  let manager_name=manager.name
+
+  function handelAssign(id){
+    assignProject(id)
+  }
 
   return (
     <Box
@@ -48,6 +58,37 @@ export default function EmployeeDetails({ onAddOrEdit }) {
           >
             Employee Details
           </Typography>
+          <FormControl sx={{ m: 1, minWidth: 120 }}>
+          <InputLabel id="demo-simple-select-autowidth-label">Select Project</InputLabel>
+          <Select
+          size="small"
+          onChange={(e)=>setSelectedProject(e.target.value)}
+           sx={{
+            "& fieldset": {
+              borderColor: "rgba(204, 204, 204, 0.5)",
+              borderWidth: "2px",
+            },
+            "&:hover": {
+              "&& fieldset": {
+                border: "2px solid rgba(204, 204, 204, 0.5)",
+              },
+            },
+            height: "50px",
+            width:"200px",
+            mr:"100px",
+            borderRadius: 1,
+          }}
+          >
+            {Project.map((project)=>
+              <MenuItem value={project.id}>
+              {project.name}
+              </MenuItem>
+            )}
+          </Select>
+          </FormControl>
+          <Button onClick={handelAssign}>
+            Assign
+          </Button>
           <Button
             onClick={() => {
               onAddOrEdit("edit");

@@ -23,7 +23,7 @@ export default function ProjectDetails({ onProjectAddOrEdit }) {
     isError,
   } = useGetProjectByIdQuery(selectedProject);
 
-  console.log("pppp", projects);
+  
 
   let [deleteDialogue, setdeleteDialogue] = useState();
   const dispatch = useDispatch();
@@ -39,7 +39,6 @@ export default function ProjectDetails({ onProjectAddOrEdit }) {
 
   const index = Projects.findIndex((project) => project.id === selectedProject);
 
-  console.log(Projects[index]);
   return (
     <Box
       sx={{

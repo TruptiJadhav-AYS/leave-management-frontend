@@ -100,13 +100,11 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
       description: Yup.string(),
     }),
     onSubmit: (values) => {
-      console.log(values);
       {
         projectAddOrEdit === "add"
           ? addProject(values)
           : dispatch(editProjectAction(values));
       }
-      console.log(values);
       setSuccess(true);
       setTimeout(() => {
         navigate("/Employee/Projects");

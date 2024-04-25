@@ -21,6 +21,11 @@ const inventoryApi = createApi({
       providesTags: ['inventory'],
     }),
 
+    getListOfInventoey:builder.query({
+      query:()=>"/inventory/list_of_inventories",
+      providesTags: ['inventory']
+    }),
+
     addInventory: builder.mutation({
         query: (newInventory) => ({
           url: '/inventory',
@@ -42,5 +47,5 @@ const inventoryApi = createApi({
 
 });
 
-export const { useGetInventoryQuery, useAddInventoryMutation,useDeleteInventoryMutation } = inventoryApi;
+export const { useGetInventoryQuery,useGetListOfInventoeyQuery, useAddInventoryMutation,useDeleteInventoryMutation } = inventoryApi;
 export default inventoryApi;

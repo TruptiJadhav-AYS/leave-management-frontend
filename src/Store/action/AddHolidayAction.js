@@ -11,7 +11,6 @@ function addHol(obj) {
     holiday = { ...obj, ...holiday };
     // console.log(holiday);
     const updatedHoliday = [...annualLeaves, holiday];
-    console.log(updatedHoliday)
     dispatch(addHoliday(updatedHoliday));
   };
 }

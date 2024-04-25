@@ -39,7 +39,6 @@ const isTokenValid = () => {
 
     return true; 
   } catch (error) {
-    console.error('Error decoding or validating token:', error);
     return false; 
   }
 };

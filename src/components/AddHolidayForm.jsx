@@ -52,13 +52,11 @@ export default function AddHolidayForm() {
       // image: Yup.string().required("Image is required."),
     }),
     onSubmit: (values) => {
-      console.log(values);
       // const formData = new FormData();
       // if (image) {
       //   formData.append("image", image);
       // }
       // dispatch(addholiday(values));
-      console.log(image);
       addholiday({data1:values, file:image});
       setOnBoardSuccess(true);
       setTimeout(() => {
@@ -93,7 +91,6 @@ export default function AddHolidayForm() {
   const handleFileChange = (event) => {
     // formik.setFieldValue("img", event.currentTarget.files[0]);
     setImage(event.currentTarget.files[0]);
-    console.log("&&&&&&&", event.currentTarget.files);
   };
 
   return (

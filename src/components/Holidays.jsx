@@ -26,13 +26,11 @@ export default function Holidays() {
   // const suttya = annualLeaves.holidays || [];
   const suttya = annualLeaves ? annualLeaves.holidays || [] : [];
 
-  console.log(suttya);
   // console.log(suttya[0].image)
 
   let responsive = UseReponsive();
 
   function handledeleteHolidayClick(value) {
-    console.log(value);
     dispatch(deleteHol(value));
   }
 
