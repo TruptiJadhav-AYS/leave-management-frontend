@@ -97,7 +97,7 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
             : ""
           : ""
         : "",
-    inventory_id:""
+    // inventory_id:""
   };
 
   const responsive = UseReponsive();
@@ -160,14 +160,12 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
     }),
 
     onSubmit: async (values) => {
-      // addEmployee(values);
       {
         addOrEditForm === "add"
-          ? // ? dispatch(addEmployee(values))
+          ?
             addEmp(values)
-          : updateEmployee(selectedEmp, values);
+          : updateEmployee({id:selectedEmp,updatedEmployeeDetails:values});
       }
-      // console.log(values)
       setOnBoardSuccess(true);
       setTimeout(() => {
         navigate("/Employee/Employees");
@@ -426,7 +424,7 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
                   height={responsive.isMobile ? "1vh" : "11vh"}
                 >
                   <Stack width={"100%"}>
-                    <Typography variant="body2">MANAGER</Typography>
+                    <Typography variant="body2">REPORTING MANAGER</Typography>
 
                     <Select
                       size="small"
@@ -542,25 +540,11 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
                             </MenuItem>
                       )}
                     </Select>
-
-                    {/* {formik.touched.manager && errors.manager && (
-                      <Typography variant="caption" color="error">
-                        {errors.manager}
-                      </Typography>
-                    )} */}
                   </Stack>
                 </Grid>
               </Grid>
 
               <Box pt={responsive.isMobile ? 3 : 0}>
-                {/* <Button
-                  // type="submit"
-                  variant="outlined"
-                  sx={{ textTransform: "none", mt: 2 }}
-                  // onClick={onAddInventoryClick}
-                >
-                  Assign Inventory
-                </Button> */}
                 <Button
                   type="submit"
                   variant="contained"

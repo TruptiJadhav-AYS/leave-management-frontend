@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
+  IconButton,
   Card,
   CardContent,
   Typography,
@@ -12,11 +13,13 @@ import {
   InputLabel,
   FormControl,
 } from "@mui/material";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import Avatar from "@mui/material/Avatar";
 import { useDispatch } from "react-redux";
 import deleteEmployee from "../Store/action/DeleteEmployee";
 import { useState } from "react";
-import { useDeleteEmployeeMutation, useGetEmployeesQuery } from '../Store/slice/apiEmployeeSlice';
+import employeeApi, { useDeleteEmployeeMutation, useGetEmployeesQuery } from '../Store/slice/apiEmployeeSlice';
 import { useGetProjectsQuery,useAssignProjectMutation } from "../Store/slice/apiProjectSlice"; 
 
 export default function EmployeeDetails({ onAddOrEdit }) {
@@ -32,8 +35,12 @@ export default function EmployeeDetails({ onAddOrEdit }) {
   const Navigate = useNavigate();
   const index = Employees.findIndex((contact) => contact.id === selectedEmp);
 
-  function handelAssign(id){
-    assignProject(id)
+  function handelAssign(projectId){
+    const projectObj={
+      employeeId:selectedEmp,
+      projectId:projectId
+    }
+    assignProject(projectObj)
   }
 
   return (
@@ -58,6 +65,7 @@ export default function EmployeeDetails({ onAddOrEdit }) {
           >
             Employee Details
           </Typography>
+
           <FormControl sx={{ m: 1, minWidth: 120 }}>
           <InputLabel id="demo-simple-select-autowidth-label">Select Project</InputLabel>
           <Select
@@ -80,32 +88,32 @@ export default function EmployeeDetails({ onAddOrEdit }) {
           }}
           >
             {Project.map((project)=>
-              <MenuItem value={project.id}>
+              <MenuItem key={project.id} value={project.id}>
               {project.name}
               </MenuItem>
             )}
           </Select>
           </FormControl>
-          <Button onClick={handelAssign}>
+
+          <Button onClick={()=>handelAssign(selectedProject)}>
             Assign
           </Button>
-          <Button
+          <IconButton
             onClick={() => {
               onAddOrEdit("edit");
               Navigate("/Employee/Employees/EmployeeDetailsForm");
             }}
           >
-            edit
-          </Button>
-          <Button
+            <EditIcon/>
+          </IconButton>
+          <IconButton
             onClick={() => {
-              // dispatch(deleteEmployee());
               deleteEmployee(selectedEmp)
               Navigate("/Employee/Employees");             
             }}
           >
-            Delete
-          </Button>
+            <DeleteIcon/>
+          </IconButton>
         </Grid>
         <CardContent>
           <Grid
@@ -149,13 +157,15 @@ export default function EmployeeDetails({ onAddOrEdit }) {
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
               <Typography variant="caption" fontWeight={"600"}>
-                Department : {Employees[index].department}
+                Department : {Employees[index].department?.department_name}
               </Typography>
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
+              {Employees[index].manager && 
               <Typography variant="caption" fontWeight={"600"}>
-                Manager Name : {Employees[index].manager}
+                Manager Name : {Employees[index].manager?.name}
               </Typography>
+              }
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
               <Typography variant="caption" fontWeight={"600"}>

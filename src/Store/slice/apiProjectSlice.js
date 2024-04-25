@@ -43,7 +43,16 @@ const projectApi = createApi({
         method:"POST",
         body:projectId
       })
-    })
+    }),
+
+    updateProject: builder.mutation({
+      query: ({ id, updatedProjectDetails }) => ({
+        url: `/project/${id}`,
+        method: 'PATCH',
+        body: updatedProjectDetails,
+      }),
+      invalidatesTags: [{ data: 'Project' }]
+    }),
   }),
 });
 
@@ -52,6 +61,7 @@ export const {
   useAddProjectMutation,
   useDeleteProjectMutation,
   useGetProjectByIdQuery,
-  useAssignProjectMutation
+  useAssignProjectMutation,
+  useUpdateProjectMutation,
 } = projectApi;
 export default projectApi;

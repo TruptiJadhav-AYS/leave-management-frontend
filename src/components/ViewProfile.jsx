@@ -24,7 +24,8 @@ export default function ViewProfile({ onAddOrEdit, logedInUser }) {
 //   const [deleteEmployee] = useDeleteEmployeeMutation();
   const dispatch = useDispatch();
   const Navigate = useNavigate();
-
+  console.log(logedInUser)
+  console.log(Employees)
 //   const index = Employees.findIndex((contact) => contact.id === selectedEmp);
 //   let manager=Employees.findIndex((emp) => emp.manager_id === Employees[index].id)
 //   let manager_name=manager.name

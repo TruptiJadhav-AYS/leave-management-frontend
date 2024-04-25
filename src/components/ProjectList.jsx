@@ -59,7 +59,7 @@ const columns = [
 export default function ProjectList({ onProjectAddOrEdit }) {
   const [filteredProjects, setFilteredEmployees] = useState([]); // New state for filtered employees
   // const Projects = useSelector((state) => state.Project.Projects);
-  const { data: project, isLoading, isError } = useGetProjectsQuery();
+  const { data: project,isSuccess} = useGetProjectsQuery();
   const Projects = project || [];
   const selectedProject = useSelector((state) => state.Project.selectedProject);
 
@@ -257,7 +257,7 @@ export default function ProjectList({ onProjectAddOrEdit }) {
                     const value = row[column.id];
                     return (
                       <TableCell key={index} align={column.align}>
-                        {value}
+                        {column.id==="status" ? value.charAt(0).toUpperCase() + value.slice(1) : value}
                       </TableCell>
                     );
                   })}

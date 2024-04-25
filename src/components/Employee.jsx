@@ -216,7 +216,7 @@ const columns = [
     id: "department",
     label: "Department",
     minWidth: 80,
-    align: "center",
+    align: "left",
   },
   // {
   //   id: "Inventory",

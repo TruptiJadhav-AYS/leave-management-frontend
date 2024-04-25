@@ -14,15 +14,19 @@ import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import { useState } from "react";
-import { useGetInventoryQuery } from "../Store/slice/apiInventorySlice";
+import { useGetListOfInventoeyQuery } from "../Store/slice/apiInventorySlice";
 
 export default function InventoryListMb() {
-  const {data:InventoryList} = useGetInventoryQuery()
+  const {data:InventoryList,isLoading} = useGetListOfInventoeyQuery()
   const Navigate = useNavigate();
   const [searchText, setsearchText] = useState("");
 
   function handleSearchText(event) {
     setsearchText(event.target.value);
+  }
+
+  if(isLoading){
+    return(<></>)
   }
 
   const FilterArray = InventoryList.filter((inventory) =>

@@ -13,6 +13,7 @@ const employeeApi = createApi({
     },
   }),
   endpoints: (builder) => ({
+    
     getEmployees: builder.query({
       query: () => '/employees',
       providesTags: [{ data: 'Employees' }],
@@ -30,14 +31,16 @@ const employeeApi = createApi({
       }),
       invalidatesTags:[{ data: 'Employees' }]
     }),
+    
     updateEmployee: builder.mutation({
-      query: ({ employeeId, ...updateData }) => ({
-        url: `/employees/${employeeId}`,
-        method: 'PUT',  
-        body: updateData,
+      query: ({ id, updatedEmployeeDetails }) => ({
+        url: `/employees/${id}`,
+        method: 'PUT',
+        body: updatedEmployeeDetails,
       }),
-      invalidatesTags:[{ data: 'Employees' }]
+      invalidatesTags: [{ data: 'Employees' }]
     }),
+
     deleteEmployee: builder.mutation({
       query: (employeeId) => ({
         url: `/employees/${employeeId}`,
@@ -47,6 +50,7 @@ const employeeApi = createApi({
     })
   }),
   
+
 });
 
 export const { useGetEmployeesQuery,useGetEmployeesByIdQuery,useAddEmployeeMutation,useUpdateEmployeeMutation, useDeleteEmployeeMutation } = employeeApi;

@@ -31,7 +31,7 @@ const isTokenValid = () => {
   const token = localStorage.getItem("authToken");
   try {
     const decodedToken = jwtDecode(token);
-    // console.log(decodedToken)
+    console.log(token)
     role=decodedToken.role
     const currentTime = Date.now() / 1000; // Convert to seconds
     if (decodedToken.exp && decodedToken.exp < currentTime) {
