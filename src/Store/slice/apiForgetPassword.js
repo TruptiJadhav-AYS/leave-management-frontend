@@ -13,7 +13,6 @@ const forgotApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-
     getOtp: builder.mutation({
       query: (obj) => ({
         url: '/auth/forgotpassword',
@@ -21,9 +20,16 @@ const forgotApi = createApi({
         body: obj,
       }),
     }),
+    setResetPassword: builder.mutation({
+        query: (obj) => ({
+          url: '/auth/reset-password',
+          method: 'POST',
+          body: obj,
+        }),
+      }),
   }),
   
 });
 
-export const { useGetOtpMutation } = forgotApi;
+export const { useGetOtpMutation, useSetResetPasswordMutation } = forgotApi;
 export default forgotApi;

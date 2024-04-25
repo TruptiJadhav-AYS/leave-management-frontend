@@ -19,12 +19,16 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SearchIcon from "@mui/icons-material/Search";
-import { useState } from "react";
-import {useSelector} from 'react-redux'
+import { useState,useEffect } from "react";
+import {useSelector,useDispatch} from 'react-redux'
+import { useDeleteProjectMutation, useGetProjectsQuery } from "../Store/slice/apiProjectSlice";
+import { deleteProject } from "../Store/slice/ProjectsSlice";
 
 
 export default function ContactsList() {
-  const Projects =useSelector(state=>state.Project.Projects)
+  // const Projects =useSelector(state=>state.Project.Projects)
+  const [filteredProjects, setFilteredEmployees] = useState([]); // New state for filtered employees
+
   // console.log("Ppppppppppppppppprojects" , Projects)
   const Navigate = useNavigate();
   const [searchText, setsearchText] = useState("");
@@ -33,10 +37,41 @@ export default function ContactsList() {
     setsearchText(event.target.value);
   }
   console.log(searchText);
+  const { data: project,isSuccess } = useGetProjectsQuery();
+  console.log(project);
+  const Projects = project || [];
+  const selectedProject = useSelector((state) => state.Project.selectedProject);
+  console.log("selected project", selectedProject);
+  const dispatch = useDispatch();
+  // const Navigate = useNavigate();
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [deleteProject]=useDeleteProjectMutation()
+  
+  // const [searchText, setsearchText] = useState("");
+  
+  function handleSearchText(event) {
+    setsearchText(event.target.value);
+  }
 
-  const FilterArray = Projects.filter((project) =>
-    project.Name.toLowerCase().includes(searchText.toLowerCase())
-  );
+  useEffect(() => {
+    // Update filteredEmployees when employees data changes
+    if (isSuccess) {
+      setFilteredEmployees(Projects);
+    }
+  }, [isSuccess, Projects]);
+  useEffect(() => {
+    // Filter employees based on search text when it changes
+    setFilteredEmployees(
+      Projects.filter((employee) =>
+        employee.name.toLowerCase().includes(searchText.toLowerCase())
+      )
+    );
+  }, [searchText, Projects]);
+
+  // const FilterArray = Projects.filter((project) =>
+  //   project.name.toLowerCase().includes(searchText.toLowerCase())
+  // );
 
   return (
     <Paper sx={{ height: "80vh", mt: "5%" }}>
@@ -112,7 +147,7 @@ export default function ContactsList() {
               bgcolor: "white"
             }}
           >
-            {FilterArray.map((project,index) => (
+            {filteredProjects.map((project,index) => (
               <Card
                 sx={{ mb: 1, borderRadius: 2, mr: 1 }}
                 elevation={3}
@@ -133,7 +168,7 @@ export default function ContactsList() {
                                 fontWeight: "530",
                               }}
                             >
-                              {project.Name}
+                              {project.name}
                             </Typography>
                             <Typography
                               variant="caption"
@@ -144,9 +179,9 @@ export default function ContactsList() {
                                 fontWeight={"bold"}
                                 mr={1}
                               >
-                                Project_Manager :
+                                Project Manager :
                               </Typography>
-                              {project.Project_Manager}
+                              {project.manager_name}
                             </Typography>
                           </Grid>
                         </Grid>
@@ -163,7 +198,7 @@ export default function ContactsList() {
                           >
     
                             <EditIcon fontSize="small" sx={{ mr: 1 }} onClick={()=>{Navigate("/Employee/Projects/EditProject")}}/>
-                            <DeleteIcon fontSize="small" />
+                            <DeleteIcon fontSize="small" onClick={()=>deleteProject(project.id)}/>
                           </Grid>
                         </Grid>
                         <Grid item xs={12}>
@@ -179,11 +214,11 @@ export default function ContactsList() {
                             }}
                           >
                             <Typography variant="body1" fontWeight={"bold"} mr={1}>
-                              Start_date :{" "}
+                              Start date :{" "}
                             </Typography>
-                            {project.Start_date}
+                            {project.startDate}
                           </Typography>
-                          <Typography
+                          {/* <Typography
                             label="End_date"
                             variant="body1"
                             sx={{
@@ -197,7 +232,7 @@ export default function ContactsList() {
                               End_date :{" "}
                             </Typography>
                             {project.End_date}
-                          </Typography>
+                          </Typography> */}
                           <Typography
                             label="Status"
                             variant="body1"
@@ -212,7 +247,7 @@ export default function ContactsList() {
                             <Typography variant="body1" fontWeight={"bold"} mr={1}>
                               Status :{" "}
                             </Typography>
-                            {project.Status}
+                            {project.status}
                           </Typography>
                         </Grid>
                       </Grid>

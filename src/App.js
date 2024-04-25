@@ -31,12 +31,12 @@ const isTokenValid = () => {
   const token = localStorage.getItem("authToken");
   try {
     const decodedToken = jwtDecode(token);
+    // console.log(decodedToken)
     role=decodedToken.role
     const currentTime = Date.now() / 1000; // Convert to seconds
     if (decodedToken.exp && decodedToken.exp < currentTime) {
       return false;
     }
-
     return true; 
   } catch (error) {
     console.error('Error decoding or validating token:', error);
@@ -51,6 +51,7 @@ function App() {
   const [logedInUser, setLogedInUser] = useState("");
   const dispatch=useDispatch()
   dispatch(setRole(role))
+  // console.log(role)
   // function isAuthenticated() {
     // localStorage.removeItem("authToken")
     // const token = localStorage.getItem("authToken");
@@ -58,17 +59,18 @@ function App() {
   //   return token;
   // }
 
-  const findRoleOfUser = () => {
+  // const findRoleOfUser = () => {
     // let emp = employee.find((employee) => employee.email === logedInUser);
     // if (emp) {
     //   return emp.role;
     // }
-  };
+  // };
 
   // let role = findRoleOfUser();
 
   function onSignIn(email) {
     setLogedInUser(email);
+    console.log(logedInUser)
   }
 
   // function onSignInClick(flag) {
@@ -110,13 +112,13 @@ function App() {
             />
           )}
           {resetRouteStatus && (
-            <Route path="/ResetPassword" element={<ResetPasswordPage />} />
+            <Route path="/ResetPassword" element={<ResetPasswordPage logedInUser={logedInUser}/>} />
           )}
           {/* {routeStatus && ( */}
           {/* {token!=== ? ( */}
             <Route
               path="/Employee/*"
-              element={isTokenValid() ? <Display logedInUser={logedInUser}/> : <></>}
+              element={isTokenValid() ? <Display /> : <></>}
             />
           {/* ) : (
             <></>

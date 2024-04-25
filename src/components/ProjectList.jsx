@@ -57,6 +57,7 @@ const columns = [
 ];
 
 export default function ProjectList({ onProjectAddOrEdit }) {
+  const [filteredProjects, setFilteredEmployees] = useState([]); // New state for filtered employees
   // const Projects = useSelector((state) => state.Project.Projects);
   const { data: project,isSuccess } = useGetProjectsQuery();
   console.log(project);
@@ -67,14 +68,29 @@ export default function ProjectList({ onProjectAddOrEdit }) {
   const Navigate = useNavigate();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  // const [sortedBy, setSortedBy] = useState("name"); // Track sorted column
-  // const [sortOrder, setSortOrder] = useState(""); // Track sort order
-
+  
   const [searchText, setsearchText] = useState("");
-
+  
   function handleSearchText(event) {
     setsearchText(event.target.value);
   }
+
+  useEffect(() => {
+    // Update filteredEmployees when employees data changes
+    if (isSuccess) {
+      setFilteredEmployees(Projects);
+    }
+  }, [isSuccess, Projects]);
+  useEffect(() => {
+    // Filter employees based on search text when it changes
+    setFilteredEmployees(
+      Projects.filter((employee) =>
+        employee.name.toLowerCase().includes(searchText.toLowerCase())
+      )
+    );
+  }, [searchText, Projects]);
+  // const [sortOrder, setSortOrder] = useState(""); // Track sort order
+  // const [sortedBy, setSortedBy] = useState("name"); // Track sorted column
   // console.log(searchText);
 
   // const sortedRows = useMemo(() => {
@@ -114,26 +130,13 @@ export default function ProjectList({ onProjectAddOrEdit }) {
   // const [searchText, setSearchText] = useState("");
   // const [sortedBy, setSortedBy] = useState("name");
   // const [sortOrder, setSortOrder] = useState("asc");
-  const [filteredProjects, setFilteredEmployees] = useState([]); // New state for filtered employees
   // const Navigate = useNavigate();
   // const employees=Employees || [];
   // console.log(employees)
 
-  useEffect(() => {
-    // Update filteredEmployees when employees data changes
-    if (isSuccess) {
-      setFilteredEmployees(Projects);
-    }
-  }, [isSuccess, Projects]);
+  
 
-  useEffect(() => {
-    // Filter employees based on search text when it changes
-    setFilteredEmployees(
-      Projects.filter((employee) =>
-        employee.name.toLowerCase().includes(searchText.toLowerCase())
-      )
-    );
-  }, [searchText, Projects]);
+  
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);

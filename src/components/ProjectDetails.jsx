@@ -26,7 +26,7 @@ export default function ProjectDetails({ onProjectAddOrEdit }) {
 
   console.log("pppp", Projects);
 
-  // let [deleteDialogue, setdeleteDialogue] = useState();
+  let [deleteDialogue, setdeleteDialogue] = useState();
   const dispatch = useDispatch();
 
   const Navigate = useNavigate();

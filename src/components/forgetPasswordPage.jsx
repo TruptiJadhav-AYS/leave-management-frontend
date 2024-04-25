@@ -12,44 +12,46 @@ import {
   Card,
   CardContent,
 } from "@mui/material";
+import { useGetOtpMutation } from "../Store/slice/apiForgetPassword";
 
 function ForgetPasswordPage(props) {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
-  const [otpError, setOtpError] = useState("");
-  const [showOTPField, setShowOTPField] = useState(false);
-  const [otp, setOTP] = useState("");
+  const [responseMessage, setResponseMessage] = useState("");
   const navigate = useNavigate();
+  const [getOtp, { isLoading }] = useGetOtpMutation();
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
     setEmailError("");
+    setResponseMessage(""); // Clear previous responses
   };
 
-  const handleGetOTP = () => {
-    setShowOTPField(true);
-  };
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setEmailError("");
+    setResponseMessage(""); // Clear previous responses
     if (!email) {
       setEmailError("Please enter email");
-    } else if (!showOTPField) {
-      handleGetOTP();
-    } else if (otp === "") {
-      setOtpError("Required");
-    } else if (otp !== "1234") {
-      setOtpError("Invalid OTP");
-    } else {
-      navigate("/ResetPassword");
-      props.onSignInClick(true);
-      props.onSignIn(email);
+      return;
     }
-    props.onResetClick(true);
-    navigate("/ResetPassword");
-    props.onSignInClick(true);
-    props.onSignIn(email);
+
+    try {
+      const response = await getOtp({ email }).unwrap();
+      setResponseMessage(response.message); // Set the success or error message from server
+      if (response.message === "OTP sent to your email address") {
+        navigate("/ResetPassword");
+        props.onSignIn(email);
+        props.onResetClick(true);
+        props.onSignInClick(true); // Navigate to reset password page on success
+      }
+    } catch (error) {
+      if (error.status === 404) {
+        setEmailError("Email not found");
+      } else {
+        setEmailError("An error occurred. Please try again.");
+      }
+    }
   };
 
   return (
@@ -82,9 +84,9 @@ function ForgetPasswordPage(props) {
           </Typography>
         </Grid>
       </Grid>
-      <Container maxWidth="xs" sx={{ pt: "4vh" }}>
+      <Container maxWidth="xs" sx={{ pt: "8vh" }}>
         <Card elevation={8}>
-          <CardContent >
+          <CardContent>
             <form onSubmit={handleSubmit}>
               <Typography
                 variant="h6"
@@ -105,25 +107,29 @@ function ForgetPasswordPage(props) {
                     type="email"
                     onChange={handleEmailChange}
                     error={Boolean(emailError)}
-                    helperText={emailError}
+                    helperText={emailError || responseMessage}
                   />
                 </Grid>
                 <Grid container gap={2} mt={2}>
                   <Grid item xs={12}>
                     <Button
-                      // type="submit"
-                      // fullWidth
+                      type="submit"
+                      fullWidth
                       // onClick={}
                       variant="contained"
                       color="primary"
-                      sx={{ textTransform: "none", borderRadius: "100px" }}
+                      sx={{
+                        textTransform: "none",
+                        borderRadius: "100px",
+                        ml: 1,
+                      }}
                     >
                       Get OTP
                     </Button>
                   </Grid>
                 </Grid>
                 {/* {showOTPField && ( */}
-                <Grid item xs={12}>
+                {/* <Grid item xs={12}>
                   <TextField
                     fullWidth
                     id="otp"
@@ -135,10 +141,10 @@ function ForgetPasswordPage(props) {
                     error={Boolean(otpError)}
                     helperText={otpError}
                   />
-                </Grid>
+                </Grid> */}
                 {/* )} */}
               </Grid>
-              <Grid container gap={2} mt={2}>
+              {/* <Grid container gap={2} mt={2}>
                 <Grid item xs={12}>
                   <Button
                     type="submit"
@@ -150,7 +156,7 @@ function ForgetPasswordPage(props) {
                     Submit
                   </Button>
                 </Grid>
-              </Grid>
+              </Grid> */}
             </form>
           </CardContent>
         </Card>

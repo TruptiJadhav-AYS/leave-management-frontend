@@ -16,7 +16,7 @@ const holidaysApi = createApi({
   endpoints: (builder) => ({
     getHolidays: builder.query({
       query: () => "/holidays",
-      providesTags: [{ data: 'Holidays' }],
+      providesTags: [{ data: "Holidays" }],
     }),
 
     addHoliday: builder.mutation({
@@ -24,18 +24,35 @@ const holidaysApi = createApi({
         url: "/holidays/upload",
         method: "POST",
         body: formData(data1, file),
-        prepareHeaders:(headers)=>{
-            headers.set('Content-Type','multipart/form-data')
+        prepareHeaders: (headers) => {
+            headers.set("Content-Type", "multipart/form-data");
             return headers;
         },
-        invalidatesTags: [{ data: 'Holidays' }],
+        invalidatesTags: [{ data: "Holidays" }],
       }),
     }),
-    
+    deleteHoliday: builder.mutation({
+      query: (holidayId) => ({
+        url: `/holidays/${holidayId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [{ data: "Holidays" }],
+    }),
+    upcomingHolidays:builder.query({
+        query:()=>({
+            url:"/holidays/upcoming",
+            invalidatesTags: [{ data: "Holidays" }],
+        })
+    })
   }),
 });
 
-export const { useGetHolidaysQuery, useAddHolidayMutation } = holidaysApi;
+export const {
+  useGetHolidaysQuery,
+  useAddHolidayMutation,
+  useDeleteHolidayMutation,
+  useUpcomingHolidaysQuery,
+} = holidaysApi;
 export default holidaysApi;
 
 function formData(data1, file) {
