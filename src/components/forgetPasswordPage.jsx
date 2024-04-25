@@ -38,12 +38,12 @@ function ForgetPasswordPage(props) {
 
     try {
       const response = await getOtp({ email }).unwrap();
-      setResponseMessage(response.message); // Set the success or error message from server
+      setResponseMessage(response.message);
       if (response.message === "OTP sent to your email address") {
         navigate("/ResetPassword");
         props.onSignIn(email);
         props.onResetClick(true);
-        props.onSignInClick(true); // Navigate to reset password page on success
+        props.onSignInClick(true);
       }
     } catch (error) {
       if (error.status === 404) {
