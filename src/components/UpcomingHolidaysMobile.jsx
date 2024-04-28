@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Grid,
   Card,
@@ -15,10 +15,33 @@ import {
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { useSelector } from "react-redux";
+import { useUpcomingHolidaysQuery } from "../Store/slice/apiHolidaySlice";
 
 export default function UpcomingHolidaysMobile() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const Holidays = useSelector((state) => state.holidays.annualLeaves);
+  // const Holidays = useSelector((state) => state.holidays.annualLeaves);
+  // const {data:upcomingHoliday,isSuccess}=useUpcomingHolidaysQuery();
+  
+  // // const upcomingHolidays=upcomingHoliday.holidays || []
+  // // const Holidays = upcomingHoliday ? upcomingHoliday.holidays || [] : [];
+  // // console.log(Holidays)
+  // const [filteredEmployees, setFilteredEmployees] = useState([]); // New state for filtered employees
+  // // const Navigate = useNavigate();
+  // const Holidays=upcomingHoliday || [];
+  // // console.log(Holidays)
+
+  // useEffect(() => {
+  //   // Update filteredEmployees when employees data changes
+  //   if (isSuccess) {
+  //     setFilteredEmployees(Holidays);
+  //   }
+  // }, [isSuccess, Holidays]);
+  const {data:upcomingHoliday,isLoading}=useUpcomingHolidaysQuery();
+  
+  // const upcomingHolidays=upcomingHoliday.holidays || []
+  const Holidays = upcomingHoliday ? upcomingHoliday.holidays || [] : [];
+
+  console.log(Holidays)
 
   const formatDate = (dateString) => {
     const [year, month, day] = dateString.split("-");
@@ -56,12 +79,15 @@ export default function UpcomingHolidaysMobile() {
 
   // Filter holidays that occur after the current date
   const upcomingHolidays = Holidays.filter((holiday) => {
-    const holidayDate = new Date(holiday.date);
+    const holidayDate = new Date(holiday.holiday_date);
     return holidayDate > currentDate;
   });
   const currentHoliday = upcomingHolidays[currentIndex];
   const showPreviousButton = currentIndex !== 0 && upcomingHolidays.length > 1;
   const showNextButton = currentIndex !== upcomingHolidays.length - 1;
+  if(isLoading){
+    return(<></>)
+  }
 
   return (
     <>
@@ -80,16 +106,18 @@ export default function UpcomingHolidaysMobile() {
               sx={{ width: "80%" }}
             >
               <Avatar
-                alt={currentHoliday.occasion}
-                src={currentHoliday.img}
+                alt={currentHoliday.holiday_occasion}
+                src={URL.createObjectURL(
+                  new Blob([new Uint8Array(currentHoliday.holiday_image.data)])
+                )}
                 sx={{ mx: "10px" }}
               />
               <Stack direction="column">
                 <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                  {currentHoliday.occasion}
+                  {currentHoliday.holiday_occasion}
                 </Typography>
                 <Typography variant="body1">
-                  {formatDate(currentHoliday.date)}
+                  {formatDate(currentHoliday.holiday_date)}
                 </Typography>
               </Stack>
             </Stack>
