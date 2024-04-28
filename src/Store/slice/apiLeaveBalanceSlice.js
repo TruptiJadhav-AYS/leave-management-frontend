@@ -24,8 +24,12 @@ const leaveBalanceApi = createApi({
     getAnnunalLeaveBalance: builder.query({
       query: () => "/holidays/remaining-holidays",
     }),
+
+    getPendingRequests: builder.query({
+      query: (employeeId) => `/leave/${employeeId}/pending-requests`,
+    }),
   }),
 });
 
-export const { useGetRemainingBalanceQuery,useGetWorkFromHomeBalanceQuery, useGetAnnunalLeaveBalanceQuery } = leaveBalanceApi;
+export const { useGetRemainingBalanceQuery,useGetWorkFromHomeBalanceQuery, useGetAnnunalLeaveBalanceQuery ,useGetPendingRequestsQuery} = leaveBalanceApi;
 export default leaveBalanceApi;

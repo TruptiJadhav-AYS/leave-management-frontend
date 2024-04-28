@@ -13,18 +13,25 @@ import {
   TableContainer,
   Stack,
 } from "@mui/material";
-import {useSelector} from 'react-redux'
+import { useSelector } from 'react-redux'
+// import { useGetPendingRequestsQuery } from "../Store/slice/apiLeaveBalanceSlice";
 
 const handleAccept = (name) => {
-  
+
 };
 
 const handleReject = (name) => {
-  
+
 };
 export default function PendingReq() {
   const PendingRequestList = useSelector(state=>state.PendingRequests.PendingRequestList)
+  // const id = useSelector((state) => state.employees.userId);
 
+  // const { data: pr, isSuccess } = useGetPendingRequestsQuery(id);
+  // console.log('History....', pr)
+  // const PendingRequestList = pr.pendingRequests || []
+
+  console.log(PendingRequestList)
   const formatDate = (dateString) => {
     const [day, month, year] = dateString.split("-");
     const monthNames = [
@@ -89,8 +96,8 @@ export default function PendingReq() {
                 </TableCell>
                 <TableCell align="center">{formatDate(row.fromDate)}</TableCell>
                 <TableCell align="center">{row.toDate !== ""
-                      ? formatDate(row.toDate)
-                      : "-"}</TableCell>
+                  ? formatDate(row.toDate)
+                  : "-"}</TableCell>
                 <TableCell align="right">{row.leaveType}</TableCell>
                 <TableCell align="left">{row.reason}</TableCell>
                 <TableCell align="right">
