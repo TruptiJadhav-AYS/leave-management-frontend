@@ -111,6 +111,7 @@ export default function PendingReq() {
                       onClick={() => handleAccept(row.name)}
                       sx={{ marginRight: 1, textTransform: "none" }}
                     >
+                      
                       Accept
                     </Button>
                     <Button

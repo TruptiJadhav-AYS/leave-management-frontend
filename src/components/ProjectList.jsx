@@ -265,6 +265,7 @@ export default function ProjectList({ onProjectAddOrEdit }) {
                 </TableRow>
               );
             })}
+            
           </TableBody>
         </Table>
       </TableContainer>
