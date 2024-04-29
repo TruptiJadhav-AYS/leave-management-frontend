@@ -14,7 +14,7 @@ import {
   Stack,
 } from "@mui/material";
 import { useSelector } from 'react-redux'
-// import { useGetPendingRequestsQuery } from "../Store/slice/apiLeaveBalanceSlice";
+import { useGetPendingRequestsQuery } from "../Store/slice/apiLeaveBalanceSlice";
 
 const handleAccept = (name) => {
 
@@ -24,33 +24,34 @@ const handleReject = (name) => {
 
 };
 export default function PendingReq() {
-  const PendingRequestList = useSelector(state=>state.PendingRequests.PendingRequestList)
-  // const id = useSelector((state) => state.employees.userId);
+  // const PendingRequestList = useSelector(state=>state.PendingRequests.PendingRequestList)
+  const id = useSelector((state) => state.employees.userId);
 
-  // const { data: pr, isSuccess } = useGetPendingRequestsQuery(id);
+  const { data: pr, isSuccess } = useGetPendingRequestsQuery(id);
   // console.log('History....', pr)
-  // const PendingRequestList = pr.pendingRequests || []
+  const PendingRequestList = pr?.pendingRequests || []
 
   console.log(PendingRequestList)
-  const formatDate = (dateString) => {
-    const [day, month, year] = dateString.split("-");
-    const monthNames = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
 
-    return `${day} ${monthNames[parseInt(month, 10) - 1]} ${year}`;
-  };
+  // const formatDate = (dateString) => {
+  //   const [day, month, year] = dateString.split("-");
+  //   const monthNames = [
+  //     "Jan",
+  //     "Feb",
+  //     "Mar",
+  //     "Apr",
+  //     "May",
+  //     "Jun",
+  //     "Jul",
+  //     "Aug",
+  //     "Sep",
+  //     "Oct",
+  //     "Nov",
+  //     "Dec",
+  //   ];
+
+  //   return `${day} ${monthNames[parseInt(month, 10) - 1]} ${year}`;
+  // };
 
   return (
     <Card sx={{ height: "100%", overflow: "auto" }}>
@@ -92,13 +93,13 @@ export default function PendingReq() {
                 }}
               >
                 <TableCell component="th" scope="row">
-                  {row.name}
+                  {row.employee.name}
                 </TableCell>
-                <TableCell align="center">{formatDate(row.fromDate)}</TableCell>
-                <TableCell align="center">{row.toDate !== ""
-                  ? formatDate(row.toDate)
+                <TableCell align="center">{row.start_date}</TableCell>
+                <TableCell align="center">{row.end_date !== ""
+                  ?row.toDate
                   : "-"}</TableCell>
-                <TableCell align="right">{row.leaveType}</TableCell>
+                <TableCell align="right">{row.leave_type}</TableCell>
                 <TableCell align="left">{row.reason}</TableCell>
                 <TableCell align="right">
                   <Stack direction={"row"}>
