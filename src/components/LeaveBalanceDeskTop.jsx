@@ -1,4 +1,5 @@
 import { Grid, Card, CardContent, Typography } from "@mui/material";
+import { orange } from "@mui/material/colors";
 import { Gauge, gaugeClasses } from "@mui/x-charts";
 
 export function LeaveBalanceDeskTop() {
@@ -16,24 +17,33 @@ export function LeaveBalanceDeskTop() {
           }}
         >
           {/* <CardContent> */}
-            <Gauge
-              width={100}
-              height={100}
-              value={10}
-              valueMax={21}
-              startAngle={-110}
-              endAngle={110}
-              sx={{
-                [`& .${gaugeClasses.valueText}`]: {
-                  fontSize: 13,
-                  transform: "translate(0px, 0px)",
-                },
-              }}
-              text={({ value, valueMax }) => `${value} / ${valueMax}`}
-            />
+          <Gauge
+            width={100}
+            height={100}
+            value={4}
+            valueMax={21}
+            startAngle={-110}
+            endAngle={110}
+            sx={{
+              [`& .${gaugeClasses.valueText}`]: {
+                fontSize: 13,
+                transform: "translate(0px, 0px)",
+              },
+              // "& .MuiGauge-root.MuiGauge-valueArc": {
+                "& .MuiGauge-valueArc": {
+                // fill: (value) => (value <= 5 ? "red" : "#3f51b5"), 
+                fill: "red", 
+                // "& .MuiGauge-valueArc": {
+                  // fill: ({ value }) => (value <= 5 ? "red" : "#3f51b5"),
+              },
+            }}
+            text={({ value, valueMax }) => `${value} / ${valueMax}`}
+          />
             {/* </CardContent>
             <CardContent> */}
-            <Typography>Remaining Leave</Typography>
+            <Typography
+            // color={"red"}
+            >Remaining Leave</Typography>
           {/* </CardContent> */}
         </Card>
       </Grid>

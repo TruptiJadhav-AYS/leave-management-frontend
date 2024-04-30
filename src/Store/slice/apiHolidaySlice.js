@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const holidaysApi = createApi({
   reducerPath: "holidaysApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3001",
+    baseUrl: "http://localhost:4000",
     prepareHeaders: (headers, { getState }) => {
       const token = localStorage.getItem("authToken");
       if (token) {

@@ -19,6 +19,8 @@ import MailIcon from "@mui/icons-material/Mail";
 import CallIcon from "@mui/icons-material/Call";
 import Profile from "../assets/profile.jpg"
 import { useSelector } from "react-redux";
+import { useGetEmployeesQuery } from "../Store/slice/apiEmployeeSlice";
+import { useEffect } from "react";
 
 function AccountMenu({LogedInEmployee}) {
 
@@ -28,8 +30,18 @@ function AccountMenu({LogedInEmployee}) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [logoutClick, setLogoutClick] = useState(false);
   const open = Boolean(anchorEl);
+  const { data: Employees, isSuccess } = useGetEmployeesQuery();
 
   let Navigate = useNavigate();
+
+  const employees=Employees || [];
+
+  useEffect(() => {
+    // Update filteredEmployees when employees data changes
+    if (isSuccess) {
+      setFilteredEmployees(employees);
+    }
+  }, [isSuccess, employees]);
 
   const onLogoutClick = () => {
     setLogoutClick(true);

@@ -48,8 +48,11 @@ export default function PendingReq() {
   return (
     <Card sx={{ height: "100%", overflow: "auto" }}>
       <CardContent sx={{ position: "sticky", top: 0, zIndex: 1 }}>
-        <Typography fontWeight={"bold"} textAlign={"left"} fontSize={"16px"}>
+        <Typography fontWeight={"bold"} textAlign={"left"} fontSize={"16px"}
+        color={"red"}
+        >
           Pending Requests
+          
         </Typography>
       </CardContent>
       <Divider />

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Grid, Typography, Paper, Box, IconButton } from "@mui/material";
+import { Grid, Typography, Paper, Box, IconButton, CircularProgress } from "@mui/material";
+import { PuffLoader } from "react-spinners";
 // import UseResponsive from '../hooks/UseResponsive';
 import UseReponsive from "../hooks/UseResponsive";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
@@ -63,7 +64,20 @@ export default function Holidays() {
     setHoverIndex(null);
   };
 
+  if (isLoading) {
+    return <Box
+     sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "80vh" }}>
+    <PuffLoader color={"blue"} fontSize={500} />
+    <Typography>Holidays loading...</Typography>
+    </Box>
+  }
+
+  if (isError) {
+    return <div>Error fetching holidays</div>;
+  }
+
   return (
+    
     <Grid container spacing={2} pt={2} px={2}>
       {suttya.map((holiday, index) => (
         <Grid
@@ -114,15 +128,31 @@ export default function Holidays() {
       ))}
       {role === "Admin"  && (
       <Box width={"100%"} display={"flex"} justifyContent={"right"}>
-        <IconButton
+        {/* <IconButton
           color="primary"
           sx={{ width: "40px", height: "40px", mt: 0.5 }}
           onClick={handleAddClick}
         >
           <AddCircleIcon sx={{ width: "40px", height: "40px" }} />
-        </IconButton>
+        </IconButton> */}
+
+<IconButton
+  color="primary"
+  sx={{
+    width: "40px",
+    height: "40px",
+    position: "fixed", // Use fixed positioning
+    bottom: "10px", // Adjust for desired distance from bottom
+    right: "10px" // Adjust for desired distance from right
+  }}
+  onClick={handleAddClick}
+>
+  <AddCircleIcon sx={{ width: "40px", height: "40px" }} />
+</IconButton>
       </Box>
        )} 
+
+
     </Grid>
   );
 }

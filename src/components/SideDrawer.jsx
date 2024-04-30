@@ -18,6 +18,7 @@ import UseReponsive from "../hooks/UseResponsive";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import CategoryIcon from '@mui/icons-material/Category';
 import { useSelector } from "react-redux";
+import { blue, brown, green, orange, purple, red, yellow } from "@mui/material/colors";
 
 export default function SideDrawer({ handleDrawerClose }) {
   let Navigate = useNavigate();
@@ -51,12 +52,16 @@ export default function SideDrawer({ handleDrawerClose }) {
   } else {
     sideDrawerList = ["Dashboard", "Apply Leave", "History", "Holidays"];
   }
+  const iconColors = [blue[500], green[500], red[500], orange[500], purple[500], yellow[500], brown[500]];
+
 
   return (
     <div>
       <Toolbar sx={{ ml: "-20px" }}>
+      <a href="https://ayssoftwaresolution.com/" target="_blank" rel="noopener noreferrer">
         <img
           src={logoImage}
+          
           alt="Logo"
           style={{
             maxWidth: "60px",
@@ -65,6 +70,7 @@ export default function SideDrawer({ handleDrawerClose }) {
             height: "100%",
           }}
         />
+        </a>
         <Grid ml="10px">
           <Typography textAlign={"left"} fontWeight={"bold"} color={"darkblue"}>
             AYS
@@ -122,7 +128,10 @@ export default function SideDrawer({ handleDrawerClose }) {
                     }
               }
             >
-              <ListItemIcon>
+              <ListItemIcon
+              sx={{ color: iconColors[index] }}
+              >
+                
                 {index === 0 ? (
                   <HomeIcon />
                 ) : index === 1 ? (
