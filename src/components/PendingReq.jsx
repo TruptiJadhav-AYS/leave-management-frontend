@@ -15,43 +15,25 @@ import {
 } from "@mui/material";
 import { useSelector } from 'react-redux'
 import { useGetPendingRequestsQuery } from "../Store/slice/apiLeaveBalanceSlice";
+import { useUpdateStatusMutation } from "../Store/slice/apiLeaveBalanceSlice";
 
-const handleAccept = (name) => {
 
-};
 
-const handleReject = (name) => {
 
-};
 export default function PendingReq() {
-  // const PendingRequestList = useSelector(state=>state.PendingRequests.PendingRequestList)
-  const id = useSelector((state) => state.employees.userId);
+  const { data: pr, isSuccess } = useGetPendingRequestsQuery();
+  const PendingRequestList = pr || [];
 
-  const { data: pr, isSuccess } = useGetPendingRequestsQuery(id);
-  // console.log('History....', pr)
-  const PendingRequestList = pr?.pendingRequests || []
+  const [updateStatus] = useUpdateStatusMutation();
 
-  console.log(PendingRequestList)
-
-  // const formatDate = (dateString) => {
-  //   const [day, month, year] = dateString.split("-");
-  //   const monthNames = [
-  //     "Jan",
-  //     "Feb",
-  //     "Mar",
-  //     "Apr",
-  //     "May",
-  //     "Jun",
-  //     "Jul",
-  //     "Aug",
-  //     "Sep",
-  //     "Oct",
-  //     "Nov",
-  //     "Dec",
-  //   ];
-
-  //   return `${day} ${monthNames[parseInt(month, 10) - 1]} ${year}`;
-  // };
+  const handleAccept = (id) => {
+    updateStatus({ id: id, updatedLeaveStatus: 'approved' });
+  
+  };
+  
+  const handleReject = (id) => {
+    updateStatus({ id: id, updatedLeaveStatus: 'rejected' });
+  };
 
   return (
     <Card sx={{ height: "100%", overflow: "auto" }}>
@@ -68,6 +50,7 @@ export default function PendingReq() {
         <Table sx={{ minWidth: 700 }} stickyHeader>
           <TableHead>
             <TableRow>
+              <TableCell sx={{ fontWeight: "bold" }}>Id</TableCell>
               <TableCell sx={{ fontWeight: "bold" }}>Name</TableCell>
               <TableCell align="center" sx={{ fontWeight: "bold" }}>
                 From date
@@ -87,18 +70,19 @@ export default function PendingReq() {
           <TableBody>
             {PendingRequestList.map((row) => (
               <TableRow
-                key={row.name}
+                key={row.id} // Changed key to use id instead of name
                 sx={{
                   "&:last-child td, &:last-child th": { border: 0 },
                 }}
               >
                 <TableCell component="th" scope="row">
-                  {row.employee.name}
+                  {row.id}
                 </TableCell>
+                <TableCell>{row.employeeName}</TableCell>
                 <TableCell align="center">{row.start_date}</TableCell>
-                <TableCell align="center">{row.end_date !== ""
-                  ?row.toDate
-                  : "-"}</TableCell>
+                <TableCell align="center">
+                  {row.end_date !== "" ? row.toDate : "-"}
+                </TableCell>
                 <TableCell align="right">{row.leave_type}</TableCell>
                 <TableCell align="left">{row.reason}</TableCell>
                 <TableCell align="right">
@@ -108,10 +92,9 @@ export default function PendingReq() {
                       variant="contained"
                       color="success"
                       size="small"
-                      onClick={() => handleAccept(row.name)}
+                      onClick={() => handleAccept(row.id)} // Changed to pass id to handleAccept
                       sx={{ marginRight: 1, textTransform: "none" }}
                     >
-                      
                       Accept
                     </Button>
                     <Button
@@ -119,7 +102,7 @@ export default function PendingReq() {
                       variant="outlined"
                       color="error"
                       size="small"
-                      onClick={() => handleReject(row.name)}
+                      onClick={() => handleReject(row.id)} // Changed to pass id to handleReject
                       sx={{ textTransform: "none" }}
                     >
                       Reject
