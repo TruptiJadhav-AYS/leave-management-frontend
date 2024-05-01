@@ -35,7 +35,7 @@ import { useGetProjectsQuery } from "../Store/slice/apiProjectSlice";
 const columns = [
   { id: "name", label: "Name", minWidth: 120 },
   {
-    id: "manager_name",
+    id: "manager",
     label: "Project Manager",
     minWidth: 90,
   },
@@ -57,10 +57,11 @@ const columns = [
 ];
 
 export default function ProjectList({ onProjectAddOrEdit }) {
-  const [filteredProjects, setFilteredEmployees] = useState([]); // New state for filtered employees
+  const [filteredProjects, setFilteredProjects] = useState([]); // New state for filtered employees
   // const Projects = useSelector((state) => state.Project.Projects);
   const { data: project,isSuccess} = useGetProjectsQuery();
   const Projects = project || [];
+  console.log(Projects)
   const selectedProject = useSelector((state) => state.Project.selectedProject);
 
   const dispatch = useDispatch();
@@ -77,64 +78,17 @@ export default function ProjectList({ onProjectAddOrEdit }) {
   useEffect(() => {
     // Update filteredEmployees when employees data changes
     if (isSuccess) {
-      setFilteredEmployees(Projects);
+      setFilteredProjects(Projects);
     }
   }, [isSuccess, Projects]);
   useEffect(() => {
     // Filter employees based on search text when it changes
-    setFilteredEmployees(
+    setFilteredProjects(
       Projects.filter((employee) =>
         employee.name.toLowerCase().includes(searchText.toLowerCase())
       )
     );
   }, [searchText, Projects]);
-  // const [sortOrder, setSortOrder] = useState(""); // Track sort order
-  // const [sortedBy, setSortedBy] = useState("name"); // Track sorted column
-  // console.log(searchText);
-
-  // const sortedRows = useMemo(() => {
-  //   // Sort rows based on sortedBy and sortOrder
-  //   return Projects.slice().sort((a, b) => {
-  //     const valueA = a[sortedBy];
-  //     const valueB = b[sortedBy];
-
-  //     if (typeof valueA === "string") {
-  //       return sortOrder === "asc"
-  //         ? valueA.localeCompare(valueB)
-  //         : valueB.localeCompare(valueA);
-  //     } else {
-  //       return sortOrder === "asc" ? valueA - valueB : valueB - valueA;
-  //     }
-  //   });
-  // }, [sortedBy, sortOrder]);
-
-  // if (isLoading) {
-  //   return (
-  //     <Grid>
-  //       <CircularProgress />
-  //     </Grid>
-  //   );
-  // }
-  // if (isError) {
-  //   return <></>;
-  // }
-
-  // const handleSortClick = (columnId) => {
-  //   const isAscending = sortedBy === columnId && sortOrder === "asc";
-  //   setSortedBy(columnId);
-  //   setSortOrder(isAscending ? "desc" : "asc");
-  // };
-
-  // const { data: Employees, isSuccess } = useGetEmployeesQuery();
-  // const [searchText, setSearchText] = useState("");
-  // const [sortedBy, setSortedBy] = useState("name");
-  // const [sortOrder, setSortOrder] = useState("asc");
-  // const Navigate = useNavigate();
-  // const employees=Employees || [];
-  // console.log(employees)
-
-  
-
   
 
   const handleChangePage = (event, newPage) => {
@@ -257,7 +211,7 @@ export default function ProjectList({ onProjectAddOrEdit }) {
                     const value = row[column.id];
                     return (
                       <TableCell key={index} align={column.align}>
-                        {column.id==="status" ? value.charAt(0).toUpperCase() + value.slice(1) : value}
+                        {column.id==="status" ? value.charAt(0).toUpperCase() + value.slice(1) :column.id==="manager" && value ? value.name: value}
                       </TableCell>
                     );
                   })}
@@ -279,3 +233,50 @@ export default function ProjectList({ onProjectAddOrEdit }) {
     </Paper>
   );
 }
+
+ // const [sortOrder, setSortOrder] = useState(""); // Track sort order
+  // const [sortedBy, setSortedBy] = useState("name"); // Track sorted column
+  // console.log(searchText);
+
+  // const sortedRows = useMemo(() => {
+  //   // Sort rows based on sortedBy and sortOrder
+  //   return Projects.slice().sort((a, b) => {
+  //     const valueA = a[sortedBy];
+  //     const valueB = b[sortedBy];
+
+  //     if (typeof valueA === "string") {
+  //       return sortOrder === "asc"
+  //         ? valueA.localeCompare(valueB)
+  //         : valueB.localeCompare(valueA);
+  //     } else {
+  //       return sortOrder === "asc" ? valueA - valueB : valueB - valueA;
+  //     }
+  //   });
+  // }, [sortedBy, sortOrder]);
+
+  // if (isLoading) {
+  //   return (
+  //     <Grid>
+  //       <CircularProgress />
+  //     </Grid>
+  //   );
+  // }
+  // if (isError) {
+  //   return <></>;
+  // }
+
+  // const handleSortClick = (columnId) => {
+  //   const isAscending = sortedBy === columnId && sortOrder === "asc";
+  //   setSortedBy(columnId);
+  //   setSortOrder(isAscending ? "desc" : "asc");
+  // };
+
+  // const { data: Employees, isSuccess } = useGetEmployeesQuery();
+  // const [searchText, setSearchText] = useState("");
+  // const [sortedBy, setSortedBy] = useState("name");
+  // const [sortOrder, setSortOrder] = useState("asc");
+  // const Navigate = useNavigate();
+  // const employees=Employees || [];
+  // console.log(employees)
+
+  

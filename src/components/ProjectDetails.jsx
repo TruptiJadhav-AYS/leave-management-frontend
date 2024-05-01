@@ -70,14 +70,15 @@ export default function ProjectDetails({ onProjectAddOrEdit }) {
               </Typography>
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
+              {Projects[index].manager&&
               <Typography
                 variant="caption"
                 fontWeight={"600"}
                 align="left"
                 // justifyContent={"left"}
               >
-                Project Manager : {Projects[index].manager_name}
-              </Typography>
+                Project Manager : {Projects[index].manager.name}
+              </Typography>}
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
               <Typography variant="caption" fontWeight={"600"}>
@@ -85,9 +86,10 @@ export default function ProjectDetails({ onProjectAddOrEdit }) {
               </Typography>
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
+              {Projects[index].description&&
               <Typography variant="caption" fontWeight={"600"} align="left">
                 Description : {Projects[index].description}
-              </Typography>
+              </Typography>}
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
               <Typography variant="caption" fontWeight={"600"} align="left">

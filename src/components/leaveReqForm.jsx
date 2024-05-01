@@ -17,13 +17,14 @@ import UseReponsive from "../hooks/UseResponsive";
 import CheckIcon from "@mui/icons-material/Check"
 import { useDispatch } from "react-redux";
 import addSendingRequest from "../Store/action/AddRequestHistory";
+import { useApplyLeaveMutation } from "../Store/slice/apiLeaveReqSlice";
 
 function LeaveReqForm() {
   let Navigate = useNavigate();
-  let dispatch=useDispatch();
   let [clickedId, setClickedId] = useState("");
   let responsive=UseReponsive();
   let [submitSuccess,setSubmitSuccess]=useState(false)
+  let [applyLeave]=useApplyLeaveMutation()
 
   function handleClick(id) {
     setClickedId(id);
@@ -31,30 +32,27 @@ function LeaveReqForm() {
 
   const yup = require("yup");
 
-  // const today = new Date();
-
   const leaveReqObj = yup.object({
-    fromDate: yup
+    start_date: yup
       .date()
       .required("Please select a date"),
-    toDate: yup
+    end_date: yup
       .date()
-      .min(yup.ref("fromDate"), "Please Select a valid date")
-      .required("Please select a date"),
-    leaveType: yup.string().required("Please Select a leave type"),
+      .min(yup.ref("start_date"), "Please Select a valid date"),
+    leave_type: yup.string().required("Please Select a leave type"),
     reason: yup.string(),
   });
 
   const formik = useFormik({
     initialValues: {
-      fromDate: "",
-      toDate: "",
-      leaveType: "",
+      start_date: "",
+      end_date: "",
+      leave_type: "",
       reason: "",
     },
     validationSchema: leaveReqObj,
     onSubmit: (values) => {
-      dispatch(addSendingRequest(values))
+      applyLeave(values)
       setSubmitSuccess(true);
       setTimeout(()=>{
       Navigate("/Employee");
@@ -92,7 +90,7 @@ function LeaveReqForm() {
                 onChange={formik.handleChange}
                 value={formik.values.fromDate}
                 type="date"
-                name="fromDate"
+                name="start_date"
                 lable="From Date"
                 onClick={() => {
                   handleClick("from-date");
@@ -108,9 +106,9 @@ function LeaveReqForm() {
                   width: "100%",
                 }}
               />
-              {formik.touched.fromDate && Error.fromDate && (
+              {formik.touched.start_date && Error.start_date && (
                 <Typography fontSize={"12px"} color="error">
-                  {Error.fromDate}
+                  {Error.start_date}
                 </Typography>
               )}
             </Grid>
@@ -121,7 +119,7 @@ function LeaveReqForm() {
                 value={formik.values.toDate}
                 onChange={formik.handleChange}
                 type="date"
-                name="toDate"
+                name="end_date"
                 lable="To Date"
                 onClick={() => {
                   handleClick("to-date");
@@ -138,9 +136,9 @@ function LeaveReqForm() {
                 }}
               />
 
-              {formik.touched.toDate && Error.toDate && (
+              {formik.touched.end_date && Error.end_date && (
                 <Typography variant="caption" color="error">
-                  {Error.toDate}
+                  {Error.end_date}
                 </Typography>
               )}
             </Grid>
@@ -152,7 +150,7 @@ function LeaveReqForm() {
                 <Typography fontSize={"13px"}>LEAVE TYPE</Typography>
                 <Select
                   value={formik.values.leaveType}
-                  name="leaveType"
+                  name="leave_type"
                   size="small"
                   labelId="leave-type-label"
                   onClick={() => {
@@ -178,9 +176,9 @@ function LeaveReqForm() {
                   <MenuItem value="Work From Home">Work From Home</MenuItem>
                 </Select>
 
-                {formik.touched.leaveType && Error.leaveType && (
+                {formik.touched.leave_type && Error.leave_type && (
                   <Typography variant="caption" color="error">
-                    {Error.leaveType}
+                    {Error.leave_type}
                   </Typography>
                 )}
               </Stack>

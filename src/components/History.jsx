@@ -9,10 +9,11 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { useSelector } from "react-redux";
 import { Box } from "@mui/material";
+import { useGetLeavesByIdQuery } from "../Store/slice/apiLeaveReqSlice";
 
 const columns = [
-  { id: "Start_Date", label: "Start Date", minWidth: 90, ml: "500px" },
-  { id: "End_Date", label: "End Date", minWidth: 80 },
+  { id: "start_date", label: "Start Date", minWidth: 90, ml: "500px" },
+  { id: "end_date", label: "End Date", minWidth: 80 },
   {
     id: "leave_type",
     label: "Leave Type",
@@ -31,8 +32,10 @@ const columns = [
 ];
 
 export default function History() {
-  const LeaveHistory = useSelector((state) => state.leaveHistory.LeaveHistory);
-  // console.log("(((((((((((((((((((((((((", LeaveHistory)
+  let logedInEmp=useSelector((state)=>state.employees.logedInEmp)
+  console.log(logedInEmp)
+  const { data: LeaveHistory = []} = useGetLeavesByIdQuery(6);
+
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -120,13 +123,13 @@ export default function History() {
                           <Box
                             sx={{
                               bgcolor:
-                                column.id === "status" && value === "Pending"
+                                column.id === "status" && value === "Pending"||"pending"
                                   ? "#FFD699"
                                   : column.id === "status" &&
-                                    value === "Accepted"
+                                    value === "Accepted"||"accepted"
                                   ? "#CCFFCC"
                                   : column.id === "status" &&
-                                    value === "Rejected"
+                                    value === "Rejected"||"rejected"
                                   ? "#D3D3D3"
                                   : "",
                               width: column.id === "status" && "70px",
