@@ -13,7 +13,7 @@ import {
   TableContainer,
   Stack,
 } from "@mui/material";
-import { useSelector } from 'react-redux'
+import { useSelector } from "react-redux";
 import { useGetPendingRequestsQuery } from "../Store/slice/apiLeaveBalanceSlice";
 import { useUpdateStatusMutation } from "../Store/slice/apiLeaveBalanceSlice";
 
@@ -24,14 +24,13 @@ export default function PendingReq() {
   const [updateStatus, { isLoading, error }] = useUpdateStatusMutation();
 
   const handleAccept = (id) => {
-    updateStatus({ id: id, updatedLeaveStatus: 'approved' });
+    updateStatus({ id: id, status: "approved" });
   };
-  
+
   const handleReject = (id) => {
-    updateStatus({ id: id, updatedLeaveStatus: 'rejected' });
+    updateStatus({ id: id, status: "rejected" });
   };
-  
-  
+
   return (
     <Card sx={{ height: "100%", overflow: "auto" }}>
       <CardContent sx={{ position: "sticky", top: 0, zIndex: 1 }}>
