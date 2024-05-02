@@ -63,11 +63,11 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
               : ""
             : ""
           : "",
-      manager_name:
+      managerId:
         projectAddOrEdit === "edit"
           ? selectedProject
-            ? Projects[index].Project_Manager
-              ? Projects[index].Project_Manager
+            ? Projects[index].managerId
+              ? Projects[index].managerId
               : ""
             : ""
           : "",
@@ -98,12 +98,13 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Project Name is required."),
-      manager_name: Yup.string().required("Manager Name is required."),
+      managerId: Yup.string().required("Manager Name is required."),
       startDate: Yup.date().required("Please select a date"),
       status: Yup.string().required("Project status is required."),
       description: Yup.string(),
     }),
     onSubmit: (values) => {
+      console.log(values)
       {
         projectAddOrEdit === "add"
           ? addProject(values)
@@ -194,10 +195,10 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
                     <Typography variant="body2"> Manager Name </Typography>
                     
                     <Select
-                      name="manager_name"
+                      name="managerId"
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
-                      value={formik.values.Project_Manager}
+                      value={formik.values.managerId}
                       size="small"
                       sx={{
                         "& fieldset": {
@@ -215,14 +216,16 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
                       MenuProps={MenuProps}
                     >
                      {Employees.map((emp, index) => (
-                        <MenuItem key={index} value={emp.name}>
+                      
+                        <MenuItem key={index} value={emp.id}>
                           {emp.name}
+                          {/* {emp.id} */}
                         </MenuItem>
                       ))}
                     </Select>
-                    {formik.touched.manager_name && errors.manager_name && (
+                    {formik.touched.managerId && errors.managerId && (
                       <Typography variant="caption" color="error">
-                        {errors.manager_name}
+                        {errors.managerId}
                       </Typography>
                     )}
                   </Stack>

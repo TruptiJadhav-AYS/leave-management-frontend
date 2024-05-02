@@ -81,12 +81,17 @@ function ResetPasswordPage({logedInUser}) {
       if(response.error==="Passwords do not match"){
         setConfirmPasswordError("Passwords do not match")
       }
-      // if(response.status===400){
-      //   setOtpError("OTP")
-      // }
+      if(response.error==="Invalid OTP"){
+        setOtpError("Invalid OTP")
+      }
+      if(response.error==="OTP has expired"){
+        setOtpError("OTP has expired")
+      }
+      if(response.message==="Password reset successfully"){
+        navigate("/")
+      }
     } catch (error) {
       console.error("Reset password error:", error);
-      // Handle different types of errors here (e.g., invalid OTP, password rules not met)
     }
   };
   

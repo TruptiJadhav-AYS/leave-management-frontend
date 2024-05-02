@@ -18,6 +18,7 @@ export default function ProjectDetails({ onProjectAddOrEdit }) {
   const selectedProject = useSelector((state) => state.Project.selectedProject);
   const { data: project,isSuccess } = useGetProjectsQuery();
   const Projects = project || [];
+  console.log(Projects)
 
   let [deleteDialogue, setdeleteDialogue] = useState();
   const dispatch = useDispatch();
@@ -76,7 +77,7 @@ export default function ProjectDetails({ onProjectAddOrEdit }) {
                 align="left"
                 // justifyContent={"left"}
               >
-                Project Manager : {Projects[index].manager_name}
+                Project Manager : {Projects[index].manager.name}
               </Typography>
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>

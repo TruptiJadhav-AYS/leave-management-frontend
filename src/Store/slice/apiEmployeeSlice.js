@@ -29,8 +29,8 @@ const employeeApi = createApi({
         url: '/employees',
         method: 'POST',
         body: newEmployee,
+        invalidatesTags:[{ data: 'Employees' }]
       }),
-      invalidatesTags:[{ data: 'Employees' }]
     }),
     
     updateEmployee: builder.mutation({
@@ -38,21 +38,42 @@ const employeeApi = createApi({
         url: `/employees/${id}`,
         method: 'PUT',
         body: updatedEmployeeDetails,
+        invalidatesTags: [{ data: 'Employees' }]
       }),
-      invalidatesTags: [{ data: 'Employees' }]
     }),
 
     deleteEmployee: builder.mutation({
       query: (employeeId) => ({
         url: `/employees/${employeeId}`,
         method: 'DELETE',
+        invalidatesTags:[{ data: 'Employees' }]
       }),
-      invalidatesTags:[{ data: 'Employees' }]
+    }),
+
+    uploadImage:builder.mutation({
+      query:({employeeId,imageData})=>({
+        url:`employees/upload-image/${employeeId}`,
+        method:"POST",
+        body: formData(employeeId, imageData),
+        prepareHeaders: (headers) => {
+            headers.set("Content-Type", "multipart/form-data");
+            return headers;
+        },
+        invalidatesTags:[{ data: 'Employees' }]
+      })
     })
   }),
   
 
 });
 
-export const { useGetEmployeesQuery,useGetEmployeesByIdQuery,useAddEmployeeMutation,useUpdateEmployeeMutation, useDeleteEmployeeMutation } = employeeApi;
+export const { useGetEmployeesQuery,useGetEmployeesByIdQuery,useAddEmployeeMutation,useUpdateEmployeeMutation, useDeleteEmployeeMutation,useUploadImageMutation } = employeeApi;
 export default employeeApi;
+
+function formData(employeeId, imageData) {
+  const formData = new FormData();
+  formData.append("employeeId", employeeId);
+  formData.append("imageData", imageData);
+  console.log("helooooo")
+  return formData;
+}
