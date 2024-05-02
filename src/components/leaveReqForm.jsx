@@ -170,10 +170,10 @@ function LeaveReqForm() {
                     },
                   }}
                 >
-                  <MenuItem value="Half day (First half)">Half Day (First half)</MenuItem>
-                  <MenuItem  value="Half day (Second half)">Half Day (Second half)</MenuItem>
-                  <MenuItem value="Full day">Full Day</MenuItem>
-                  <MenuItem value="Work From Home">Work From Home</MenuItem>
+                  <MenuItem value="first half">Half Day (First half)</MenuItem>
+                  <MenuItem  value="second half">Half Day (Second half)</MenuItem>
+                  <MenuItem value="full">Full Day</MenuItem>
+                  <MenuItem value="work from home">Work From Home</MenuItem>
                 </Select>
 
                 {formik.touched.leave_type && Error.leave_type && (

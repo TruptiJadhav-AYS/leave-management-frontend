@@ -12,18 +12,11 @@ import {
 import ListItem from "@mui/material/ListItem";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
 import SearchIcon from "@mui/icons-material/Search";
+import { selectProject } from "../Store/slice/ProjectsSlice";
 import { useState,useEffect } from "react";
 import {useSelector,useDispatch} from 'react-redux'
 import { useDeleteProjectMutation, useGetProjectsQuery } from "../Store/slice/apiProjectSlice";
-import { deleteProject } from "../Store/slice/ProjectsSlice";
-
 
 export default function ContactsList() {
   // const Projects =useSelector(state=>state.Project.Projects)
@@ -43,13 +36,7 @@ export default function ContactsList() {
   const selectedProject = useSelector((state) => state.Project.selectedProject);
   console.log("selected project", selectedProject);
   const dispatch = useDispatch();
-  // const Navigate = useNavigate();
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [deleteProject]=useDeleteProjectMutation()
-  
-  // const [searchText, setsearchText] = useState("");
-  
+
   function handleSearchText(event) {
     setsearchText(event.target.value);
   }
@@ -60,8 +47,8 @@ export default function ContactsList() {
       setFilteredEmployees(Projects);
     }
   }, [isSuccess, Projects]);
+
   useEffect(() => {
-    // Filter employees based on search text when it changes
     setFilteredEmployees(
       Projects.filter((employee) =>
         employee.name.toLowerCase().includes(searchText.toLowerCase())
@@ -69,9 +56,18 @@ export default function ContactsList() {
     );
   }, [searchText, Projects]);
 
-  // const FilterArray = Projects.filter((project) =>
-  //   project.name.toLowerCase().includes(searchText.toLowerCase())
-  // );
+  
+  const formatDate = (timestampString) => {
+    const date = new Date(timestampString);
+    const year = date.getFullYear();
+    const day = date.getDate().toString().padStart(2, "0");
+
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const formattedDate = `${day} ${monthNames[date.getMonth()]} ${year}`;
+
+    return formattedDate;
+  };
+
 
   return (
     <Paper sx={{ height: "80vh", mt: "5%" }}>
@@ -149,111 +145,57 @@ export default function ContactsList() {
           >
             {filteredProjects.map((project,index) => (
               <Card
-                sx={{ mb: 1, borderRadius: 2, mr: 1 }}
+                sx={{ mb: 1, borderRadius: 2, mr: 1 ,cursor:"pointer"}}
                 elevation={3}
                 key={index}
-                // fullWidth
+                onClick={() => {
+                  dispatch(selectProject(project.id));
+                  Navigate(`/Employee/Projects/${project.id}`);
+                }}
               >
-                <Accordion>
-                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                    {
-                      <ListItem alignItems="flex-start" fullWidth mx={1}>
-                        <Grid container spacing={2}>
-                          <Grid item xs={12}>
-                            <Typography
-                              variant="body1"
-                              sx={{
-                                textTransform: "none",
-                                color: "black",
-                                fontWeight: "530",
-                              }}
-                            >
-                              {project.name}
-                            </Typography>
-                            <Typography
-                              variant="caption"
-                              sx={{ textTransform: "none", color: "black" }}
-                            >
-                              <Typography
-                                variant="caption"
-                                fontWeight={"bold"}
-                                mr={1}
-                              >
-                                Project Manager :
-                              </Typography>
-                              {project.manager_name}
-                            </Typography>
-                          </Grid>
-                        </Grid>
-                      </ListItem>
-                    }
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    {
-                      <Grid container width={"100%"}>
-                        <Grid item xs={12}>
-                          <Grid
-                            container
-                            sx={{ display: "flex", justifyContent: "flex-end" }}
-                          >
-    
-                            <EditIcon fontSize="small" sx={{ mr: 1 }} onClick={()=>{Navigate("/Employee/Projects/EditProject")}}/>
-                            <DeleteIcon fontSize="small" onClick={()=>deleteProject(project.id)}/>
-                          </Grid>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <Typography
-                            label="Start_date"
-                            variant="body1"
-                            sx={{
-                              textTransform: "none",
-                              color: "black",
-
-                              display: "flex",
-                              mx: 2,
-                            }}
-                          >
-                            <Typography variant="body1" fontWeight={"bold"} mr={1}>
-                              Start date :{" "}
-                            </Typography>
-                            {project.startDate}
-                          </Typography>
-                          {/* <Typography
-                            label="End_date"
-                            variant="body1"
-                            sx={{
-                              textTransform: "none",
-                              color: "black",
-                              display: "flex",
-                              mx: 2,
-                            }}
-                          >
-                            <Typography variant="body1" fontWeight={"bold"} mr={1}>
-                              End_date :{" "}
-                            </Typography>
-                            {project.End_date}
-                          </Typography> */}
-                          <Typography
-                            label="Status"
-                            variant="body1"
-                            sx={{
-                              textTransform: "none",
-                              color: "black",
-
-                              display: "flex",
-                              mx: 2,
-                            }}
-                          >
-                            <Typography variant="body1" fontWeight={"bold"} mr={1}>
-                              Status :{" "}
-                            </Typography>
-                            {project.status}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                    }
-                  </AccordionDetails>
-                </Accordion>                
+                <ListItem alignItems="flex-start" fullWidth mx={1}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          textTransform: "none",
+                          color: "black",
+                          fontWeight: "530",
+                        }}
+                      >
+                        {project.name}
+                      </Typography>
+                      <Typography
+                        variant="caption"
+                        sx={{ textTransform: "none", color: "black" }}
+                      >
+                        <Typography
+                          variant="caption"
+                          fontWeight={"bold"}
+                          mr={1}
+                        >
+                          Project Manager :
+                        </Typography>
+                        {project.manager.name}
+                      </Typography>
+                      <br/>
+                      <Typography
+                        variant="caption"
+                        sx={{ textTransform: "none", color: "black" }}
+                      >
+                        <Typography
+                          variant="caption"
+                          fontWeight={"bold"}
+                          mr={1}
+                        >
+                          Start Date :
+                        </Typography>
+                        {formatDate(project.startDate)}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </ListItem>          
                 </Card>
             ))}
           </Grid>

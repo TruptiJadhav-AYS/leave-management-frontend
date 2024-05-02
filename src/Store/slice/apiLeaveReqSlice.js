@@ -26,13 +26,37 @@ const leaveReqApi = createApi({
         method: "POST",
         body: leave,
       }),
-      invalidatesTags: [{ data: 'Project' }]
+      invalidatesTags: [{ data: 'leave' }]
     }),
+
+    getEmpOnLeaveToday:builder.query({
+      query:()=>({
+        url:"/leave/employees/employees-leave-on-today"
+      }),
+      providesTags: [{ data: 'leave' }]
+    }),
+
+    getPendingRequest:builder.query({
+      query: () => `/leave/employees/pending-requests`,
+      providesTags:[{data:"leave"}]
+    }),
+
+    updateLeaveStatus:builder.mutation({
+      query:({ id, status }) => ({
+        url: `/leave/${id}/status`,
+        method: "PUT",
+        body: { status },
+      }),
+      invalidatesTags:[{data:"leave"}]
+    })
     }),
 });
 
 export const {
     useApplyLeaveMutation,
     useGetLeavesByIdQuery,
+    useGetEmpOnLeaveTodayQuery,
+    useGetPendingRequestQuery,
+    useUpdateLeaveStatusMutation
 } = leaveReqApi;
 export default leaveReqApi;

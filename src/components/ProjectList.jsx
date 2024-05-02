@@ -44,11 +44,6 @@ const columns = [
     label: "Start Date",
     minWidth: 90,
   },
-  // {
-  //   id: "End_date",
-  //   label: "End Date",
-  //   minWidth: 90,
-  // },
   {
     id: "status",
     label: "Status",
@@ -75,14 +70,23 @@ export default function ProjectList({ onProjectAddOrEdit }) {
     setsearchText(event.target.value);
   }
 
+  const formatDate = (timestampString) => {
+    const date = new Date(timestampString);
+    const year = date.getFullYear();
+    const day = date.getDate().toString().padStart(2, "0");
+
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const formattedDate = `${day} ${monthNames[date.getMonth()]} ${year}`;
+
+    return formattedDate;
+  };
+
   useEffect(() => {
-    // Update filteredEmployees when employees data changes
     if (isSuccess) {
       setFilteredProjects(Projects);
     }
   }, [isSuccess, Projects]);
   useEffect(() => {
-    // Filter employees based on search text when it changes
     setFilteredProjects(
       Projects.filter((employee) =>
         employee.name.toLowerCase().includes(searchText.toLowerCase())
@@ -99,10 +103,6 @@ export default function ProjectList({ onProjectAddOrEdit }) {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
-  // const FilterArray = sortedRows.filter((project) =>
-  //   project.name.toLowerCase().includes(searchText.toLowerCase())
-  // );
 
   return (
     <Paper
@@ -160,27 +160,7 @@ export default function ProjectList({ onProjectAddOrEdit }) {
                     <Typography fontWeight={550} fontSize={"16px"}>
                       {column.label}
                     </Typography>
-                    {/* {column.label === "name" ? (
-                      <Button
-                        disableRipple
-                        size="small"
-                        onClick={
-                          column.id === "name"
-                            ? () => handleSortClick(column.id)
-                            : undefined
-                        }
-                      >
-                        {sortOrder === "asc" ? (
-                          <>
-                            <ArrowUpwardIcon />
-                          </>
-                        ) : (
-                          <>
-                            <ArrowDownwardIcon />
-                          </>
-                        )}
-                      </Button>
-                    ) : null} */}
+                   
                   </Stack>
                 </TableCell>
               ))}
@@ -211,7 +191,7 @@ export default function ProjectList({ onProjectAddOrEdit }) {
                     const value = row[column.id];
                     return (
                       <TableCell key={index} align={column.align}>
-                        {column.id==="status" ? value.charAt(0).toUpperCase() + value.slice(1) :column.id==="manager" && value ? value.name: value}
+                        {column.id==="status" ? value.charAt(0).toUpperCase() + value.slice(1) :column.id==="manager" && value ? value.name :column.id==="startDate"? formatDate(value) : value}
                       </TableCell>
                     );
                   })}

@@ -1,7 +1,5 @@
 import {
   Card,
-  CardContent,
-  Typography,
   Divider,
   Paper,
   TableHead,
@@ -13,17 +11,30 @@ import {
   TableContainer,
   Stack,
 } from "@mui/material";
-import {useSelector} from 'react-redux'
+import { useSelector } from "react-redux";
+import { useGetPendingRequestQuery } from "../Store/slice/apiLeaveReqSlice";
+import { useUpdateLeaveStatusMutation } from "../Store/slice/apiLeaveReqSlice";
 
-const handleAccept = (name) => {
-  
-};
-
-const handleReject = (name) => {
-  
-};
 export default function PendingReq() {
-  const PendingRequestList = useSelector(state=>state.PendingRequests.PendingRequestList)
+  const {
+    data: pendingRequest,
+  } = useGetPendingRequestQuery();
+
+  const id = useSelector((state) => state.employees.userId);
+
+  const PendingRequestList = pendingRequest
+    ? pendingRequest.filter((request) => request.emp_id !== id)
+    : [];
+
+  const [updateStatus] = useUpdateLeaveStatusMutation();
+
+  const handleAccept = (id) => {
+    updateStatus({ id: id, status: "approved" });
+  };
+
+  const handleReject = (id) => {
+    updateStatus({ id: id, status: "rejected" });
+  };
 
   const formatDate = (dateString) => {
     const [day, month, year] = dateString.split("-");
@@ -47,15 +58,10 @@ export default function PendingReq() {
 
   return (
     <Card sx={{ height: "100%", overflow: "auto" }}>
-      <CardContent sx={{ position: "sticky", top: 0, zIndex: 1 }}>
-        <Typography fontWeight={"bold"} textAlign={"left"} fontSize={"16px"}>
-          Pending Requests
-        </Typography>
-      </CardContent>
       <Divider />
       <TableContainer
         component={Paper}
-        sx={{ height: "51vh", scrollbarWidth: "thin" }}
+        sx={{ height: "99%", scrollbarWidth: "thin" }}
       >
         <Table sx={{ minWidth: 700 }} stickyHeader>
           <TableHead>
@@ -64,7 +70,7 @@ export default function PendingReq() {
               <TableCell align="center" sx={{ fontWeight: "bold" }}>
                 From date
               </TableCell>
-              <TableCell align="left" sx={{ fontWeight: "bold" }}>
+              <TableCell align="center" sx={{ fontWeight: "bold" }}>
                 To date
               </TableCell>
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
@@ -79,19 +85,19 @@ export default function PendingReq() {
           <TableBody>
             {PendingRequestList.map((row) => (
               <TableRow
-                key={row.name}
+                key={row.id}
                 sx={{
                   "&:last-child td, &:last-child th": { border: 0 },
                 }}
               >
                 <TableCell component="th" scope="row">
-                  {row.name}
+                  {row.employeeName}
                 </TableCell>
-                <TableCell align="center">{formatDate(row.fromDate)}</TableCell>
-                <TableCell align="center">{row.toDate !== ""
-                      ? formatDate(row.toDate)
-                      : "-"}</TableCell>
-                <TableCell align="right">{row.leaveType}</TableCell>
+                <TableCell align="center">{formatDate(row.start_date)}</TableCell>
+                <TableCell align="center">
+                  {row.toDate !== "" ? formatDate(row.end_date) : "-"}
+                </TableCell>
+                <TableCell align="right">{row.leave_type}</TableCell>
                 <TableCell align="left">{row.reason}</TableCell>
                 <TableCell align="right">
                   <Stack direction={"row"}>
@@ -100,18 +106,18 @@ export default function PendingReq() {
                       variant="contained"
                       color="success"
                       size="small"
-                      onClick={() => handleAccept(row.name)}
-                      sx={{ marginRight: 1, textTransform: "none" }}
+                      onClick={() => handleAccept(row.id)}
+                      sx={{ marginRight: 1, textTransform: "none" ,height:"25px",width:"52px"}}
                     >
-                      Accept
+                      Approve
                     </Button>
                     <Button
                       disableRipple
                       variant="outlined"
                       color="error"
                       size="small"
-                      onClick={() => handleReject(row.name)}
-                      sx={{ textTransform: "none" }}
+                      onClick={() => handleReject(row.id)}
+                      sx={{ textTransform: "none" ,height:"25px",width:"52px"}}
                     >
                       Reject
                     </Button>

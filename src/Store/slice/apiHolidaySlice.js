@@ -28,8 +28,8 @@ const holidaysApi = createApi({
             headers.set("Content-Type", "multipart/form-data");
             return headers;
         },
-        invalidatesTags: [{ data: "Holidays" }],
       }),
+      invalidatesTags: [{ data: "Holidays" }],
     }),
     deleteHoliday: builder.mutation({
       query: (holidayId) => ({
@@ -38,12 +38,13 @@ const holidaysApi = createApi({
       }),
       invalidatesTags: [{ data: "Holidays" }],
     }),
+    
     upcomingHolidays:builder.query({
-        query:()=>({
-            url:"/holidays/upcoming",
-            invalidatesTags: [{ data: "Holidays" }],
-        })
-    })
+      query:()=>({
+      url:"/holidays/upcoming",
+          invalidatesTags: [{ data: "Holidays" }],
+      })
+  })
   }),
 });
 

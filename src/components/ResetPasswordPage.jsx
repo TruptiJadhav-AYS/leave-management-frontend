@@ -19,10 +19,18 @@ function ResetPasswordPage({logedInUser}) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
+  const [responseMessage, setResponseMessage] = useState("");
+
   const [otpError, setOtpError] = useState("");
+  
   const [otp, setOTP] = useState("");
   const navigate = useNavigate();
   const [setResetPassword]=useSetResetPasswordMutation()
+
+  const handleOTPChange = (event) => {
+    setOTP(event.target.value);
+    setOtpError("");
+  };
 
   const handleNewPasswordChange = (event) => {
     setNewPassword(event.target.value);
@@ -34,36 +42,59 @@ function ResetPasswordPage({logedInUser}) {
     setConfirmPasswordError("");
   };
 
-  const handleResetPassword = (event) => {
+  const handleResetPassword = async (event) => {
     event.preventDefault();
-    setPasswordError("");
-    setConfirmPasswordError("");
-    if(!otp){
-      setOtpError("Please enter OTP")
-      return
-    }
-    else if(!newPassword){
-        setPasswordError("Please enter Password");
+    if (!otp || !newPassword || !confirmPassword) {
+      // Set errors if any field is empty
+      setOtpError(!otp ? "Please enter OTP" : "");
+      setPasswordError(!newPassword ? "Please enter Password" : "");
+      setConfirmPasswordError(!confirmPassword ? "Please enter Password" : "");
       return;
     }
-    else if(!confirmPassword){
-        setConfirmPasswordError("Please enter Password");
-      return;
-    }
-    else if (newPassword !== confirmPassword) {
-      setConfirmPasswordError("Passwords do not match");
-      return;
-    }else{
-    // console.log("New Password:", newPassword);
-      const newobj={
-        "email":logedInUser,
-        "otp":otp,
-        "newPassword":newPassword,
-        "confirmPassword":confirmPassword
+    // if (newPassword !== confirmPassword) {
+    //   setConfirmPasswordError("Passwords do not match");
+    //   return;
+    // }
+  
+    try {
+      const newobj = {
+        email: logedInUser,
+        otp: otp,
+        newPassword: newPassword,
+        confirmPassword: confirmPassword
+      };
+      console.log(newobj)
+      // await setResetPassword(newobj).unwrap(); // Assuming unwrap() handles promise rejection
+      // navigate("/");
+      const response = await setResetPassword(newobj).unwrap();
+      // setResponseMessage(response.message);
+      console.log(response)
+      if (response.error === "Password must be at least 6 characters long") {
+        setPasswordError("Password must be at least 6 characters long")
+        // setConfirmPasswordError("Password must be at least 6 characters long")
+
+        // navigate("/ResetPassword");
+        // props.onSignIn(email);
+        // props.onResetClick(true);
+        // props.onSignInClick(true);
       }
-      setResetPassword(newobj)
-    navigate("/");}
+      if(response.error==="Passwords do not match"){
+        setConfirmPasswordError("Passwords do not match")
+      }
+      if(response.error==="Invalid OTP"){
+        setOtpError("Invalid OTP")
+      }
+      if(response.error==="OTP has expired"){
+        setOtpError("OTP has expired")
+      }
+      if(response.message==="Password reset successfully"){
+        navigate("/")
+      }
+    } catch (error) {
+      console.error("Reset password error:", error);
+    }
   };
+  
 
   return (
     <Paper
@@ -117,7 +148,7 @@ function ResetPasswordPage({logedInUser}) {
                     label="OTP"
                     type="text"
                     value={otp}
-                    onChange={(e) => setOTP(e.target.value)}
+                    onChange={handleOTPChange}
                     error={Boolean(otpError)}
                     helperText={otpError}
                   />

@@ -19,6 +19,8 @@ import { useState } from "react";
 import AddHolidayForm from "./AddHolidayForm";
 import ProjectDetails from "./ProjectDetails";
 import ViewProfile from "./ViewProfile";
+import PendingReq from "./PendingReq";
+import PendingReqMobile from "./PendingReqMobile";
 
 export default function CenterDisplay({logedInUser}) {
   let [addOrEditForm, setAddOrEditForm] = useState();
@@ -43,6 +45,7 @@ export default function CenterDisplay({logedInUser}) {
   return (
     <Routes>
       <Route path="/" element={<Dashboard />} />
+      <Route path="/PendingRequest" element={responsive.isMobile ?<PendingReqMobile/> : <PendingReq/>}/>
       <Route path="/ApplyLeave" element={<LeaveReqForm />} />
       <Route
         path="/History"
