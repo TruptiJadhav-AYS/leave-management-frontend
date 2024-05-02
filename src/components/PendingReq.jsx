@@ -17,24 +17,21 @@ import { useSelector } from 'react-redux'
 import { useGetPendingRequestsQuery } from "../Store/slice/apiLeaveBalanceSlice";
 import { useUpdateStatusMutation } from "../Store/slice/apiLeaveBalanceSlice";
 
-
-
-
 export default function PendingReq() {
-  const { data: pr, isSuccess } = useGetPendingRequestsQuery();
+  const { data: pr, isSuccess, isError } = useGetPendingRequestsQuery();
   const PendingRequestList = pr || [];
 
-  const [updateStatus] = useUpdateStatusMutation();
+  const [updateStatus, { isLoading, error }] = useUpdateStatusMutation();
 
   const handleAccept = (id) => {
     updateStatus({ id: id, updatedLeaveStatus: 'approved' });
-  
   };
   
   const handleReject = (id) => {
     updateStatus({ id: id, updatedLeaveStatus: 'rejected' });
   };
-
+  
+  
   return (
     <Card sx={{ height: "100%", overflow: "auto" }}>
       <CardContent sx={{ position: "sticky", top: 0, zIndex: 1 }}>
@@ -50,7 +47,7 @@ export default function PendingReq() {
         <Table sx={{ minWidth: 700 }} stickyHeader>
           <TableHead>
             <TableRow>
-              <TableCell sx={{ fontWeight: "bold" }}>Id</TableCell>
+              {/* <TableCell sx={{ fontWeight: "bold" }}>Id</TableCell> */}
               <TableCell sx={{ fontWeight: "bold" }}>Name</TableCell>
               <TableCell align="center" sx={{ fontWeight: "bold" }}>
                 From date
@@ -75,9 +72,9 @@ export default function PendingReq() {
                   "&:last-child td, &:last-child th": { border: 0 },
                 }}
               >
-                <TableCell component="th" scope="row">
+                {/* <TableCell component="th" scope="row">
                   {row.id}
-                </TableCell>
+                </TableCell> */}
                 <TableCell>{row.employeeName}</TableCell>
                 <TableCell align="center">{row.start_date}</TableCell>
                 <TableCell align="center">

@@ -26,8 +26,7 @@ export default function Holidays() {
   const [deleteHoliday]=useDeleteHolidayMutation()
 
   // const suttya = annualLeaves.holidays || [];
-  const suttya = annualLeaves ? annualLeaves || [] : [];
-
+  const suttya = annualLeaves ? annualLeaves || [] : [];
   // console.log(suttya)
 
   let responsive = UseReponsive();

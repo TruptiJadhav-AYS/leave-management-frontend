@@ -33,7 +33,7 @@ const leaveBalanceApi = createApi({
       query: ({ id, updatedLeaveStatus }) => ({
         url: `/leave/${id}/status`,
         method: 'PUT',
-        body: updatedLeaveStatus,
+        body:{updatedLeaveStatus},
       }),
       // invalidatesTags: [{ data: 'Employees' }]
     }),
