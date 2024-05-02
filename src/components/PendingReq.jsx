@@ -16,9 +16,10 @@ import {
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 // import viewEmployeeLeavesForLeaveRequest from "./viewEmployeeLeavesForLeaveRequest";
 import { useSelector } from 'react-redux'
-import { useGetPendingRequestsQuery } from "../Store/slice/apiLeaveBalanceSlice";
+import leaveBalanceApi, { useGetPendingRequestsQuery } from "../Store/slice/apiLeaveBalanceSlice";
 import ViewEmployeeLeavesForLeaveRequest from "./ViewEmployeeLeavesForLeaveRequest";
-import { useState } from "react";
+import { useUpdateStatusMutation } from "../Store/slice/apiLeaveBalanceSlice";
+import { useEffect, useState } from "react";
 
 
 const handleAccept = (name) => {
@@ -30,46 +31,49 @@ const handleReject = (name) => {
 };
 export default function PendingReq() {
   // const PendingRequestList = useSelector(state=>state.PendingRequests.PendingRequestList)
-  const id = useSelector((state) => state.employees.userId);
+  const userid = useSelector((state) => state.employees.userId);
 
-  const { data: pr, isSuccess } = useGetPendingRequestsQuery(id);
-  // console.log('History....', pr)
-  const PendingRequestList = pr?.pendingRequests || []
+  // const { data: pr, isSuccess } = useGetPendingRequestsQuery(id);
+  const [getpendingrequest, { data: data }] = leaveBalanceApi.endpoints.getPendingRequests.useLazyQuery()
+  const PendingRequestList = data?.pendingRequests || []
 
+  const [updateStatus, { isLoading, error }] = useUpdateStatusMutation();
   console.log(PendingRequestList)
 
-  // const formatDate = (dateString) => {
-  //   const [day, month, year] = dateString.split("-");
-  //   const monthNames = [
-  //     "Jan",
-  //     "Feb",
-  //     "Mar",
-  //     "Apr",
-  //     "May",
-  //     "Jun",
-  //     "Jul",
-  //     "Aug",
-  //     "Sep",
-  //     "Oct",
-  //     "Nov",
-  //     "Dec",
-  //   ];
 
-  //   return `${day} ${monthNames[parseInt(month, 10) - 1]} ${year}`;
-  // };
+  const handleAccept = async (id) => {
+    await updateStatus({ id: id, status: "approved" });
+    await getpendingrequest(userid)
+
+  };
+
+  const handleReject = async (id) => {
+    await updateStatus({ id: id, status: "rejected" });
+    await getpendingrequest(userid)
+  };
+
   const [open, setOpen] = useState(false);
-  let [Emp,setEmp]= useState();
+  let [Emp, setEmp] = useState();
+
+  useEffect(() => {
+    (
+      async () => {
+        await getpendingrequest(userid)
+      }
+    )()
+
+  }, [])
 
   return (
     <Card sx={{ height: "100%", overflow: "auto" }}>
-      <ViewEmployeeLeavesForLeaveRequest Emp={Emp} open={open} setOpen={setOpen}/>
+      <ViewEmployeeLeavesForLeaveRequest Emp={Emp} open={open} setOpen={setOpen} />
 
       <CardContent sx={{ position: "sticky", top: 0, zIndex: 1 }}>
         <Typography fontWeight={"bold"} textAlign={"left"} fontSize={"16px"}
-        color={"red"}
+          color={"red"}
         >
           Pending Requests
-          
+
         </Typography>
       </CardContent>
       <Divider />
@@ -111,45 +115,45 @@ export default function PendingReq() {
                 </TableCell>
                 <TableCell align="center">{row.start_date}</TableCell>
                 <TableCell align="center">{row.end_date !== ""
-                  ?row.end_date
+                  ? row.end_date
                   : "-"}</TableCell>
                 <TableCell align="center">{row.leave_type}</TableCell>
                 <TableCell align="left">{row.reason}</TableCell>
-                <TableCell align="center" sx={{display:'flex',justifyContent:'space-around'}}>
+                <TableCell align="center" sx={{ display: 'flex', justifyContent: 'space-around' }}>
                   {/* <Stack direction={"row"}> */}
-                    <Button
-                      disableRipple
-                      variant="contained"
-                      color="success"
-                      size="small"
-                      onClick={() => handleAccept(row.name)}
-                      sx={{textTransform: "none" }}
-                    >
-                      
-                      Accept
-                    </Button>
-                    <Button
-                      disableRipple
-                      variant="outlined"
-                      color="error"
-                      size="small"
-                      onClick={() => handleReject(row.name)}
-                      sx={{ textTransform: "none" }}
-                    >
-                      Reject
-                    </Button>                    
+                  <Button
+                    disableRipple
+                    variant="contained"
+                    color="success"
+                    size="small"
+                    onClick={() => handleAccept(row.id)}
+                    sx={{ textTransform: "none" }}
+                  >
+
+                    Accept
+                  </Button>
+                  <Button
+                    disableRipple
+                    variant="outlined"
+                    color="error"
+                    size="small"
+                    onClick={() => handleReject(row.id)}
+                    sx={{ textTransform: "none" }}
+                  >
+                    Reject
+                  </Button>
                   {/* </Stack> */}
                 </TableCell>
-                <TableCell sx={{padding:0}}>
-                    <Button
+                <TableCell sx={{ padding: 0 }}>
+                  <Button
                     // onClick={handleView}
-                    onClick={()=>{
+                    onClick={() => {
                       setOpen(true)
                       setEmp(row)
                     }}
-                    >
-                      <RemoveRedEyeIcon/>
-                    </Button>
+                  >
+                    <RemoveRedEyeIcon />
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}

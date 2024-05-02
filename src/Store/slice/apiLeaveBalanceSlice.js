@@ -28,8 +28,16 @@ const leaveBalanceApi = createApi({
     getPendingRequests: builder.query({
       query: (employeeId) => `/leave/${employeeId}/pending-requests`,
     }),
+    updateStatus: builder.mutation({
+      query: ({ id, status }) => ({
+        url: `/leave/${id}/status`,
+        method: "PUT",
+        body: { status },
+      }),
+      
+    }),
   }),
 });
 
-export const { useGetRemainingBalanceQuery,useGetWorkFromHomeBalanceQuery, useGetAnnunalLeaveBalanceQuery ,useGetPendingRequestsQuery} = leaveBalanceApi;
+export const { useGetRemainingBalanceQuery,useGetWorkFromHomeBalanceQuery, useGetAnnunalLeaveBalanceQuery ,useGetPendingRequestsQuery,useUpdateStatusMutation} = leaveBalanceApi;
 export default leaveBalanceApi;
