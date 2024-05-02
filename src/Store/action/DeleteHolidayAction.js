@@ -5,7 +5,6 @@ function deleteHol(id) {
     const { annualLeaves } = getState().holidays;
 
     const hol = annualLeaves.findIndex((hol) => hol.id === id);
-    console.log(hol)
      
     dispatch(deleteHoliday(hol))
 

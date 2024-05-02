@@ -38,7 +38,7 @@ export default function SideDrawer({ handleDrawerClose }) {
     selectedItem = "Dashboard";
   }
 
-  // if (role === "Admin") {
+  if (role === "Admin") {
     sideDrawerList = [
       "Dashboard",
       "Apply Leave",
@@ -48,9 +48,9 @@ export default function SideDrawer({ handleDrawerClose }) {
       "Projects",
       "Inventory List",
     ];
-  // } else {
-  //   sideDrawerList = ["Dashboard", "Apply Leave", "History", "Holidays"];
-  // }
+  } else {
+    sideDrawerList = ["Dashboard", "Apply Leave", "History", "Holidays"];
+  }
 
   return (
     <div>

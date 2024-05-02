@@ -8,10 +8,7 @@ export default function editProjectAction(newProject){
         const {selectedProject}=getState().Project
         let updatedProjects=[...Projects]
 
-        console.log("idddd",selectedProject)
-
         let index=Projects.findIndex(project => project.Id === selectedProject);
-        console.log("index",index)
           if (index !== -1) {
             if (newProject.Name) updatedProjects[index] = { ...updatedProjects[index], Name: newProject.Name };
             if (newProject.Start_date) updatedProjects[index] ={ ...updatedProjects[index], Start_date: newProject.Start_date };

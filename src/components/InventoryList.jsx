@@ -1,6 +1,6 @@
 import * as React from "react";
 import Paper from "@mui/material/Paper";
-import { Box, Button, Divider, InputBase, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Divider, InputBase, Typography } from "@mui/material";
 import {
   TableBody,
   TableCell,
@@ -11,38 +11,41 @@ import {
   Table,
   Stack,
 } from "@mui/material";
-import {useSelector} from "react-redux";
-
 import { useNavigate } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
 import { useState } from "react";
-// import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useDispatch } from "react-redux";
-import deleteInventory from "../Store/action/DeleteInventoryAction";
+import {useGetListOfInventoeyQuery,useDeleteInventoryMutation} from  "../Store/slice/apiInventorySlice";
 
 const columns = [
   { id: "name", label: "Name", minWidth: 180 },
   { id: "category", label: "Category", minWidth: 170 },
   {
-    id: "serialNo",
+    id: "serial_number",
     label: "Serial No",
     minWidth: 110,
   },
 ];
 
 export default function InventoryList() {
-  const InventoryListItems = useSelector(state=>state.Inventory.InventoryListItems)
-  console.log("****************", InventoryListItems)
+  const {data: inventoryListItems,isLoading,isError }= useGetListOfInventoeyQuery()
+  const InventoryListItems=inventoryListItems
+
+  const [deleteInventory]=useDeleteInventoryMutation()
+
   const Navigate = useNavigate();
-  const dispatch =useDispatch()
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [searchText, setsearchText] = useState("");
 
   // const handleEditClick = () => {
   //   Navigate("/Employee/Employees/EditEmployee");
   // };
+
+  function handelDelete(id){
+    deleteInventory(id)
+  }
 
   const handleChangePage = (newPage) => {
     setPage(newPage);
@@ -53,15 +56,18 @@ export default function InventoryList() {
     setPage(0);
   };
 
-  const [searchText, setsearchText] = useState("");
-
   function handleSearchText(event) {
     setsearchText(event.target.value);
   }
-  // console.log(searchText);
 
+  if(isLoading){
+    return(<CircularProgress/>)
+  }
+  if(isError){
+    return(<></>)
+  }
   const FilterArray = InventoryListItems.filter((inventory) =>
-    inventory.category.toLowerCase().includes(searchText.toLowerCase())
+    inventory.category.name.toLowerCase().includes(searchText.toLowerCase())
   );
 
   return (
@@ -133,7 +139,7 @@ export default function InventoryList() {
           const value = inventory[column.id];
           return (
             <TableCell key={column.id} align={column.align}>
-              {value}
+              {column.id=="category" ? value.name :value}
             </TableCell>
           );
         })}
@@ -141,7 +147,7 @@ export default function InventoryList() {
           <Stack direction="row">
             <DeleteIcon
               sx={{ cursor: "pointer" }}
-              onClick={() => dispatch(deleteInventory(inventory.id))}
+              onClick={() => handelDelete(inventory.id)}
             />
           </Stack>
         </TableCell>

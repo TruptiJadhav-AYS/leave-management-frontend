@@ -7,12 +7,12 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import deleteHol from "../Store/action/DeleteHolidayAction";
-import { useGetHolidaysQuery } from "../Store/slice/apiHolidaySlice";
+import { useDeleteHolidayMutation, useGetHolidaysQuery } from "../Store/slice/apiHolidaySlice";
 
 export default function Holidays() {
   const navigate = useNavigate();
-  const dispatch=useDispatch();
-  const role=useSelector((state)=>state.employees.userRole)
+  const dispatch = useDispatch();
+  const role = useSelector((state) => state.employees.userRole);
   const [hoverIndex, setHoverIndex] = useState(null); // State to track hovered card
 
   function handleAddClick() {
@@ -20,22 +20,22 @@ export default function Holidays() {
   }
 
   // const annualLeaves = useSelector((state) => state.holidays.annualLeaves);
-  const { data: holiday,isLoading,isError} = useGetHolidaysQuery();
-  const annualLeaves=holiday 
+  const { data: holiday, isLoading, isError } = useGetHolidaysQuery();
+  const annualLeaves = holiday;
+  const [deleteHoliday]=useDeleteHolidayMutation()
 
-  const suttya=annualLeaves.holidays || []
-  console.log(suttya)
+  // const suttya = annualLeaves.holidays || [];
+  const suttya = annualLeaves ? annualLeaves.holidays || [] : [];
+
   // console.log(suttya[0].image)
 
   let responsive = UseReponsive();
 
-  function handledeleteHolidayClick(value){
-    console.log(value)
-    dispatch(deleteHol(value))
+  function handledeleteHolidayClick(value) {
+    dispatch(deleteHol(value));
   }
 
   const formatDate = (dateString) => {
-
     const [year, month, day] = dateString.split("-");
     const monthNames = [
       "Jan",
@@ -89,23 +89,30 @@ export default function Holidays() {
             <img
               style={{ borderRadius: "50%" }}
               alt={holiday.occasion}
-              src={`${holiday.image}}`}
+              src={URL.createObjectURL(
+                new Blob([new Uint8Array(holiday.image.data)])
+              )}
               width={"50px"}
               height={"50px"}
             />
             <Typography>{formatDate(holiday.date)}</Typography>
             <Typography sx={{ mb: 1 }}>{holiday.day}</Typography>
-            {hoverIndex === index && 
-            // role === "Admin" && 
-            ((
-              <IconButton sx={{ position: "absolute", top: 0, right: 0 }} onClick={()=>{handledeleteHolidayClick(holiday.id)}}>
+            {hoverIndex === index && (
+              role === "Admin" &&
+              <IconButton
+                sx={{ position: "absolute", top: 0, right: 0 }}
+                onClick={() => {
+                  // handledeleteHolidayClick(holiday.id);
+                  deleteHoliday(holiday.id)
+                }}
+              >
                 <DeleteIcon />
               </IconButton>
-            ))}
+            )}
           </Paper>
         </Grid>
       ))}
-      {/* {role === "Admin"  && ( */}
+      {role === "Admin"  && (
       <Box width={"100%"} display={"flex"} justifyContent={"right"}>
         <IconButton
           color="primary"
@@ -115,7 +122,7 @@ export default function Holidays() {
           <AddCircleIcon sx={{ width: "40px", height: "40px" }} />
         </IconButton>
       </Box>
-      {/* )} */}
+       )} 
     </Grid>
   );
 }

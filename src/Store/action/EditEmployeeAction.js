@@ -7,10 +7,7 @@ export default function editEmployee(newEmp){
         const {selectedEmp}=getState().employees
         let updatedEmployees=[...Employees]
 
-        console.log("idddd",selectedEmp)
-
         let index=Employees.findIndex(emp => emp.id === selectedEmp);
-        console.log("index",index)
           if (index !== -1) {
             if (newEmp.name) updatedEmployees[index] = { ...updatedEmployees[index], name: newEmp.name };
             if (newEmp.department) updatedEmployees[index] ={ ...updatedEmployees[index], department: newEmp.department };

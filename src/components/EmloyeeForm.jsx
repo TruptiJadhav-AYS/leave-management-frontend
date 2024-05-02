@@ -11,44 +11,33 @@ import {
   Box,
 } from "@mui/material";
 import Card from "@mui/material/Card";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import UseReponsive from "../hooks/UseResponsive";
 import CheckIcon from "@mui/icons-material/Check";
 // import { addEmployee, editEmployee } from "../Store/action/EmployeeAction";
 import editEmployee from "../Store/action/EditEmployeeAction";
-import addEmployee from "../Store/action/AddEmployeeAction"
+import addEmployee from "../Store/action/AddEmployeeAction";
 import { useSelector } from "react-redux";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
-import { useAddEmployeeMutation, useGetEmployeesQuery, useUpdateEmployeeMutation } from "../Store/slice/apiEmployeeSlice";
+import {
+  useAddEmployeeMutation,
+  useGetEmployeesQuery,
+  useUpdateEmployeeMutation,
+} from "../Store/slice/apiEmployeeSlice";
+import { useGetDepartmentsQuery } from "../Store/slice/apiDepartmentSlice";
+import {useGetInventoryQuery} from  "../Store/slice/apiInventorySlice";
 
 export default function EmloyeeDetailForm({ addOrEditForm }) {
-  // let { Employees } = useSelector((state) => state.employees);
-  const {
-    data: employees
-  } = useGetEmployeesQuery();
-  // console.log(isSuccess)
+  const { data: employees } = useGetEmployeesQuery();
+  const {data: inventory}=useGetInventoryQuery();
 
-  //   // useEffect(() => {
-  //     console.log("employees:", employees);
-  //   console.log("error:", error);
-  //   console.log("isLoading:", isLoading);
-  // }, [employees, error, isLoading]);
-  // const employees = useSelector(state => state.employee.Employees);
-
-  // const Employee = useSelector((state) => state.rootReducer.employees);
   const Employees = employees || [];
+  const InventoryList=inventory || []
+  
   let { selectedEmp } = useSelector((state) => state.employees);
-  let managerList = ["Pratiksha","Pruthvi","Trupti"];
-  let departmentList=["Human Resource","Support","Developement","Finance"]
-
-  for (let i in Employees) {
-    if (Employees[i].role == "Manager") {
-      managerList.push(Employees[i].name); 
-    }
-  }
 
   let selectedEmpIndex = Employees.findIndex((emp) => emp.id === selectedEmp);
   const initialValues = {
@@ -84,11 +73,11 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
             : ""
           : ""
         : "",
-    department:
+    department_id:
       addOrEditForm === "edit"
         ? selectedEmp
-          ? Employees[selectedEmpIndex].department
-            ? Employees[selectedEmpIndex].department
+          ? Employees[selectedEmpIndex].department_id
+            ? Employees[selectedEmpIndex].department_id
             : ""
           : ""
         : "",
@@ -100,24 +89,31 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
             : ""
           : ""
         : "",
-    manager:
+    manager_id:
       addOrEditForm === "edit"
         ? selectedEmp
-          ? Employees[selectedEmpIndex].manager
-            ? Employees[selectedEmpIndex].manager
+          ? Employees[selectedEmpIndex].manager_id
+            ? Employees[selectedEmpIndex].manager_id
             : ""
           : ""
         : "",
+    // inventory_id:""
   };
 
   const responsive = UseReponsive();
   const [clickedBtnID, setClickedBtnID] = useState("");
   let [onBoardSuccess, setOnBoardSuccess] = useState(false);
+  const [Department, setDepartment] = useState([]);
   const [addEmp] = useAddEmployeeMutation();
   const [updateEmployee] = useUpdateEmployeeMutation();
-  // console.log(isLoading)
-  // let dispatch = useDispatch();
-  const InventoryList=useSelector((state) => state.Inventory.InventoryListItems)
+  const { data: department, isSuccess } = useGetDepartmentsQuery();
+  const dept = department || [];
+
+  useEffect(() => {
+    if (isSuccess) {
+      setDepartment(dept);
+    }
+  }, [isSuccess, dept]);
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const today = new Date();
@@ -130,12 +126,12 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: Yup.object({
-      name: Yup.string().required("name is Mandatory."),
+      name: Yup.string().required("Name is required."),
 
       email: Yup.string()
         .trim()
         .matches(emailRegex, "Invalid email format")
-        .required("email is required."),
+        .required("Email is required."),
 
       mobile_number: Yup.number()
         .test(
@@ -158,27 +154,23 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
         )
         .required("Date of birth is required."),
 
-      // department: Yup.string().required("Department is mandatory."),
+      department_id: Yup.number().required("Department is required."),
       // manager: Yup.string().required("Manager is mandatory."),
-      gender: Yup.string().required("gender is required."),
+      gender: Yup.string().required("Gender is required."),
     }),
 
-    onSubmit: (values) => {
-      // addEmployee(values);
-      console.log(values)
+    onSubmit: async (values) => {
       {
         addOrEditForm === "add"
-          // ? dispatch(addEmployee(values))
-          ? addEmp(values)
-
-          : updateEmployee(selectedEmp,values);
+          ?
+            addEmp(values)
+          : updateEmployee({id:selectedEmp,updatedEmployeeDetails:values});
       }
-      // console.log(values)
       setOnBoardSuccess(true);
       setTimeout(() => {
         navigate("/Employee/Employees");
       }, 1000);
-      console.log(values)
+      console.log(values);
     },
   });
 
@@ -386,7 +378,7 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
                     <Typography variant="body2"> DEPARTMENT</Typography>
                     <Select
                       size="small"
-                      name="department"
+                      name="department_id"
                       sx={{
                         "& fieldset": {
                           borderColor: "rgba(204, 204, 204, 0.5)",
@@ -395,7 +387,7 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
                         "&:hover": {
                           "&& fieldset": {
                             border:
-                              clickedBtnID === "Department"
+                              clickedBtnID === "department_id"
                                 ? "2px solid blue"
                                 : "2px solid  rgba(204, 204, 204, 0.5)",
                           },
@@ -403,21 +395,21 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
                         height: "40px",
                         borderRadius: 1,
                       }}
-                      onClick={() => handleClick("Department")}
+                      onClick={() => handleClick("department_id")}
                       onChange={formik.handleChange}
-                      value={formik.values.department}
+                      value={formik.values.department_id}
                       onBlur={formik.handleBlur}
                     >
-                      {departmentList.map((department,index) => (
-                        <MenuItem key={index} value={department}>
-                          {department}
+                      {Department.map((department, index) => (
+                        <MenuItem key={index} value={department.id}>
+                          {department.department_name}
                         </MenuItem>
                       ))}
                     </Select>
 
-                    {formik.touched.department && errors.department && (
+                    {formik.touched.department_id && errors.department_id && (
                       <Typography variant="caption" color="error">
-                        {errors.department}
+                        {errors.department_id}
                       </Typography>
                     )}
                   </Stack>
@@ -432,11 +424,11 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
                   height={responsive.isMobile ? "1vh" : "11vh"}
                 >
                   <Stack width={"100%"}>
-                    <Typography variant="body2">MANAGER</Typography>
+                    <Typography variant="body2">REPORTING MANAGER</Typography>
 
                     <Select
                       size="small"
-                      name="manager"
+                      name="manager_id"
                       sx={{
                         "& fieldset": {
                           borderColor: "rgba(204, 204, 204, 0.5)",
@@ -445,7 +437,7 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
                         "&:hover": {
                           "&& fieldset": {
                             border:
-                              clickedBtnID === "Manager"
+                              clickedBtnID === "manager_id"
                                 ? "2px solid blue"
                                 : "2px solid  rgba(204, 204, 204, 0.5)",
                           },
@@ -455,22 +447,21 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
                       }}
                       MenuProps={MenuProps}
                       onChange={formik.handleChange}
-                      value={formik.values.manager}
+                      value={formik.values.manager_id}
                     >
-                      {managerList.map((manager,index) => (
-                        <MenuItem key={index} value={manager}>
-                          {manager}
+                      {Employees.map((emp, index) => (
+                        <MenuItem key={index} value={emp.id}>
+                          {emp.name}
                         </MenuItem>
                       ))}
                     </Select>
-                    {formik.touched.manager && errors.manager && (
+                    {formik.touched.manager_id && errors.manager_id && (
                       <Typography variant="caption" color="error">
-                        {errors.manager}
+                        {errors.manager_id}
                       </Typography>
                     )}
                   </Stack>
                 </Grid>
-                
               </Grid>
               <br />
               <Grid container mt={responsive.isMobile ? 5 : 0} spacing={1}>
@@ -509,48 +500,7 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
                     )}
                   </Stack>
                 </Grid>
-                {/* <Grid
-                item
-                xs={12}
-                sm={6}
-                md={6}
-                lg={6}
-                sx={{ display: "flex", justifyContent: "space-between" }}
-                height={responsive.isMobile ? "10vh" : "11vh"}
-              >
-                <Stack width={"100%"} >
-                  <Typography variant="body2"> ASSIGN INVENTORY </Typography>
-                  <Select
-                      value={formik.values.category}
-                      name="assignInventory"
-                      size="small"
-                      labelId="assignInventory"
-                      // onBlur={formik.handleBlur}
-                      // onChange={formik.handleChange}
-                      sx={{
-                        "& fieldset": {
-                          borderColor: "rgba(204, 204, 204, 0.5)",
-                          borderWidth: "2px",
-                        },
-                        "&:hover": {
-                          "&& fieldset": {
-                            border: "2px solid rgba(204, 204, 204, 0.5)",
-                          },
-                          height:"40px",
-                        },
-                        
-                        
-                      }}
-                    >
-                      {InventoryList.map((inventory) => (
-                        <MenuItem key={inventory.id} value={inventory.name} >
-                          {inventory.name} - {inventory.category} - {inventory.serialNo}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                </Stack>
-              </Grid> */}
-              <Grid
+                <Grid
                   item
                   xs={12}
                   sm={6}
@@ -562,10 +512,11 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
                     <Typography variant="body2">ASSIGN INVENTORY</Typography>
 
                     <Select
-                      // value={formik.values.category}
-                      name="assignInventory"
+                      value={formik.values.inventory_id}
+                      onChange={formik.handleChange}
+                      name="inventory_id"
                       size="small"
-                      labelId="assignInventory"
+                      labelId="inventory_id"
                       sx={{
                         "& fieldset": {
                           borderColor: "rgba(204, 204, 204, 0.5)",
@@ -581,33 +532,19 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
                       }}
                       MenuProps={MenuProps}
                     >
-                      {InventoryList.map((inventory) => (
-                        ((inventory.assign===0) &&
-                        <MenuItem key={inventory.id} value={inventory.name} >
-                          {inventory.name} - {inventory.category} - {inventory.serialNo}
-                        </MenuItem>
-                        )
-                      ))}
+                      {InventoryList.map(
+                        (inventory) =>
+                            <MenuItem key={inventory.id} value={inventory.id}>
+                              {inventory.name} - {inventory.category.name} -{" "}
+                              {inventory.serial_number}
+                            </MenuItem>
+                      )}
                     </Select>
-
-                    {/* {formik.touched.manager && errors.manager && (
-                      <Typography variant="caption" color="error">
-                        {errors.manager}
-                      </Typography>
-                    )} */}
                   </Stack>
                 </Grid>
               </Grid>
 
               <Box pt={responsive.isMobile ? 3 : 0}>
-                {/* <Button
-                  // type="submit"
-                  variant="outlined"
-                  sx={{ textTransform: "none", mt: 2 }}
-                  // onClick={onAddInventoryClick}
-                >
-                  Assign Inventory
-                </Button> */}
                 <Button
                   type="submit"
                   variant="contained"

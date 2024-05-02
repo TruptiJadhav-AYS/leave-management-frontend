@@ -23,6 +23,7 @@ import ViewProfile from "./ViewProfile";
 export default function CenterDisplay({logedInUser}) {
   let [addOrEditForm, setAddOrEditForm] = useState();
   let [projectAddOrEdit, setProjectAddOrEdit] = useState();
+  let [selectedEmpId,setSelectedEmpId]=useState(null)
 
   // console.log(logedInUser)
 
@@ -33,6 +34,10 @@ export default function CenterDisplay({logedInUser}) {
   function onAddOrEdit(form) {
     setAddOrEditForm(form);
   }
+  function handleSelectedEmp(id){
+    setSelectedEmpId(id)
+  }
+
 
   let responsive = UseReponsive();
   return (
@@ -57,14 +62,14 @@ export default function CenterDisplay({logedInUser}) {
           responsive.isMobile ? (
             <EmployeeMobile onAddOrEdit={onAddOrEdit} />
           ) : (
-            <EmployeeList onAddOrEdit={onAddOrEdit} />
+            <EmployeeList onAddOrEdit={onAddOrEdit} handleSelectedEmp={handleSelectedEmp}/>
           )
         }
       />
 
       <Route
         path="/:id"
-        element={<EmployeeDetails onAddOrEdit={onAddOrEdit} />}
+        element={<EmployeeDetails onAddOrEdit={onAddOrEdit} selectedEmpId={selectedEmpId}/>}
       />
 
       <Route

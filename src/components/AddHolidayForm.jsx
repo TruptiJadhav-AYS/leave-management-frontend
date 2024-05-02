@@ -19,10 +19,13 @@ import CheckIcon from "@mui/icons-material/Check";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { useDispatch } from "react-redux";
 import addHol from "../Store/action/AddHolidayAction";
+import { useAddHolidayMutation } from "../Store/slice/apiHolidaySlice";
 
 export default function AddHolidayForm() {
   const responsive = UseReponsive();
   const dispatch = useDispatch();
+  const [addholiday] = useAddHolidayMutation();
+  const [image, setImage] = useState(null);
 
   const [clickedBtnID, setClickedBtnID] = useState("");
   const [onBoardSuccess, setOnBoardSuccess] = useState(false);
@@ -38,7 +41,7 @@ export default function AddHolidayForm() {
       occasion: "",
       date: "",
       day: "",
-      img: "",
+      // img: null,
     },
     validationSchema: Yup.object({
       //   holidayName: Yup.string().required("Holiday Name is required."),
@@ -46,12 +49,15 @@ export default function AddHolidayForm() {
       date: Yup.date().required("Please select a date"),
       // toDate: Yup.date().required("Please select a date"),
       day: Yup.string().required("Day is required."),
-      //   image: Yup.string().required("Image is required."),
+      // image: Yup.string().required("Image is required."),
     }),
     onSubmit: (values) => {
-      console.log(values);
-      dispatch(addHol(values));
-
+      // const formData = new FormData();
+      // if (image) {
+      //   formData.append("image", image);
+      // }
+      // dispatch(addholiday(values));
+      addholiday({data1:values, file:image});
       setOnBoardSuccess(true);
       setTimeout(() => {
         navigate("/Employee/Holidays");
@@ -59,7 +65,33 @@ export default function AddHolidayForm() {
     },
   });
 
+  // function handleFileChange(event) {
+  //   const file = event.target.files[0];
+  //   if (!file) {
+  //     console.log("No file chosen");
+  //     return;
+  //   }
+  
+  //   const reader = new FileReader();
+  //   reader.onload = function(evt) {
+  //     if (evt.target.readyState === FileReader.DONE) {
+  //       const arrayBuffer = evt.target.result;
+  //       const array = new Uint8Array(arrayBuffer);
+  //       console.log("Array:", array);
+  //       // Now you can handle this array as needed, e.g., sending to server or processing
+  //     }
+  //   };
+  
+  //   reader.readAsArrayBuffer(file);
+  //   setImage(reader.readAsArrayBuffer(file));
+  // }
+
   const errors = formik.errors;
+
+  const handleFileChange = (event) => {
+    // formik.setFieldValue("img", event.currentTarget.files[0]);
+    setImage(event.currentTarget.files[0]);
+  };
 
   return (
     <Grid container justifyContent={"center"} width="100%" pt={3}>
@@ -241,7 +273,10 @@ export default function AddHolidayForm() {
                   </Typography>
                   <input
                     type="file"
-                    // onChange={handleFileChange}
+                    onChange={(event) => {
+                      // formik.setFieldValue("img", event.currentTarget.files[0]);
+                      handleFileChange(event);
+                    }}
                     accept="image/*"
                   />
                   {/* <Button variant="outlined" sx={{textTransform:"none"}}><FileUploadIcon/>Upload Image</Button> */}

@@ -13,33 +13,45 @@ const employeeApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    // console.log(builder)
+    
     getEmployees: builder.query({
       query: () => '/employees',
+      providesTags: [{ data: 'Employees' }],
     }),
+
+    getEmployeesById: builder.query({
+      query: (employeeId) => `/employees/employee/${employeeId}`,
+    }),
+
     addEmployee: builder.mutation({
       query: (newEmployee) => ({
         url: '/employees',
         method: 'POST',
         body: newEmployee,
       }),
+      invalidatesTags:[{ data: 'Employees' }]
     }),
+    
     updateEmployee: builder.mutation({
-      query: ({ employeeId, ...updateData }) => ({
-        url: `/employees/${employeeId}`,
-        method: 'PUT',  // or 'PATCH' if partially updating the data
-        body: updateData,
+      query: ({ id, updatedEmployeeDetails }) => ({
+        url: `/employees/${id}`,
+        method: 'PUT',
+        body: updatedEmployeeDetails,
       }),
+      invalidatesTags: [{ data: 'Employees' }]
     }),
+
     deleteEmployee: builder.mutation({
       query: (employeeId) => ({
         url: `/employees/${employeeId}`,
         method: 'DELETE',
       }),
+      invalidatesTags:[{ data: 'Employees' }]
     })
   }),
   
+
 });
 
-export const { useGetEmployeesQuery,useAddEmployeeMutation,useDeleteEmployeeMutation,useUpdateEmployeeMutation } = employeeApi;
+export const { useGetEmployeesQuery,useGetEmployeesByIdQuery,useAddEmployeeMutation,useUpdateEmployeeMutation, useDeleteEmployeeMutation } = employeeApi;
 export default employeeApi;

@@ -19,24 +19,33 @@ import CheckIcon from "@mui/icons-material/Check";
 import addProjectAction from "../Store/action/AddProjectAction";
 import { useDispatch, useSelector } from "react-redux";
 import editProjectAction from "../Store/action/EditProjectAction";
+import {
+  useAddProjectMutation,
+  useGetProjectsQuery,
+  useUpdateProjectMutation,
+} from "../Store/slice/apiProjectSlice";
+import { useGetEmployeesQuery } from "../Store/slice/apiEmployeeSlice";
 
-export default function ProjectOnboardForm({projectAddOrEdit}) {
+export default function ProjectOnboardForm({ projectAddOrEdit }) {
   const responsive = UseReponsive();
   const [clickedBtnID, setClickedBtnID] = useState("");
+  const [addProject] = useAddProjectMutation();
+  const [updateProject] = useUpdateProjectMutation();
+  const { data: employees } = useGetEmployeesQuery();
   const [onSuccess, setSuccess] = useState(false);
   const dispatch = useDispatch();
   const Projects = useSelector((state) => state.Project.Projects);
   const selectedProject = useSelector((state) => state.Project.selectedProject);
   const index = Projects.findIndex((project) => project.Id === selectedProject);
 
-  let { Employees } = useSelector((state) => state.employees);
-  let projectManagerList=[]
+  const Employees = employees || [];
+  // let projectManagerList = [];
 
-  for (let i in Employees) {
-    if (Employees[i].name) {
-      projectManagerList.push(Employees[i].name); 
-    }
-  }
+  // for (let i in Employees) {
+  //   if (Employees[i].name) {
+  //     projectManagerList.push(Employees[i].name);
+  //   }
+  // }
 
   function handleClick(id) {
     setClickedBtnID(id);
@@ -46,53 +55,60 @@ export default function ProjectOnboardForm({projectAddOrEdit}) {
 
   const formik = useFormik({
     initialValues: {
-      Name: projectAddOrEdit === "edit"
-      ? selectedProject
-        ? Projects[index].Name
-          ? Projects[index].Name
-          : ""
-        : ""
-      : "",
-      Project_Manager:  projectAddOrEdit === "edit"
-      ? selectedProject
-        ? Projects[index].Project_Manager
-          ? Projects[index].Project_Manager
-          : ""
-        : ""
-      : "",
-      Start_date: projectAddOrEdit === "edit"
-      ? selectedProject
-        ? Projects[index].Start_date
-          ? Projects[index].Start_date
-          : ""
-        : ""
-      : "",
-      Status: projectAddOrEdit === "edit"
-      ? selectedProject
-        ? Projects[index].Status
-          ? Projects[index].Status
-          : ""
-        : ""
-      : "",
-      Description: projectAddOrEdit === "edit"
-      ? selectedProject
-        ? Projects[index].Description
-          ? Projects[index].Description
-          : ""
-        : ""
-      : "",
+      name:
+        projectAddOrEdit === "edit"
+          ? selectedProject
+            ? Projects[index].Name
+              ? Projects[index].Name
+              : ""
+            : ""
+          : "",
+      manager_name:
+        projectAddOrEdit === "edit"
+          ? selectedProject
+            ? Projects[index].Project_Manager
+              ? Projects[index].Project_Manager
+              : ""
+            : ""
+          : "",
+      startDate:
+        projectAddOrEdit === "edit"
+          ? selectedProject
+            ? Projects[index].Start_date
+              ? Projects[index].Start_date
+              : ""
+            : ""
+          : "",
+      status:
+        projectAddOrEdit === "edit"
+          ? selectedProject
+            ? Projects[index].Status
+              ? Projects[index].Status
+              : ""
+            : ""
+          : "",
+      description:
+        projectAddOrEdit === "edit"
+          ? selectedProject
+            ? Projects[index].Description
+              ? Projects[index].Description
+              : ""
+            : ""
+          : "",
     },
     validationSchema: Yup.object({
-      Name: Yup.string().required("Project Name is required."),
-      Project_Manager: Yup.string().required("Manager Name is required."),
-      Start_date: Yup.date().required("Please select a date"),
-      Status: Yup.string().required("Project status is required."),
-      Description:Yup.string()
+      name: Yup.string().required("Project Name is required."),
+      manager_name: Yup.string().required("Manager Name is required."),
+      startDate: Yup.date().required("Please select a date"),
+      status: Yup.string().required("Project status is required."),
+      description: Yup.string(),
     }),
     onSubmit: (values) => {
-      console.log(values)
-      {projectAddOrEdit==="add" ?
-      dispatch(addProjectAction(values)) : dispatch(editProjectAction(values))}
+      {
+        projectAddOrEdit === "add"
+          ? addProject(values)
+          : updateProject({id:selectedProject,updatedProjectDetails:values});
+      }
       setSuccess(true);
       setTimeout(() => {
         navigate("/Employee/Projects");
@@ -101,7 +117,7 @@ export default function ProjectOnboardForm({projectAddOrEdit}) {
   });
 
   const errors = formik.errors;
-  
+
   const MenuProps = {
     PaperProps: {
       style: {
@@ -126,8 +142,9 @@ export default function ProjectOnboardForm({projectAddOrEdit}) {
           <CardContent>
             <form onSubmit={formik.handleSubmit}>
               <Typography color={"primary"} variant="h5" mb={2}>
-                {projectAddOrEdit==="add" ?
-                "Add Project" : "Edit Project Details"}
+                {projectAddOrEdit === "add"
+                  ? "Add Project"
+                  : "Edit Project Details"}
               </Typography>
 
               <Grid container spacing={1}>
@@ -144,7 +161,7 @@ export default function ProjectOnboardForm({projectAddOrEdit}) {
                     <InputBase
                       placeholder="Project Name"
                       type="text"
-                      name="Name"
+                      name="name"
                       sx={{
                         border:
                           clickedBtnID === "Name"
@@ -156,11 +173,11 @@ export default function ProjectOnboardForm({projectAddOrEdit}) {
                       onClick={() => handleClick("Name")}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
-                      value={formik.values.Name}
+                      value={formik.values.name}
                     />
-                    {formik.touched.Name && errors.Name && (
+                    {formik.touched.name && errors.name && (
                       <Typography variant="caption" color="error">
-                        {errors.Name}
+                        {errors.name}
                       </Typography>
                     )}
                   </Stack>
@@ -175,28 +192,13 @@ export default function ProjectOnboardForm({projectAddOrEdit}) {
                 >
                   <Stack width={"100%"}>
                     <Typography variant="body2"> Manager Name </Typography>
-                    {/* <InputBase
-                      placeholder="Manager Name"
-                      type="text"
-                      name="Project_Manager"
-                      sx={{
-                        border:
-                          clickedBtnID === "Project_Manager"
-                            ? "2px solid blue"
-                            : "2px solid rgba(204, 204, 204, 0.5)",
-                        height: "40px",
-                        borderRadius: 1,
-                      }}
-                      onClick={() => handleClick("Project_Manager")}
+                    
+                    <Select
+                      name="manager_name"
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                       value={formik.values.Project_Manager}
-                    /> */}
-                    <Select name="Project_Manager"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.Project_Manager}
-                    size="small"
+                      size="small"
                       sx={{
                         "& fieldset": {
                           borderColor: "rgba(204, 204, 204, 0.5)",
@@ -212,18 +214,17 @@ export default function ProjectOnboardForm({projectAddOrEdit}) {
                       }}
                       MenuProps={MenuProps}
                     >
-                    {projectManagerList.map((manager,index) => (
-                        <MenuItem key={index} value={manager}>
-                          {manager}
+                     {Employees.map((emp, index) => (
+                        <MenuItem key={index} value={emp.name}>
+                          {emp.name}
                         </MenuItem>
                       ))}
                     </Select>
-                    {formik.touched.Project_Manager &&
-                      errors.Project_Manager && (
-                        <Typography variant="caption" color="error">
-                          {errors.Project_Manager}
-                        </Typography>
-                      )}
+                    {formik.touched.manager_name && errors.manager_name && (
+                      <Typography variant="caption" color="error">
+                        {errors.manager_name}
+                      </Typography>
+                    )}
                   </Stack>
                 </Grid>
               </Grid>
@@ -239,13 +240,13 @@ export default function ProjectOnboardForm({projectAddOrEdit}) {
                   <InputBase
                     onChange={formik.handleChange}
                     type="date"
-                    name="Start_date"
+                    name="startDate"
                     lable="From Date"
                     onClick={() => {
                       handleClick("Start_date");
                     }}
                     onBlur={formik.handleBlur}
-                    value={formik.values.Start_date}
+                    value={formik.values.startDate}
                     sx={{
                       border:
                         clickedBtnID === "fromDate"
@@ -256,9 +257,9 @@ export default function ProjectOnboardForm({projectAddOrEdit}) {
                       width: "100%",
                     }}
                   />
-                  {formik.touched.Start_date && errors.Start_date && (
+                  {formik.touched.startDate && errors.startDate && (
                     <Typography variant="caption" color="error">
-                      {errors.Start_date}
+                      {errors.startDate}
                     </Typography>
                   )}
                 </Grid>
@@ -275,9 +276,9 @@ export default function ProjectOnboardForm({projectAddOrEdit}) {
                     <Typography variant="body2"> Status</Typography>
                     <Select
                       size="small"
-                      name="Status"
+                      name="status"
                       onChange={formik.handleChange}
-                      value={formik.values.Status}
+                      value={formik.values.status}
                       sx={{
                         "& fieldset": {
                           borderColor: "rgba(204, 204, 204, 0.5)",
@@ -294,12 +295,12 @@ export default function ProjectOnboardForm({projectAddOrEdit}) {
                       onClick={() => handleClick("status")}
                       onBlur={formik.handleBlur}
                     >
-                      <MenuItem value="Active">Active</MenuItem>
-                      <MenuItem value="Inactive">Inactive</MenuItem>
+                      <MenuItem value="active">active</MenuItem>
+                      <MenuItem value="inactive">inactive</MenuItem>
                     </Select>
-                    {formik.touched.Status && errors.Status && (
+                    {formik.touched.status && errors.status && (
                       <Typography variant="caption" color="error">
-                        {errors.Status}
+                        {errors.status}
                       </Typography>
                     )}
                   </Stack>
@@ -307,7 +308,6 @@ export default function ProjectOnboardForm({projectAddOrEdit}) {
               </Grid>
               <br />
               <Grid container spacing={1}>
-
                 <Grid
                   item
                   xs={12}
@@ -322,7 +322,7 @@ export default function ProjectOnboardForm({projectAddOrEdit}) {
                     <InputBase
                       placeholder="Description"
                       type="text"
-                      name="Description"
+                      name="description"
                       sx={{
                         border:
                           clickedBtnID === "Description"
@@ -333,7 +333,7 @@ export default function ProjectOnboardForm({projectAddOrEdit}) {
                       }}
                       onClick={() => handleClick("Description")}
                       onChange={formik.handleChange}
-                      value={formik.values.Description}
+                      value={formik.values.description}
                     />
                   </Stack>
                 </Grid>
@@ -345,8 +345,7 @@ export default function ProjectOnboardForm({projectAddOrEdit}) {
                 variant="contained"
                 sx={{ textTransform: "none", mt: 2 }}
               >
-                {projectAddOrEdit==="add" ?
-                "Onboard Project" : "Submit"}
+                {projectAddOrEdit === "add" ? "Onboard Project" : "Submit"}
               </Button>
             </form>
           </CardContent>
@@ -357,8 +356,9 @@ export default function ProjectOnboardForm({projectAddOrEdit}) {
             sx={{ height: "50px", mt: "10px" }}
             severity="success"
           >
-            {projectAddOrEdit==="add" ? "Project added successfully." : "Project Edited Successfully"}
-            
+            {projectAddOrEdit === "add"
+              ? "Project added successfully."
+              : "Project Edited Successfully"}
           </Alert>
         )}
       </Stack>

@@ -5,7 +5,6 @@ function deleteInventory(id) {
     const { InventoryListItems } = getState().Inventory;
 
     const inv = InventoryListItems.findIndex((inv) => inv.id === id);
-    console.log(inv)
      
     dispatch(deleteInv(inv))
 
