@@ -11,15 +11,30 @@ import MailIcon from "@mui/icons-material/Mail";
 import CallIcon from "@mui/icons-material/Call";
 import profile from "../assets/profile.jpg";
 import UseReponsive from "../hooks/UseResponsive";
+import { useSelector } from "react-redux";
+import { useGetEmployeesQuery } from "../Store/slice/apiEmployeeSlice";
 
 export default function ApproverCard() {
-  let responsive=UseReponsive()
+  let responsive = UseReponsive();
+
+  const id = useSelector((state) => state.employees.userId);
+  const { data: emp, isLoading, isError } = useGetEmployeesQuery();
+
+  if (isLoading || isError || !emp) {
+    return null;
+  }
+
+  const employee = emp.find((employee) => employee.id === id);
+
+  if (!employee) {
+    return null;
+  }
 
   return (
     <Card>
       <CardContent>
         <Typography fontWeight="bold" fontSize="16px">
-          Approver
+          Details
         </Typography>
       </CardContent>
       <Divider />
@@ -28,15 +43,28 @@ export default function ApproverCard() {
           display="flex"
           alignItems="center"
           justifyContent={"center"}
-          my={responsive.isMobile ? 2 :0.8}
+          my={responsive.isMobile ? 2 : 0.8}
         >
           <Avatar
-            src={profile}
-            style={{ width:responsive.isMobile ? "50px" :"70px", height:responsive.isMobile ? "50px" : "70px", border: "2px solid blue" }}
+            // src={employee.image.data}
+            src={URL.createObjectURL(
+              new Blob([new Uint8Array(employee.image.data)])
+            )}
+            style={{
+              width: responsive.isMobile ? "50px" : "70px",
+              height: responsive.isMobile ? "50px" : "70px",
+              border: "2px solid blue",
+            }}
           />
           <Box px={6} display={"flex"} flexDirection={"column"}>
-            <Typography fontSize={responsive.isDesktop ? "19px" : "16px"}> Pratik Deshmukh</Typography>
-            <Typography variant={responsive.isDesktop ? "subtitle1" : "subtitle2"}> Project Manager</Typography>
+            <Typography fontSize={responsive.isDesktop ? "19px" : "16px"}>
+              {employee ? employee.name : ""}
+            </Typography>
+            <Typography
+              variant={responsive.isDesktop ? "subtitle1" : "subtitle2"}
+            >
+              {employee ? employee.role : ""}
+            </Typography>
           </Box>
         </Box>
 
@@ -51,11 +79,15 @@ export default function ApproverCard() {
         >
           <Grid item display="flex" px={0.5}>
             <MailIcon />
-            <Typography variant={responsive.isMobile ? "subtitle2" : "15px"}>pratik.23@gmail.com</Typography>
+            <Typography variant={responsive.isMobile ? "subtitle2" : "15px"}>
+              {employee ? employee.email : ""}
+            </Typography>
           </Grid>
           <Grid item display="flex">
             <CallIcon />
-            <Typography variant={responsive.isMobile ? "subtitle2" : "15px"}>+91 8356789870</Typography>
+            <Typography variant={responsive.isMobile ? "subtitle2" : "15px"}>
+              {employee ? employee.mobile_number : ""}
+            </Typography>
           </Grid>
         </Grid>
       </CardContent>

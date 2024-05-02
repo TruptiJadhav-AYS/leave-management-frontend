@@ -13,36 +13,35 @@ import {
   TableContainer,
   Stack,
 } from "@mui/material";
-import {useSelector} from 'react-redux'
+import { useSelector } from "react-redux";
+import { useGetPendingRequestsQuery } from "../Store/slice/apiLeaveBalanceSlice";
+import { useUpdateStatusMutation } from "../Store/slice/apiLeaveBalanceSlice";
 
-const handleAccept = (name) => {
-  
-};
-
-const handleReject = (name) => {
-  
-};
 export default function PendingReq() {
-  const PendingRequestList = useSelector(state=>state.PendingRequests.PendingRequestList)
+  const { data: pr, isSuccess, isError } = useGetPendingRequestsQuery();
 
-  const formatDate = (dateString) => {
-    const [day, month, year] = dateString.split("-");
-    const monthNames = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
+  // const loggedInEmployeeId = useSelector((state) => state.loggedInEmployee?.id);
+  const id = useSelector((state) => state.employees.userId);
+  console.log(id);
+  // console.log(loggedInEmployeeId);
 
-    return `${day} ${monthNames[parseInt(month, 10) - 1]} ${year}`;
+  // Filter pending requests to exclude requests of the logged-in employee
+  const PendingRequestList = pr
+    ? pr.filter((request) => request.emp_id !== id)
+    : [];
+
+  console.log(PendingRequestList);
+
+  // const PendingRequestList = pr || [];
+
+  const [updateStatus, { isLoading, error }] = useUpdateStatusMutation();
+
+  const handleAccept = (id) => {
+    updateStatus({ id: id, status: "approved" });
+  };
+
+  const handleReject = (id) => {
+    updateStatus({ id: id, status: "rejected" });
   };
 
   return (
@@ -60,6 +59,7 @@ export default function PendingReq() {
         <Table sx={{ minWidth: 700 }} stickyHeader>
           <TableHead>
             <TableRow>
+              {/* <TableCell sx={{ fontWeight: "bold" }}>Id</TableCell> */}
               <TableCell sx={{ fontWeight: "bold" }}>Name</TableCell>
               <TableCell align="center" sx={{ fontWeight: "bold" }}>
                 From date
@@ -79,19 +79,20 @@ export default function PendingReq() {
           <TableBody>
             {PendingRequestList.map((row) => (
               <TableRow
-                key={row.name}
+                key={row.id} // Changed key to use id instead of name
                 sx={{
                   "&:last-child td, &:last-child th": { border: 0 },
                 }}
               >
-                <TableCell component="th" scope="row">
-                  {row.name}
+                {/* <TableCell component="th" scope="row">
+                  {row.id}
+                </TableCell> */}
+                <TableCell>{row.employeeName}</TableCell>
+                <TableCell align="center">{row.start_date}</TableCell>
+                <TableCell align="center">
+                  {row.end_date !== "" ? row.end_date : "-"}
                 </TableCell>
-                <TableCell align="center">{formatDate(row.fromDate)}</TableCell>
-                <TableCell align="center">{row.toDate !== ""
-                      ? formatDate(row.toDate)
-                      : "-"}</TableCell>
-                <TableCell align="right">{row.leaveType}</TableCell>
+                <TableCell align="right">{row.leave_type}</TableCell>
                 <TableCell align="left">{row.reason}</TableCell>
                 <TableCell align="right">
                   <Stack direction={"row"}>
@@ -100,7 +101,7 @@ export default function PendingReq() {
                       variant="contained"
                       color="success"
                       size="small"
-                      onClick={() => handleAccept(row.name)}
+                      onClick={() => handleAccept(row.id)} // Changed to pass id to handleAccept
                       sx={{ marginRight: 1, textTransform: "none" }}
                     >
                       Accept
@@ -110,7 +111,7 @@ export default function PendingReq() {
                       variant="outlined"
                       color="error"
                       size="small"
-                      onClick={() => handleReject(row.name)}
+                      onClick={() => handleReject(row.id)} // Changed to pass id to handleReject
                       sx={{ textTransform: "none" }}
                     >
                       Reject

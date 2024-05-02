@@ -28,15 +28,15 @@ import {
   useUpdateEmployeeMutation,
 } from "../Store/slice/apiEmployeeSlice";
 import { useGetDepartmentsQuery } from "../Store/slice/apiDepartmentSlice";
-import {useGetInventoryQuery} from  "../Store/slice/apiInventorySlice";
+import { useGetInventoryQuery } from "../Store/slice/apiInventorySlice";
 
 export default function EmloyeeDetailForm({ addOrEditForm }) {
   const { data: employees } = useGetEmployeesQuery();
-  const {data: inventory}=useGetInventoryQuery();
+  const { data: inventory } = useGetInventoryQuery();
 
   const Employees = employees || [];
-  const InventoryList=inventory || []
-  
+  const InventoryList = inventory || [];
+
   let { selectedEmp } = useSelector((state) => state.employees);
 
   let selectedEmpIndex = Employees.findIndex((emp) => emp.id === selectedEmp);
@@ -107,6 +107,7 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
   const [addEmp] = useAddEmployeeMutation();
   const [updateEmployee] = useUpdateEmployeeMutation();
   const { data: department, isSuccess } = useGetDepartmentsQuery();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const dept = department || [];
 
   useEffect(() => {
@@ -160,11 +161,11 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
     }),
 
     onSubmit: async (values) => {
+      // eslint-disable-next-line no-lone-blocks
       {
         addOrEditForm === "add"
-          ?
-            addEmp(values)
-          : updateEmployee({id:selectedEmp,updatedEmployeeDetails:values});
+          ? addEmp(values)
+          : updateEmployee({ id: selectedEmp, updatedEmployeeDetails: values });
       }
       setOnBoardSuccess(true);
       setTimeout(() => {
@@ -532,13 +533,12 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
                       }}
                       MenuProps={MenuProps}
                     >
-                      {InventoryList.map(
-                        (inventory) =>
-                            <MenuItem key={inventory.id} value={inventory.id}>
-                              {inventory.name} - {inventory.category.name} -{" "}
-                              {inventory.serial_number}
-                            </MenuItem>
-                      )}
+                      {InventoryList.map((inventory) => (
+                        <MenuItem key={inventory.id} value={inventory.id}>
+                          {inventory.name} - {inventory.category.name} -{" "}
+                          {inventory.serial_number}
+                        </MenuItem>
+                      ))}
                     </Select>
                   </Stack>
                 </Grid>

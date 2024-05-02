@@ -61,6 +61,7 @@ export default function ProjectList({ onProjectAddOrEdit }) {
   // const Projects = useSelector((state) => state.Project.Projects);
   const { data: project,isSuccess} = useGetProjectsQuery();
   const Projects = project || [];
+  console.log(Projects)
   const selectedProject = useSelector((state) => state.Project.selectedProject);
 
   const dispatch = useDispatch();
@@ -264,6 +265,7 @@ export default function ProjectList({ onProjectAddOrEdit }) {
                 </TableRow>
               );
             })}
+            
           </TableBody>
         </Table>
       </TableContainer>

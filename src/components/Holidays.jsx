@@ -22,12 +22,12 @@ export default function Holidays() {
   // const annualLeaves = useSelector((state) => state.holidays.annualLeaves);
   const { data: holiday, isLoading, isError } = useGetHolidaysQuery();
   const annualLeaves = holiday;
+  // console.log(annualLeaves)
   const [deleteHoliday]=useDeleteHolidayMutation()
 
   // const suttya = annualLeaves.holidays || [];
-  const suttya = annualLeaves ? annualLeaves.holidays || [] : [];
-
-  // console.log(suttya[0].image)
+  const suttya = annualLeaves ? annualLeaves || [] : [];
+  // console.log(suttya)
 
   let responsive = UseReponsive();
 
