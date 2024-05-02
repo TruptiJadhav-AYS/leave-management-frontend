@@ -13,45 +13,73 @@ import {
   InputLabel,
   FormControl,
 } from "@mui/material";
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import Avatar from "@mui/material/Avatar";
-import { useDispatch } from "react-redux";
-import deleteEmployee from "../Store/action/DeleteEmployee";
+import DeleteDialouge from "./DeleteDialouge";
 import { useState } from "react";
-import employeeApi, { useDeleteEmployeeMutation, useGetEmployeesQuery } from '../Store/slice/apiEmployeeSlice';
-import { useGetProjectsQuery,useAssignProjectMutation } from "../Store/slice/apiProjectSlice"; 
+import employeeApi, {
+  useDeleteEmployeeMutation,
+  useGetEmployeesQuery,
+} from "../Store/slice/apiEmployeeSlice";
+import {
+  useGetProjectsQuery,
+  useAssignProjectMutation,
+} from "../Store/slice/apiProjectSlice";
 
-export default function EmployeeDetails({ onAddOrEdit }) {
-  const { data: Employees,isLoading,isError} = useGetEmployeesQuery();
-  const {data: project}=useGetProjectsQuery()
-  let [selectedProject,setSelectedProject]=useState("")
-  const [assignProject]=useAssignProjectMutation()
+export default function EmployeeDetails({
+  onAddOrEdit,
+  openDeleteDialouge,
+  onOpenDeleteDialogue,
+  onCloseDeleteDialogue,
+}) {
+  const { data: Employees, isLoading, isError } = useGetEmployeesQuery();
+  const { data: project } = useGetProjectsQuery();
+  let [selectedProject, setSelectedProject] = useState("");
+  const [assignProject] = useAssignProjectMutation();
 
-  const Project=project || []
+  const Project = project || [];
   const selectedEmp = useSelector((state) => state.employees.selectedEmp);
 
   const [deleteEmployee] = useDeleteEmployeeMutation();
   const Navigate = useNavigate();
   const index = Employees.findIndex((contact) => contact.id === selectedEmp);
 
+  function hadleDelete() {
+    deleteEmployee(selectedEmp);
+    Navigate("/Employee/Employees");
+  }
+
   const formatDate = (timestampString) => {
     const date = new Date(timestampString);
     const year = date.getFullYear();
     const day = date.getDate().toString().padStart(2, "0");
 
-    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const monthNames = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
     const formattedDate = `${day} ${monthNames[date.getMonth()]} ${year}`;
 
     return formattedDate;
   };
 
-  function handelAssign(projectId){
-    const projectObj={
-      employeeId:selectedEmp,
-      projectId:projectId
-    }
-    assignProject(projectObj)
+  function handelAssign(projectId) {
+    const projectObj = {
+      employeeId: selectedEmp,
+      projectId: projectId,
+    };
+    assignProject(projectObj);
   }
 
   return (
@@ -78,52 +106,52 @@ export default function EmployeeDetails({ onAddOrEdit }) {
           </Typography>
 
           <FormControl sx={{ m: 1, minWidth: 120 }}>
-          <InputLabel id="demo-simple-select-autowidth-label">Select Project</InputLabel>
-          <Select
-          size="small"
-          onChange={(e)=>setSelectedProject(e.target.value)}
-           sx={{
-            "& fieldset": {
-              borderColor: "rgba(204, 204, 204, 0.5)",
-              borderWidth: "2px",
-            },
-            "&:hover": {
-              "&& fieldset": {
-                border: "2px solid rgba(204, 204, 204, 0.5)",
-              },
-            },
-            height: "50px",
-            width:"200px",
-            mr:"100px",
-            borderRadius: 1,
-          }}
-          >
-            {Project.map((project)=>
-              <MenuItem key={project.id} value={project.id}>
-              {project.name}
-              </MenuItem>
-            )}
-          </Select>
+            <InputLabel id="demo-simple-select-autowidth-label">
+              Select Project
+            </InputLabel>
+            <Select
+              size="small"
+              onChange={(e) => setSelectedProject(e.target.value)}
+              sx={{
+                "& fieldset": {
+                  borderColor: "rgba(204, 204, 204, 0.5)",
+                  borderWidth: "2px",
+                },
+                "&:hover": {
+                  "&& fieldset": {
+                    border: "2px solid rgba(204, 204, 204, 0.5)",
+                  },
+                },
+                height: "50px",
+                width: "200px",
+                mr: "100px",
+                borderRadius: 1,
+              }}
+            >
+              {Project.map((project) => (
+                <MenuItem key={project.id} value={project.id}>
+                  {project.name}
+                </MenuItem>
+              ))}
+            </Select>
           </FormControl>
 
-          <Button onClick={()=>handelAssign(selectedProject)}>
-            Assign
-          </Button>
+          <Button onClick={() => handelAssign(selectedProject)}>Assign</Button>
           <IconButton
             onClick={() => {
               onAddOrEdit("edit");
               Navigate("/Employee/Employees/EmployeeDetailsForm");
             }}
           >
-            <EditIcon/>
+            <EditIcon />
           </IconButton>
           <IconButton
             onClick={() => {
-              deleteEmployee(selectedEmp)
-              Navigate("/Employee/Employees");             
+              onOpenDeleteDialogue();
+              // Navigate("/Employee/Employees");
             }}
           >
-            <DeleteIcon/>
+            <DeleteIcon />
           </IconButton>
         </Grid>
         <CardContent>
@@ -172,11 +200,11 @@ export default function EmployeeDetails({ onAddOrEdit }) {
               </Typography>
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
-              {Employees[index].manager && 
-              <Typography variant="caption" fontWeight={"600"}>
-                Manager Name : {Employees[index].manager?.name}
-              </Typography>
-              }
+              {Employees[index].manager && (
+                <Typography variant="caption" fontWeight={"600"}>
+                  Manager Name : {Employees[index].manager?.name}
+                </Typography>
+              )}
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
               <Typography variant="caption" fontWeight={"600"}>
@@ -186,6 +214,11 @@ export default function EmployeeDetails({ onAddOrEdit }) {
           </Grid>
         </CardContent>
       </Card>
+      <DeleteDialouge
+        openDeleteDialouge={openDeleteDialouge}
+        onCloseDeleteDialogue={onCloseDeleteDialogue}
+        handelDelete={hadleDelete}
+      />
     </Box>
   );
 }

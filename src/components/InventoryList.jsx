@@ -1,6 +1,13 @@
 import * as React from "react";
 import Paper from "@mui/material/Paper";
-import { Box, Button, CircularProgress, Divider, InputBase, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Divider,
+  InputBase,
+  Typography,
+} from "@mui/material";
 import {
   TableBody,
   TableCell,
@@ -16,7 +23,11 @@ import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
 import { useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {useGetListOfInventoeyQuery,useDeleteInventoryMutation} from  "../Store/slice/apiInventorySlice";
+import {
+  useGetListOfInventoeyQuery,
+  useDeleteInventoryMutation,
+} from "../Store/slice/apiInventorySlice";
+import DeleteDialouge from "./DeleteDialouge";
 
 const columns = [
   { id: "name", label: "Name", minWidth: 180 },
@@ -28,23 +39,28 @@ const columns = [
   },
 ];
 
-export default function InventoryList() {
-  const {data: inventoryListItems,isLoading,isError }= useGetListOfInventoeyQuery()
-  const InventoryListItems=inventoryListItems
+export default function InventoryList({
+  openDeleteDialouge,
+  onOpenDeleteDialogue,
+  onCloseDeleteDialogue,
+}) {
+  const {
+    data: inventoryListItems,
+    isLoading,
+    isError,
+  } = useGetListOfInventoeyQuery();
+  const InventoryListItems = inventoryListItems;
 
-  const [deleteInventory]=useDeleteInventoryMutation()
+  const [deleteInventory] = useDeleteInventoryMutation();
 
   const Navigate = useNavigate();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchText, setsearchText] = useState("");
+  const [inventoryId,setinventoryId]=useState();
 
-  // const handleEditClick = () => {
-  //   Navigate("/Employee/Employees/EditEmployee");
-  // };
-
-  function handelDelete(id){
-    deleteInventory(id)
+  function handelDelete() {
+    deleteInventory(inventoryId);
   }
 
   const handleChangePage = (newPage) => {
@@ -60,11 +76,11 @@ export default function InventoryList() {
     setsearchText(event.target.value);
   }
 
-  if(isLoading){
-    return(<CircularProgress/>)
+  if (isLoading) {
+    return <CircularProgress />;
   }
-  if(isError){
-    return(<></>)
+  if (isError) {
+    return <></>;
   }
   const FilterArray = InventoryListItems.filter((inventory) =>
     inventory.category.name.toLowerCase().includes(searchText.toLowerCase())
@@ -109,15 +125,15 @@ export default function InventoryList() {
         <Table stickyHeader>
           <TableHead>
             <TableRow>
-              {columns.map((column,index) => (
+              {columns.map((column, index) => (
                 <TableCell
                   key={index}
                   align={column.align}
                   sx={{ color: "primary.main", minWidth: column.minWidth }}
                 >
-                    <Typography fontWeight={550} fontSize={"16px"}>
-                      {column.label}
-                    </Typography>
+                  <Typography fontWeight={550} fontSize={"16px"}>
+                    {column.label}
+                  </Typography>
                 </TableCell>
               ))}
               <TableCell
@@ -126,35 +142,38 @@ export default function InventoryList() {
             </TableRow>
           </TableHead>
           <TableBody>
-  {FilterArray.map((inventory, index) => {
-    return (
-      <TableRow
-        hover
-        role="checkbox"
-        tabIndex={-1}
-        key={index}
-        sx={{ cursor: "pointer" }}
-      >
-        {columns.map((column) => {
-          const value = inventory[column.id];
-          return (
-            <TableCell key={column.id} align={column.align}>
-              {column.id=="category" ? value.name :value}
-            </TableCell>
-          );
-        })}
-        <TableCell align="center">
-          <Stack direction="row">
-            <DeleteIcon
-              sx={{ cursor: "pointer" }}
-              onClick={() => handelDelete(inventory.id)}
-            />
-          </Stack>
-        </TableCell>
-      </TableRow>
-    );
-  })}
-</TableBody>
+            {FilterArray.map((inventory, index) => {
+              return (
+                <TableRow
+                  hover
+                  role="checkbox"
+                  tabIndex={-1}
+                  key={index}
+                  sx={{ cursor: "pointer" }}
+                >
+                  {columns.map((column) => {
+                    const value = inventory[column.id];
+                    return (
+                      <TableCell key={column.id} align={column.align}>
+                        {column.id == "category" ? value.name : value}
+                      </TableCell>
+                    );
+                  })}
+                  <TableCell align="center">
+                    <Stack direction="row">
+                      <DeleteIcon
+                        sx={{ cursor: "pointer" }}
+                        onClick={() => {
+                          onOpenDeleteDialogue();
+                          setinventoryId(inventory.id)
+                        }}
+                      />
+                    </Stack>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
         </Table>
       </TableContainer>
       <TablePagination
@@ -165,6 +184,11 @@ export default function InventoryList() {
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+      <DeleteDialouge
+        openDeleteDialouge={openDeleteDialouge}
+        onCloseDeleteDialogue={onCloseDeleteDialogue}
+        handelDelete={handelDelete}
       />
     </Paper>
   );

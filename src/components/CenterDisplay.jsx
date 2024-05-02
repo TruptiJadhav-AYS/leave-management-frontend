@@ -22,12 +22,11 @@ import ViewProfile from "./ViewProfile";
 import PendingReq from "./PendingReq";
 import PendingReqMobile from "./PendingReqMobile";
 
-export default function CenterDisplay({logedInUser}) {
+export default function CenterDisplay({ logedInUser }) {
   let [addOrEditForm, setAddOrEditForm] = useState();
   let [projectAddOrEdit, setProjectAddOrEdit] = useState();
-  let [selectedEmpId,setSelectedEmpId]=useState(null)
-
-  // console.log(logedInUser)
+  let [selectedEmpId, setSelectedEmpId] = useState(null);
+  let [openDeleteDialouge, setOpenDeleteDialouge] = useState(false);
 
   function onProjectAddOrEdit(form) {
     setProjectAddOrEdit(form);
@@ -36,16 +35,24 @@ export default function CenterDisplay({logedInUser}) {
   function onAddOrEdit(form) {
     setAddOrEditForm(form);
   }
-  function handleSelectedEmp(id){
-    setSelectedEmpId(id)
+  function handleSelectedEmp(id) {
+    setSelectedEmpId(id);
   }
-
+  function onOpenDeleteDialogue() {
+    setOpenDeleteDialouge(true);
+  }
+  function onCloseDeleteDialogue() {
+    setOpenDeleteDialouge(false);
+  }
 
   let responsive = UseReponsive();
   return (
     <Routes>
       <Route path="/" element={<Dashboard />} />
-      <Route path="/PendingRequest" element={responsive.isMobile ?<PendingReqMobile/> : <PendingReq/>}/>
+      <Route
+        path="/PendingRequest"
+        element={responsive.isMobile ? <PendingReqMobile /> : <PendingReq />}
+      />
       <Route path="/ApplyLeave" element={<LeaveReqForm />} />
       <Route
         path="/History"
@@ -65,23 +72,51 @@ export default function CenterDisplay({logedInUser}) {
           responsive.isMobile ? (
             <EmployeeMobile onAddOrEdit={onAddOrEdit} />
           ) : (
-            <EmployeeList onAddOrEdit={onAddOrEdit} handleSelectedEmp={handleSelectedEmp}/>
+            <EmployeeList
+              onAddOrEdit={onAddOrEdit}
+              handleSelectedEmp={handleSelectedEmp}
+            />
           )
         }
       />
 
       <Route
         path="/:id"
-        element={<EmployeeDetails onAddOrEdit={onAddOrEdit} selectedEmpId={selectedEmpId}/>}
+        element={
+          <EmployeeDetails
+            onAddOrEdit={onAddOrEdit}
+            selectedEmpId={selectedEmpId}
+            addOrEditForm={addOrEditForm}
+            openDeleteDialouge={openDeleteDialouge}
+            onOpenDeleteDialogue={onOpenDeleteDialogue}
+            onCloseDeleteDialogue={onCloseDeleteDialogue}
+          />
+        }
       />
 
       <Route
         path="/InventoryList"
-        element={responsive.isMobile ? <InventoryListMb /> : <InventoryList />}
+        element={
+          responsive.isMobile ? (
+            <InventoryListMb
+              openDeleteDialouge={openDeleteDialouge}
+              onOpenDeleteDialogue={onOpenDeleteDialogue}
+              onCloseDeleteDialogue={onCloseDeleteDialogue}
+            />
+          ) : (
+            <InventoryList
+              openDeleteDialouge={openDeleteDialouge}
+              onOpenDeleteDialogue={onOpenDeleteDialogue}
+              onCloseDeleteDialogue={onCloseDeleteDialogue}
+            />
+          )
+        }
       />
       <Route
         path="/Employees/EmployeeDetailsForm"
-        element={<EmloyeeDetailForm addOrEditForm={addOrEditForm} />}
+        element={
+          <EmloyeeDetailForm/>
+        }
       />
       <Route
         path="/Projects"
@@ -94,7 +129,12 @@ export default function CenterDisplay({logedInUser}) {
         }
       />
 
-      <Route path="/Profile" element={ logedInUser ? <ViewProfile logedInUser={logedInUser}/> : <></>} />
+      <Route
+        path="/Profile"
+        element={
+          logedInUser ? <ViewProfile logedInUser={logedInUser} /> : <></>
+        }
+      />
       <Route
         path="/Projects/OnboardProject"
         element={<ProjectOnboardForm projectAddOrEdit={projectAddOrEdit} />}
