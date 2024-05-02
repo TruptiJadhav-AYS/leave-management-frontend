@@ -104,10 +104,14 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
       description: Yup.string(),
     }),
     onSubmit: (values) => {
+      // eslint-disable-next-line no-lone-blocks
       {
         projectAddOrEdit === "add"
           ? addProject(values)
-          : updateProject({id:selectedProject,updatedProjectDetails:values});
+          : updateProject({
+              id: selectedProject,
+              updatedProjectDetails: values,
+            });
       }
       setSuccess(true);
       setTimeout(() => {
@@ -192,12 +196,12 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
                 >
                   <Stack width={"100%"}>
                     <Typography variant="body2"> Manager Name </Typography>
-                    
+
                     <Select
                       name="manager_name"
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
-                      value={formik.values.Project_Manager}
+                      value={formik.values.manager.name}
                       size="small"
                       sx={{
                         "& fieldset": {
@@ -214,7 +218,7 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
                       }}
                       MenuProps={MenuProps}
                     >
-                     {Employees.map((emp, index) => (
+                      {Employees.map((emp, index) => (
                         <MenuItem key={index} value={emp.name}>
                           {emp.name}
                         </MenuItem>

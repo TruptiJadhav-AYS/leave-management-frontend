@@ -19,7 +19,20 @@ import { useUpdateStatusMutation } from "../Store/slice/apiLeaveBalanceSlice";
 
 export default function PendingReq() {
   const { data: pr, isSuccess, isError } = useGetPendingRequestsQuery();
-  const PendingRequestList = pr || [];
+
+  // const loggedInEmployeeId = useSelector((state) => state.loggedInEmployee?.id);
+  const id = useSelector((state) => state.employees.userId);
+  console.log(id);
+  // console.log(loggedInEmployeeId);
+
+  // Filter pending requests to exclude requests of the logged-in employee
+  const PendingRequestList = pr
+    ? pr.filter((request) => request.emp_id !== id)
+    : [];
+
+  console.log(PendingRequestList);
+
+  // const PendingRequestList = pr || [];
 
   const [updateStatus, { isLoading, error }] = useUpdateStatusMutation();
 
@@ -77,7 +90,7 @@ export default function PendingReq() {
                 <TableCell>{row.employeeName}</TableCell>
                 <TableCell align="center">{row.start_date}</TableCell>
                 <TableCell align="center">
-                  {row.end_date !== "" ? row.toDate : "-"}
+                  {row.end_date !== "" ? row.end_date : "-"}
                 </TableCell>
                 <TableCell align="right">{row.leave_type}</TableCell>
                 <TableCell align="left">{row.reason}</TableCell>

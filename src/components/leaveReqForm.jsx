@@ -8,7 +8,7 @@ import {
   Card,
   CardContent,
   Grid,
-  Alert
+  Alert,
 } from "@mui/material";
 import { useState } from "react";
 import { useFormik } from "formik";
@@ -52,9 +52,8 @@ function LeaveReqForm() {
     },
     validationSchema: leaveReqObj,
     onSubmit: (values) => {
-      
       addLeave(values);
-      console.log(values)
+      console.log(values);
       setSubmitSuccess(true);
       setTimeout(() => {
         Navigate("/Employee");
@@ -68,7 +67,6 @@ function LeaveReqForm() {
   // const [addLeaveMutation] = useAddLeaveMutation();
 
   return (
-    
     <Grid
       container
       justifyContent={"center"}
@@ -79,10 +77,7 @@ function LeaveReqForm() {
         sx={{ textAlign: "left", width: responsive.isMobile ? "100%" : "70%" }}
       >
         <Card elevation={1} pt="5%">
-          <CardContent
-            component={"form"}
-            onSubmit={formik.handleSubmit}
-          >
+          <CardContent component={"form"} onSubmit={formik.handleSubmit}>
             <Typography mb={2} variant="h5" color={"primary"}>
               Apply Leave
             </Typography>
@@ -94,7 +89,12 @@ function LeaveReqForm() {
               justifyContent={"space-between"}
               pt="5px"
             >
-              <Grid item xs={12} sm={6} height={responsive.isMobile ? "15vh" : "15vh"}>
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                height={responsive.isMobile ? "15vh" : "15vh"}
+              >
                 <Typography fontSize={"13px"}>FROM DATE</Typography>
                 <InputBase
                   onChange={formik.handleChange}
@@ -123,7 +123,12 @@ function LeaveReqForm() {
                 )}
               </Grid>
 
-              <Grid item xs={12} sm={6} height={responsive.isMobile ? "15vh" : "15vh"}>
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                height={responsive.isMobile ? "15vh" : "15vh"}
+              >
                 <Typography fontSize={"13px"}>TO DATE</Typography>
                 <InputBase
                   value={formik.values.end_date}
@@ -155,7 +160,12 @@ function LeaveReqForm() {
             </Grid>
 
             <Grid container pb={2}>
-              <Grid item xs={12} sm={6} height={responsive.isMobile ? "11vh" : "11vh"}>
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                height={responsive.isMobile ? "11vh" : "11vh"}
+              >
                 <Stack width="100%">
                   <Typography fontSize={"13px"}>LEAVE TYPE</Typography>
                   <Select
@@ -175,13 +185,17 @@ function LeaveReqForm() {
                       },
                       "&:hover": {
                         "&& fieldset": {
-                          border: "2px solid rgba(204, 204, 204, 0.5)"
-                        }
+                          border: "2px solid rgba(204, 204, 204, 0.5)",
+                        },
                       },
                     }}
                   >
-                    <MenuItem value="first half">Half Day (First half)</MenuItem>
-                    <MenuItem value="second half">Half Day (Second half)</MenuItem>
+                    <MenuItem value="first half">
+                      Half Day (First half)
+                    </MenuItem>
+                    <MenuItem value="second half">
+                      Half Day (Second half)
+                    </MenuItem>
                     <MenuItem value="full">Full Day</MenuItem>
                     <MenuItem value="work from home">Work From Home</MenuItem>
                   </Select>
@@ -206,7 +220,7 @@ function LeaveReqForm() {
                       ? "2px solid blue"
                       : "2px solid  rgba(204, 204, 204, 0.5)",
                   borderRadius: "4px",
-                  px: 1
+                  px: 1,
                 }}
                 multiline
                 rows={3}
@@ -220,18 +234,25 @@ function LeaveReqForm() {
 
             <br />
 
-            <Button type="submit" variant="contained" color="primary" sx={{ textTransform: "none", }} >
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              sx={{ textTransform: "none" }}
+            >
               Apply Leave
             </Button>
-
           </CardContent>
         </Card>
-        {submitSuccess &&
-          (
-            <Alert icon={<CheckIcon fontSize="inherit" />} sx={{ height: "50px", mt: "10px" }} severity="success">
-              You have applied for leave successfully.
-            </Alert>
-          )}
+        {submitSuccess && (
+          <Alert
+            icon={<CheckIcon fontSize="inherit" />}
+            sx={{ height: "50px", mt: "10px" }}
+            severity="success"
+          >
+            You have applied for leave successfully.
+          </Alert>
+        )}
       </Stack>
     </Grid>
   );
