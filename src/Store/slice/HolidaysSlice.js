@@ -14,6 +14,10 @@ import diwali from "../../assets/diwali.png";
 import christmas from "../../assets/christmas.jpg";
 
 const initialState = {
+  holidayImages:[],
+
+
+
   annualLeaves: [
     {
       id: 1,
@@ -97,6 +101,11 @@ const annualLeaveSlice = createSlice({
     addHoliday: (state, action) => {
       state.annualLeaves = action.payload;
     },
+    imageLoading: (state, action) => {
+      state.holidayImages = action.payload;
+      console.log("action.payload",action.payload)
+    },
+    
     deleteHoliday: (state, action) => {
       //   console.log(action.payload);
       if (action.payload !== -1) {
@@ -106,5 +115,5 @@ const annualLeaveSlice = createSlice({
   },
 });
 
-export const { addHoliday, deleteHoliday } = annualLeaveSlice.actions;
+export const { addHoliday, deleteHoliday,imageLoading } = annualLeaveSlice.actions;
 export default annualLeaveSlice.reducer;

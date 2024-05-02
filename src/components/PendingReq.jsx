@@ -13,40 +13,57 @@ import {
   TableContainer,
   Stack,
 } from "@mui/material";
-import {useSelector} from 'react-redux'
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+// import viewEmployeeLeavesForLeaveRequest from "./viewEmployeeLeavesForLeaveRequest";
+import { useSelector } from 'react-redux'
+import { useGetPendingRequestsQuery } from "../Store/slice/apiLeaveBalanceSlice";
+import ViewEmployeeLeavesForLeaveRequest from "./ViewEmployeeLeavesForLeaveRequest";
+import { useState } from "react";
+
 
 const handleAccept = (name) => {
-  
+
 };
 
 const handleReject = (name) => {
-  
+
 };
 export default function PendingReq() {
-  const PendingRequestList = useSelector(state=>state.PendingRequests.PendingRequestList)
+  // const PendingRequestList = useSelector(state=>state.PendingRequests.PendingRequestList)
+  const id = useSelector((state) => state.employees.userId);
 
-  const formatDate = (dateString) => {
-    const [day, month, year] = dateString.split("-");
-    const monthNames = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
+  const { data: pr, isSuccess } = useGetPendingRequestsQuery(id);
+  // console.log('History....', pr)
+  const PendingRequestList = pr?.pendingRequests || []
 
-    return `${day} ${monthNames[parseInt(month, 10) - 1]} ${year}`;
-  };
+  console.log(PendingRequestList)
+
+  // const formatDate = (dateString) => {
+  //   const [day, month, year] = dateString.split("-");
+  //   const monthNames = [
+  //     "Jan",
+  //     "Feb",
+  //     "Mar",
+  //     "Apr",
+  //     "May",
+  //     "Jun",
+  //     "Jul",
+  //     "Aug",
+  //     "Sep",
+  //     "Oct",
+  //     "Nov",
+  //     "Dec",
+  //   ];
+
+  //   return `${day} ${monthNames[parseInt(month, 10) - 1]} ${year}`;
+  // };
+  const [open, setOpen] = useState(false);
+  let [Emp,setEmp]= useState();
 
   return (
     <Card sx={{ height: "100%", overflow: "auto" }}>
+      <ViewEmployeeLeavesForLeaveRequest Emp={Emp} open={open} setOpen={setOpen}/>
+
       <CardContent sx={{ position: "sticky", top: 0, zIndex: 1 }}>
         <Typography fontWeight={"bold"} textAlign={"left"} fontSize={"16px"}
         color={"red"}
@@ -76,7 +93,9 @@ export default function PendingReq() {
               <TableCell align="left" sx={{ fontWeight: "bold" }}>
                 Reason
               </TableCell>
-              <TableCell align="center" sx={{ fontWeight: "bold" }}></TableCell>
+              <TableCell></TableCell>
+              <TableCell ></TableCell>
+
             </TableRow>
           </TableHead>
           <TableBody>
@@ -88,24 +107,25 @@ export default function PendingReq() {
                 }}
               >
                 <TableCell component="th" scope="row">
-                  {row.name}
+                  {row.employee.name}
                 </TableCell>
-                <TableCell align="center">{formatDate(row.fromDate)}</TableCell>
-                <TableCell align="center">{row.toDate !== ""
-                      ? formatDate(row.toDate)
-                      : "-"}</TableCell>
-                <TableCell align="right">{row.leaveType}</TableCell>
+                <TableCell align="center">{row.start_date}</TableCell>
+                <TableCell align="center">{row.end_date !== ""
+                  ?row.end_date
+                  : "-"}</TableCell>
+                <TableCell align="center">{row.leave_type}</TableCell>
                 <TableCell align="left">{row.reason}</TableCell>
-                <TableCell align="right">
-                  <Stack direction={"row"}>
+                <TableCell align="center" sx={{display:'flex',justifyContent:'space-around'}}>
+                  {/* <Stack direction={"row"}> */}
                     <Button
                       disableRipple
                       variant="contained"
                       color="success"
                       size="small"
                       onClick={() => handleAccept(row.name)}
-                      sx={{ marginRight: 1, textTransform: "none" }}
+                      sx={{textTransform: "none" }}
                     >
+                      
                       Accept
                     </Button>
                     <Button
@@ -117,8 +137,19 @@ export default function PendingReq() {
                       sx={{ textTransform: "none" }}
                     >
                       Reject
+                    </Button>                    
+                  {/* </Stack> */}
+                </TableCell>
+                <TableCell sx={{padding:0}}>
+                    <Button
+                    // onClick={handleView}
+                    onClick={()=>{
+                      setOpen(true)
+                      setEmp(row)
+                    }}
+                    >
+                      <RemoveRedEyeIcon/>
                     </Button>
-                  </Stack>
                 </TableCell>
               </TableRow>
             ))}

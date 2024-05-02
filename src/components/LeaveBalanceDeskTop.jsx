@@ -1,8 +1,25 @@
 import { Grid, Card, CardContent, Typography } from "@mui/material";
 import { orange } from "@mui/material/colors";
 import { Gauge, gaugeClasses } from "@mui/x-charts";
+import { useGetAnnunalLeaveBalanceQuery, useGetRemainingBalanceQuery, useGetWorkFromHomeBalanceQuery } from "../Store/slice/apiLeaveBalanceSlice";
+import { useSelector } from "react-redux";
 
 export function LeaveBalanceDeskTop() {
+
+  const {data: annualBal}=useGetAnnunalLeaveBalanceQuery();
+  // const annualBalance=annualBal.remainingHolidays ||[]
+  const annualBalance = annualBal ? annualBal.remainingHolidays || [] : [];
+  // console.log(annualBalance)
+  const id = useSelector((state) => state.employees.userId);
+// console.log(id)
+const {data:wfh}=useGetWorkFromHomeBalanceQuery(id)
+const workFromHome = wfh ? wfh || [] : [];
+// console.log(workFromHome)
+
+const {data:leave}=useGetRemainingBalanceQuery(id)
+// console.log(leave)
+const remainingLeaves=leave ? leave || [] : [];
+
   return (
     <Grid container spacing={1} pt={1}>
       <Grid item xs={4} sm={4} md={4} lg={4}>
@@ -17,28 +34,21 @@ export function LeaveBalanceDeskTop() {
           }}
         >
           {/* <CardContent> */}
-          <Gauge
-            width={100}
-            height={100}
-            value={4}
-            valueMax={21}
-            startAngle={-110}
-            endAngle={110}
-            sx={{
-              [`& .${gaugeClasses.valueText}`]: {
-                fontSize: 13,
-                transform: "translate(0px, 0px)",
-              },
-              // "& .MuiGauge-root.MuiGauge-valueArc": {
-                "& .MuiGauge-valueArc": {
-                // fill: (value) => (value <= 5 ? "red" : "#3f51b5"), 
-                fill: "red", 
-                // "& .MuiGauge-valueArc": {
-                  // fill: ({ value }) => (value <= 5 ? "red" : "#3f51b5"),
-              },
-            }}
-            text={({ value, valueMax }) => `${value} / ${valueMax}`}
-          />
+            <Gauge
+              width={100}
+              height={100}
+              value={remainingLeaves.remainingBalance}
+              valueMax={remainingLeaves.default_balance}
+              startAngle={-110}
+              endAngle={110}
+              sx={{
+                [`& .${gaugeClasses.valueText}`]: {
+                  fontSize: 13,
+                  transform: "translate(0px, 0px)",
+                },
+              }}
+              text={({ value, valueMax }) => `${value} / ${valueMax}`}
+            />
             {/* </CardContent>
             <CardContent> */}
             <Typography
@@ -62,8 +72,8 @@ export function LeaveBalanceDeskTop() {
             <Gauge
               width={100}
               height={100}
-              value={10}
-              valueMax={21}
+              value={workFromHome.remainingBalance}
+              valueMax={workFromHome.defaultBalance}
               startAngle={-110}
               endAngle={110}
               sx={{
@@ -93,8 +103,8 @@ export function LeaveBalanceDeskTop() {
             <Gauge
               width={100}
               height={100}
-              value={9}
-              valueMax={21}
+              value={annualBalance.remainingHolidays}
+              valueMax={annualBalance.totalHolidays}
               startAngle={-110}
               endAngle={110}
               sx={{

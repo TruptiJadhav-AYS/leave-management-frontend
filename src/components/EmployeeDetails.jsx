@@ -43,6 +43,8 @@ export default function EmployeeDetails({ onAddOrEdit }) {
     assignProject(projectObj)
   }
 
+
+
   return (
     <Box
       sx={{
@@ -66,6 +68,8 @@ export default function EmployeeDetails({ onAddOrEdit }) {
             Employee Details
           </Typography>
 
+
+          <Button >History</Button>
           <FormControl sx={{ m: 1, minWidth: 120 }}>
           <InputLabel id="demo-simple-select-autowidth-label">Select Project</InputLabel>
           <Select
@@ -95,9 +99,13 @@ export default function EmployeeDetails({ onAddOrEdit }) {
           </Select>
           </FormControl>
 
+          {/* <Button >History</Button> */}
+
+
           <Button onClick={()=>handelAssign(selectedProject)}>
             Assign
           </Button>
+
           <IconButton
             onClick={() => {
               onAddOrEdit("edit");

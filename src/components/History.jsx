@@ -9,10 +9,12 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { useSelector } from "react-redux";
 import { Box } from "@mui/material";
+import { useGetHistoryQuery } from "../Store/slice/apiHistorySlice";
+
 
 const columns = [
-  { id: "Start_Date", label: "Start Date", minWidth: 90, ml: "500px" },
-  { id: "End_Date", label: "End Date", minWidth: 80 },
+  { id: "start_date", label: "Start Date", minWidth: 90, ml: "500px" },
+  { id: "end_date", label: "End Date", minWidth: 80 },
   {
     id: "leave_type",
     label: "Leave Type",
@@ -31,8 +33,15 @@ const columns = [
 ];
 
 export default function History() {
-  const LeaveHistory = useSelector((state) => state.leaveHistory.LeaveHistory);
+  // const LeaveHistory = useSelector((state) => state.leaveHistory.LeaveHistory);
   // console.log("(((((((((((((((((((((((((", LeaveHistory)
+
+  const id = useSelector((state) => state.employees.userId);
+ 
+  const { data: History, isSuccess } = useGetHistoryQuery(id);
+  // console.log('History....',History)
+  const LeaveHistory=History? History || []:[];
+  // console.log("hiiiiii",LeaveHistory)
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -64,6 +73,7 @@ export default function History() {
 
     return `${day} ${monthNames[parseInt(month, 10) - 1]} ${year}`;
   };
+  
 
   return (
     <Paper sx={{ width: "100%", overflow: "hidden", pt: 1 }}>

@@ -7,7 +7,7 @@ import { useState } from "react";
 import ForgetPasswordPage from "./components/forgetPasswordPage";
 import {jwtDecode} from 'jwt-decode';
 import ResetPasswordPage from "./components/ResetPasswordPage";
-import { setRole } from "./Store/slice/EmployeeSlice";
+import { setId, setRole } from "./Store/slice/EmployeeSlice";
 import { useDispatch } from "react-redux";
 import "swagger-ui-react/swagger-ui.css";
 
@@ -26,6 +26,7 @@ const myTheme = createTheme({
 });
 
 let role;
+let id;
 
 const isTokenValid = () => {
   const token = localStorage.getItem("authToken");
@@ -33,6 +34,8 @@ const isTokenValid = () => {
     const decodedToken = jwtDecode(token);
     console.log(token)
     role=decodedToken.role
+    id=decodedToken.id
+    console.log(decodedToken)
     const currentTime = Date.now() / 1000; // Convert to seconds
     if (decodedToken.exp && decodedToken.exp < currentTime) {
       return false;
@@ -50,6 +53,7 @@ function App() {
   const [logedInUser, setLogedInUser] = useState("");
   const dispatch=useDispatch()
   dispatch(setRole(role))
+  dispatch(setId(id))
   // console.log(role)
   // function isAuthenticated() {
     // localStorage.removeItem("authToken")

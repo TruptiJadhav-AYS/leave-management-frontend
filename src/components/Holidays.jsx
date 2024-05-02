@@ -139,8 +139,8 @@ export default function Holidays() {
 <IconButton
   color="primary"
   sx={{
-    width: "40px",
-    height: "40px",
+    width: "60px",
+    height: "60px",
     position: "fixed", // Use fixed positioning
     bottom: "10px", // Adjust for desired distance from bottom
     right: "10px" // Adjust for desired distance from right

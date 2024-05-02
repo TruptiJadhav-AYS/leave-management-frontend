@@ -11,26 +11,43 @@ import {
   Avatar,
 } from "@mui/material";
 import { useSelector } from "react-redux";
+import { useUpcomingHolidaysQuery } from "../Store/slice/apiHolidaySlice";
+import { PuffLoader } from "react-spinners";
 
 export default function UpcomingHolidays() {
   const role = useSelector((state) => state.employees.userRole);
-  const Holidays = useSelector((state) => state.holidays.annualLeaves);
+  // const Holidays = useSelector((state) => state.holidays.annualLeaves);
+  const {data:upcomingHoliday,isLoading, isError}=useUpcomingHolidaysQuery();
+  // const upcomingHoliday = useSelector((state) => state.holidays.holidayImages);
+  const upcomingHolidays = upcomingHoliday ? upcomingHoliday.holidays || [] : [];
+  // console.log(upcomingHolidays)
 
-  const formatDate = (dateString) => {
-    const [year, month, day] = dateString.split("-");
-    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-    return `${day} ${monthNames[parseInt(month, 10) - 1]} ${year}`;
-  };
+  // const formatDate = (dateString) => {
+  //   const [year, month, day] = dateString.split("-");
+  //   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+  //   return `${day} ${monthNames[parseInt(month, 10) - 1]} ${year}`;
+  // };
 
   // Get the current date
   const currentDate = new Date();
 
   // Filter holidays that occur after the current date
-  const upcomingHolidays = Holidays.filter((holiday) => {
-    const holidayDate = new Date(holiday.date);
-    return holidayDate > currentDate;
-  });
+  // const upcomingHolidays = Holidays.filter((holiday) => {
+  //   const holidayDate = new Date(holiday.date);
+  //   return holidayDate > currentDate;
+  // });
+  if (isLoading) {
+    return <Box
+     sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "80vh" }}>
+    <PuffLoader color={"red"} fontSize={500} />
+    </Box>
+  }
+
+  if (isError) {
+    return <div>Error fetching holidays</div>;
+  }
 
   return (
     <Card sx={{ height: "100%" }}>
@@ -54,12 +71,14 @@ export default function UpcomingHolidays() {
             <Box key={index}>
               <ListItem width="100%">
                 <ListItemAvatar>
-                  <Avatar src={holiday.img} />
+                  <Avatar src={URL.createObjectURL(
+                new Blob([new Uint8Array(holiday.holiday_image.data)])
+              )} />
                 </ListItemAvatar>
                 <Typography sx={{ ml: role === "Employee" ? "25%" : "15%" }}>
-                  {holiday.occasion}
+                  {holiday.holiday_occasion}
                   <br />
-                  {formatDate(holiday.date)}
+                  {(holiday.holiday_date)}
                 </Typography>
               </ListItem>
               <Divider variant="inset" />

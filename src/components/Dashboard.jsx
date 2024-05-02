@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Grid } from "@mui/material";
 import UseReponsive from "../hooks/UseResponsive";
 import LeavePolicy from "./LeavePolicy";
@@ -9,11 +9,21 @@ import PendingReq from "./PendingReq";
 import ApproverCard from "./ApproverCard";
 import PendingReqMobile from "./PendingReqMobile";
 import UpcomingHolidaysMobile from "./UpcomingHolidaysMobile";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useUpcomingHolidaysQuery } from "../Store/slice/apiHolidaySlice";
+import { imageLoading } from "../Store/slice/HolidaysSlice";
 
 export default function Dashboard() {
   const role=useSelector((state)=>state.employees.userRole)
   const responsive = UseReponsive();
+  const dispatch = useDispatch();
+  const {data:upcomingHoliday,isLoading, isError}=useUpcomingHolidaysQuery();
+  console.log("upcomingHoliday",upcomingHoliday)
+  useEffect(()=>{
+  dispatch(imageLoading(upcomingHoliday))
+    
+  },[upcomingHoliday])
+
 
   return (
     <Grid container width="100%" px={1} >
