@@ -17,13 +17,13 @@ export default function EmployeeOnLeave() {
   const { data: employees,isLoading,isError} = useGetEmpOnLeaveTodayQuery();
   const Employees= employees || [];
 
-  if (isLoading) {
-    return <CircularProgress />; 
-  }
+  // if (isLoading) {
+  //   return <CircularProgress />; 
+  // }
 
-  if (isError) {
-    return <div>Error fetching data</div>;
-  }
+  // if (isError) {
+  //   return <div>Error fetching data</div>;
+  // }
 
   return (
     <Card sx={{ height: "100%"}}>
