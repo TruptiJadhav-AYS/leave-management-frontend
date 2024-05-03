@@ -105,6 +105,7 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
     }),
     onSubmit: (values) => {
       {
+        console.log("VALUE",values)
         projectAddOrEdit === "add"
           ? addProject(values)
           : updateProject({id:selectedProject,updatedProjectDetails:values});

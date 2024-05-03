@@ -41,6 +41,11 @@ const leaveReqApi = createApi({
       providesTags:[{data:"leave"}]
     }),
 
+    getPendingRequestById:builder.query({
+      query: (emp_id) => `/leave/${emp_id}/pending-requests`,
+      providesTags:[{data:"leave"}]
+    }),
+
     updateLeaveStatus:builder.mutation({
       query:({ id, status }) => ({
         url: `/leave/${id}/status`,
@@ -57,6 +62,7 @@ export const {
     useGetLeavesByIdQuery,
     useGetEmpOnLeaveTodayQuery,
     useGetPendingRequestQuery,
-    useUpdateLeaveStatusMutation
+    useUpdateLeaveStatusMutation,
+    useGetPendingRequestByIdQuery,
 } = leaveReqApi;
 export default leaveReqApi;

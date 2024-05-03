@@ -12,19 +12,45 @@ import {
   Stack,
 } from "@mui/material";
 import { useSelector } from "react-redux";
-import { useGetPendingRequestQuery } from "../Store/slice/apiLeaveReqSlice";
+import {
+  useGetPendingRequestByIdQuery,
+  useGetPendingRequestQuery,
+} from "../Store/slice/apiLeaveReqSlice";
 import { useUpdateLeaveStatusMutation } from "../Store/slice/apiLeaveReqSlice";
+import { useEffect, useState } from "react";
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
 export default function PendingReq() {
-  const {
-    data: pendingRequest,
-  } = useGetPendingRequestQuery();
+  let [pendingRequest, setPendingRequest] = useState([]);
+  let [pendingRequestById, setPendingRequestById] = useState([]);
+
+  const { data: PendingRequest, isSuccess,isLoading} = useGetPendingRequestQuery();
 
   const id = useSelector((state) => state.employees.userId);
+  const role = useSelector((state) => state.employees.userRole);
 
-  const PendingRequestList = pendingRequest
+  const { data: PendingRequestById, isSuccess: isSuccessById,isLoading:isLoadingById } = useGetPendingRequestByIdQuery(id);
+
+  useEffect(() => {
+    if (isSuccess) {
+      setPendingRequest(PendingRequest||[]);
+    }
+  }, [isSuccess, PendingRequest]);
+
+  useEffect(() => {
+    if (isSuccessById ) {
+        setPendingRequestById(PendingRequestById.pendingRequests || []);
+    }
+}, [isSuccessById, PendingRequestById]);
+
+  const PendingRequestList =
+  role === "Manager"
+    ? pendingRequestById || []
+    : pendingRequest
     ? pendingRequest.filter((request) => request.emp_id !== id)
     : [];
+
+  console.log(PendingRequestList)
 
   const [updateStatus] = useUpdateLeaveStatusMutation();
 
@@ -55,6 +81,14 @@ export default function PendingReq() {
 
     return `${day} ${monthNames[parseInt(month, 10) - 1]} ${year}`;
   };
+
+  if(isLoadingById){
+    return(<></>)
+  }
+
+  if(isLoading){
+    return(<></>)
+  }
 
   return (
     <Card sx={{ height: "100%", overflow: "auto" }}>
@@ -91,23 +125,30 @@ export default function PendingReq() {
                 }}
               >
                 <TableCell component="th" scope="row">
-                  {row.employeeName}
+                  {row.employee.name}
                 </TableCell>
-                <TableCell align="center">{formatDate(row.start_date)}</TableCell>
                 <TableCell align="center">
-                  {row.toDate !== "" ? formatDate(row.end_date) : "-"}
+                  {formatDate(row.start_date)}
+                </TableCell>
+                <TableCell align="center">
+                  {row.end_date !== null ? formatDate(row.end_date) : "-"}
                 </TableCell>
                 <TableCell align="right">{row.leave_type}</TableCell>
                 <TableCell align="left">{row.reason}</TableCell>
                 <TableCell align="right">
-                  <Stack direction={"row"}>
+                  {(row.employee.manager_id==id || row.employee.manager_id===null) && <Stack direction={"row"}>
                     <Button
                       disableRipple
                       variant="contained"
                       color="success"
                       size="small"
                       onClick={() => handleAccept(row.id)}
-                      sx={{ marginRight: 1, textTransform: "none" ,height:"25px",width:"52px"}}
+                      sx={{
+                        marginRight: 1,
+                        textTransform: "none",
+                        height: "25px",
+                        width: "52px",
+                      }}
                     >
                       Approve
                     </Button>
@@ -117,11 +158,15 @@ export default function PendingReq() {
                       color="error"
                       size="small"
                       onClick={() => handleReject(row.id)}
-                      sx={{ textTransform: "none" ,height:"25px",width:"52px"}}
+                      sx={{
+                        textTransform: "none",
+                        height: "25px",
+                        width: "52px",
+                      }}
                     >
                       Reject
                     </Button>
-                  </Stack>
+                  </Stack>}
                 </TableCell>
               </TableRow>
             ))}

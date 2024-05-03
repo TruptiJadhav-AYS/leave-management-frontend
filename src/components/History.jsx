@@ -32,8 +32,6 @@ const columns = [
 ];
 
 export default function History() {
-  let logedInEmp=useSelector((state)=>state.employees.logedInEmp)
-  console.log(logedInEmp)
   const id=useSelector((state)=>state.employees.userId)
   
   const { data: LeaveHistory = []} = useGetLeavesByIdQuery(id);
@@ -102,7 +100,7 @@ export default function History() {
                   {columns.map((column) => {
                     const value =
                       column.id === "start_date" || column.id === "end_date"
-                        ? row[column.id] !== ""
+                        ? row[column.id] !== null
                           ? formatDate(row[column.id])
                           : "-"
                         :row[column.id];
@@ -146,7 +144,7 @@ export default function History() {
                           </Box>
                         ) : (
                           <Box>
-                          { value }
+                          {value!=null ? value : ""}
                           </Box>
                         )}
                       </TableCell>

@@ -21,6 +21,7 @@ import { useState } from "react";
 import employeeApi, {
   useDeleteEmployeeMutation,
   useGetEmployeesQuery,
+  useUploadImageMutation,
 } from "../Store/slice/apiEmployeeSlice";
 import {
   useGetProjectsQuery,
@@ -40,10 +41,10 @@ export default function EmployeeDetails({
 
   const Project = project || [];
   const selectedEmp = useSelector((state) => state.employees.selectedEmp);
-
   const [deleteEmployee] = useDeleteEmployeeMutation();
+  const [uploadImage] = useUploadImageMutation();
   const Navigate = useNavigate();
-  const index = Employees.findIndex((contact) => contact.id === selectedEmp);
+  const index = Employees.findIndex((emp) => emp.id === selectedEmp);
 
   function hadleDelete() {
     deleteEmployee(selectedEmp);
@@ -82,17 +83,31 @@ export default function EmployeeDetails({
     assignProject(projectObj);
   }
 
+  function handleFileUpload(files) {
+    // document.getElementById('fileUpload').click();
+
+    const file = files[0]; // Assuming you want to upload only one file
+    console.log(file)
+    console.log(selectedEmp)
+    if(file){
+      uploadImage({employeeId: selectedEmp, imageData: file});
+    }
+  }
+
+  // function onFileUploadClick() {
+  //   document.getElementById('fileUpload').click();
+  // }
+
   return (
     <Box
       sx={{
         display: "flex",
         justifyContent: "center",
-        alignItems: "center",
-        minHeight: "70vh",
+        minHeight: "100%",
         top: "10%",
       }}
     >
-      <Card elevation={2}>
+      <Card elevation={2} >
         <Grid display={"flex"} justifyContent={"space-between"} mx={2}>
           <Typography
             variant="h5"
@@ -106,9 +121,7 @@ export default function EmployeeDetails({
           </Typography>
 
           <FormControl sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel id="demo-simple-select-autowidth-label">
-              Select Project
-            </InputLabel>
+            <InputLabel id="demo-simple-select-autowidth-label">Select Project</InputLabel>
             <Select
               size="small"
               onChange={(e) => setSelectedProject(e.target.value)}
@@ -153,6 +166,7 @@ export default function EmployeeDetails({
           >
             <DeleteIcon />
           </IconButton>
+          
         </Grid>
         <CardContent>
           <Grid
@@ -162,11 +176,13 @@ export default function EmployeeDetails({
             columnGap={12}
           >
             <Grid item lg={12} md={12} xs={12} sm={12}>
-              <Avatar sx={{ width: 124, height: 124 }} />
+              <Avatar sx={{ width: 124, height: 124 }} src={Employees[index].image===null?"":URL.createObjectURL(
+              new Blob([new Uint8Array(Employees[index].image.data)])
+            )}/>
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
               <Typography variant="body1" mt={8} fontWeight={"700"}>
-                Name : {Employees[index].name}
+                Name : {Employees && Employees[index] && Employees[index].name}
               </Typography>
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
@@ -174,14 +190,13 @@ export default function EmployeeDetails({
                 variant="caption"
                 fontWeight={"600"}
                 align="left"
-                // justifyContent={"left"}
               >
-                Email : {Employees[index].email}
+                Email : {Employees && Employees[index] && Employees[index].email}
               </Typography>
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
               <Typography variant="caption" fontWeight={"600"}>
-                Phone No : {Employees[index].mobile_number}
+                Phone No : {Employees && Employees[index] && Employees[index].mobile_number}
               </Typography>
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
@@ -191,12 +206,12 @@ export default function EmployeeDetails({
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
               <Typography variant="caption" fontWeight={"600"} align="left">
-                Gender : {Employees[index].gender}
+                Gender : {Employees && Employees[index] && Employees[index].gender}
               </Typography>
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
               <Typography variant="caption" fontWeight={"600"}>
-                Department : {Employees[index].department?.department_name}
+                Department : {Employees && Employees[index] && Employees[index].department?.department_name}
               </Typography>
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
@@ -208,7 +223,27 @@ export default function EmployeeDetails({
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
               <Typography variant="caption" fontWeight={"600"}>
-                Role : {Employees[index].role}
+                Role : {Employees && Employees[index] && Employees[index].role}
+              </Typography>
+            </Grid>
+            <Grid item lg={12} md={12} xs={12} sm={12}>
+              <Typography variant="caption" fontWeight={"600"}>
+                Projects: {Employees[index].project && Employees[index].project.map((pr, index1) => (
+                  <Typography key={index} variant="caption" fontWeight={"600"}>
+                    {pr.name}
+                    {index1 !== Employees[index].project.length - 1 && ", "}
+                  </Typography>
+                ))}
+                </Typography>
+            </Grid>
+            <Grid item lg={12} md={12} xs={12} sm={12}>
+              <Typography variant="caption" fontWeight={"600"}>
+                Inventory :{Employees[index].inventories && Employees[index].inventories.map((inv, index1) => (
+                  <Typography key={index} variant="caption" fontWeight={"600"}>
+                    {inv.name}
+                    {index1 !==  Employees[index].inventories.length - 1 &&  ", " }
+                  </Typography>
+                ))}
               </Typography>
             </Grid>
           </Grid>

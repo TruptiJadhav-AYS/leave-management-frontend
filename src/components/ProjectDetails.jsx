@@ -18,6 +18,7 @@ export default function ProjectDetails({ onProjectAddOrEdit }) {
   const selectedProject = useSelector((state) => state.Project.selectedProject);
   const { data: project,isSuccess } = useGetProjectsQuery();
   const Projects = project || [];
+  console.log(Projects)
 
   let [deleteDialogue, setdeleteDialogue] = useState();
   const dispatch = useDispatch();
@@ -105,6 +106,16 @@ export default function ProjectDetails({ onProjectAddOrEdit }) {
             <Grid item lg={12} md={12} xs={12} sm={12}>
               <Typography variant="caption" fontWeight={"600"} align="left">
                 Status : {Projects[index].status}
+              </Typography>
+            </Grid>
+            <Grid item lg={12} md={12} xs={12} sm={12}>
+              <Typography variant="caption" fontWeight={"600"}>
+                Employees :{Projects[index].employee && Projects[index].employee.map((emp, index1) => (
+                  <Typography key={index} variant="caption" fontWeight={"600"}>
+                    {emp.name}
+                    {index1 !==  Projects[index].employee.length - 1 &&  ", " }
+                  </Typography>
+                ))}
               </Typography>
             </Grid>
           </Grid>
