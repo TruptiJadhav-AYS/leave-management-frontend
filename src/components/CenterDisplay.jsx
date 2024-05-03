@@ -91,7 +91,7 @@ export default function CenterDisplay({logedInUser}) {
         }
       />
 
-      <Route path="/Profile" element={ logedInUser ? <ViewProfile logedInUser={logedInUser}/> : <></>} />
+      <Route path="/Profile" element={ <ViewProfile/>} />
       <Route
         path="/Projects/OnboardProject"
         element={<ProjectOnboardForm projectAddOrEdit={projectAddOrEdit} />}

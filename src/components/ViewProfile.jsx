@@ -1,5 +1,3 @@
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
@@ -9,27 +7,22 @@ import {
   Grid,
 } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
-import { useDispatch } from "react-redux";
-import deleteEmployee from "../Store/action/DeleteEmployee";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useGetEmployeesByIdQuery } from "../Store/slice/apiEmployeeSlice";
+// import { useNavigate } from "react-router-dom";
+// import deleteEmployee from "../Store/action/DeleteEmployee";
 // import { useDeleteEmployeeMutation, useGetEmployeesQuery } from '../Store/slice/apiEmployeeSlice';
-import { useGetEmployeesQuery } from "../Store/slice/apiEmployeeSlice";
 
-export default function ViewProfile({ onAddOrEdit, logedInUser }) {
-  // const Employees = useSelector((state) => state.employees.Employees);
-  const { data: Employees,isLoading,isError} = useGetEmployeesQuery();
-//   const selectedEmp = useSelector((state) => state.employees.selectedEmp);
-//   console.log(typeof selectedEmp)
+export default function ViewProfile({ onAddOrEdit }) {
   // let [deleteDialogue,setdeleteDialogue]=useState()
-//   const [deleteEmployee] = useDeleteEmployeeMutation();
-  const dispatch = useDispatch();
-  const Navigate = useNavigate();
-  console.log(logedInUser)
-  console.log(Employees)
-//   const index = Employees.findIndex((contact) => contact.id === selectedEmp);
-//   let manager=Employees.findIndex((emp) => emp.manager_id === Employees[index].id)
-//   let manager_name=manager.name
-    const index = Employees.findIndex((contact) => contact.email === logedInUser );
+  // const [deleteEmployee] = useDeleteEmployeeMutation();
+  // const dispatch = useDispatch();
+  // const Navigate = useNavigate();
+  const id=useSelector((state)=>state.employees.logedInEmp)
+  console.log(id)
+  const {data:Emp}=useGetEmployeesByIdQuery(id)
+  const logedInEmp=Emp || []
+  console.log(logedInEmp)
 
   return (
     <Box
@@ -66,7 +59,7 @@ export default function ViewProfile({ onAddOrEdit, logedInUser }) {
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
               <Typography variant="body1" mt={8} fontWeight={"700"}>
-                Name : {Employees[index].name}
+                Name : {logedInEmp.name}
               </Typography>
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
@@ -76,37 +69,37 @@ export default function ViewProfile({ onAddOrEdit, logedInUser }) {
                 align="left"
                 // justifyContent={"left"}
               >
-                Email : {Employees[index].email}
+                Email : {logedInEmp.email}
               </Typography>
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
               <Typography variant="caption" fontWeight={"600"}>
-                Phone No : {Employees[index].mobile_number}
+                Phone No : {logedInEmp.mobile_number}
               </Typography>
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
               <Typography variant="caption" fontWeight={"600"} align="left">
-                Date Of Birth : {Employees[index].dob}
+                Date Of Birth : {logedInEmp.dob}
               </Typography>
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
               <Typography variant="caption" fontWeight={"600"} align="left">
-                Gender : {Employees[index].gender}
+                Gender : {logedInEmp.gender}
               </Typography>
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
               <Typography variant="caption" fontWeight={"600"}>
-                Department : {Employees[index].department}
+                Department : {logedInEmp.department}
               </Typography>
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
               <Typography variant="caption" fontWeight={"600"}>
-                Manager Name : {Employees[index].manager}
+                Manager Name : {logedInEmp.manager}
               </Typography>
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
               <Typography variant="caption" fontWeight={"600"}>
-                Role : {Employees[index].role}
+                Role : {logedInEmp.role}
               </Typography>
             </Grid>
           </Grid>

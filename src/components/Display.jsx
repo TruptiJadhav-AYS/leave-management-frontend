@@ -13,17 +13,20 @@ import MenuItem from "@mui/material/MenuItem";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
-import Logout from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router-dom";
 import MailIcon from "@mui/icons-material/Mail";
 import CallIcon from "@mui/icons-material/Call";
 import Profile from "../assets/profile.jpg"
 import { useSelector } from "react-redux";
+import { useGetEmployeesByIdQuery } from "../Store/slice/apiEmployeeSlice";
 
-function AccountMenu({LogedInEmployee}) {
+function AccountMenu() {
 
-  // const LogedInEmployee = LogedInEmployee;
-  // console.log("1111111111111",LogedInEmployeeDetails.id)
+  const id=useSelector((state)=>state.employees.logedInEmp)
+  console.log(id)
+  const {data:Emp}=useGetEmployeesByIdQuery(id)
+  const logedInEmp=Emp || []
+  console.log(logedInEmp)
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [logoutClick, setLogoutClick] = useState(false);
@@ -32,8 +35,11 @@ function AccountMenu({LogedInEmployee}) {
   let Navigate = useNavigate();
 
   const onLogoutClick = () => {
-    setLogoutClick(true);
+    // setLogoutClick(true);
+    // localStorage.removeItem("authToken");
+    Navigate("/");
     localStorage.removeItem("authToken");
+    console.log("Token Removed Succesfully", localStorage)
   };
 
   const handleClick = (event) => {
@@ -43,11 +49,15 @@ function AccountMenu({LogedInEmployee}) {
     setAnchorEl(null);
   };
 
+  const handleViewProfile = () => {
+    Navigate(`/Employee/Profile`); // Replace with your profile route
+  };
+
   return (
     <Box>
       <Tooltip title="Account settings">
         <IconButton onClick={handleClick} size="small" sx={{ ml: 0.2 }}>
-          <Avatar src={Profile} sx={{ width: 32, height: 32 }}/>
+          <Avatar src={Profile} sx={{ width: 32, height: 32 }} />
         </IconButton>
       </Tooltip>
       {anchorEl ? (
@@ -93,43 +103,28 @@ function AccountMenu({LogedInEmployee}) {
             px={7}
             py={1.5}
           >
-            <Avatar style={{ width: "60px", height: "60px" }} src={Profile}/>
-            <Typography fontWeight={"bold"} mt={1} >
-              {/* {role === "Admin"
-                ? "Pratiksha Nimbalkar"
-                : role === "Manager"
-                ? "Trupti Jadhav"
-                : " Pruthviraj Suryavanshi"} */}
-            </Typography>
-            <Typography variant="subTitle">
-              {/* {role === "Admin"
-                ? "Admin"
-                : role === "Manager"
-                ? "Project Manager"
-                : "Developer"} */}
+            <Avatar style={{ width: "60px", height: "60px" }} src={Profile} />
+            <Typography fontWeight={"bold"} mt={1}>
+              {logedInEmp.name}
             </Typography>
             <Box display={"flex"} gap={0.5} mt={1} flexDirection={"row"}>
               <MailIcon />
+              <Typography color="textSecondary">{logedInEmp.email}</Typography>
+            </Box>
+            <Box display="flex">
+              <CallIcon />
               <Typography color="textSecondary">
-               {/* {logedInUser.email} */}
+                {logedInEmp.mobile_number}
               </Typography>
             </Box>
-            <Box  display="flex">
-              <CallIcon />
-              <Typography color="textSecondary">+91 8356789870</Typography>
+            <Box display="flex">
+              <MenuItem onClick={handleViewProfile}>View Profile</MenuItem>
+              <MenuItem onClick={onLogoutClick}>Logout</MenuItem>
             </Box>
-            <MenuItem
-              onClick={() => onLogoutClick()}
-              disableRipple
-              sx={{ mt: 3,color:"red"}}
-            >
-                <Logout fontSize="small" sx={{ color: 'red' ,mr:1}}/>
-              Logout
-            </MenuItem>
           </Box>
         </Menu>
       ) : (
-        logoutClick && Navigate("/")
+        <></>
       )}
     </Box>
   );
@@ -138,8 +133,12 @@ function AccountMenu({LogedInEmployee}) {
 const drawerWidth = 240;
 
 export default function Display() {
-  const role=useSelector((state)=>state.employees.userRole)
-  const logedInUser=useSelector((state)=>state.employees.logedInEmp)
+
+  const id=useSelector((state)=>state.employees.logedInEmp)
+  // console.log(id)
+  const {data:Emp}=useGetEmployeesByIdQuery(id)
+  const logedInEmp=Emp || []
+  // console.log(logedInEmp)
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -189,19 +188,15 @@ export default function Display() {
             height={"100%"}
             alignItems={"center"}
           >
+            <Typography fontSize={"18px"} noWrap component="div">
+              {logedInEmp.name}
+            </Typography>
 
-              <Typography fontSize={"18px"} noWrap component="div">
-                {/* {LogedInEmployee.name} */}
-              </Typography>
-
-            <AccountMenu   />
+            <AccountMenu />
           </Stack>
         </Stack>
       </AppBar>
-      <Box
-        // component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-      >
+      <Box sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}>
         <Drawer
           variant="temporary"
           open={mobileOpen}
@@ -218,7 +213,7 @@ export default function Display() {
             },
           }}
         >
-          <SideDrawer  handleDrawerClose={handleDrawerClose} />
+          <SideDrawer handleDrawerClose={handleDrawerClose} />
         </Drawer>
         <Drawer
           variant="permanent"
@@ -231,13 +226,13 @@ export default function Display() {
           }}
           open
         >
-          <SideDrawer  />
+          <SideDrawer />
         </Drawer>
       </Box>
       <Grid container direction={"row"}>
-        <Toolbar/>
+        <Toolbar />
         <Box bgcolor={"#f5f5f5"} sx={{ width: "100%", height: "90vh" }}>
-          <CenterDisplay  />
+          <CenterDisplay />
         </Box>
       </Grid>
     </Box>
