@@ -17,13 +17,13 @@ export default function EmployeeOnLeave() {
   const { data: employees,isLoading,isError} = useGetEmpOnLeaveTodayQuery();
   const Employees= employees || [];
 
-  // if (isLoading) {
-  //   return <CircularProgress />; 
-  // }
+  if (isLoading) {
+    return <CircularProgress />; 
+  }
 
-  // if (isError) {
-  //   return <div>Error fetching data</div>;
-  // }
+  if (isError) {
+    return <div>Error fetching data</div>;
+  }
 
   return (
     <Card sx={{ height: "100%"}}>
@@ -57,14 +57,17 @@ export default function EmployeeOnLeave() {
               minHeight:"100%"
             }}
           >
-            {Employees.map((contact,index) => (
+            {Employees.map((emp,index) => (
                 <Box sx={{p:"1%"}}> 
                 <ListItem alignItems="flex-start" mx={1}>           
                     <Grid container spacing={2} alignItems={"center"}>
                       <Grid item>
                         <Avatar
                         sx={{width:"50px",height:"50px"}}
-                          alt={contact.employee.name}
+                          alt={emp.employee.name}
+                          src={emp.employee.image===null?"":URL.createObjectURL(
+                            new Blob([new Uint8Array(emp.employee.image.data)])
+                          )}
                         />
                       </Grid>
                       <Grid item>
@@ -76,10 +79,10 @@ export default function EmployeeOnLeave() {
                             fontWeight: "30",
                           }}
                         >
-                          {contact.employee.name}
+                          {emp.employee.name}
                         </Typography>
                         <Typography sx={{fontSize:"12px"}}>
-                            {contact.start_date} - {contact.end_date}
+                            {emp.start_date} - {emp.end_date}
                         </Typography>
                       </Grid>
                     </Grid>                 

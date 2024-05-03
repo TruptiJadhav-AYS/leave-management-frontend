@@ -27,6 +27,7 @@ export default function CenterDisplay({ logedInUser }) {
   let [projectAddOrEdit, setProjectAddOrEdit] = useState();
   let [selectedEmpId, setSelectedEmpId] = useState(null);
   let [openDeleteDialouge, setOpenDeleteDialouge] = useState(false);
+  console.log(logedInUser)
 
   function onProjectAddOrEdit(form) {
     setProjectAddOrEdit(form);
@@ -148,6 +149,7 @@ export default function CenterDisplay({ logedInUser }) {
         path="Projects/:Id"
         element={<ProjectDetails onProjectAddOrEdit={onProjectAddOrEdit} />}
       />
+      {/* <Route path="/Profile" element={<ViewProfile/>}/> */}
     </Routes>
   );
 }

@@ -43,7 +43,7 @@ export default function EmployeeDetails({
 
   const [deleteEmployee] = useDeleteEmployeeMutation();
   const Navigate = useNavigate();
-  const index = Employees.findIndex((contact) => contact.id === selectedEmp);
+  const index = Employees.findIndex((emp) => emp.id === selectedEmp);
 
   function hadleDelete() {
     deleteEmployee(selectedEmp);
@@ -162,7 +162,9 @@ export default function EmployeeDetails({
             columnGap={12}
           >
             <Grid item lg={12} md={12} xs={12} sm={12}>
-              <Avatar sx={{ width: 124, height: 124 }} />
+              <Avatar sx={{ width: 124, height: 124 }} src={Employees[index].image===null?"":URL.createObjectURL(
+              new Blob([new Uint8Array(Employees[index].image.data)])
+            )}/>
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
               <Typography variant="body1" mt={8} fontWeight={"700"}>
@@ -209,6 +211,26 @@ export default function EmployeeDetails({
             <Grid item lg={12} md={12} xs={12} sm={12}>
               <Typography variant="caption" fontWeight={"600"}>
                 Role : {Employees[index].role}
+              </Typography>
+            </Grid>
+            <Grid item lg={12} md={12} xs={12} sm={12}>
+              <Typography variant="caption" fontWeight={"600"}>
+                Projects: {Employees[index].project && Employees[index].project.map((pr, index1) => (
+                  <Typography key={index} variant="caption" fontWeight={"600"}>
+                    {pr.name}
+                    {index1 !== Employees[index].project.length - 1 && ", "}
+                  </Typography>
+                ))}
+                </Typography>
+            </Grid>
+            <Grid item lg={12} md={12} xs={12} sm={12}>
+              <Typography variant="caption" fontWeight={"600"}>
+                Inventory :{Employees[index].inventory && Employees[index].inventory.map((inv, index1) => (
+                  <Typography key={index} variant="caption" fontWeight={"600"}>
+                    {inv.name}
+                    {index1 !==  Employees[index].inventory.length - 1 &&  ", " }
+                  </Typography>
+                ))}
               </Typography>
             </Grid>
           </Grid>
