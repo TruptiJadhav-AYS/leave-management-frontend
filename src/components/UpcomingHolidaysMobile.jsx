@@ -19,34 +19,8 @@ import { useUpcomingHolidaysQuery } from "../Store/slice/apiHolidaySlice";
 
 export default function UpcomingHolidaysMobile() {
   const [currentIndex, setCurrentIndex] = useState(0);
-<<<<<<< HEAD
-  // const Holidays = useSelector((state) => state.holidays.annualLeaves);
-  // const {data:upcomingHoliday,isSuccess}=useUpcomingHolidaysQuery();
-  
-  // // const upcomingHolidays=upcomingHoliday.holidays || []
-  // // const Holidays = upcomingHoliday ? upcomingHoliday.holidays || [] : [];
-  // // console.log(Holidays)
-  // const [filteredEmployees, setFilteredEmployees] = useState([]); // New state for filtered employees
-  // // const Navigate = useNavigate();
-  // const Holidays=upcomingHoliday || [];
-  // // console.log(Holidays)
-
-  // useEffect(() => {
-  //   // Update filteredEmployees when employees data changes
-  //   if (isSuccess) {
-  //     setFilteredEmployees(Holidays);
-  //   }
-  // }, [isSuccess, Holidays]);
-  const {data:upcomingHoliday,isLoading}=useUpcomingHolidaysQuery();
-  
-  // const upcomingHolidays=upcomingHoliday.holidays || []
-  const Holidays = upcomingHoliday ? upcomingHoliday.holidays || [] : [];
-
-  console.log(Holidays)
-=======
   const {data:upcomingHoliday,isLoading}=useUpcomingHolidaysQuery();
   const Holidays = upcomingHoliday ? upcomingHoliday.holidays || [] : [];
->>>>>>> origin
 
   console.log(Holidays)
 

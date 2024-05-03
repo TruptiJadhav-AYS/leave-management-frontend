@@ -27,16 +27,12 @@ import {
   useAssignProjectMutation,
 } from "../Store/slice/apiProjectSlice";
 
-<<<<<<< HEAD
-export default function EmployeeDetails({ onAddOrEdit }) {
-=======
 export default function EmployeeDetails({
   onAddOrEdit,
   openDeleteDialouge,
   onOpenDeleteDialogue,
   onCloseDeleteDialogue,
 }) {
->>>>>>> origin
   const { data: Employees, isLoading, isError } = useGetEmployeesQuery();
   const { data: project } = useGetProjectsQuery();
   let [selectedProject, setSelectedProject] = useState("");
@@ -49,8 +45,6 @@ export default function EmployeeDetails({
   const Navigate = useNavigate();
   const index = Employees.findIndex((contact) => contact.id === selectedEmp);
 
-<<<<<<< HEAD
-=======
   function hadleDelete() {
     deleteEmployee(selectedEmp);
     Navigate("/Employee/Employees");
@@ -80,7 +74,6 @@ export default function EmployeeDetails({
     return formattedDate;
   };
 
->>>>>>> origin
   function handelAssign(projectId) {
     const projectObj = {
       employeeId: selectedEmp,
@@ -154,13 +147,8 @@ export default function EmployeeDetails({
           </IconButton>
           <IconButton
             onClick={() => {
-<<<<<<< HEAD
-              deleteEmployee(selectedEmp);
-              Navigate("/Employee/Employees");
-=======
               onOpenDeleteDialogue();
               // Navigate("/Employee/Employees");
->>>>>>> origin
             }}
           >
             <DeleteIcon />

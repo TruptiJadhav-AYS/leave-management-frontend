@@ -12,13 +12,6 @@ import {
   Stack,
 } from "@mui/material";
 import { useSelector } from "react-redux";
-<<<<<<< HEAD
-import { useGetPendingRequestsQuery } from "../Store/slice/apiLeaveBalanceSlice";
-import { useUpdateStatusMutation } from "../Store/slice/apiLeaveBalanceSlice";
-
-export default function PendingReq() {
-  const { data: pr, isSuccess, isError } = useGetPendingRequestsQuery();
-=======
 import { useGetPendingRequestQuery } from "../Store/slice/apiLeaveReqSlice";
 import { useUpdateLeaveStatusMutation } from "../Store/slice/apiLeaveReqSlice";
 
@@ -42,30 +35,25 @@ export default function PendingReq() {
   const handleReject = (id) => {
     updateStatus({ id: id, status: "rejected" });
   };
->>>>>>> origin
 
-  // const loggedInEmployeeId = useSelector((state) => state.loggedInEmployee?.id);
-  const id = useSelector((state) => state.employees.userId);
-  console.log(id);
-  // console.log(loggedInEmployeeId);
+  const formatDate = (dateString) => {
+    const [day, month, year] = dateString.split("-");
+    const monthNames = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
 
-  // Filter pending requests to exclude requests of the logged-in employee
-  const PendingRequestList = pr
-    ? pr.filter((request) => request.emp_id !== id)
-    : [];
-
-  console.log(PendingRequestList);
-
-  // const PendingRequestList = pr || [];
-
-  const [updateStatus, { isLoading, error }] = useUpdateStatusMutation();
-
-  const handleAccept = (id) => {
-    updateStatus({ id: id, status: "approved" });
-  };
-
-  const handleReject = (id) => {
-    updateStatus({ id: id, status: "rejected" });
+    return `${day} ${monthNames[parseInt(month, 10) - 1]} ${year}`;
   };
 
   return (
@@ -98,11 +86,7 @@ export default function PendingReq() {
           <TableBody>
             {PendingRequestList.map((row) => (
               <TableRow
-<<<<<<< HEAD
-                key={row.id} // Changed key to use id instead of name
-=======
                 key={row.id}
->>>>>>> origin
                 sx={{
                   "&:last-child td, &:last-child th": { border: 0 },
                 }}
@@ -124,7 +108,6 @@ export default function PendingReq() {
                 <TableCell align="center">
                   {row.toDate !== "" ? formatDate(row.end_date) : "-"}
                 </TableCell>
->>>>>>> origin
                 <TableCell align="right">{row.leave_type}</TableCell>
                 <TableCell align="left">{row.reason}</TableCell>
                 <TableCell align="right">
@@ -134,13 +117,8 @@ export default function PendingReq() {
                       variant="contained"
                       color="success"
                       size="small"
-<<<<<<< HEAD
-                      onClick={() => handleAccept(row.id)} // Changed to pass id to handleAccept
-                      sx={{ marginRight: 1, textTransform: "none" }}
-=======
                       onClick={() => handleAccept(row.id)}
                       sx={{ marginRight: 1, textTransform: "none" ,height:"25px",width:"52px"}}
->>>>>>> origin
                     >
                       Approve
                     </Button>
@@ -149,13 +127,8 @@ export default function PendingReq() {
                       variant="outlined"
                       color="error"
                       size="small"
-<<<<<<< HEAD
-                      onClick={() => handleReject(row.id)} // Changed to pass id to handleReject
-                      sx={{ textTransform: "none" }}
-=======
                       onClick={() => handleReject(row.id)}
                       sx={{ textTransform: "none" ,height:"25px",width:"52px"}}
->>>>>>> origin
                     >
                       Reject
                     </Button>

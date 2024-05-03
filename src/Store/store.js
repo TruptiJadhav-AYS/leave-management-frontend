@@ -13,14 +13,8 @@ import forgotApi from './slice/apiForgetPassword'
 import categoryApi from './slice/apiCategorySlice'
 import inventoryApi from './slice/apiInventorySlice'
 import departmentApi from './slice/apiDepartmentSlice'
-<<<<<<< HEAD
-import leaveBalanceApi from './slice/apiLeaveBalanceSlice'
-import historyApi from './slice/apiHistorySlice'
-import leaveApi from './slice/apiLeaveSlice'
-=======
 import leaveReqApi from './slice/apiLeaveReqSlice'
 import leaveBalanceApi from './slice/apiLeaveBalanceSlice'
->>>>>>> origin
 
 export const store = configureStore({
   reducer: {
@@ -38,15 +32,8 @@ export const store = configureStore({
     [categoryApi.reducerPath]:categoryApi.reducer,
     [inventoryApi.reducerPath]:inventoryApi.reducer,
     [departmentApi.reducerPath]:departmentApi.reducer,
-<<<<<<< HEAD
-    [leaveBalanceApi.reducerPath]:leaveBalanceApi.reducer,
-    [historyApi.reducerPath]:historyApi.reducer,
-    [leaveApi.reducerPath]:leaveApi.reducer,
-    
-=======
     [leaveReqApi.reducerPath]:leaveReqApi.reducer,
     [leaveBalanceApi.reducerPath]:leaveBalanceApi.reducer,
->>>>>>> origin
   },
   
   middleware: (getDefaultMiddleware) =>
@@ -58,14 +45,7 @@ export const store = configureStore({
     .concat(categoryApi.middleware)
     .concat(inventoryApi.middleware)
     .concat(departmentApi.middleware)
-<<<<<<< HEAD
-    .concat(leaveBalanceApi.middleware)
-    .concat(historyApi.middleware)
-    .concat(leaveApi.middleware)
-
-=======
     .concat(leaveReqApi.middleware)
     .concat(leaveBalanceApi.middleware)
->>>>>>> origin
 })
 

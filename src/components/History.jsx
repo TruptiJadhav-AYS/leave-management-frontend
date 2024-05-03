@@ -9,12 +9,7 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { useSelector } from "react-redux";
 import { Box } from "@mui/material";
-<<<<<<< HEAD
-import { useGetHistoryQuery } from "../Store/slice/apiHistorySlice";
-
-=======
 import { useGetLeavesByIdQuery } from "../Store/slice/apiLeaveReqSlice";
->>>>>>> origin
 
 const columns = [
   { id: "start_date", label: "Start Date", minWidth: 90, ml: "500px" },
@@ -37,24 +32,12 @@ const columns = [
 ];
 
 export default function History() {
-<<<<<<< HEAD
-  // const LeaveHistory = useSelector((state) => state.leaveHistory.LeaveHistory);
-  // console.log("(((((((((((((((((((((((((", LeaveHistory)
-
-  const id = useSelector((state) => state.employees.userId);
- 
-  const { data: History, isSuccess } = useGetHistoryQuery(id);
-  // console.log('History....',History)
-  const LeaveHistory=History? History || []:[];
-  // console.log("hiiiiii",LeaveHistory)
-=======
   let logedInEmp=useSelector((state)=>state.employees.logedInEmp)
   console.log(logedInEmp)
   const id=useSelector((state)=>state.employees.userId)
   
   const { data: LeaveHistory = []} = useGetLeavesByIdQuery(id);
 
->>>>>>> origin
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 

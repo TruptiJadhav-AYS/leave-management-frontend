@@ -40,19 +40,11 @@ const holidaysApi = createApi({
     }),
     
     upcomingHolidays:builder.query({
-<<<<<<< HEAD
-        query:()=>({
-        url:"/holidays/upcoming",
-            invalidatesTags: [{ data: "Holidays" }],
-        })
-    })
-=======
       query:()=>({
       url:"/holidays/upcoming",
           invalidatesTags: [{ data: "Holidays" }],
       })
   })
->>>>>>> origin
   }),
 });
 

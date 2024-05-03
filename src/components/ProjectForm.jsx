@@ -218,13 +218,8 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
                       }}
                       MenuProps={MenuProps}
                     >
-<<<<<<< HEAD
-                      {Employees.map((emp, index) => (
-                        <MenuItem key={index} value={emp.name}>
-=======
                      {Employees.map((emp, index) => (
                         <MenuItem key={index} value={emp.id}>
->>>>>>> origin
                           {emp.name}
                         </MenuItem>
                       ))}

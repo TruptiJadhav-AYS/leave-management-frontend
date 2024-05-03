@@ -178,10 +178,6 @@ export const {
   getLogedInEmp,
   setSelectedEmp,
   deleteEmp,
-<<<<<<< HEAD
-  setId,
-=======
   setUserId,
->>>>>>> origin
 } = EmployeeSlice.actions;
 export default EmployeeSlice.reducer;
