@@ -104,6 +104,7 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
       description: Yup.string(),
     }),
     onSubmit: (values) => {
+      console.log(values)
       {
         projectAddOrEdit === "add"
           ? addProject(values)
@@ -197,7 +198,7 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
                       name="manager_id"
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
-                      value={formik.values.Project_Manager}
+                      value={formik.values.managerId}
                       size="small"
                       sx={{
                         "& fieldset": {
@@ -217,6 +218,7 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
                      {Employees.map((emp, index) => (
                         <MenuItem key={index} value={emp.id}>
                           {emp.name}
+                          {/* {emp.id} */}
                         </MenuItem>
                       ))}
                     </Select>

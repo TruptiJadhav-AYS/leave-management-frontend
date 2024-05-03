@@ -33,13 +33,13 @@ export default function EmployeeList({onAddOrEdit}) {
 
   const Employees= employees || [];
 
-  if (isLoading) {
-    return <CircularProgress />; 
-  }
+  // if (isLoading) {
+  //   return <CircularProgress />; 
+  // }
 
-  if (isError) {
-    return <div>Error fetching data</div>;
-  }
+  // if (isError) {
+  //   return <div>Error fetching data</div>;
+  // }
 
   const FilterArray = Employees.filter((contact) =>
     contact.name.toLowerCase().includes(searchText.toLowerCase())
@@ -120,18 +120,21 @@ export default function EmployeeList({onAddOrEdit}) {
               minHeight:"100%"
             }}
           >
-            {FilterArray.map((contact,index) => (
-              <Button fullWidth key={index} onClick={()=>{dispatch(setSelectedEmp(contact.id));Navigate(`/Employee/${contact.id}`)}}>
+            {FilterArray.map((emp,index) => (
+              <Button fullWidth key={index} onClick={()=>{dispatch(setSelectedEmp(emp.id));Navigate(`/Employee/${emp.id}`)}}>
               <Card
                 sx={{ mb: 1, borderRadius: 2, mr: 1, bgcolor:"white", width:"100%"}}
                 elevation={3}
-                key={contact.id}             
+                key={emp.id}             
               >              
                 <ListItem alignItems="flex-start" mx={1}>           
                     <Grid container spacing={2}>
                       <Grid item>
                         <Avatar
-                          alt={contact.name}
+                        src={emp.image===null?"":URL.createObjectURL(
+                          new Blob([new Uint8Array(emp.image.data)])
+                        )}
+                          alt={emp.name}
                         />
                       </Grid>
                       <Grid item>
@@ -143,13 +146,13 @@ export default function EmployeeList({onAddOrEdit}) {
                             fontWeight: "30",
                           }}
                         >
-                          {contact.name}
+                          {emp.name}
                         </Typography>
                         <Typography
                           variant="caption"
                           sx={{ textTransform: "none", color: "black" }}
                         >
-                          {contact.email}
+                          {emp.email}
                         </Typography>
                       </Grid>
                     </Grid>                 

@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Drawer from "@mui/material/Drawer";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Avatar, Stack, Toolbar, Grid } from "@mui/material";
+import { Avatar, Stack, Toolbar, Grid,CircularProgress } from "@mui/material";
 import SideDrawer from "./SideDrawer";
 import { useState } from "react";
 import CenterDisplay from "./CenterDisplay";
@@ -16,17 +16,16 @@ import Tooltip from "@mui/material/Tooltip";
 import { useNavigate } from "react-router-dom";
 import MailIcon from "@mui/icons-material/Mail";
 import CallIcon from "@mui/icons-material/Call";
-import Profile from "../assets/profile.jpg"
+import Profile from "../assets/profile.jpg";
 import { useSelector } from "react-redux";
 import { useGetEmployeesByIdQuery } from "../Store/slice/apiEmployeeSlice";
 
 function AccountMenu() {
-
-  const id=useSelector((state)=>state.employees.logedInEmp)
-  console.log(id)
-  const {data:Emp}=useGetEmployeesByIdQuery(id)
-  const logedInEmp=Emp || []
-  console.log(logedInEmp)
+  const id = useSelector((state) => state.employees.userId);
+  console.log(id);
+  const { data: Emp,isLoading,isError } = useGetEmployeesByIdQuery(id);
+  const logedInEmp = Emp || [];
+  // console.log(logedInEmp);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [logoutClick, setLogoutClick] = useState(false);
@@ -39,7 +38,7 @@ function AccountMenu() {
     // localStorage.removeItem("authToken");
     Navigate("/");
     localStorage.removeItem("authToken");
-    console.log("Token Removed Succesfully", localStorage)
+    console.log("Token Removed Succesfully", localStorage);
   };
 
   const handleClick = (event) => {
@@ -52,12 +51,24 @@ function AccountMenu() {
   const handleViewProfile = () => {
     Navigate(`/Employee/Profile`); // Replace with your profile route
   };
+  if (isLoading) {
+    return <CircularProgress />;
+  }
+  if (isError) {
+    return <></>;
+  }
 
   return (
+    
     <Box>
       <Tooltip title="Account settings">
         <IconButton onClick={handleClick} size="small" sx={{ ml: 0.2 }}>
-          <Avatar src={Profile} sx={{ width: 32, height: 32 }} />
+          <Avatar
+            src={logedInEmp.image===null?"":URL.createObjectURL(
+              new Blob([new Uint8Array(logedInEmp.image.data)])
+            )}
+            sx={{ width: 32, height: 32 }}
+          />
         </IconButton>
       </Tooltip>
       {anchorEl ? (
@@ -103,7 +114,12 @@ function AccountMenu() {
             px={7}
             py={1.5}
           >
-            <Avatar style={{ width: "60px", height: "60px" }} src={Profile} />
+            <Avatar
+              style={{ width: "60px", height: "60px" }}
+              src={logedInEmp.image===null?"":URL.createObjectURL(
+                new Blob([new Uint8Array(logedInEmp.image.data)])
+              )}
+            />
             <Typography fontWeight={"bold"} mt={1}>
               {logedInEmp.name}
             </Typography>
@@ -133,11 +149,10 @@ function AccountMenu() {
 const drawerWidth = 240;
 
 export default function Display() {
-
-  const id=useSelector((state)=>state.employees.logedInEmp)
+  const id = useSelector((state) => state.employees.userId);
   // console.log(id)
-  const {data:Emp}=useGetEmployeesByIdQuery(id)
-  const logedInEmp=Emp || []
+  const { data: Emp } = useGetEmployeesByIdQuery(id);
+  const logedInEmp = Emp || [];
   // console.log(logedInEmp)
 
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -232,7 +247,7 @@ export default function Display() {
       <Grid container direction={"row"}>
         <Toolbar />
         <Box bgcolor={"#f5f5f5"} sx={{ width: "100%", height: "90vh" }}>
-          <CenterDisplay />
+          <CenterDisplay logedInUser={logedInEmp} />
         </Box>
       </Grid>
     </Box>

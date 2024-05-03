@@ -18,6 +18,7 @@ export default function ProjectDetails({ onProjectAddOrEdit }) {
   const selectedProject = useSelector((state) => state.Project.selectedProject);
   const { data: project,isSuccess } = useGetProjectsQuery();
   const Projects = project || [];
+  console.log(Projects)
 
   let [deleteDialogue, setdeleteDialogue] = useState();
   const dispatch = useDispatch();
