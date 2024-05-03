@@ -151,6 +151,7 @@ import ForgetPasswordPage from "./components/forgetPasswordPage";
 import {jwtDecode} from 'jwt-decode';
 import ResetPasswordPage from "./components/ResetPasswordPage";
 import { useGetEmployeesQuery } from "./Store/slice/apiEmployeeSlice";
+import { setUserId } from "./Store/slice/EmployeeSlice";
 import "swagger-ui-react/swagger-ui.css";
 import { useDispatch, useSelector } from "react-redux";
 // import getLogedInUser from "./Store/action/getLogedInUser";
@@ -201,23 +202,26 @@ const isTokenValid = () => {
 function App() {
   const [forgetRouteStatus, setForgetRouteStatus] = useState(false);
   const [resetRouteStatus, setResetRouteStatus] = useState(false);
-  // const [logedInUser, setLogedInUser] = useState("");
+  const [logedInUser, setLogedInUser] = useState("");
+  const dispatch=useDispatch()
+  dispatch(setRole(role))
+  dispatch(setUserId(id))
+  // console.log(role)
+  // function isAuthenticated() {
+    // localStorage.removeItem("authToken")
+    // const token = localStorage.getItem("authToken");
+    // console.log(token)
+  //   return token;
+  // }
 
-  const dispatch = useDispatch();
-  dispatch(getRole(role))
+  // const findRoleOfUser = () => {
+    // let emp = employee.find((employee) => employee.email === logedInUser);
+    // if (emp) {
+    //   return emp.role;
+    // }
+  // };
 
-  const [allUsers, setAllUsers] = useState([]);
-
-  const { data : Employees, isLoading: usersLoading, error: usersError } = useGetEmployeesQuery();
-
-  useEffect(() => {
-    if(logedInId && Employees && !usersLoading && Employees.length > 0){
-        setAllUsers(Employees);
-        console.log(logedInId,Employees)
-        dispatch(getLogedInUserId(logedInId))
-        // dispatch(getLogedInUser(logedInId,Employees))
-    }
-  }, [Employees, logedInId, usersLoading]);
+  // let role = findRoleOfUser();
 
   function onSignIn(email) {
     // setLogedInUser(email);

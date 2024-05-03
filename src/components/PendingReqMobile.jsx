@@ -8,9 +8,30 @@ import {
   Box,
 } from "@mui/material";
 import {useSelector} from 'react-redux'
+import { useGetPendingRequestQuery } from "../Store/slice/apiLeaveReqSlice";
+import { useUpdateLeaveStatusMutation } from "../Store/slice/apiLeaveReqSlice";
 
 export default function PendingReqMobile() {
-  const PendingRequestList = useSelector(state=>state.PendingRequests.PendingRequestList)
+  const {
+    data: pendingRequest,
+  } = useGetPendingRequestQuery();
+
+  const id = useSelector((state) => state.employees.userId);
+
+  const PendingRequestList = pendingRequest
+  ? pendingRequest.filter((request) => request.emp_id !== id)
+  : [];
+
+  const [updateStatus] = useUpdateLeaveStatusMutation();
+
+  const handleAccept = (id) => {
+    updateStatus({ id: id, status: "approved" });
+  };
+
+  const handleReject = (id) => {
+    updateStatus({ id: id, status: "rejected" });
+  };
+
   const formatDate = (dateString) => {
     const [day, month, year] = dateString.split("-");
     const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -45,15 +66,15 @@ export default function PendingReqMobile() {
                       fontWeight: "530",
                     }}
                   >
-                    {request.name}
+                    {request.employeeName}
                   </Typography>
                   <Typography
                     variant="subtitle2"
                     sx={{ textTransform: "none", color: "black" }}
                   >
-                    {formatDate(request.fromDate)} 
+                    {formatDate(request.start_date)} 
                     {request.toDate !== ""
-                      ? " to "+formatDate(request.toDate)
+                      ? " to "+formatDate(request.end_date)
                       : ""}
                   </Typography>
                   <Box style={{ minHeight: "24px" }}>
@@ -65,6 +86,7 @@ export default function PendingReqMobile() {
                       color="success"
                       size="small"
                       sx={{ marginRight: 1, textTransform: "none" }}
+                      onClick={() => handleAccept(request.id)}
                     >
                       Accept
                     </Button>
@@ -73,6 +95,7 @@ export default function PendingReqMobile() {
                       color="error"
                       size="small"
                       sx={{ textTransform: "none" }}
+                      onClick={() => handleReject(request.id)}
                     >
                       Reject
                     </Button>

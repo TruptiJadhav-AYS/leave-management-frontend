@@ -26,6 +26,17 @@ export default function ProjectDetails({ onProjectAddOrEdit }) {
 
   const index = Projects.findIndex((project) => project.id === selectedProject);
 
+  const formatDate = (timestampString) => {
+    const date = new Date(timestampString);
+    const year = date.getFullYear();
+    const day = date.getDate().toString().padStart(2, "0");
+
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const formattedDate = `${day} ${monthNames[date.getMonth()]} ${year}`;
+
+    return formattedDate;
+  };
+
   return (
     <Box
       sx={{
@@ -70,24 +81,26 @@ export default function ProjectDetails({ onProjectAddOrEdit }) {
               </Typography>
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
+              {Projects[index].manager&&
               <Typography
                 variant="caption"
                 fontWeight={"600"}
                 align="left"
                 // justifyContent={"left"}
               >
-                Project Manager : {Projects[index].manager_name}
-              </Typography>
+                Project Manager : {Projects[index].manager.name}
+              </Typography>}
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
               <Typography variant="caption" fontWeight={"600"}>
-                Start Date : {Projects[index].startDate}
+                Start Date : {formatDate(Projects[index].startDate)}
               </Typography>
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
+              {Projects[index].description&&
               <Typography variant="caption" fontWeight={"600"} align="left">
                 Description : {Projects[index].description}
-              </Typography>
+              </Typography>}
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
               <Typography variant="caption" fontWeight={"600"} align="left">

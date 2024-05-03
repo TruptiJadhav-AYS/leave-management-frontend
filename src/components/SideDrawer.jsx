@@ -1,11 +1,12 @@
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import { Typography, Grid } from "@mui/material";
+import { Typography, Grid,Badge } from "@mui/material";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import HomeIcon from "@mui/icons-material/Home";
 import SendIcon from "@mui/icons-material/Send";
+import PendingActionsIcon from '@mui/icons-material/PendingActions';
 import { People } from "@mui/icons-material";
 import HistoryIcon from "@mui/icons-material/History";
 import EventIcon from "@mui/icons-material/Event";
@@ -18,6 +19,7 @@ import UseReponsive from "../hooks/UseResponsive";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import CategoryIcon from '@mui/icons-material/Category';
 import { useSelector } from "react-redux";
+import { useGetPendingRequestQuery } from "../Store/slice/apiLeaveReqSlice";
 
 export default function SideDrawer({ handleDrawerClose }) {
   let Navigate = useNavigate();
@@ -26,6 +28,15 @@ export default function SideDrawer({ handleDrawerClose }) {
   let selectedItem;
   let sideDrawerList;
   const role=useSelector((state)=>state.employees.userRole)
+  const {
+    data: pendingRequest,
+  } = useGetPendingRequestQuery();
+
+  const id = useSelector((state) => state.employees.userId);
+
+  const PendingRequestList = pendingRequest
+    ? pendingRequest.filter((request) => request.emp_id !== id)
+    : [];
 
   let responsive = UseReponsive();
   function onMobile() {
@@ -41,6 +52,7 @@ export default function SideDrawer({ handleDrawerClose }) {
   if (role === "Admin") {
     sideDrawerList = [
       "Dashboard",
+      "Pending Request",
       "Apply Leave",
       "History",
       "Holidays",
@@ -48,7 +60,15 @@ export default function SideDrawer({ handleDrawerClose }) {
       "Projects",
       "Inventory List",
     ];
-  } else {
+  }if(role==="Manager"){
+    sideDrawerList = [
+      "Dashboard",
+      "Pending Request",
+      "Apply Leave",
+      "History",
+      "Holidays",
+    ]
+  } if(role==="Employee") {
     sideDrawerList = ["Dashboard", "Apply Leave", "History", "Holidays"];
   }
 
@@ -86,32 +106,37 @@ export default function SideDrawer({ handleDrawerClose }) {
             <ListItemButton
               disableTouchRipple
               onClick={
-                index === 0
+                text === "Dashboard"
                   ? () => {
                       Navigate("/Employee");
                       onMobile();
                     }
-                  : index === 1
+                  : text==="Pending Request"
+                  ? ()=>{
+                    Navigate("/Employee/PendingRequest");
+                    onMobile();
+                  }
+                  : text === "Apply Leave"
                   ? () => {
                       Navigate("/Employee/ApplyLeave");
                       onMobile();
                     }
-                  : index === 2
+                  : text === "History"
                   ? () => {
                       Navigate("/Employee/History");
                       onMobile();
                     }
-                  : index === 3
+                  : text === "Holidays"
                   ? () => {
                       Navigate("/Employee/Holidays");
                       onMobile();
                     }
-                  : index === 4
+                  : text === "Employees"
                   ? () => {
                       Navigate("/Employee/Employees");
                       onMobile();
                     }
-                  : index === 5
+                  : text === "Projects"
                   ? () => {
                       Navigate("/Employee/Projects");
                       onMobile();
@@ -123,17 +148,27 @@ export default function SideDrawer({ handleDrawerClose }) {
               }
             >
               <ListItemIcon>
-                {index === 0 ? (
+                {text === "Dashboard" ? (
                   <HomeIcon />
-                ) : index === 1 ? (
+                )
+                : text=== "Pending Request" ?(
+                  <Badge badgeContent={PendingRequestList.length} color="primary"
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                  }}>
+                  <PendingActionsIcon/>
+                  </Badge>
+                )
+                : text === "Apply Leave" ? (
                   <SendIcon />
-                ) : index === 2 ? (
+                ) : text === "History" ? (
                   <HistoryIcon />
-                ) : index === 3 ? (
+                ) : text === "Holidays" ? (
                   <EventIcon />
-                ) : index === 4 ? (
+                ) : text === "Employees" ? (
                   <People />
-                ) : index===5 ? (
+                ) : text === "Projects" ? (
                   <AssignmentIcon />
                 ) : 
                   <CategoryIcon/>
