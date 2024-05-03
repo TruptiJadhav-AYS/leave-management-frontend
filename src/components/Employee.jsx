@@ -192,7 +192,7 @@ import SearchIcon from "@mui/icons-material/Search";
 // import VisibilityIcon from "@mui/icons-material/Visibility";
 // import EditIcon from "@mui/icons-material/Edit";
 // import DeleteIcon from "@mui/icons-material/Delete";
-import { useState, useMemo,useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 // import { selectProject } from "../Store/slice/ProjectsSlice";
 import { setSelectedEmp } from "../Store/slice/EmployeeSlice";
@@ -232,10 +232,10 @@ export default function EmployeeList({ onAddOrEdit }) {
   const { data: Employees, isSuccess } = useGetEmployeesQuery();
   // const [searchText, setSearchText] = useState("");
   // const [sortedBy, setSortedBy] = useState("name");
-  // const [sortOrder, setSortOrder] = useState("asc");
+  const [sortOrder, setSortOrder] = useState(null);
   const [filteredEmployees, setFilteredEmployees] = useState([]); // New state for filtered employees
   // const Navigate = useNavigate();
-  const employees=Employees || [];
+  const employees = Employees || [];
 
   useEffect(() => {
     // Update filteredEmployees when employees data changes
@@ -261,8 +261,7 @@ export default function EmployeeList({ onAddOrEdit }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [sortedBy, setSortedBy] = useState("name"); // Track sorted column
-  const [sortOrder, setSortOrder] = useState("asc"); // Track sort order
-
+  // const [sortOrder, setSortOrder] = useState("asc"); // Track sort order
 
   function handleSearchText(event) {
     setsearchText(event.target.value);
@@ -300,9 +299,11 @@ export default function EmployeeList({ onAddOrEdit }) {
     setPage(0);
   };
 
-  // const FilterArray = sortedRows.filter((Employee) =>
-  //   Employee.name.toLowerCase().includes(searchText.toLowerCase())
-  // );
+  const FilterArray = sortedRows.filter((Employee) =>
+    Employee.name.toLowerCase().includes(searchText.toLowerCase())
+  );
+  console.log(filteredEmployees);
+  console.log("uytuyfyt", FilterArray);
 
   return (
     <Paper
@@ -390,13 +391,8 @@ export default function EmployeeList({ onAddOrEdit }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {
-            // isSuccess &&
-              filteredEmployees.slice(
-                page * rowsPerPage,
-                page * rowsPerPage + rowsPerPage
-              ).map((row) => {
-                return (
+            {sortOrder
+              ? FilterArray.map((row) => (
                   <TableRow
                     hover
                     role="checkbox"
@@ -411,18 +407,47 @@ export default function EmployeeList({ onAddOrEdit }) {
                   >
                     {columns.map((column, index) => {
                       const value = row[column.id];
-                      // console.log(value)
                       return (
                         <TableCell key={index} align={column.align}>
-                         {((column.id === "manager") && value) ? value.name : ((column.id === "department" && value) ? value.department_name : value)}
-
+                          {column.id === "manager" && value
+                            ? value.name
+                            : column.id === "department" && value
+                            ? value.department_name
+                            : value}
                         </TableCell>
                       );
                     })}
                   </TableRow>
-                );
-              })
-              }
+                ))
+              : filteredEmployees
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row) => (
+                    <TableRow
+                      hover
+                      role="checkbox"
+                      tabIndex={-1}
+                      key={row.name}
+                      ml={2}
+                      sx={{ cursor: "pointer" }}
+                      onClick={() => {
+                        dispatch(setSelectedEmp(row.id));
+                        Navigate(`/Employee/${row.id}`);
+                      }}
+                    >
+                      {columns.map((column, index) => {
+                        const value = row[column.id];
+                        return (
+                          <TableCell key={index} align={column.align}>
+                            {column.id === "manager" && value
+                              ? value.name
+                              : column.id === "department" && value
+                              ? value.department_name
+                              : value}
+                          </TableCell>
+                        );
+                      })}
+                    </TableRow>
+                  ))}
           </TableBody>
         </Table>
       </TableContainer>
