@@ -30,6 +30,7 @@ const myTheme = createTheme({
 });
 
 let role;
+let id;
 // Check if the token is valid
 
 const isTokenValid = () => {
