@@ -155,6 +155,7 @@ import "swagger-ui-react/swagger-ui.css";
 import { useDispatch, useSelector } from "react-redux";
 // import getLogedInUser from "./Store/action/getLogedInUser";
 import getLogedInUserId from "./Store/action/getLogedInUserEmail";
+import { getRole} from "./Store/slice/EmployeeSlice";
 
 const myTheme = createTheme({
   satus: {
@@ -171,7 +172,7 @@ const myTheme = createTheme({
 });
 
 let logedInId;
-
+let role;
 // Check if the token is valid
 
 const isTokenValid = () => {
@@ -181,6 +182,7 @@ const isTokenValid = () => {
     const decodedToken = jwtDecode(token);
     console.log(localStorage)
     logedInId=decodedToken.id
+    role=decodedToken.role
     // Check if the token is expired
     const currentTime = Date.now() / 1000; // Convert to seconds
     if (decodedToken.exp && decodedToken.exp < currentTime) {
@@ -202,7 +204,7 @@ function App() {
   // const [logedInUser, setLogedInUser] = useState("");
 
   const dispatch = useDispatch();
-
+  dispatch(getRole(role))
 
   const [allUsers, setAllUsers] = useState([]);
 
