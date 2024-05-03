@@ -16,8 +16,7 @@ import {
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Avatar from "@mui/material/Avatar";
-import { useDispatch } from "react-redux";
-import deleteEmployee from "../Store/action/DeleteEmployee";
+import DeleteDialouge from "./DeleteDialouge";
 import { useState } from "react";
 import employeeApi, {
   useDeleteEmployeeMutation,
@@ -28,7 +27,16 @@ import {
   useAssignProjectMutation,
 } from "../Store/slice/apiProjectSlice";
 
+<<<<<<< HEAD
 export default function EmployeeDetails({ onAddOrEdit }) {
+=======
+export default function EmployeeDetails({
+  onAddOrEdit,
+  openDeleteDialouge,
+  onOpenDeleteDialogue,
+  onCloseDeleteDialogue,
+}) {
+>>>>>>> origin
   const { data: Employees, isLoading, isError } = useGetEmployeesQuery();
   const { data: project } = useGetProjectsQuery();
   let [selectedProject, setSelectedProject] = useState("");
@@ -41,6 +49,38 @@ export default function EmployeeDetails({ onAddOrEdit }) {
   const Navigate = useNavigate();
   const index = Employees.findIndex((contact) => contact.id === selectedEmp);
 
+<<<<<<< HEAD
+=======
+  function hadleDelete() {
+    deleteEmployee(selectedEmp);
+    Navigate("/Employee/Employees");
+  }
+
+  const formatDate = (timestampString) => {
+    const date = new Date(timestampString);
+    const year = date.getFullYear();
+    const day = date.getDate().toString().padStart(2, "0");
+
+    const monthNames = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+    const formattedDate = `${day} ${monthNames[date.getMonth()]} ${year}`;
+
+    return formattedDate;
+  };
+
+>>>>>>> origin
   function handelAssign(projectId) {
     const projectObj = {
       employeeId: selectedEmp,
@@ -114,8 +154,13 @@ export default function EmployeeDetails({ onAddOrEdit }) {
           </IconButton>
           <IconButton
             onClick={() => {
+<<<<<<< HEAD
               deleteEmployee(selectedEmp);
               Navigate("/Employee/Employees");
+=======
+              onOpenDeleteDialogue();
+              // Navigate("/Employee/Employees");
+>>>>>>> origin
             }}
           >
             <DeleteIcon />
@@ -153,7 +198,7 @@ export default function EmployeeDetails({ onAddOrEdit }) {
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
               <Typography variant="caption" fontWeight={"600"} align="left">
-                Date Of Birth : {Employees[index].dob}
+                Date Of Birth : {formatDate(Employees[index].dob)}
               </Typography>
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
@@ -181,6 +226,11 @@ export default function EmployeeDetails({ onAddOrEdit }) {
           </Grid>
         </CardContent>
       </Card>
+      <DeleteDialouge
+        openDeleteDialouge={openDeleteDialouge}
+        onCloseDeleteDialogue={onCloseDeleteDialogue}
+        handelDelete={hadleDelete}
+      />
     </Box>
   );
 }

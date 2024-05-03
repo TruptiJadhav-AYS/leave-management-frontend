@@ -15,6 +15,7 @@ import { useUpcomingHolidaysQuery } from "../Store/slice/apiHolidaySlice";
 
 export default function UpcomingHolidays() {
   const role = useSelector((state) => state.employees.userRole);
+<<<<<<< HEAD
   // const Holidays = useSelector((state) => state.holidays.annualLeaves);
   const {data:upcomingHoliday}=useUpcomingHolidaysQuery();
   
@@ -38,6 +39,23 @@ export default function UpcomingHolidays() {
   //   const holidayDate = new Date(holiday.date);
   //   return holidayDate > currentDate;
   // });
+=======
+  const {data:upcomingHoliday}=useUpcomingHolidaysQuery();
+  
+  const upcomingHolidays = upcomingHoliday ? upcomingHoliday.holidays || [] : [];
+  const currentDate = new Date();
+
+  const formatDate = (timestampString) => {
+    const date = new Date(timestampString);
+    const year = date.getFullYear();
+    const day = date.getDate().toString().padStart(2, "0");
+
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const formattedDate = `${day} ${monthNames[date.getMonth()]} ${year}`;
+
+    return formattedDate;
+  };
+>>>>>>> origin
 
   return (
     <Card sx={{ height: "100%" }}>
@@ -54,7 +72,7 @@ export default function UpcomingHolidays() {
             height: 300,
             maxWidth: 360,
             bgcolor: "background.paper",
-            ml: role === "Employee" ? "8%" : "0%",
+            ml:  "6%" ,
           }}
         >
           {upcomingHolidays.map((holiday, index) => (
@@ -68,7 +86,11 @@ export default function UpcomingHolidays() {
                 <Typography sx={{ ml: role === "Employee" ? "25%" : "15%" }}>
                   {holiday.holiday_occasion}
                   <br />
+<<<<<<< HEAD
                   {(holiday.holiday_date)}
+=======
+                  {formatDate(holiday.holiday_date)}
+>>>>>>> origin
                 </Typography>
               </ListItem>
               <Divider variant="inset" />

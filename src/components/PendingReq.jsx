@@ -1,7 +1,5 @@
 import {
   Card,
-  CardContent,
-  Typography,
   Divider,
   Paper,
   TableHead,
@@ -14,11 +12,37 @@ import {
   Stack,
 } from "@mui/material";
 import { useSelector } from "react-redux";
+<<<<<<< HEAD
 import { useGetPendingRequestsQuery } from "../Store/slice/apiLeaveBalanceSlice";
 import { useUpdateStatusMutation } from "../Store/slice/apiLeaveBalanceSlice";
 
 export default function PendingReq() {
   const { data: pr, isSuccess, isError } = useGetPendingRequestsQuery();
+=======
+import { useGetPendingRequestQuery } from "../Store/slice/apiLeaveReqSlice";
+import { useUpdateLeaveStatusMutation } from "../Store/slice/apiLeaveReqSlice";
+
+export default function PendingReq() {
+  const {
+    data: pendingRequest,
+  } = useGetPendingRequestQuery();
+
+  const id = useSelector((state) => state.employees.userId);
+
+  const PendingRequestList = pendingRequest
+    ? pendingRequest.filter((request) => request.emp_id !== id)
+    : [];
+
+  const [updateStatus] = useUpdateLeaveStatusMutation();
+
+  const handleAccept = (id) => {
+    updateStatus({ id: id, status: "approved" });
+  };
+
+  const handleReject = (id) => {
+    updateStatus({ id: id, status: "rejected" });
+  };
+>>>>>>> origin
 
   // const loggedInEmployeeId = useSelector((state) => state.loggedInEmployee?.id);
   const id = useSelector((state) => state.employees.userId);
@@ -46,15 +70,10 @@ export default function PendingReq() {
 
   return (
     <Card sx={{ height: "100%", overflow: "auto" }}>
-      <CardContent sx={{ position: "sticky", top: 0, zIndex: 1 }}>
-        <Typography fontWeight={"bold"} textAlign={"left"} fontSize={"16px"}>
-          Pending Requests
-        </Typography>
-      </CardContent>
       <Divider />
       <TableContainer
         component={Paper}
-        sx={{ height: "51vh", scrollbarWidth: "thin" }}
+        sx={{ height: "99%", scrollbarWidth: "thin" }}
       >
         <Table sx={{ minWidth: 700 }} stickyHeader>
           <TableHead>
@@ -64,7 +83,7 @@ export default function PendingReq() {
               <TableCell align="center" sx={{ fontWeight: "bold" }}>
                 From date
               </TableCell>
-              <TableCell align="left" sx={{ fontWeight: "bold" }}>
+              <TableCell align="center" sx={{ fontWeight: "bold" }}>
                 To date
               </TableCell>
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
@@ -79,11 +98,16 @@ export default function PendingReq() {
           <TableBody>
             {PendingRequestList.map((row) => (
               <TableRow
+<<<<<<< HEAD
                 key={row.id} // Changed key to use id instead of name
+=======
+                key={row.id}
+>>>>>>> origin
                 sx={{
                   "&:last-child td, &:last-child th": { border: 0 },
                 }}
               >
+<<<<<<< HEAD
                 {/* <TableCell component="th" scope="row">
                   {row.id}
                 </TableCell> */}
@@ -92,6 +116,15 @@ export default function PendingReq() {
                 <TableCell align="center">
                   {row.end_date !== "" ? row.end_date : "-"}
                 </TableCell>
+=======
+                <TableCell component="th" scope="row">
+                  {row.employeeName}
+                </TableCell>
+                <TableCell align="center">{formatDate(row.start_date)}</TableCell>
+                <TableCell align="center">
+                  {row.toDate !== "" ? formatDate(row.end_date) : "-"}
+                </TableCell>
+>>>>>>> origin
                 <TableCell align="right">{row.leave_type}</TableCell>
                 <TableCell align="left">{row.reason}</TableCell>
                 <TableCell align="right">
@@ -101,18 +134,28 @@ export default function PendingReq() {
                       variant="contained"
                       color="success"
                       size="small"
+<<<<<<< HEAD
                       onClick={() => handleAccept(row.id)} // Changed to pass id to handleAccept
                       sx={{ marginRight: 1, textTransform: "none" }}
+=======
+                      onClick={() => handleAccept(row.id)}
+                      sx={{ marginRight: 1, textTransform: "none" ,height:"25px",width:"52px"}}
+>>>>>>> origin
                     >
-                      Accept
+                      Approve
                     </Button>
                     <Button
                       disableRipple
                       variant="outlined"
                       color="error"
                       size="small"
+<<<<<<< HEAD
                       onClick={() => handleReject(row.id)} // Changed to pass id to handleReject
                       sx={{ textTransform: "none" }}
+=======
+                      onClick={() => handleReject(row.id)}
+                      sx={{ textTransform: "none" ,height:"25px",width:"52px"}}
+>>>>>>> origin
                     >
                       Reject
                     </Button>

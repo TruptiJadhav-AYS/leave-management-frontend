@@ -18,13 +18,21 @@ import CheckIcon from "@mui/icons-material/Check";
 import { useAddLeaveMutation } from "../Store/slice/apiLeaveSlice";
 import { useDispatch } from "react-redux";
 import addSendingRequest from "../Store/action/AddRequestHistory";
+import { useApplyLeaveMutation } from "../Store/slice/apiLeaveReqSlice";
 
 function LeaveReqForm() {
   let Navigate = useNavigate();
+<<<<<<< HEAD
   let dispatch = useDispatch();
   let [clickedId, setClickedId] = useState("");
   let responsive = UseResponsive();
   let [submitSuccess, setSubmitSuccess] = useState(false);
+=======
+  let [clickedId, setClickedId] = useState("");
+  let responsive=UseReponsive();
+  let [submitSuccess,setSubmitSuccess]=useState(false)
+  let [applyLeave]=useApplyLeaveMutation()
+>>>>>>> origin
 
   function handleClick(id) {
     setClickedId(id);
@@ -34,11 +42,21 @@ function LeaveReqForm() {
   const yup = require("yup");
 
   const leaveReqObj = yup.object({
+<<<<<<< HEAD
     start_date: yup.date().required("Please select a date"),
     end_date: yup
+=======
+    start_date: yup
+>>>>>>> origin
       .date()
       .min(yup.ref("start_date"), "Please Select a valid date")
       .required("Please select a date"),
+<<<<<<< HEAD
+=======
+    end_date: yup
+      .date()
+      .min(yup.ref("start_date"), "Please Select a valid date"),
+>>>>>>> origin
     leave_type: yup.string().required("Please Select a leave type"),
     reason: yup.string(),
   });
@@ -52,8 +70,12 @@ function LeaveReqForm() {
     },
     validationSchema: leaveReqObj,
     onSubmit: (values) => {
+<<<<<<< HEAD
       addLeave(values);
       console.log(values);
+=======
+      applyLeave(values)
+>>>>>>> origin
       setSubmitSuccess(true);
       setTimeout(() => {
         Navigate("/Employee");
@@ -82,6 +104,7 @@ function LeaveReqForm() {
               Apply Leave
             </Typography>
 
+<<<<<<< HEAD
             <Grid
               container
               direction={"row"}
@@ -102,6 +125,85 @@ function LeaveReqForm() {
                   type="date"
                   name="start_date"
                   lable="From Date"
+=======
+          <Grid
+            container
+            direction={"row"}
+            columnSpacing={1.5}
+            // mb={1}
+            justifyContent={"space-between"}
+            pt="5px"
+          >
+            <Grid item xs={12} sm={6} height={responsive.isMobile ? "15vh" : "15vh"}>
+              <Typography fontSize={"13px"}>FROM DATE</Typography>
+              <InputBase
+                onChange={formik.handleChange}
+                value={formik.values.fromDate}
+                type="date"
+                name="start_date"
+                lable="From Date"
+                onClick={() => {
+                  handleClick("from-date");
+                }}
+                onBlur={formik.handleBlur}
+                sx={{
+                  border:
+                    clickedId === "from-date"
+                      ? "2px solid blue"
+                      : "2px solid rgba(204, 204, 204, 0.5)",
+                  borderRadius: "4px",
+                  p: "4px",
+                  width: "100%",
+                }}
+              />
+              {formik.touched.start_date && Error.start_date && (
+                <Typography fontSize={"12px"} color="error">
+                  {Error.start_date}
+                </Typography>
+              )}
+            </Grid>
+
+            <Grid item xs={12} sm={6} height={responsive.isMobile ? "15vh" : "15vh"}> 
+              <Typography fontSize={"13px"}>TO DATE</Typography>
+              <InputBase
+                value={formik.values.toDate}
+                onChange={formik.handleChange}
+                type="date"
+                name="end_date"
+                lable="To Date"
+                onClick={() => {
+                  handleClick("to-date");
+                }}
+                onBlur={formik.handleBlur}
+                sx={{
+                  border:
+                    clickedId === "to-date"
+                      ? "2px solid blue"
+                      : "2px solid rgba(204, 204, 204, 0.5)",
+                  borderRadius: "4px",
+                  p: "4px",
+                  width: "100%",
+                }}
+              />
+
+              {formik.touched.end_date && Error.end_date && (
+                <Typography variant="caption" color="error">
+                  {Error.end_date}
+                </Typography>
+              )}
+            </Grid>
+          </Grid>
+
+          <Grid container pb={2}>
+            <Grid item xs={12} sm={6} height={responsive.isMobile ? "11vh" : "11vh"}>
+              <Stack width="100%">
+                <Typography fontSize={"13px"}>LEAVE TYPE</Typography>
+                <Select
+                  value={formik.values.leaveType}
+                  name="leave_type"
+                  size="small"
+                  labelId="leave-type-label"
+>>>>>>> origin
                   onClick={() => {
                     handleClick("start_date");
                   }}
@@ -115,10 +217,23 @@ function LeaveReqForm() {
                     p: "4px",
                     width: "100%",
                   }}
+<<<<<<< HEAD
                 />
                 {formik.touched.start_date && Error.start_date && (
                   <Typography fontSize={"12px"} color="error">
                     {Error.start_date}
+=======
+                >
+                  <MenuItem value="first half">Half Day (First half)</MenuItem>
+                  <MenuItem  value="second half">Half Day (Second half)</MenuItem>
+                  <MenuItem value="full">Full Day</MenuItem>
+                  <MenuItem value="work from home">Work From Home</MenuItem>
+                </Select>
+
+                {formik.touched.leave_type && Error.leave_type && (
+                  <Typography variant="caption" color="error">
+                    {Error.leave_type}
+>>>>>>> origin
                   </Typography>
                 )}
               </Grid>

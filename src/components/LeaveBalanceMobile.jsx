@@ -67,4 +67,8 @@ export function LeaveBalanceMobile() {
       </Card>
     </Grid>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin

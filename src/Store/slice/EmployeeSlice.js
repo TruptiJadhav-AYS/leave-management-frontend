@@ -134,7 +134,7 @@ const initialState = {
       department: "Human Resource",
     },
   ],
-  logedInEmp: "",
+  userId: "",
   selectedEmp: "",
   userRole: "",
   userId:"",
@@ -152,6 +152,9 @@ const EmployeeSlice = createSlice({
     },
     editEmp: (state, action) => {
       state.Employees = action.payload;
+    },
+    setUserId:(state,action)=>{
+      state.userId= action.payload;
     },
     setRole: (state, action) => {
       state.userRole = action.payload;
@@ -175,6 +178,10 @@ export const {
   getLogedInEmp,
   setSelectedEmp,
   deleteEmp,
+<<<<<<< HEAD
   setId,
+=======
+  setUserId,
+>>>>>>> origin
 } = EmployeeSlice.actions;
 export default EmployeeSlice.reducer;

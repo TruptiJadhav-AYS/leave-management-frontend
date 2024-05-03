@@ -115,7 +115,6 @@ function ForgetPasswordPage(props) {
                     <Button
                       type="submit"
                       fullWidth
-                      // onClick={}
                       variant="contained"
                       color="primary"
                       sx={{
@@ -128,35 +127,9 @@ function ForgetPasswordPage(props) {
                     </Button>
                   </Grid>
                 </Grid>
-                {/* {showOTPField && ( */}
-                {/* <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    id="otp"
-                    name="otp"
-                    label="OTP"
-                    type="text"
-                    value={otp}
-                    onChange={(e) => setOTP(e.target.value)}
-                    error={Boolean(otpError)}
-                    helperText={otpError}
-                  />
-                </Grid> */}
-                {/* )} */}
+                
               </Grid>
-              {/* <Grid container gap={2} mt={2}>
-                <Grid item xs={12}>
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    sx={{ textTransform: "none", borderRadius: "100px" }}
-                  >
-                    Submit
-                  </Button>
-                </Grid>
-              </Grid> */}
+              
             </form>
           </CardContent>
         </Card>

@@ -10,7 +10,7 @@ import ApproverCard from "./ApproverCard";
 import PendingReqMobile from "./PendingReqMobile";
 import UpcomingHolidaysMobile from "./UpcomingHolidaysMobile";
 import { useSelector } from "react-redux";
-
+import EmployeeOnLeave from "./EmployeeOnLeave";
 export default function Dashboard() {
   const role=useSelector((state)=>state.employees.userRole)
   const responsive = UseReponsive();
@@ -34,14 +34,17 @@ export default function Dashboard() {
           {
           (role === "Admin" || role === "Manager") && 
           (responsive.isDesktop||responsive.isLaptop||responsive.isTablet) ? (
-            <Grid item sm={9} md={9} lg={9}>
-              <PendingReq />
+            <Grid item sm={7} md={7} lg={7}>
+              {/* <PendingReq /> */}
+              <EmployeeOnLeave/>
+              
             </Grid>
           ) : 
           (role === "Admin" || role === "Manager") &&
           (responsive.isMobile)&& (
             <Grid item xs={12}>
-              <PendingReqMobile />
+              {/* <PendingReqMobile /> */}
+              <EmployeeOnLeave/>
             </Grid>
           )}
 
@@ -50,9 +53,9 @@ export default function Dashboard() {
           ? (
           <Grid
             item
-            sm={3}
-            md={3}
-            lg={3}
+            sm={5}
+            md={5}
+            lg={5}
           >
             <UpcomingHolidaysDesktop />
           </Grid>) :

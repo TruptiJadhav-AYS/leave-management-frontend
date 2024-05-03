@@ -34,18 +34,18 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
   const { data: employees } = useGetEmployeesQuery();
   const [onSuccess, setSuccess] = useState(false);
   const dispatch = useDispatch();
-  const Projects = useSelector((state) => state.Project.Projects);
+  const {data:Projects,isSuccess} = useGetProjectsQuery();
   const selectedProject = useSelector((state) => state.Project.selectedProject);
-  const index = Projects.findIndex((project) => project.Id === selectedProject);
 
+  let index ;
+  if(isSuccess){
+  index = Projects.findIndex((project) => project.id === selectedProject);
+  }
+
+  console.log("pppppp",Projects)
+
+  console.log(index)
   const Employees = employees || [];
-  // let projectManagerList = [];
-
-  // for (let i in Employees) {
-  //   if (Employees[i].name) {
-  //     projectManagerList.push(Employees[i].name);
-  //   }
-  // }
 
   function handleClick(id) {
     setClickedBtnID(id);
@@ -58,47 +58,47 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
       name:
         projectAddOrEdit === "edit"
           ? selectedProject
-            ? Projects[index].Name
-              ? Projects[index].Name
+            ? Projects[index].name
+              ? Projects[index].name
               : ""
             : ""
           : "",
-      manager_name:
+      manager_id:
         projectAddOrEdit === "edit"
           ? selectedProject
-            ? Projects[index].Project_Manager
-              ? Projects[index].Project_Manager
+            ? Projects[index].manager
+              ? Projects[index].manager.id
               : ""
             : ""
-          : "",
+          :"",
       startDate:
         projectAddOrEdit === "edit"
           ? selectedProject
-            ? Projects[index].Start_date
-              ? Projects[index].Start_date
+            ? Projects[index].startDate
+              ? Projects[index].startDate
               : ""
             : ""
           : "",
       status:
         projectAddOrEdit === "edit"
           ? selectedProject
-            ? Projects[index].Status
-              ? Projects[index].Status
+            ? Projects[index].status
+              ? Projects[index].status
               : ""
             : ""
           : "",
       description:
         projectAddOrEdit === "edit"
           ? selectedProject
-            ? Projects[index].Description
-              ? Projects[index].Description
+            ? Projects[index].description
+              ? Projects[index].description
               : ""
             : ""
           : "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Project Name is required."),
-      manager_name: Yup.string().required("Manager Name is required."),
+      manager_id: Yup.number().required("Manager Name is required."),
       startDate: Yup.date().required("Please select a date"),
       status: Yup.string().required("Project status is required."),
       description: Yup.string(),
@@ -198,7 +198,7 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
                     <Typography variant="body2"> Manager Name </Typography>
 
                     <Select
-                      name="manager_name"
+                      name="manager_id"
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                       value={formik.values.manager.name}
@@ -218,15 +218,20 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
                       }}
                       MenuProps={MenuProps}
                     >
+<<<<<<< HEAD
                       {Employees.map((emp, index) => (
                         <MenuItem key={index} value={emp.name}>
+=======
+                     {Employees.map((emp, index) => (
+                        <MenuItem key={index} value={emp.id}>
+>>>>>>> origin
                           {emp.name}
                         </MenuItem>
                       ))}
                     </Select>
-                    {formik.touched.manager_name && errors.manager_name && (
+                    {formik.touched.manager_id && errors.manager_id && (
                       <Typography variant="caption" color="error">
-                        {errors.manager_name}
+                        {errors.manager_id}
                       </Typography>
                     )}
                   </Stack>

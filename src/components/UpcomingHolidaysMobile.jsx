@@ -19,6 +19,7 @@ import { useUpcomingHolidaysQuery } from "../Store/slice/apiHolidaySlice";
 
 export default function UpcomingHolidaysMobile() {
   const [currentIndex, setCurrentIndex] = useState(0);
+<<<<<<< HEAD
   // const Holidays = useSelector((state) => state.holidays.annualLeaves);
   // const {data:upcomingHoliday,isSuccess}=useUpcomingHolidaysQuery();
   
@@ -42,25 +43,22 @@ export default function UpcomingHolidaysMobile() {
   const Holidays = upcomingHoliday ? upcomingHoliday.holidays || [] : [];
 
   console.log(Holidays)
+=======
+  const {data:upcomingHoliday,isLoading}=useUpcomingHolidaysQuery();
+  const Holidays = upcomingHoliday ? upcomingHoliday.holidays || [] : [];
+>>>>>>> origin
 
-  const formatDate = (dateString) => {
-    const [year, month, day] = dateString.split("-");
-    const monthNames = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
+  console.log(Holidays)
 
-    return `${day} ${monthNames[parseInt(month, 10) - 1]} ${year}`;
+  const formatDate = (timestampString) => {
+    const date = new Date(timestampString);
+    const year = date.getFullYear();
+    const day = date.getDate().toString().padStart(2, "0");
+
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const formattedDate = `${day} ${monthNames[date.getMonth()]} ${year}`;
+
+    return formattedDate;
   };
 
   const handleNext = () => {

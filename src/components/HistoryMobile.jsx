@@ -1,10 +1,14 @@
 import { Box, Typography, Grid, Card, Stack } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useGetLeavesByIdQuery } from "../Store/slice/apiLeaveReqSlice";
 
 export default function HistoryMobile() {
-  const LeaveHistory = useSelector((state) => state.leaveHistory.LeaveHistory);
+  // const LeaveHistory = useSelector((state) => state.leaveHistory.LeaveHistory);
+  const { data: LeaveHistory = []} = useGetLeavesByIdQuery(6);
+  console.log(LeaveHistory)
+  
   const formatDate = (dateString) => {
-    const [day, month] = dateString.split("/");
+    
+    const [day, month] = dateString.split("-");
     const monthNames = [
       "Jan",
       "Feb",
@@ -47,9 +51,9 @@ export default function HistoryMobile() {
                 px={0.1}
                 color="white"
                 bgcolor={
-                  history.status === "Accepted"
+                  history.status === "Approved"|| history.status ==="approved"
                     ? "#CCFFCC"
-                    : history.status === "Pending"
+                    : history.status === "Pending"|| history.status ==="pending"
                     ? "#FFD699"
                     : "#D3D3D3"
                 }
@@ -58,22 +62,23 @@ export default function HistoryMobile() {
                 <Typography
                   fontSize={"12px"}
                   color={
-                    history.status === "Accepted"
-                      ? "darkgreen"
-                      : history.status === "Pending"
+                    history.status === "Approved"||history.status ==="approved"
+                      ? "#008800"
+                      : history.status === "Pending"||history.status ==="pending"
                       ? "#7B3F00"
                       : "gray"
                   }
                 >
-                  {history.status}
+                  {history.status.charAt(0).toUpperCase()+ history.status.slice(1)}
                 </Typography>
               </Box>
             </Stack>
             <Stack direction={"column"} textAlign={"left"}>
               <Typography variant="body" sx={{ fontWeight: "bold" }}>
-                {formatDate(history.Start_Date)}
+                {formatDate(history.start_date)}
                 {history.End_Date !== ""
-                  ? " - " + formatDate(history.End_Date)
+                  ? " - " 
+                  + formatDate(history.end_date)
                   : ""}
               </Typography>
               <Typography variant="caption" color="grey">

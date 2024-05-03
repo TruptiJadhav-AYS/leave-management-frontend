@@ -9,8 +9,12 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { useSelector } from "react-redux";
 import { Box } from "@mui/material";
+<<<<<<< HEAD
 import { useGetHistoryQuery } from "../Store/slice/apiHistorySlice";
 
+=======
+import { useGetLeavesByIdQuery } from "../Store/slice/apiLeaveReqSlice";
+>>>>>>> origin
 
 const columns = [
   { id: "start_date", label: "Start Date", minWidth: 90, ml: "500px" },
@@ -33,6 +37,7 @@ const columns = [
 ];
 
 export default function History() {
+<<<<<<< HEAD
   // const LeaveHistory = useSelector((state) => state.leaveHistory.LeaveHistory);
   // console.log("(((((((((((((((((((((((((", LeaveHistory)
 
@@ -42,6 +47,14 @@ export default function History() {
   // console.log('History....',History)
   const LeaveHistory=History? History || []:[];
   // console.log("hiiiiii",LeaveHistory)
+=======
+  let logedInEmp=useSelector((state)=>state.employees.logedInEmp)
+  console.log(logedInEmp)
+  const id=useSelector((state)=>state.employees.userId)
+  
+  const { data: LeaveHistory = []} = useGetLeavesByIdQuery(id);
+
+>>>>>>> origin
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -55,7 +68,7 @@ export default function History() {
   };
 
   const formatDate = (dateString) => {
-    const [day, month, year] = dateString.split("/");
+    const [day, month, year] = dateString.split("-");
     const monthNames = [
       "Jan",
       "Feb",
@@ -106,22 +119,22 @@ export default function History() {
                 <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                   {columns.map((column) => {
                     const value =
-                      column.id === "Start_Date" || column.id === "End_Date"
+                      column.id === "start_date" || column.id === "end_date"
                         ? row[column.id] !== ""
                           ? formatDate(row[column.id])
                           : "-"
-                        : row[column.id];
+                        :row[column.id];
                     return (
                       <TableCell
                         key={column.id}
                         align={column.align}
                         sx={{
                           color:
-                            column.id === "status" && value === "Pending"
+                            column.id === "status" && (value === "Pending"||value ==="pending")
                               ? "#7B3F00"
-                              : column.id === "status" && value === "Accepted"
+                              : column.id === "status" && (value === "Approved"||value ==="approved")
                               ? "#008800"
-                              : column.id === "status" && value === "Rejected"
+                              : column.id === "status" && (value === "Rejected"||value ==="rejected")
                               ? "gray"
                               : "black",
                         }}
@@ -130,13 +143,13 @@ export default function History() {
                           <Box
                             sx={{
                               bgcolor:
-                                column.id === "status" && value === "Pending"
+                                column.id === "status" && (value === "Pending"||value ==="pending")
                                   ? "#FFD699"
                                   : column.id === "status" &&
-                                    value === "Accepted"
+                                  (value === "Approved"||value ==="approved")
                                   ? "#CCFFCC"
                                   : column.id === "status" &&
-                                    value === "Rejected"
+                                  (value === "Rejected"||value ==="rejected")
                                   ? "#D3D3D3"
                                   : "",
                               width: column.id === "status" && "70px",
@@ -147,7 +160,7 @@ export default function History() {
                               fontSize:"12px"
                             }}
                           >
-                            {value}
+                            {value.charAt(0).toUpperCase()+ value.slice(1)}
                           </Box>
                         ) : (
                           <Box>
