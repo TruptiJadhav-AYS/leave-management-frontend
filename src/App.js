@@ -7,7 +7,7 @@ import { useState } from "react";
 import ForgetPasswordPage from "./components/forgetPasswordPage";
 import {jwtDecode} from 'jwt-decode';
 import ResetPasswordPage from "./components/ResetPasswordPage";
-import { setRole } from "./Store/slice/EmployeeSlice";
+import { setId, setRole } from "./Store/slice/EmployeeSlice";
 import { useDispatch } from "react-redux";
 import { setUserId } from "./Store/slice/EmployeeSlice";
 import "swagger-ui-react/swagger-ui.css";
