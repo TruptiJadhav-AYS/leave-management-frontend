@@ -1,9 +1,6 @@
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   Box,
-  Button,
-  IconButton,
   Card,
   CardContent,
   Typography,
@@ -12,21 +9,30 @@ import {
   MenuItem,
   InputLabel,
   FormControl,
+  Divider,
+  List,
+  ListItem,
+  ListItemText,
+  Stack,
 } from "@mui/material";
+import CheckIcon from "@mui/icons-material/Check";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Avatar from "@mui/material/Avatar";
 import DeleteDialouge from "./DeleteDialouge";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 import employeeApi, {
+  useGetEmployeesByIdQuery,
   useDeleteEmployeeMutation,
-  useGetEmployeesQuery,
-  useUploadImageMutation,
 } from "../Store/slice/apiEmployeeSlice";
 import {
   useGetProjectsQuery,
   useAssignProjectMutation,
 } from "../Store/slice/apiProjectSlice";
+import MailIcon from "@mui/icons-material/Mail";
+import CallIcon from "@mui/icons-material/Call";
+import PeopleIcon from "@mui/icons-material/People";
 
 export default function EmployeeDetails({
   onAddOrEdit,
@@ -34,17 +40,21 @@ export default function EmployeeDetails({
   onOpenDeleteDialogue,
   onCloseDeleteDialogue,
 }) {
-  const { data: Employees, isLoading, isError } = useGetEmployeesQuery();
+  const { id } = useParams();
+  const selectedEmp = parseInt(id);
+
+  const {
+    data: Employee,
+    isLoading,
+    isError,
+  } = useGetEmployeesByIdQuery(selectedEmp);
   const { data: project } = useGetProjectsQuery();
   let [selectedProject, setSelectedProject] = useState("");
   const [assignProject] = useAssignProjectMutation();
 
   const Project = project || [];
-  const selectedEmp = useSelector((state) => state.employees.selectedEmp);
   const [deleteEmployee] = useDeleteEmployeeMutation();
-  const [uploadImage] = useUploadImageMutation();
   const Navigate = useNavigate();
-  const index = Employees.findIndex((emp) => emp.id === selectedEmp);
 
   function hadleDelete() {
     deleteEmployee(selectedEmp);
@@ -83,172 +93,242 @@ export default function EmployeeDetails({
     assignProject(projectObj);
   }
 
-  function handleFileUpload(files) {
-    // document.getElementById('fileUpload').click();
-
-    const file = files[0]; // Assuming you want to upload only one file
-    console.log(file)
-    console.log(selectedEmp)
-    if(file){
-      uploadImage({employeeId: selectedEmp, imageData: file});
-    }
+  if (isLoading) {
+    return <></>;
   }
-
-  // function onFileUploadClick() {
-  //   document.getElementById('fileUpload').click();
-  // }
+  if (isError) {
+    return <></>;
+  }
 
   return (
     <Box
       sx={{
-        display: "flex",
-        justifyContent: "center",
-        minHeight: "100%",
-        top: "10%",
+        p: 1,
       }}
     >
-      <Card elevation={2} >
-        <Grid display={"flex"} justifyContent={"space-between"} mx={2}>
-          <Typography
-            variant="h5"
-            display="flex"
-            justifyContent="left"
-            alignItems={"left"}
-            mt={3}
-            width="100%"
-          >
-            Employee Details
-          </Typography>
-
-          <FormControl sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel id="demo-simple-select-autowidth-label">Select Project</InputLabel>
-            <Select
-              size="small"
-              onChange={(e) => setSelectedProject(e.target.value)}
-              sx={{
-                "& fieldset": {
-                  borderColor: "rgba(204, 204, 204, 0.5)",
-                  borderWidth: "2px",
-                },
-                "&:hover": {
-                  "&& fieldset": {
-                    border: "2px solid rgba(204, 204, 204, 0.5)",
-                  },
-                },
-                height: "50px",
-                width: "200px",
-                mr: "100px",
-                borderRadius: 1,
-              }}
-            >
-              {Project.map((project) => (
-                <MenuItem key={project.id} value={project.id}>
-                  {project.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-
-          <Button onClick={() => handelAssign(selectedProject)}>Assign</Button>
-          <IconButton
-            onClick={() => {
-              onAddOrEdit("edit");
-              Navigate("/Employee/Employees/EmployeeDetailsForm");
-            }}
-          >
-            <EditIcon />
-          </IconButton>
-          <IconButton
-            onClick={() => {
-              onOpenDeleteDialogue();
-              // Navigate("/Employee/Employees");
-            }}
-          >
-            <DeleteIcon />
-          </IconButton>
-          
-        </Grid>
+      <Card elevation={3} sx={{ display: "flex", marginBottom: 1 }}>
         <CardContent>
-          <Grid
-            container
-            justifyContent={"space-around"}
-            align={"center"}
-            columnGap={12}
-          >
-            <Grid item lg={12} md={12} xs={12} sm={12}>
-              <Avatar sx={{ width: 124, height: 124 }} src={Employees[index].image===null?"":URL.createObjectURL(
-              new Blob([new Uint8Array(Employees[index].image.data)])
-            )}/>
-            </Grid>
-            <Grid item lg={12} md={12} xs={12} sm={12}>
-              <Typography variant="body1" mt={8} fontWeight={"700"}>
-                Name : {Employees && Employees[index] && Employees[index].name}
-              </Typography>
-            </Grid>
-            <Grid item lg={12} md={12} xs={12} sm={12}>
+          <Stack direction={"row"} justifyContent={"space-between"}>
+            <Stack>
               <Typography
-                variant="caption"
-                fontWeight={"600"}
-                align="left"
+                fontWeight="700"
+                variant="h6"
+                ml={20}
+                width="150px"
+                textAlign={"left"}
               >
-                Email : {Employees && Employees[index] && Employees[index].email}
+                {Employee.name}
               </Typography>
+            </Stack>
+
+            <Stack direction={"row"}>
+              <EditIcon
+                sx={{ mx: 0.5 }}
+                onClick={() => {
+                  onAddOrEdit("edit");
+                  Navigate("/Employee/Employees/EmployeeDetailsForm");
+                }}
+              />
+              <DeleteIcon
+                sx={{ mx: 0.5 }}
+                onClick={() => {
+                  onOpenDeleteDialogue();
+                }}
+              />
+            </Stack>
+          </Stack>
+
+          <Grid container alignItems="center" spacing={2}>
+            <Grid item>
+              <Avatar
+                sx={{ width: 124, height: 124, mt: -3 }}
+                src={
+                  Employee.image === null
+                    ? ""
+                    : URL.createObjectURL(
+                        new Blob([new Uint8Array(Employee.image.data)])
+                      )
+                }
+                alt="Profile"
+              />
             </Grid>
-            <Grid item lg={12} md={12} xs={12} sm={12}>
-              <Typography variant="caption" fontWeight={"600"}>
-                Phone No : {Employees && Employees[index] && Employees[index].mobile_number}
-              </Typography>
+
+            <Grid item ml={2} textAlign={"left"}>
+              <Box display={"flex"} gap={0.5} flexDirection={"row"}>
+                <MailIcon sx={{ height: "20px", mt: 0.2 }} />
+                <Typography color="body2">{Employee.email}</Typography>
+              </Box>
+              <Box display={"flex"} gap={0.5} flexDirection={"row"}>
+                <CallIcon sx={{ height: "20px" }} />
+                <Typography variant="body2">
+                  {Employee.mobile_number}
+                </Typography>
+              </Box>
+              <Box display={"flex"} gap={0.5} flexDirection={"row"}>
+                <PeopleIcon />
+                <Typography variant="body1">
+                  {Employee.department
+                    ? Employee.department.department_name
+                    : "-"}
+                </Typography>
+              </Box>
             </Grid>
-            <Grid item lg={12} md={12} xs={12} sm={12}>
-              <Typography variant="caption" fontWeight={"600"} align="left">
-                Date Of Birth : {formatDate(Employees[index].dob)}
-              </Typography>
-            </Grid>
-            <Grid item lg={12} md={12} xs={12} sm={12}>
-              <Typography variant="caption" fontWeight={"600"} align="left">
-                Gender : {Employees && Employees[index] && Employees[index].gender}
-              </Typography>
-            </Grid>
-            <Grid item lg={12} md={12} xs={12} sm={12}>
-              <Typography variant="caption" fontWeight={"600"}>
-                Department : {Employees && Employees[index] && Employees[index].department?.department_name}
-              </Typography>
-            </Grid>
-            <Grid item lg={12} md={12} xs={12} sm={12}>
-              {Employees[index].manager && (
-                <Typography variant="caption" fontWeight={"600"}>
-                  Manager Name : {Employees[index].manager?.name}
+            <Grid item textAlign={"left"} ml={2}>
+            {Employee.manager && (
+                <Typography variant="body1">
+                  Manager : {Employee.manager.name}
                 </Typography>
               )}
-            </Grid>
-            <Grid item lg={12} md={12} xs={12} sm={12}>
-              <Typography variant="caption" fontWeight={"600"}>
-                Role : {Employees && Employees[index] && Employees[index].role}
+              <Typography variant="body1">Gender: {Employee.gender}</Typography>
+              <Typography variant="body1">
+                Date Of Birth: {formatDate(Employee.dob)}
               </Typography>
-            </Grid>
-            <Grid item lg={12} md={12} xs={12} sm={12}>
-              <Typography variant="caption" fontWeight={"600"}>
-                Projects: {Employees[index].project && Employees[index].project.map((pr, index1) => (
-                  <Typography key={index} variant="caption" fontWeight={"600"}>
-                    {pr.name}
-                    {index1 !== Employees[index].project.length - 1 && ", "}
-                  </Typography>
-                ))}
-                </Typography>
-            </Grid>
-            <Grid item lg={12} md={12} xs={12} sm={12}>
-              <Typography variant="caption" fontWeight={"600"}>
-                Inventory :{Employees[index].inventories && Employees[index].inventories.map((inv, index1) => (
-                  <Typography key={index} variant="caption" fontWeight={"600"}>
-                    {inv.name}
-                    {index1 !==  Employees[index].inventories.length - 1 &&  ", " }
-                  </Typography>
-                ))}
-              </Typography>
+              <Typography variant="body1">Role: {Employee.role}</Typography>
             </Grid>
           </Grid>
         </CardContent>
       </Card>
+
+      <Grid container spacing={1} height={"60vh"}>
+        <Grid item xs={12} md={6}>
+          <Card elevation={3} sx={{ height: "100%" }}>
+            <Typography variant="h6" p={1}>
+              Projects
+            </Typography>
+
+            <Divider />
+            <Stack direction={"column"}justifyContent={"space-between"} >
+            <Stack height={"250px"}>
+              <List sx={{ overflowY: "auto", maxHeight: "260px" }}>
+                {Employee.project &&
+                  Employee.project.map((Project, index) => (
+                    <Box>
+                      <ListItem
+                        key={index}
+                        variant="body1"
+                        sx={{ px: 2, py: 1.3 }}
+                      >
+                        <ListItemText>{Project.name}</ListItemText>
+                        <Box
+                          sx={{
+                            bgcolor:
+                              Project.status === "active"
+                                ? "#CCFFCC"
+                                : "#D3D3D3",
+                            color:
+                              Project.status === "active" ? "008800" : "gray",
+                            width: "60px",
+                            p: "1px",
+                            borderRadius: "6px",
+                            textAlign: "center",
+                            fontSize: "12px",
+                          }}
+                        >
+                          {Project.status.charAt(0).toUpperCase() +
+                            Project.status.slice(1)}
+                        </Box>
+                      </ListItem>
+                      {index !== Employee.project.length - 1 && <Divider />}
+                    </Box>
+                  ))}
+              </List>
+            </Stack>
+            
+            <Stack>
+            <Grid item display={"flex"} mx={2} alignItems={"center"}>
+              <FormControl sx={{ m: 1, minWidth: 120 }}>
+                <InputLabel id="demo-select-small-label">Assign Project</InputLabel>
+                <Select
+                  size="small"
+                  labelId="demo-select-small-label"
+                  id="demo-select-small"
+                  onChange={(e) => setSelectedProject(e.target.value)}
+                  sx={{
+                    "& fieldset": {
+                      borderColor: "rgba(204, 204, 204, 0.5)",
+                      borderWidth: "2px",
+                    },
+                    "&:hover": {
+                      "&& fieldset": {
+                        border: "2px solid rgba(204, 204, 204, 0.5)",
+                      },
+                    },
+                    width: "200px",
+                    borderRadius: 1,
+                  }}
+                >
+                  {Project.map((project) => (
+                    <MenuItem key={project.id} value={project.id}>
+                      {project.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+
+              <CheckIcon
+                onClick={() => handelAssign(selectedProject)}
+                sx={{
+                  color: "black",
+                  border: "2px solid rgba(204, 204, 204, 0.5)",
+                  borderRadius: 5,
+                  bgcolor: "lightblue",
+                }}
+              />
+            </Grid>
+            </Stack>
+            </Stack>
+          </Card>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Card elevation={3} sx={{ height: "100%" }}>
+            <Typography variant="h6" p={1}>
+              Inventory
+            </Typography>
+            <Divider />
+            <List sx={{ overflowY: "auto", maxHeight: "260px" }}>
+              {Employee.inventories &&
+                Employee.inventories.map((inventory, index) => (
+                  <div key={index}>
+                    <ListItem sx={{ px: 2, pb: 0.5, pt: 0.2 }}>
+                      <Box display={"flex"} flexDirection={"column"}>
+                        <Typography variant="subtitle1">
+                          {inventory.name}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          Serial Number : {inventory.serial_number}
+                        </Typography>
+                      </Box>
+                    </ListItem>
+                    {index !== Employee.inventories.length - 1 && <Divider />}
+                  </div>
+                ))}
+            </List>
+          </Card>
+        </Grid>
+      </Grid>
+      {/* <Grid item lg={12} md={12} xs={12} sm={12}>
+              <Typography variant="caption" fontWeight={"600"}>
+                Projects: {Employee.project && Employee.project.map((pr, index1) => (
+                  <Typography key={Employee.id} variant="caption" fontWeight={"600"}>
+                    {pr.name}
+                    {index1 !== Employee.project.length - 1 && ", "}
+                  </Typography>
+                ))}
+                </Typography>
+            </Grid>
+            <Grid item lg={12} md={12} xs={12} sm={12}>
+              <Typography variant="caption" fontWeight={"600"}>
+                Inventory :{Employee.inventories && Employee.inventories.map((inv, index1) => (
+                  <Typography key={Employee.id} variant="caption" fontWeight={"600"}>
+                    {inv.name}
+                    {index1 !==  Employee.inventories.length - 1 &&  ", " }
+                  </Typography>
+                ))}
+              </Typography>
+            </Grid> */}
+      {/* </Grid>
+        </CardContent>
+      </Card> */}
       <DeleteDialouge
         openDeleteDialouge={openDeleteDialouge}
         onCloseDeleteDialogue={onCloseDeleteDialogue}

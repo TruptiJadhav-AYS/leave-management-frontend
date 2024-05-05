@@ -314,7 +314,7 @@ export default function EmployeeList({ onAddOrEdit }) {
         height: "100%",
       }}
     >
-      <Box display={"flex"} justifyContent={"space-between"} mt={1}>
+      <Box display={"flex"} justifyContent={"space-between"} mt={1} mb={0.7}>
         <Box
           sx={{
             display: "flex",
