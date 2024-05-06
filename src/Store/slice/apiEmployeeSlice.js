@@ -21,6 +21,7 @@ const employeeApi = createApi({
 
     getEmployeesById: builder.query({
       query: (employeeId) => `/employees/employee/${employeeId}`,
+      providesTags: [{ data: 'Employees' }],
     }),
 
     addEmployee: builder.mutation({
@@ -70,6 +71,8 @@ const employeeApi = createApi({
       }),
       invalidatesTags: [{ data: 'Project' }]
     }),
+
+   
   }),
   });
 
