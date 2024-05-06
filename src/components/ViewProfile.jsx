@@ -21,6 +21,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import MailIcon from "@mui/icons-material/Mail";
 import CallIcon from "@mui/icons-material/Call";
 import PeopleIcon from "@mui/icons-material/People";
+import UseReponsive from "../hooks/UseResponsive";
 
 export default function ViewProfile() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -29,6 +30,7 @@ export default function ViewProfile() {
   const logedInEmp = Emp || [];
   const [uploadImage] = useUploadImageMutation();
   const fileInputRef = useRef(null);
+  const responsive=UseReponsive()
 
   const formatDate = (timestampString) => {
     const date = new Date(timestampString);
@@ -83,15 +85,13 @@ export default function ViewProfile() {
   return (
     <Box sx={{ padding: 1 }}>
       {/* Horizontal card for profile photo and basic details */}
-      <Card elevation={3} sx={{ display: "flex", marginBottom: 1 }}>
+      <Card elevation={3} sx={{ mb: 1}}>
         <CardContent>
-          <Typography fontWeight="700" variant="h6" ml={20} textAlign={"left"}>
-            {logedInEmp.name}
-          </Typography>
-          <Grid container alignItems="center" spacing={2}>
-            <Grid item>
+          <Grid container width={"100%"}>
+            <Grid item xs={12} sm={4.5} md={2.5} lg={1.7} alignItems={"center"}>
+              <Box sx={{ width: 124, height: 124 }}>
               <Avatar
-                sx={{ width: 124, height: 124, mt: -3 }}
+                sx={{ width: 124, height: 124 }}
                 src={
                   logedInEmp.image === null
                     ? ""
@@ -126,9 +126,13 @@ export default function ViewProfile() {
                 style={{ display: "none" }}
                 onChange={handleFileChange}
               />
+              </Box>
             </Grid>
 
-            <Grid item ml={2} textAlign={"left"}>
+            <Grid item ml={2} xs={12} sm={4} md={4} lg={2.5} textAlign={"left"}>
+              <Typography fontWeight="700" variant="h6" textAlign={"left"} mb={1}>
+                {logedInEmp.name}
+              </Typography>
               <Box display={"flex"} gap={0.5} flexDirection={"row"}>
                 <MailIcon sx={{ height: "20px", mt: 0.2 }} />
                 <Typography color="body2">{logedInEmp.email}</Typography>
@@ -153,7 +157,16 @@ export default function ViewProfile() {
                 </Typography>
               )}
             </Grid>
-            <Grid item textAlign={"left"} ml={2}>
+            <Grid
+              item
+              ml={2}
+              xs={12}
+              sm={4}
+              md={4}
+              lg={3}
+              mt={responsive.isDesktop ? 5:0}
+              textAlign={"left"}
+            >
               <Typography variant="body1">
                 Gender: {logedInEmp.gender}
               </Typography>
@@ -162,6 +175,7 @@ export default function ViewProfile() {
               </Typography>
               <Typography variant="body1">Role: {logedInEmp.role}</Typography>
             </Grid>
+
           </Grid>
         </CardContent>
       </Card>
@@ -174,11 +188,21 @@ export default function ViewProfile() {
               Projects
             </Typography>
             <Divider />
-            <List sx={{ overflowY: "auto", maxHeight: "400px" }}>
+            <List
+              sx={{
+                overflowY: "auto",
+                maxHeight: "320px",
+                scrollbarWidth: "thin",
+              }}
+            >
               {logedInEmp.project &&
                 logedInEmp.project.map((Project, index) => (
                   <Box>
-                    <ListItem key={index} variant="body1" sx={{ px: 2 ,py:1.3}}>
+                    <ListItem
+                      key={index}
+                      variant="body1"
+                      sx={{ px: 2, py: 1.3 }}
+                    >
                       <ListItemText>{Project.name}</ListItemText>
                       <Box
                         sx={{
@@ -209,21 +233,24 @@ export default function ViewProfile() {
               Inventory
             </Typography>
             <Divider />
-            <List sx={{ overflowY: "auto", maxHeight: "400px" }}>
+            <List
+              sx={{
+                overflowY: "auto",
+                maxHeight: "320px",
+                scrollbarWidth: "thin",
+              }}
+            >
               {logedInEmp.inventories &&
                 logedInEmp.inventories.map((inventory, index) => (
                   <div key={index}>
-                    <ListItem sx={{ px: 2 ,pb:0.5,pt:0.2}}>
+                    <ListItem sx={{ px: 2, pb: 0.5, pt: 0.2 }}>
                       <Box display={"flex"} flexDirection={"column"}>
-                      <Typography variant="subtitle1">
-                        {inventory.name}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="text.secondary"
-                      >
-                        Serial Number : {inventory.serial_number}
-                      </Typography>
+                        <Typography variant="subtitle1">
+                          {inventory.name}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          Serial Number : {inventory.serial_number}
+                        </Typography>
                       </Box>
                     </ListItem>
                     {index !== logedInEmp.inventories.length - 1 && <Divider />}

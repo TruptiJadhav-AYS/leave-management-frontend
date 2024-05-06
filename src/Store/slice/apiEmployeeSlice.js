@@ -60,11 +60,20 @@ const employeeApi = createApi({
         },
       }),
       invalidatesTags:[{ data: 'Employees' }]
-    })
+    }),
+
+    assignProject:builder.mutation({
+      query:(projectId)=>({
+        url:"/project/assign_project",
+        method:"POST",
+        body:projectId
+      }),
+      invalidatesTags: [{ data: 'Project' }]
+    }),
   }),
   });
 
-export const { useGetEmployeesQuery,useGetEmployeesByIdQuery,useAddEmployeeMutation,useUpdateEmployeeMutation, useDeleteEmployeeMutation ,useUploadImageMutation} = employeeApi;
+export const { useGetEmployeesQuery,useGetEmployeesByIdQuery,useAddEmployeeMutation,useUpdateEmployeeMutation, useDeleteEmployeeMutation ,useUploadImageMutation,useAssignProjectMutation} = employeeApi;
 export default employeeApi;
 
 function formData(employeeId, imageData) {
