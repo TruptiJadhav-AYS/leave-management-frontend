@@ -48,7 +48,7 @@ export default function ApproverCard() {
           <Avatar
             // src={employee.image.data}
             src={URL.createObjectURL(
-              new Blob([new Uint8Array(employee.image.data)])
+              new Blob([new Uint8Array(employee.image)])
             )}
             style={{
               width: responsive.isMobile ? "50px" : "70px",

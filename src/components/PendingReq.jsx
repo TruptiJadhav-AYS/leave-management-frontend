@@ -30,6 +30,8 @@ export default function PendingReq() {
     ? pr.filter((request) => request.emp_id !== id)
     : [];
 
+  // eslint-disable-next-line no-undef
+
   console.log(PendingRequestList);
 
   // const PendingRequestList = pr || [];
