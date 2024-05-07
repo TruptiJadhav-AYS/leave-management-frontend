@@ -244,7 +244,7 @@ export default function EmployeeDetails({
             <Divider />
             <Box position={"sticky"} py={1}>
                     <FormControl sx={{ minWidth: 120}}>
-                      <InputLabel id="demo-select-small-label">
+                      <InputLabel id="demo-select-small-label" size="small">
                         Assign Project
                       </InputLabel>
                       <Select
@@ -263,8 +263,17 @@ export default function EmployeeDetails({
                               border: "2px solid rgba(204, 204, 204, 0.5)",
                             },
                           },
-                          width: "200px",
+                          width: "270px",
+                          height: "40px",
                           borderRadius: 1,
+                        }}
+                        MenuProps={{
+                          PaperProps: {
+                            style: {
+                              maxHeight: 200,
+                              scrollbarWidth:"thin"
+                            },
+                          },
                         }}
                       >
                         {availableProjects.map((project) => (

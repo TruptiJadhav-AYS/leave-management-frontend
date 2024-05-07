@@ -188,6 +188,7 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
       style: {
         maxHeight: 130,
         width: 250,
+        scrollbarWidth:"thin"
       },
     },
   };

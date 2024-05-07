@@ -18,7 +18,8 @@ export default function EmployeeOnLeave() {
   const Employees= employees || [];
 
   if (isLoading) {
-    return <CircularProgress />; 
+    return 
+    <CircularProgress />; 
   }
 
   if (isError) {
