@@ -172,7 +172,7 @@
 // }
 import * as React from "react";
 import Paper from "@mui/material/Paper";
-import { Box, Button, Divider, InputBase, Typography } from "@mui/material";
+import { Box, Button, Divider, InputBase, Tooltip, Typography } from "@mui/material";
 import {
   TableBody,
   TableCell,
@@ -189,18 +189,13 @@ import AddIcon from "@mui/icons-material/Add";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import SearchIcon from "@mui/icons-material/Search";
-// import VisibilityIcon from "@mui/icons-material/Visibility";
-// import EditIcon from "@mui/icons-material/Edit";
-// import DeleteIcon from "@mui/icons-material/Delete";
 import { useState, useMemo, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// import { selectProject } from "../Store/slice/ProjectsSlice";
 import { setSelectedEmp } from "../Store/slice/EmployeeSlice";
 
 const columns = [
   { id: "name", label: "Name", minWidth: 180 },
   { id: "email", label: "Email", minWidth: 170 },
-
   {
     id: "gender",
     label: "Gender",
@@ -210,7 +205,6 @@ const columns = [
     id: "manager",
     label: "Manager",
     minWidth: 120,
-    // align: "center",
   },
   {
     id: "department",
@@ -218,58 +212,39 @@ const columns = [
     minWidth: 80,
     align: "left",
   },
-  // {
-  //   id: "Inventory",
-  //   label: "Inventory",
-  //   minWidth: 80,
-  //   align: "center",
-  // },
 ];
 
 export default function EmployeeList({ onAddOrEdit }) {
   const [searchText, setsearchText] = useState("");
-  //   const Projects = useSelector((state) => state.Project.Projects);
+  const dispatch = useDispatch();
+  const Navigate = useNavigate();
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [sortedBy, setSortedBy] = useState("name");
   const { data: Employees, isSuccess } = useGetEmployeesQuery();
-  // const [searchText, setSearchText] = useState("");
-  // const [sortedBy, setSortedBy] = useState("name");
   const [sortOrder, setSortOrder] = useState(null);
-  const [filteredEmployees, setFilteredEmployees] = useState([]); // New state for filtered employees
-  // const Navigate = useNavigate();
+  const [filteredEmployees, setFilteredEmployees] = useState([]); 
   const employees = Employees || [];
 
   useEffect(() => {
-    // Update filteredEmployees when employees data changes
     if (isSuccess) {
       setFilteredEmployees(employees);
     }
   }, [isSuccess, employees]);
 
   useEffect(() => {
-    // Filter employees based on search text when it changes
     setFilteredEmployees(
       employees.filter((employee) =>
         employee.name.toLowerCase().includes(searchText.toLowerCase())
       )
     );
   }, [searchText, employees]);
-  // console.log(Employees)
-  //   const selectedProject = useSelector((state) => state.Project.selectedProject);
-
-  //   console.log("selected project", selectedProject);
-  const dispatch = useDispatch();
-  const Navigate = useNavigate();
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [sortedBy, setSortedBy] = useState("name"); // Track sorted column
-  // const [sortOrder, setSortOrder] = useState("asc"); // Track sort order
 
   function handleSearchText(event) {
     setsearchText(event.target.value);
   }
-  // console.log(searchText);
 
   const sortedRows = useMemo(() => {
-    // Sort rows based on sortedBy and sortOrder
     return employees.slice().sort((a, b) => {
       const valueA = a[sortedBy];
       const valueB = b[sortedBy];
@@ -302,8 +277,6 @@ export default function EmployeeList({ onAddOrEdit }) {
   const FilterArray = sortedRows.filter((Employee) =>
     Employee.name.toLowerCase().includes(searchText.toLowerCase())
   );
-  console.log(filteredEmployees);
-  console.log("uytuyfyt", FilterArray);
 
   return (
     <Paper
@@ -332,6 +305,7 @@ export default function EmployeeList({ onAddOrEdit }) {
           <SearchIcon sx={{ my: "1.5%", mr: 1.5 }} />
         </Box>
 
+        <Tooltip title="Add Employee">
         <Button
           variant="contained"
           sx={{ borderRadius: "50px", textTransform: "none" }}
@@ -343,6 +317,7 @@ export default function EmployeeList({ onAddOrEdit }) {
           Employee
           <AddIcon />
         </Button>
+        </Tooltip>
       </Box>
       <Divider />
       <TableContainer
@@ -362,6 +337,7 @@ export default function EmployeeList({ onAddOrEdit }) {
                       {column.label}
                     </Typography>
                     {column.label === "Name" ? (
+                      <Tooltip title="Sort Employee">
                       <Button
                         disableRipple
                         size="small"
@@ -381,6 +357,7 @@ export default function EmployeeList({ onAddOrEdit }) {
                           </>
                         )}
                       </Button>
+                      </Tooltip>
                     ) : null}
                   </Stack>
                 </TableCell>

@@ -6,6 +6,7 @@ import {
   CircularProgress,
   Divider,
   InputBase,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import {
@@ -107,6 +108,7 @@ export default function InventoryList({
           <SearchIcon sx={{ my: "1.5%", mr: 1.5 }} />
         </Box>
 
+        <Tooltip title="Add Inventory">
         <Button
           variant="contained"
           sx={{ borderRadius: "50px", textTransform: "none" }}
@@ -117,6 +119,7 @@ export default function InventoryList({
           Inventory
           <AddIcon />
         </Button>
+        </Tooltip>
       </Box>
       <Divider />
       <TableContainer
@@ -161,6 +164,7 @@ export default function InventoryList({
                   })}
                   <TableCell align="center">
                     <Stack direction="row">
+                      <Tooltip title="Delete Inventory">
                       <DeleteIcon
                         sx={{ cursor: "pointer" }}
                         onClick={() => {
@@ -168,6 +172,7 @@ export default function InventoryList({
                           setinventoryId(inventory.id)
                         }}
                       />
+                      </Tooltip>
                     </Stack>
                   </TableCell>
                 </TableRow>

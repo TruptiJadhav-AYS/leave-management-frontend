@@ -11,13 +11,15 @@ import {
   ListItem,
   List,
   ListItemText,
+  IconButton,
+  Tooltip
 } from "@mui/material";
 import { useSelector } from "react-redux";
 import {
   useGetEmployeesByIdQuery,
   useUploadImageMutation,
 } from "../Store/slice/apiEmployeeSlice";
-import EditIcon from "@mui/icons-material/Edit";
+import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import MailIcon from "@mui/icons-material/Mail";
 import CallIcon from "@mui/icons-material/Call";
 import PeopleIcon from "@mui/icons-material/People";
@@ -30,7 +32,7 @@ export default function ViewProfile() {
   const logedInEmp = Emp || [];
   const [uploadImage] = useUploadImageMutation();
   const fileInputRef = useRef(null);
-  const responsive=UseReponsive()
+  const responsive = UseReponsive();
 
   const formatDate = (timestampString) => {
     const date = new Date(timestampString);
@@ -85,52 +87,70 @@ export default function ViewProfile() {
   return (
     <Box sx={{ padding: 1 }}>
       {/* Horizontal card for profile photo and basic details */}
-      <Card elevation={3} sx={{ mb: 1}}>
+      <Card elevation={3} sx={{ mb: 1 }}>
         <CardContent>
           <Grid container width={"100%"}>
             <Grid item xs={12} sm={4.5} md={2.5} lg={1.7} alignItems={"center"}>
               <Box sx={{ width: 124, height: 124 }}>
-              <Avatar
-                sx={{ width: 124, height: 124 }}
-                src={
-                  logedInEmp.image === null
-                    ? ""
-                    : URL.createObjectURL(
-                        new Blob([new Uint8Array(logedInEmp.image.data)])
-                      )
-                }
-                alt="Profile"
-              />
+                <Avatar
+                  sx={{ width: 124, height: 124 }}
+                  src={
+                    logedInEmp.image === null
+                      ? ""
+                      : URL.createObjectURL(
+                          new Blob([new Uint8Array(logedInEmp.image.data)])
+                        )
+                  }
+                  alt="Profile"
+                />
 
-              <EditIcon
-                onClick={triggerFileInput}
-                sx={{
-                  height: "35px",
-                  mt: -4,
-                  ml: 3,
-                  width: "35px",
-                  p: 0.5,
-                  color: "white",
-                  backgroundColor: "blue",
-                  border: "3px solid white",
-                  borderRadius: "50%",
-                  position: "absolute",
-                }}
-              />
+              <Tooltip title="Add Photo">
+                <IconButton
+                  onClick={triggerFileInput}
+                  disableRipple
+                  sx={{
+                    
+                    mt: -8,
+                    ml: 11,
+                    position: "relative",
+                    backgroundColor: "blue",
+                    border: "3px solid white",
+                    borderRadius: "50%",
+                    p:"5px",
+                    "&:hover": {
+                      backgroundColor: "blue",
+                    },
+                  }}
+                  
+                >
+                  <AddAPhotoIcon
+                    sx={{
+                      height: "20px",
+                      width: "20px",
+                      color: "white",
+                    }}
+                  />
+                </IconButton>
+                </Tooltip>
 
-              <input
-                ref={fileInputRef}
-                id="fileInput"
-                type="file"
-                accept="image/*"
-                style={{ display: "none" }}
-                onChange={handleFileChange}
-              />
+                <input
+                  ref={fileInputRef}
+                  id="fileInput"
+                  type="file"
+                  accept="image/*"
+                  style={{ display: "none" }}
+                  onChange={handleFileChange}
+                />
               </Box>
             </Grid>
 
             <Grid item ml={2} xs={12} sm={4} md={4} lg={2.5} textAlign={"left"}>
-              <Typography fontWeight="700" variant="h6" textAlign={"left"} mb={1}>
+              <Typography
+                fontWeight="700"
+                variant="h6"
+                textAlign={"left"}
+                mb={1}
+              >
                 {logedInEmp.name}
               </Typography>
               <Box display={"flex"} gap={0.5} flexDirection={"row"}>
@@ -164,7 +184,7 @@ export default function ViewProfile() {
               sm={4}
               md={4}
               lg={3}
-              mt={responsive.isDesktop ? 5:0}
+              mt={responsive.isDesktop ? 5 : 0}
               textAlign={"left"}
             >
               <Typography variant="body1">
@@ -175,7 +195,6 @@ export default function ViewProfile() {
               </Typography>
               <Typography variant="body1">Role: {logedInEmp.role}</Typography>
             </Grid>
-
           </Grid>
         </CardContent>
       </Card>

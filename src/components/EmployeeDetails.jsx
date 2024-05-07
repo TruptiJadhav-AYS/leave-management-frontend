@@ -14,9 +14,8 @@ import {
   ListItem,
   ListItemText,
   Stack,
-  ListSubheader,
-  Toolbar,
-  IconButton
+  Tooltip,
+  IconButton,
 } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import EditIcon from "@mui/icons-material/Edit";
@@ -44,14 +43,16 @@ export default function EmployeeDetails({
   onOpenDeleteDialogue,
   onCloseDeleteDialogue,
 }) {
+  const responsive=UseReponsive()
+  const Navigate = useNavigate();
   const { id } = useParams();
   const selectedEmp = parseInt(id);
-  const responsive=UseReponsive()
 
   const {
     data: Employee,
     isLoading,
     isError,
+    isSuccess
   } = useGetEmployeesByIdQuery(selectedEmp);
   const { data: project } = useGetProjectsQuery();
   let [selectedProject, setSelectedProject] = useState("");
@@ -59,7 +60,8 @@ export default function EmployeeDetails({
 
   const Project = project || [];
   const [deleteEmployee] = useDeleteEmployeeMutation();
-  const Navigate = useNavigate();
+  
+  let availableProjects=[];
 
   function hadleDelete() {
     deleteEmployee(selectedEmp);
@@ -106,6 +108,10 @@ export default function EmployeeDetails({
   if (isError) {
     return <></>;
   }
+  if(isSuccess){
+    const assignedProjectIds = Employee.project.map(project => project.id);
+    availableProjects = Project.filter(project => !assignedProjectIds.includes(project.id));
+  }
 
   return (
     <Box
@@ -116,18 +122,51 @@ export default function EmployeeDetails({
       <Card elevation={3} sx={{ mb: 1 }}>
         <CardContent>
           <Grid container width="100%">
-            <Grid item xs={12} sm={4.5} md={2.5} lg={1.7} alignItems={"center"}>
-              <Avatar
-                sx={{ width: 124, height: 124, ml: 1 }}
-                src={
-                  Employee.image === null
-                    ? ""
-                    : URL.createObjectURL(
-                        new Blob([new Uint8Array(Employee.image.data)])
-                      )
-                }
-                alt="Profile"
-              />
+          <Grid item xs={12} sm={4.5} md={2.5} lg={1.7} alignItems={"center"}>
+              <Box sx={{ width: 124, height: 124 }}>
+                <Avatar
+                  sx={{ width: 124, height: 124 }}
+                  src={
+                    Employee.image === null
+                      ? ""
+                      : URL.createObjectURL(
+                          new Blob([new Uint8Array(Employee.image.data)])
+                        )
+                  }
+                  alt="Profile"
+                />
+
+              <Tooltip title="Edit Employee">
+                <IconButton
+                  disableRipple
+                  sx={{
+                    mt: -8,
+                    ml: 11,
+                    position: "relative",
+                    backgroundColor: "blue",
+                    border: "3px solid white",
+                    borderRadius: "50%",
+                    p:"5px",
+                    "&:hover": {
+                      backgroundColor: "blue",
+                    },
+                  }}
+                  
+                >
+                  <EditIcon
+                    sx={{
+                      height: "20px",
+                      width: "20px",
+                      color: "white",
+                    }}
+                    onClick={() => {
+                      onAddOrEdit("edit");
+                      Navigate("/Employee/Employees/EmployeeDetailsForm");
+                    }}
+                  />
+                </IconButton>
+                </Tooltip>
+              </Box>
             </Grid>
 
             <Grid item textAlign={"left"} xs={12} sm={4} md={4} lg={2.5}>
@@ -181,22 +220,15 @@ export default function EmployeeDetails({
               </Typography>
             </Grid>
 
-            <Grid item xs={12} sm={12} md={1} lg={4}>
-              <Stack direction={"row"}>
-                <EditIcon
-                  sx={{ mx: 0.5 }}
-                  onClick={() => {
-                    onAddOrEdit("edit");
-                    Navigate("/Employee/Employees/EmployeeDetailsForm");
-                  }}
-                />
+            <Grid item xs={12} sm={12} md={1} lg={4.8} width={"100%"}>
+              <Tooltip title="Delete Employee">
                 <DeleteIcon
-                  sx={{ mx: 0.5 }}
+                  sx={{ml:"96%"}}
                   onClick={() => {
                     onOpenDeleteDialogue();
                   }}
                 />
-              </Stack>
+              </Tooltip>
             </Grid>
           </Grid>
         </CardContent>
@@ -210,11 +242,8 @@ export default function EmployeeDetails({
             </Typography>
 
             <Divider />
-            <Box></Box> 
-                <List sx={{ overflowY: "auto",maxHeight:"320px",scrollbarWidth:"thin"}}>
-                  <ListSubheader>
-
-                    <FormControl sx={{ minWidth: 120 }}>
+            <Box position={"sticky"} py={1}>
+                    <FormControl sx={{ minWidth: 120}}>
                       <InputLabel id="demo-select-small-label">
                         Assign Project
                       </InputLabel>
@@ -238,7 +267,7 @@ export default function EmployeeDetails({
                           borderRadius: 1,
                         }}
                       >
-                        {Project.map((project) => (
+                        {availableProjects.map((project) => (
                           <MenuItem key={project.id} value={project.id}>
                             {project.name}
                           </MenuItem>
@@ -246,7 +275,8 @@ export default function EmployeeDetails({
                       </Select>
                     </FormControl>
 
-                    <IconButton onClick={() =>{handelAssign(selectedProject);handelAssign("");}} type="submit" sx={{mb:1}}>
+                    <Tooltip title="Assign Project">
+                    <IconButton onClick={() =>{handelAssign(selectedProject);handelAssign("");}}>
                     <CheckIcon
                       sx={{     
                         color: "black",
@@ -256,10 +286,10 @@ export default function EmployeeDetails({
                       }}
                     />
                     </IconButton>
-                    
-                    <Divider/>
-                  </ListSubheader>
-
+                    </Tooltip>
+                  </Box>
+                  <Divider/>
+                <List sx={{ overflowY: "auto",maxHeight:"44.5vh",scrollbarWidth:"thin"}}>
                   {Employee.project &&
                     Employee.project.map((Project, index) => (
                       <Box>

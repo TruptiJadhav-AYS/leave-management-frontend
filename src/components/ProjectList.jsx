@@ -7,6 +7,7 @@ import {
   Divider,
   Grid,
   InputBase,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import {
@@ -131,6 +132,7 @@ export default function ProjectList({ onProjectAddOrEdit }) {
           <SearchIcon sx={{ my: "1.5%", mr: 1.5 }} />
         </Box>
 
+        <Tooltip title="Add Project">
         <Button
           variant="contained"
           sx={{ borderRadius: "50px", textTransform: "none" }}
@@ -142,6 +144,7 @@ export default function ProjectList({ onProjectAddOrEdit }) {
           Project
           <AddIcon />
         </Button>
+        </Tooltip>
       </Box>
       <Divider />
       <TableContainer
