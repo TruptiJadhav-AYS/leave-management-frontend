@@ -27,7 +27,7 @@ function LeaveReqForm() {
   function handleClick(id) {
     setClickedId(id);
   }
-  const [addLeave] = useAddLeaveMutation();
+  const [addLeave] = useApplyLeaveMutation();
 
   const yup = require("yup");
 

@@ -5,7 +5,7 @@ import {
   Grid,
   CardContent,
   Divider,
-  Box
+  Box,
 } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import ListItem from "@mui/material/ListItem";
@@ -14,11 +14,12 @@ import { CircularProgress } from "@mui/material";
 import { useGetEmpOnLeaveTodayQuery } from "../Store/slice/apiLeaveReqSlice";
 
 export default function EmployeeOnLeave() {
-  const { data: employees,isLoading,isError} = useGetEmpOnLeaveTodayQuery();
-  const Employees= employees || [];
+  const { data: employees, isLoading, isError } = useGetEmpOnLeaveTodayQuery();
+  const Employees = employees || [];
 
+  console.log("employees", Employees);
   if (isLoading) {
-    return <CircularProgress />; 
+    return <CircularProgress />;
   }
 
   if (isError) {
@@ -26,13 +27,13 @@ export default function EmployeeOnLeave() {
   }
 
   return (
-    <Card sx={{ height: "100%"}}>
-        <CardContent sx={{ position: "sticky", top: 0, zIndex: 1 }}>
+    <Card sx={{ height: "100%" }}>
+      <CardContent sx={{ position: "sticky", top: 0, zIndex: 1 }}>
         <Typography fontWeight={"bold"} textAlign={"left"} fontSize={"16px"}>
           Employees on leave
         </Typography>
       </CardContent>
-      <Divider/>
+      <Divider />
       <Grid
         container
         sx={{
@@ -42,9 +43,8 @@ export default function EmployeeOnLeave() {
           flexDirection: "column",
           bgcolor: "white",
           height: "90%",
-          paddingTop:"0%",
-          mt:"0%"
-
+          paddingTop: "0%",
+          mt: "0%",
         }}
       >
         <Grid item xs={12}>
@@ -54,44 +54,53 @@ export default function EmployeeOnLeave() {
               overflowY: "scroll",
               scrollbarWidth: "thin",
               bgcolor: "white",
-              minHeight:"100%"
+              minHeight: "100%",
             }}
           >
-            {Employees.map((emp,index) => (
-                <Box sx={{p:"1%"}}> 
-                <ListItem alignItems="flex-start" mx={1}>           
-                    <Grid container spacing={2} alignItems={"center"}>
-                      <Grid item>
-                        <Avatar
-                        sx={{width:"50px",height:"50px"}}
-                          alt={emp.employee.name}
-                          src={emp.employee.image===null?"":URL.createObjectURL(
-                            new Blob([new Uint8Array(emp.employee.image.data)])
-                          )}
-                        />
-                      </Grid>
-                      <Grid item>
-                        <Typography
-                          variant="body1"
-                          sx={{
-                            textTransform: "none",
-                            color: "black",
-                            fontWeight: "30",
-                          }}
-                        >
-                          {emp.employee.name}
-                        </Typography>
-                        <Typography sx={{fontSize:"12px"}}>
-                            {emp.start_date} - {emp.end_date}
-                        </Typography>
-                      </Grid>
-                    </Grid>                 
-                </ListItem> 
-                <Divider variant="inset"/> 
-                </Box>             
+            {Employees.map((emp, index) => (
+              <Box sx={{ p: "1%" }}>
+                <ListItem alignItems="flex-start" mx={1}>
+                  <Grid container spacing={2} alignItems={"center"}>
+                    <Grid item>
+                      <Avatar
+                        sx={{ width: "50px", height: "50px" }}
+                        alt={emp.leaveRequest.employee.name}
+                        src={
+                          emp.leaveRequest.employee.image === null
+                            ? ""
+                            : URL.createObjectURL(
+                                new Blob([
+                                  new Uint8Array(
+                                    emp.leaveRequest.employee.image.data
+                                  ),
+                                ])
+                              )
+                        }
+                      />
+                    </Grid>
+                    <Grid item>
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          textTransform: "none",
+                          color: "black",
+                          fontWeight: "30",
+                        }}
+                      >
+                        {emp.leaveRequest.employee.name}
+                      </Typography>
+                      <Typography sx={{ fontSize: "12px" }}>
+                        {emp.leaveRequest.start_date} -{" "}
+                        {emp.leaveRequest.end_date}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </ListItem>
+                <Divider variant="inset" />
+              </Box>
             ))}
-             </Grid>
           </Grid>
+        </Grid>
       </Grid>
     </Card>
   );
