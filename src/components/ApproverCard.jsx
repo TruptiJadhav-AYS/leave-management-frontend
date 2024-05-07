@@ -11,23 +11,17 @@ import MailIcon from "@mui/icons-material/Mail";
 import CallIcon from "@mui/icons-material/Call";
 import profile from "../assets/profile.jpg";
 import UseReponsive from "../hooks/UseResponsive";
+import { useGetEmployeesByIdQuery } from "../Store/slice/apiEmployeeSlice";
 import { useSelector } from "react-redux";
-import { useGetEmployeesQuery } from "../Store/slice/apiEmployeeSlice";
 
 export default function ApproverCard() {
   let responsive = UseReponsive();
+  let id = useSelector((state) => state.employees.userId);
+  let { data: Employee, isLoading } = useGetEmployeesByIdQuery(id);
+  console.log("Employee", Employee);
 
-  const id = useSelector((state) => state.employees.userId);
-  const { data: emp, isLoading, isError } = useGetEmployeesQuery();
-
-  if (isLoading || isError || !emp) {
-    return null;
-  }
-
-  const employee = emp.find((employee) => employee.id === id);
-
-  if (!employee) {
-    return null;
+  if (isLoading) {
+    return <></>;
   }
 
   return (
@@ -46,10 +40,12 @@ export default function ApproverCard() {
           my={responsive.isMobile ? 2 : 0.8}
         >
           <Avatar
-            // src={employee.image.data}
-            src={URL.createObjectURL(
-              new Blob([new Uint8Array(employee.image)])
-            )}
+            src={
+              Employee.manager.image &&
+              URL.createObjectURL(
+                new Blob([new Uint8Array(Employee.manager.image.data)])
+              )
+            }
             style={{
               width: responsive.isMobile ? "50px" : "70px",
               height: responsive.isMobile ? "50px" : "70px",
@@ -58,12 +54,13 @@ export default function ApproverCard() {
           />
           <Box px={6} display={"flex"} flexDirection={"column"}>
             <Typography fontSize={responsive.isDesktop ? "19px" : "16px"}>
-              {employee ? employee.name : ""}
+              {Employee.manager.name}
             </Typography>
             <Typography
               variant={responsive.isDesktop ? "subtitle1" : "subtitle2"}
             >
-              {employee ? employee.role : ""}
+              {" "}
+              Reporting Manager
             </Typography>
           </Box>
         </Box>
@@ -80,13 +77,13 @@ export default function ApproverCard() {
           <Grid item display="flex" px={0.5}>
             <MailIcon />
             <Typography variant={responsive.isMobile ? "subtitle2" : "15px"}>
-              {employee ? employee.email : ""}
+              {Employee.manager.email}
             </Typography>
           </Grid>
           <Grid item display="flex">
             <CallIcon />
             <Typography variant={responsive.isMobile ? "subtitle2" : "15px"}>
-              {employee ? employee.mobile_number : ""}
+              {Employee.manager.mobile_number}
             </Typography>
           </Grid>
         </Grid>

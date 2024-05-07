@@ -112,10 +112,9 @@ const remainingLeaves=leave ? leave || [] : [];
               }}
               text={({ value, valueMax }) => `${value} / ${valueMax}`}
             />
-            {/* </CardContent>
-            <CardContent> */}
+
             <Typography>Annual Leave</Typography>
-          {/* </CardContent> */}
+
         </Card>
       </Grid>
     </Grid>

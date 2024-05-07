@@ -15,29 +15,36 @@ import { useUpcomingHolidaysQuery } from "../Store/slice/apiHolidaySlice";
 
 export default function UpcomingHolidays() {
   const role = useSelector((state) => state.employees.userRole);
-  // const Holidays = useSelector((state) => state.holidays.annualLeaves);
-  const {data:upcomingHoliday}=useUpcomingHolidaysQuery();
-  
-  // const upcomingHolidays=upcomingHoliday.holidays || []
-  const upcomingHolidays = upcomingHoliday ? upcomingHoliday.holidays || [] : [];
-  // console.log(upcomingHolidays)
+  const { data: upcomingHoliday } = useUpcomingHolidaysQuery();
 
-
-  // const formatDate = (dateString) => {
-  //   const [year, month, day] = dateString.split("-");
-  //   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-  //   return `${day} ${monthNames[parseInt(month, 10) - 1]} ${year}`;
-  // };
-
-  // Get the current date
+  const upcomingHolidays = upcomingHoliday
+    ? upcomingHoliday.holidays || []
+    : [];
   const currentDate = new Date();
 
-  // Filter holidays that occur after the current date
-  // const upcomingHolidays = Holidays.filter((holiday) => {
-  //   const holidayDate = new Date(holiday.date);
-  //   return holidayDate > currentDate;
-  // });
+  const formatDate = (timestampString) => {
+    const date = new Date(timestampString);
+    const year = date.getFullYear();
+    const day = date.getDate().toString().padStart(2, "0");
+
+    const monthNames = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+    const formattedDate = `${day} ${monthNames[date.getMonth()]} ${year}`;
+
+    return formattedDate;
+  };
 
   return (
     <Card sx={{ height: "100%" }}>
@@ -47,28 +54,37 @@ export default function UpcomingHolidays() {
         </Typography>
       </CardContent>
       <Divider />
-      <Box sx={{ overflow: "auto", scrollbarWidth: "thin", height: "85%", width: "100%" }}>
+      <Box
+        sx={{
+          overflow: "auto",
+          scrollbarWidth: "thin",
+          height: "85%",
+          width: "100%",
+        }}
+      >
         <List
           sx={{
             width: "100%",
             height: 300,
             maxWidth: 360,
             bgcolor: "background.paper",
-            ml: role === "Employee" ? "8%" : "0%",
+            ml: "6%",
           }}
         >
           {upcomingHolidays.map((holiday, index) => (
             <Box key={index}>
               <ListItem width="100%">
                 <ListItemAvatar>
-                  <Avatar src={URL.createObjectURL(
-                new Blob([new Uint8Array(holiday.holiday_image.data)])
-              )} />
+                  <Avatar
+                    src={URL.createObjectURL(
+                      new Blob([new Uint8Array(holiday.holiday_image.data)])
+                    )}
+                  />
                 </ListItemAvatar>
                 <Typography sx={{ ml: role === "Employee" ? "25%" : "15%" }}>
                   {holiday.holiday_occasion}
                   <br />
-                  {(holiday.holiday_date)}
+                  {formatDate(holiday.holiday_date)}
                 </Typography>
               </ListItem>
               <Divider variant="inset" />

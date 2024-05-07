@@ -18,6 +18,7 @@ export default function ProjectDetails({ onProjectAddOrEdit }) {
   const selectedProject = useSelector((state) => state.Project.selectedProject);
   const { data: project,isSuccess } = useGetProjectsQuery();
   const Projects = project || [];
+  console.log(Projects)
 
   let [deleteDialogue, setdeleteDialogue] = useState();
   const dispatch = useDispatch();
@@ -25,6 +26,17 @@ export default function ProjectDetails({ onProjectAddOrEdit }) {
   const Navigate = useNavigate();
 
   const index = Projects.findIndex((project) => project.id === selectedProject);
+
+  const formatDate = (timestampString) => {
+    const date = new Date(timestampString);
+    const year = date.getFullYear();
+    const day = date.getDate().toString().padStart(2, "0");
+
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const formattedDate = `${day} ${monthNames[date.getMonth()]} ${year}`;
+
+    return formattedDate;
+  };
 
   return (
     <Box
@@ -70,28 +82,40 @@ export default function ProjectDetails({ onProjectAddOrEdit }) {
               </Typography>
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
+              {Projects[index].manager&&
               <Typography
                 variant="caption"
                 fontWeight={"600"}
                 align="left"
                 // justifyContent={"left"}
               >
-                Project Manager : {Projects[index].manager_name}
-              </Typography>
+                Project Manager : {Projects[index].manager.name}
+              </Typography>}
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
               <Typography variant="caption" fontWeight={"600"}>
-                Start Date : {Projects[index].startDate}
+                Start Date : {formatDate(Projects[index].startDate)}
               </Typography>
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
+              {Projects[index].description&&
               <Typography variant="caption" fontWeight={"600"} align="left">
                 Description : {Projects[index].description}
-              </Typography>
+              </Typography>}
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
               <Typography variant="caption" fontWeight={"600"} align="left">
                 Status : {Projects[index].status}
+              </Typography>
+            </Grid>
+            <Grid item lg={12} md={12} xs={12} sm={12}>
+              <Typography variant="caption" fontWeight={"600"}>
+                Employees :{Projects[index].employee && Projects[index].employee.map((emp, index1) => (
+                  <Typography key={index} variant="caption" fontWeight={"600"}>
+                    {emp.name}
+                    {index1 !==  Projects[index].employee.length - 1 &&  ", " }
+                  </Typography>
+                ))}
               </Typography>
             </Grid>
           </Grid>

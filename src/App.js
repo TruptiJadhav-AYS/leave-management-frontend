@@ -5,10 +5,11 @@ import { Route, Routes } from "react-router-dom";
 import LoginPage from "./components/LoginPage";
 import { useState } from "react";
 import ForgetPasswordPage from "./components/forgetPasswordPage";
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
 import ResetPasswordPage from "./components/ResetPasswordPage";
 import { setId, setRole } from "./Store/slice/EmployeeSlice";
 import { useDispatch } from "react-redux";
+import { setUserId } from "./Store/slice/EmployeeSlice";
 import "swagger-ui-react/swagger-ui.css";
 
 const myTheme = createTheme({
@@ -32,17 +33,17 @@ const isTokenValid = () => {
   const token = localStorage.getItem("authToken");
   try {
     const decodedToken = jwtDecode(token);
-    console.log(token)
-    role=decodedToken.role
-    id=decodedToken.id
-    console.log(decodedToken)
+    console.log(token);
+    role = decodedToken.role;
+    id = decodedToken.id;
+    console.log("defg", id, decodedToken);
     const currentTime = Date.now() / 1000; // Convert to seconds
     if (decodedToken.exp && decodedToken.exp < currentTime) {
       return false;
     }
-    return true; 
+    return true;
   } catch (error) {
-    return false; 
+    return false;
   }
 };
 
@@ -51,29 +52,29 @@ function App() {
   const [forgetRouteStatus, setForgetRouteStatus] = useState(false);
   const [resetRouteStatus, setResetRouteStatus] = useState(false);
   const [logedInUser, setLogedInUser] = useState("");
-  const dispatch=useDispatch()
-  dispatch(setRole(role))
-  dispatch(setId(id))
+  const dispatch = useDispatch();
+  dispatch(setRole(role));
+  dispatch(setUserId(id));
   // console.log(role)
   // function isAuthenticated() {
-    // localStorage.removeItem("authToken")
-    // const token = localStorage.getItem("authToken");
-    // console.log(token)
+  // localStorage.removeItem("authToken")
+  // const token = localStorage.getItem("authToken");
+  // console.log(token)
   //   return token;
   // }
 
   // const findRoleOfUser = () => {
-    // let emp = employee.find((employee) => employee.email === logedInUser);
-    // if (emp) {
-    //   return emp.role;
-    // }
+  // let emp = employee.find((employee) => employee.email === logedInUser);
+  // if (emp) {
+  //   return emp.role;
+  // }
   // };
 
   // let role = findRoleOfUser();
 
   function onSignIn(email) {
     setLogedInUser(email);
-    console.log(logedInUser)
+    console.log(logedInUser);
   }
 
   // function onSignInClick(flag) {
@@ -115,14 +116,17 @@ function App() {
             />
           )}
           {resetRouteStatus && (
-            <Route path="/ResetPassword" element={<ResetPasswordPage logedInUser={logedInUser}/>} />
+            <Route
+              path="/ResetPassword"
+              element={<ResetPasswordPage logedInUser={logedInUser} />}
+            />
           )}
           {/* {routeStatus && ( */}
           {/* {token!=== ? ( */}
-            <Route
-              path="/Employee/*"
-              element={isTokenValid() ? <Display /> : <></>}
-            />
+          <Route
+            path="/Employee/*"
+            element={isTokenValid() ? <Display /> : <></>}
+          />
           {/* ) : (
             <></>
           )} */}

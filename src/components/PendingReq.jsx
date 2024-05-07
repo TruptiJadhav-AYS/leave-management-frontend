@@ -1,7 +1,5 @@
 import {
   Card,
-  CardContent,
-  Typography,
   Divider,
   Paper,
   TableHead,
@@ -14,29 +12,55 @@ import {
   Stack,
 } from "@mui/material";
 import { useSelector } from "react-redux";
-import { useGetPendingRequestsQuery } from "../Store/slice/apiLeaveBalanceSlice";
-import { useUpdateStatusMutation } from "../Store/slice/apiLeaveBalanceSlice";
+import {
+  useGetPendingRequestByIdQuery,
+  useGetPendingRequestQuery,
+} from "../Store/slice/apiLeaveReqSlice";
+import { useUpdateLeaveStatusMutation } from "../Store/slice/apiLeaveReqSlice";
+import { useEffect, useState } from "react";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 
 export default function PendingReq() {
-  const { data: pr, isSuccess, isError } = useGetPendingRequestsQuery();
+  let [pendingRequest, setPendingRequest] = useState([]);
+  let [pendingRequestById, setPendingRequestById] = useState([]);
 
-  // const loggedInEmployeeId = useSelector((state) => state.loggedInEmployee?.id);
+  const {
+    data: PendingRequest,
+    isSuccess,
+    isLoading,
+  } = useGetPendingRequestQuery();
+
   const id = useSelector((state) => state.employees.userId);
-  console.log(id);
-  // console.log(loggedInEmployeeId);
+  const role = useSelector((state) => state.employees.userRole);
 
-  // Filter pending requests to exclude requests of the logged-in employee
-  const PendingRequestList = pr
-    ? pr.filter((request) => request.emp_id !== id)
-    : [];
+  const {
+    data: PendingRequestById,
+    isSuccess: isSuccessById,
+    isLoading: isLoadingById,
+  } = useGetPendingRequestByIdQuery(id);
 
-  // eslint-disable-next-line no-undef
+  useEffect(() => {
+    if (isSuccess) {
+      setPendingRequest(PendingRequest || []);
+    }
+  }, [isSuccess, PendingRequest]);
+
+  useEffect(() => {
+    if (isSuccessById) {
+      setPendingRequestById(PendingRequestById.pendingRequests || []);
+    }
+  }, [isSuccessById, PendingRequestById]);
+
+  const PendingRequestList =
+    role === "Manager"
+      ? pendingRequestById || []
+      : pendingRequest
+      ? pendingRequest.filter((request) => request.emp_id !== id)
+      : [];
 
   console.log(PendingRequestList);
 
-  // const PendingRequestList = pr || [];
-
-  const [updateStatus, { isLoading, error }] = useUpdateStatusMutation();
+  const [updateStatus] = useUpdateLeaveStatusMutation();
 
   const handleAccept = (id) => {
     updateStatus({ id: id, status: "approved" });
@@ -46,17 +70,40 @@ export default function PendingReq() {
     updateStatus({ id: id, status: "rejected" });
   };
 
+  const formatDate = (dateString) => {
+    const [day, month, year] = dateString.split("-");
+    const monthNames = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+
+    return `${day} ${monthNames[parseInt(month, 10) - 1]} ${year}`;
+  };
+
+  if (isLoadingById) {
+    return <></>;
+  }
+
+  if (isLoading) {
+    return <></>;
+  }
+
   return (
     <Card sx={{ height: "100%", overflow: "auto" }}>
-      <CardContent sx={{ position: "sticky", top: 0, zIndex: 1 }}>
-        <Typography fontWeight={"bold"} textAlign={"left"} fontSize={"16px"}>
-          Pending Requests
-        </Typography>
-      </CardContent>
       <Divider />
       <TableContainer
         component={Paper}
-        sx={{ height: "51vh", scrollbarWidth: "thin" }}
+        sx={{ height: "99%", scrollbarWidth: "thin" }}
       >
         <Table sx={{ minWidth: 700 }} stickyHeader>
           <TableHead>
@@ -66,7 +113,7 @@ export default function PendingReq() {
               <TableCell align="center" sx={{ fontWeight: "bold" }}>
                 From date
               </TableCell>
-              <TableCell align="left" sx={{ fontWeight: "bold" }}>
+              <TableCell align="center" sx={{ fontWeight: "bold" }}>
                 To date
               </TableCell>
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
@@ -81,44 +128,57 @@ export default function PendingReq() {
           <TableBody>
             {PendingRequestList.map((row) => (
               <TableRow
-                key={row.id} // Changed key to use id instead of name
+                key={row.id}
                 sx={{
                   "&:last-child td, &:last-child th": { border: 0 },
                 }}
               >
-                {/* <TableCell component="th" scope="row">
-                  {row.id}
-                </TableCell> */}
-                <TableCell>{row.employeeName}</TableCell>
-                <TableCell align="center">{row.start_date}</TableCell>
+                <TableCell component="th" scope="row">
+                  {row.employee.name}
+                </TableCell>
                 <TableCell align="center">
-                  {row.end_date !== "" ? row.end_date : "-"}
+                  {formatDate(row.start_date)}
+                </TableCell>
+                <TableCell align="center">
+                  {row.end_date !== null ? formatDate(row.end_date) : "-"}
                 </TableCell>
                 <TableCell align="right">{row.leave_type}</TableCell>
                 <TableCell align="left">{row.reason}</TableCell>
                 <TableCell align="right">
-                  <Stack direction={"row"}>
-                    <Button
-                      disableRipple
-                      variant="contained"
-                      color="success"
-                      size="small"
-                      onClick={() => handleAccept(row.id)} // Changed to pass id to handleAccept
-                      sx={{ marginRight: 1, textTransform: "none" }}
-                    >
-                      Accept
-                    </Button>
-                    <Button
-                      disableRipple
-                      variant="outlined"
-                      color="error"
-                      size="small"
-                      onClick={() => handleReject(row.id)} // Changed to pass id to handleReject
-                      sx={{ textTransform: "none" }}
-                    >
-                      Reject
-                    </Button>
-                  </Stack>
+                  {(row.employee.manager_id == id ||
+                    row.employee.manager_id === null) && (
+                    <Stack direction={"row"}>
+                      <Button
+                        disableRipple
+                        variant="contained"
+                        color="success"
+                        size="small"
+                        onClick={() => handleAccept(row.id)}
+                        sx={{
+                          marginRight: 1,
+                          textTransform: "none",
+                          height: "25px",
+                          width: "52px",
+                        }}
+                      >
+                        Approve
+                      </Button>
+                      <Button
+                        disableRipple
+                        variant="outlined"
+                        color="error"
+                        size="small"
+                        onClick={() => handleReject(row.id)}
+                        sx={{
+                          textTransform: "none",
+                          height: "25px",
+                          width: "52px",
+                        }}
+                      >
+                        Reject
+                      </Button>
+                    </Stack>
+                  )}
                 </TableCell>
               </TableRow>
             ))}

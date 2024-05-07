@@ -39,6 +39,8 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
 
   let { selectedEmp } = useSelector((state) => state.employees);
 
+  console.log("adddor", addOrEditForm);
+
   let selectedEmpIndex = Employees.findIndex((emp) => emp.id === selectedEmp);
   const initialValues = {
     name:
@@ -94,9 +96,9 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
         ? selectedEmp
           ? Employees[selectedEmpIndex].manager_id
             ? Employees[selectedEmpIndex].manager_id
-            : ""
-          : ""
-        : "",
+            : null
+          : null
+        : null,
     // inventory_id:""
   };
 
@@ -156,12 +158,12 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
         .required("Date of birth is required."),
 
       department_id: Yup.number().required("Department is required."),
-      // manager: Yup.string().required("Manager is mandatory."),
+      manager_id: Yup.string().nullable(),
       gender: Yup.string().required("Gender is required."),
     }),
 
     onSubmit: async (values) => {
-      // eslint-disable-next-line no-lone-blocks
+      console.log(values);
       {
         addOrEditForm === "add"
           ? addEmp(values)

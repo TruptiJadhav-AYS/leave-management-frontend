@@ -10,12 +10,12 @@ export function LeaveBalanceMobile() {
   const { data: annualBal } = useGetAnnunalLeaveBalanceQuery();
   // const annualBalance=annualBal.remainingHolidays ||[]
   const annualBalance = annualBal ? annualBal.remainingHolidays || [] : [];
-//   console.log(annualBalance);
+  //   console.log(annualBalance);
   const id = useSelector((state) => state.employees.userId);
-//   console.log(id);
+  //   console.log(id);
   const { data: wfh } = useGetWorkFromHomeBalanceQuery(id);
   const workFromHome = wfh ? wfh || [] : [];
-//   console.log(workFromHome);
+  //   console.log(workFromHome);
 
   const { data: leave } = useGetRemainingBalanceQuery(id);
   console.log(leave);
@@ -54,14 +54,18 @@ export function LeaveBalanceMobile() {
             <Typography sx={{ height: 28, fontSize: "16px" }}>
               Work From Home
             </Typography>
-            <Typography sx={{ mt: 2.5, fontWeight: "bold" }}>{workFromHome.remainingBalance} / {workFromHome.defaultBalance}</Typography>
+            <Typography sx={{ mt: 2.5, fontWeight: "bold" }}>
+              {workFromHome.remainingBalance} / {workFromHome.defaultBalance}
+            </Typography>
           </Grid>
 
           <Grid item xs={4} px={1}>
             <Typography sx={{ height: 28, fontSize: "16px" }}>
               Annual Leaves
             </Typography>
-            <Typography sx={{ mt: 2.5, fontWeight: "bold" }}>{annualBalance.remainingHolidays} / {annualBalance.totalHolidays}</Typography>
+            <Typography sx={{ mt: 2.5, fontWeight: "bold" }}>
+              {annualBalance.remainingHolidays} / {annualBalance.totalHolidays}
+            </Typography>
           </Grid>
         </Grid>
       </Card>

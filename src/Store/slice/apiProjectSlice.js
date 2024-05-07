@@ -16,10 +16,12 @@ const projectApi = createApi({
   endpoints: (builder) => ({
     getProjects: builder.query({
       query: () => "/project",
+      providesTags:[{ data: 'Project' }]
     }),
 
     getProjectById: builder.query({
       query: (projectId) => `/project/${projectId}`,
+      providesTags:[{ data: 'Project' }]
     }),
 
     addProject: builder.mutation({
@@ -28,6 +30,7 @@ const projectApi = createApi({
         method: "POST",
         body: newProject,
       }),
+      invalidatesTags: [{ data: 'Project' }]
     }),
 
     deleteProject: builder.mutation({
@@ -35,14 +38,7 @@ const projectApi = createApi({
         url: `/project/${projectId}`,
         method: "DELETE",
       }),
-    }),
-
-    assignProject:builder.mutation({
-      query:(projectId)=>({
-        url:"/project/assign_project",
-        method:"POST",
-        body:projectId
-      })
+      invalidatesTags: [{ data: 'Project' }]
     }),
 
     updateProject: builder.mutation({
@@ -61,7 +57,6 @@ export const {
   useAddProjectMutation,
   useDeleteProjectMutation,
   useGetProjectByIdQuery,
-  useAssignProjectMutation,
   useUpdateProjectMutation,
 } = projectApi;
 export default projectApi;

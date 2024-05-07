@@ -13,18 +13,16 @@ import {
 import { useState } from "react";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
-import UseResponsive from "../hooks/UseResponsive";
+import UseReponsive from "../hooks/UseResponsive";
 import CheckIcon from "@mui/icons-material/Check";
-import { useAddLeaveMutation } from "../Store/slice/apiLeaveSlice";
-import { useDispatch } from "react-redux";
-import addSendingRequest from "../Store/action/AddRequestHistory";
+import { useApplyLeaveMutation } from "../Store/slice/apiLeaveReqSlice";
 
 function LeaveReqForm() {
   let Navigate = useNavigate();
-  let dispatch = useDispatch();
   let [clickedId, setClickedId] = useState("");
-  let responsive = UseResponsive();
+  let responsive = UseReponsive();
   let [submitSuccess, setSubmitSuccess] = useState(false);
+  let [applyLeave] = useApplyLeaveMutation();
 
   function handleClick(id) {
     setClickedId(id);
@@ -34,11 +32,14 @@ function LeaveReqForm() {
   const yup = require("yup");
 
   const leaveReqObj = yup.object({
-    start_date: yup.date().required("Please select a date"),
-    end_date: yup
+    start_date: yup
       .date()
       .min(yup.ref("start_date"), "Please Select a valid date")
       .required("Please select a date"),
+    end_date: yup
+      .date()
+      .nullable()
+      .min(yup.ref("start_date"), "Please Select a valid date"),
     leave_type: yup.string().required("Please Select a leave type"),
     reason: yup.string(),
   });
@@ -46,14 +47,14 @@ function LeaveReqForm() {
   const formik = useFormik({
     initialValues: {
       start_date: "",
-      end_date: "",
+      end_date: null,
       leave_type: "",
       reason: "",
     },
     validationSchema: leaveReqObj,
     onSubmit: (values) => {
-      addLeave(values);
       console.log(values);
+      applyLeave(values);
       setSubmitSuccess(true);
       setTimeout(() => {
         Navigate("/Employee");
@@ -86,6 +87,7 @@ function LeaveReqForm() {
               container
               direction={"row"}
               columnSpacing={1.5}
+              // mb={1}
               justifyContent={"space-between"}
               pt="5px"
             >
@@ -98,17 +100,17 @@ function LeaveReqForm() {
                 <Typography fontSize={"13px"}>FROM DATE</Typography>
                 <InputBase
                   onChange={formik.handleChange}
-                  value={formik.values.start_date}
+                  value={formik.values.fromDate}
                   type="date"
                   name="start_date"
                   lable="From Date"
                   onClick={() => {
-                    handleClick("start_date");
+                    handleClick("from-date");
                   }}
                   onBlur={formik.handleBlur}
                   sx={{
                     border:
-                      clickedId === "start_date"
+                      clickedId === "from-date"
                         ? "2px solid blue"
                         : "2px solid rgba(204, 204, 204, 0.5)",
                     borderRadius: "4px",
@@ -131,18 +133,18 @@ function LeaveReqForm() {
               >
                 <Typography fontSize={"13px"}>TO DATE</Typography>
                 <InputBase
-                  value={formik.values.end_date}
+                  value={formik.values.toDate}
                   onChange={formik.handleChange}
                   type="date"
                   name="end_date"
                   lable="To Date"
                   onClick={() => {
-                    handleClick("end_date");
+                    handleClick("to-date");
                   }}
                   onBlur={formik.handleBlur}
                   sx={{
                     border:
-                      clickedId === "end_date"
+                      clickedId === "to-date"
                         ? "2px solid blue"
                         : "2px solid rgba(204, 204, 204, 0.5)",
                     borderRadius: "4px",
@@ -169,12 +171,12 @@ function LeaveReqForm() {
                 <Stack width="100%">
                   <Typography fontSize={"13px"}>LEAVE TYPE</Typography>
                   <Select
-                    value={formik.values.leave_type}
+                    value={formik.values.leaveType}
                     name="leave_type"
                     size="small"
                     labelId="leave-type-label"
                     onClick={() => {
-                      handleClick("leave_type");
+                      handleClick("leave-type");
                     }}
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}

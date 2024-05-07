@@ -19,32 +19,16 @@ import { useUpcomingHolidaysQuery } from "../Store/slice/apiHolidaySlice";
 
 export default function UpcomingHolidaysMobile() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  // const Holidays = useSelector((state) => state.holidays.annualLeaves);
-  // const {data:upcomingHoliday,isSuccess}=useUpcomingHolidaysQuery();
-  
-  // // const upcomingHolidays=upcomingHoliday.holidays || []
-  // // const Holidays = upcomingHoliday ? upcomingHoliday.holidays || [] : [];
-  // // console.log(Holidays)
-  // const [filteredEmployees, setFilteredEmployees] = useState([]); // New state for filtered employees
-  // // const Navigate = useNavigate();
-  // const Holidays=upcomingHoliday || [];
-  // // console.log(Holidays)
-
-  // useEffect(() => {
-  //   // Update filteredEmployees when employees data changes
-  //   if (isSuccess) {
-  //     setFilteredEmployees(Holidays);
-  //   }
-  // }, [isSuccess, Holidays]);
-  const {data:upcomingHoliday,isLoading}=useUpcomingHolidaysQuery();
-  
-  // const upcomingHolidays=upcomingHoliday.holidays || []
+  const { data: upcomingHoliday, isLoading } = useUpcomingHolidaysQuery();
   const Holidays = upcomingHoliday ? upcomingHoliday.holidays || [] : [];
 
-  console.log(Holidays)
+  console.log(Holidays);
 
-  const formatDate = (dateString) => {
-    const [year, month, day] = dateString.split("-");
+  const formatDate = (timestampString) => {
+    const date = new Date(timestampString);
+    const year = date.getFullYear();
+    const day = date.getDate().toString().padStart(2, "0");
+
     const monthNames = [
       "Jan",
       "Feb",
@@ -59,8 +43,9 @@ export default function UpcomingHolidaysMobile() {
       "Nov",
       "Dec",
     ];
+    const formattedDate = `${day} ${monthNames[date.getMonth()]} ${year}`;
 
-    return `${day} ${monthNames[parseInt(month, 10) - 1]} ${year}`;
+    return formattedDate;
   };
 
   const handleNext = () => {
@@ -85,8 +70,8 @@ export default function UpcomingHolidaysMobile() {
   const currentHoliday = upcomingHolidays[currentIndex];
   const showPreviousButton = currentIndex !== 0 && upcomingHolidays.length > 1;
   const showNextButton = currentIndex !== upcomingHolidays.length - 1;
-  if(isLoading){
-    return(<></>)
+  if (isLoading) {
+    return <></>;
   }
 
   return (

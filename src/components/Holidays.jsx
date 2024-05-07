@@ -35,23 +35,15 @@ export default function Holidays() {
     dispatch(deleteHol(value));
   }
 
-  const formatDate = (dateString) => {
-    const [year, month, day] = dateString.split("-");
-    const monthNames = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
-    return `${day} ${monthNames[parseInt(month, 10) - 1]} ${year}`;
+  const formatDate = (timestampString) => {
+    const date = new Date(timestampString);
+    const year = date.getFullYear();
+    const day = date.getDate().toString().padStart(2, "0");
+
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const formattedDate = `${day} ${monthNames[date.getMonth()]} ${year}`;
+
+    return formattedDate;
   };
 
   // Handle mouse enter and leave

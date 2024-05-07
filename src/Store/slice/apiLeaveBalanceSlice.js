@@ -25,19 +25,6 @@ const leaveBalanceApi = createApi({
     getAnnunalLeaveBalance: builder.query({
       query: () => "/holidays/remaining-holidays",
     }),
-
-    getPendingRequests: builder.query({
-      query: () => `/leave/employees/pending-requests`,
-    }),
-
-    updateStatus: builder.mutation({
-      query: ({ id, status }) => ({
-        url: `/leave/${id}/status`,
-        method: "PUT",
-        body: { status },
-      }),
-      // invalidatesTags: [{ data: 'Employees' }]
-    }),
   }),
 });
 
@@ -45,7 +32,5 @@ export const {
   useGetRemainingBalanceQuery,
   useGetWorkFromHomeBalanceQuery,
   useGetAnnunalLeaveBalanceQuery,
-  useGetPendingRequestsQuery,
-  useUpdateStatusMutation,
 } = leaveBalanceApi;
 export default leaveBalanceApi;

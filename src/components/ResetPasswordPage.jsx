@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { useSetResetPasswordMutation } from "../Store/slice/apiForgetPassword";
 
-function ResetPasswordPage({logedInUser}) {
+function ResetPasswordPage({ logedInUser }) {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -22,10 +22,10 @@ function ResetPasswordPage({logedInUser}) {
   const [responseMessage, setResponseMessage] = useState("");
 
   const [otpError, setOtpError] = useState("");
-  
+
   const [otp, setOTP] = useState("");
   const navigate = useNavigate();
-  const [setResetPassword]=useSetResetPasswordMutation()
+  const [setResetPassword] = useSetResetPasswordMutation();
 
   const handleOTPChange = (event) => {
     setOTP(event.target.value);
@@ -55,22 +55,22 @@ function ResetPasswordPage({logedInUser}) {
     //   setConfirmPasswordError("Passwords do not match");
     //   return;
     // }
-  
+
     try {
       const newobj = {
         email: logedInUser,
         otp: otp,
         newPassword: newPassword,
-        confirmPassword: confirmPassword
+        confirmPassword: confirmPassword,
       };
-      console.log(newobj)
+      console.log(newobj);
       // await setResetPassword(newobj).unwrap(); // Assuming unwrap() handles promise rejection
       // navigate("/");
       const response = await setResetPassword(newobj).unwrap();
       // setResponseMessage(response.message);
-      console.log(response)
+      console.log(response);
       if (response.error === "Password must be at least 6 characters long") {
-        setPasswordError("Password must be at least 6 characters long")
+        setPasswordError("Password must be at least 6 characters long");
         // setConfirmPasswordError("Password must be at least 6 characters long")
 
         // navigate("/ResetPassword");
@@ -78,18 +78,22 @@ function ResetPasswordPage({logedInUser}) {
         // props.onResetClick(true);
         // props.onSignInClick(true);
       }
-      if(response.error==="Passwords do not match"){
-        setConfirmPasswordError("Passwords do not match")
+      if (response.error === "Passwords do not match") {
+        setConfirmPasswordError("Passwords do not match");
       }
-      // if(response.status===400){
-      //   setOtpError("OTP")
-      // }
+      if (response.error === "Invalid OTP") {
+        setOtpError("Invalid OTP");
+      }
+      if (response.error === "OTP has expired") {
+        setOtpError("OTP has expired");
+      }
+      if (response.message === "Password reset successfully") {
+        navigate("/");
+      }
     } catch (error) {
       console.error("Reset password error:", error);
-      // Handle different types of errors here (e.g., invalid OTP, password rules not met)
     }
   };
-  
 
   return (
     <Paper
@@ -135,7 +139,7 @@ function ResetPasswordPage({logedInUser}) {
                 Reset Password
               </Typography>
               <Grid container spacing={2}>
-              <Grid item xs={12}>
+                <Grid item xs={12}>
                   <TextField
                     fullWidth
                     id="otp"
