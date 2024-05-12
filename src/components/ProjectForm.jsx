@@ -42,7 +42,7 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
   index = Projects.findIndex((project) => project.id === selectedProject);
   }
 
-  console.log("pppppp",Projects)
+  console.log("pppppp",Projects, Projects[1].manager.name)
 
   console.log(index)
   const Employees = employees || [];
@@ -106,6 +106,7 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
     onSubmit: (values) => {
       console.log(values)
       {
+        console.log("VALUE",values)
         projectAddOrEdit === "add"
           ? addProject(values)
           : updateProject({id:selectedProject,updatedProjectDetails:values});
@@ -198,7 +199,7 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
                       name="manager_id"
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
-                      value={formik.values.managerId}
+                      value={formik.values.manager_id}
                       size="small"
                       sx={{
                         "& fieldset": {

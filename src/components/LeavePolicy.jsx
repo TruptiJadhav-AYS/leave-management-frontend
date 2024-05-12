@@ -42,7 +42,9 @@ export default function LeavePolicy() {
 
             <Box p={1.6}>
             <Typography  bgcolor={"#f5f5f5"} p={"1%"} mb={1} borderRadius={"5px"} onClick={handleClickOpen('paper')} sx={{cursor:"pointer"}}>What about leave policy ?</Typography>
+            <a href="https://ayssoftwaresolution.com/" target="_blank" rel="noopener noreferrer">
             <Typography  bgcolor={"#f5f5f5"} p={"1%"} borderRadius={"5px"} sx={{cursor:"pointer"}}>About</Typography>
+            </a>
             </Box>
 
         </Card> 

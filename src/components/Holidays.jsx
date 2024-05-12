@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Grid, Typography, Paper, Box, IconButton } from "@mui/material";
+import { Grid, Typography, Paper, Box, IconButton,Tooltip } from "@mui/material";
 // import UseResponsive from '../hooks/UseResponsive';
 import UseReponsive from "../hooks/UseResponsive";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
@@ -22,13 +22,12 @@ export default function Holidays() {
   // const annualLeaves = useSelector((state) => state.holidays.annualLeaves);
   const { data: holiday, isLoading, isError } = useGetHolidaysQuery();
   const annualLeaves = holiday;
+  // console.log(annualLeaves)
   const [deleteHoliday]=useDeleteHolidayMutation()
 
   // const suttya = annualLeaves.holidays || [];
-  const suttya = annualLeaves ? annualLeaves.holidays || [] : [];
-  console.log(holiday)
-
-  // console.log(suttya[0].image)
+  const suttya = annualLeaves ? annualLeaves || [] : [];
+  // console.log(suttya)
 
   let responsive = UseReponsive();
 
@@ -47,6 +46,7 @@ export default function Holidays() {
     return formattedDate;
   };
 
+  // Handle mouse enter and leave
   const handleMouseEnter = (index) => {
     setHoverIndex(index);
   };
@@ -91,6 +91,7 @@ export default function Holidays() {
             <Typography sx={{ mb: 1 }}>{holiday.day}</Typography>
             {hoverIndex === index && (
               role === "Admin" &&
+              <Tooltip title="Delete Holiday">
               <IconButton
                 sx={{ position: "absolute", top: 0, right: 0 }}
                 onClick={() => {
@@ -100,12 +101,14 @@ export default function Holidays() {
               >
                 <DeleteIcon />
               </IconButton>
+              </Tooltip>
             )}
           </Paper>
         </Grid>
       ))}
       {role === "Admin"  && (
       <Box width={"100%"} display={"flex"} justifyContent={"right"}>
+        <Tooltip title="Add Holiday">
         <IconButton
           color="primary"
           sx={{ width: "40px", height: "40px", mt: 0.5 }}
@@ -113,6 +116,7 @@ export default function Holidays() {
         >
           <AddCircleIcon sx={{ width: "40px", height: "40px" }} />
         </IconButton>
+        </Tooltip>
       </Box>
        )} 
     </Grid>

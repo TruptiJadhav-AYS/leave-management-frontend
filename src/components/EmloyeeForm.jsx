@@ -28,16 +28,18 @@ import {
   useUpdateEmployeeMutation,
 } from "../Store/slice/apiEmployeeSlice";
 import { useGetDepartmentsQuery } from "../Store/slice/apiDepartmentSlice";
-import {useGetInventoryQuery} from  "../Store/slice/apiInventorySlice";
+import { useGetInventoryQuery } from "../Store/slice/apiInventorySlice";
 
 export default function EmloyeeDetailForm({ addOrEditForm }) {
   const { data: employees } = useGetEmployeesQuery();
-  const {data: inventory}=useGetInventoryQuery();
+  const { data: inventory } = useGetInventoryQuery();
 
   const Employees = employees || [];
-  const InventoryList=inventory || []
-  
+  const InventoryList = inventory || [];
+
   let { selectedEmp } = useSelector((state) => state.employees);
+
+  console.log("adddor",employees)
 
   let selectedEmpIndex = Employees.findIndex((emp) => emp.id === selectedEmp);
   const initialValues = {
@@ -94,9 +96,9 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
         ? selectedEmp
           ? Employees[selectedEmpIndex].manager_id
             ? Employees[selectedEmpIndex].manager_id
-            : ""
-          : ""
-        : "",
+            : null
+          : null
+        : null,
     // inventory_id:""
   };
 
@@ -107,6 +109,7 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
   const [addEmp] = useAddEmployeeMutation();
   const [updateEmployee] = useUpdateEmployeeMutation();
   const { data: department, isSuccess } = useGetDepartmentsQuery();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const dept = department || [];
 
   useEffect(() => {
@@ -155,16 +158,16 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
         .required("Date of birth is required."),
 
       department_id: Yup.number().required("Department is required."),
-      // manager: Yup.string().required("Manager is mandatory."),
+      manager_id: Yup.string().nullable(),
       gender: Yup.string().required("Gender is required."),
     }),
 
     onSubmit: async (values) => {
+      console.log(values)
       {
         addOrEditForm === "add"
-          ?
-            addEmp(values)
-          : updateEmployee({id:selectedEmp,updatedEmployeeDetails:values});
+          ? addEmp(values)
+          : updateEmployee({ id: selectedEmp, updatedEmployeeDetails: values });
       }
       setOnBoardSuccess(true);
       setTimeout(() => {
@@ -175,14 +178,17 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
   });
 
   const errors = formik.errors;
-  function handleClick(id) {
-    setClickedBtnID(id);
+  function handleClick(id)
+ {
+    setClickedBtnID(id)
+;
   }
   const MenuProps = {
     PaperProps: {
       style: {
         maxHeight: 130,
         width: 250,
+        scrollbarWidth:"thin"
       },
     },
   };
@@ -532,13 +538,12 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
                       }}
                       MenuProps={MenuProps}
                     >
-                      {InventoryList.map(
-                        (inventory) =>
-                            <MenuItem key={inventory.id} value={inventory.id}>
-                              {inventory.name} - {inventory.category.name} -{" "}
-                              {inventory.serial_number}
-                            </MenuItem>
-                      )}
+                      {InventoryList.map((inventory) => (
+                        <MenuItem key={inventory.id} value={inventory.id}>
+                          {inventory.name} - {inventory.category.name} -{" "}
+                          {inventory.serial_number}
+                        </MenuItem>
+                      ))}
                     </Select>
                   </Stack>
                 </Grid>

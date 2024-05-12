@@ -1,9 +1,11 @@
 import { Box, Typography, Grid, Card, Stack } from "@mui/material";
 import { useGetLeavesByIdQuery } from "../Store/slice/apiLeaveReqSlice";
+import { useSelector } from "react-redux";
 
 export default function HistoryMobile() {
   // const LeaveHistory = useSelector((state) => state.leaveHistory.LeaveHistory);
-  const { data: LeaveHistory = []} = useGetLeavesByIdQuery(6);
+  const id=useSelector((state)=>state.employees.userId)
+  const { data: LeaveHistory = []} = useGetLeavesByIdQuery(id);
   console.log(LeaveHistory)
   
   const formatDate = (dateString) => {
@@ -76,7 +78,7 @@ export default function HistoryMobile() {
             <Stack direction={"column"} textAlign={"left"}>
               <Typography variant="body" sx={{ fontWeight: "bold" }}>
                 {formatDate(history.start_date)}
-                {history.End_Date !== ""
+                {history.end_date !== null
                   ? " - " 
                   + formatDate(history.end_date)
                   : ""}

@@ -8,19 +8,42 @@ import {
   Box,
 } from "@mui/material";
 import {useSelector} from 'react-redux'
-import { useGetPendingRequestQuery } from "../Store/slice/apiLeaveReqSlice";
+import { useGetPendingRequestQuery,useGetPendingRequestByIdQuery } from "../Store/slice/apiLeaveReqSlice";
 import { useUpdateLeaveStatusMutation } from "../Store/slice/apiLeaveReqSlice";
+import { useState,useEffect } from "react";
 
 export default function PendingReqMobile() {
-  const {
-    data: pendingRequest,
-  } = useGetPendingRequestQuery();
+  let [pendingRequest, setPendingRequest] = useState([]);
+  let [pendingRequestById, setPendingRequestById] = useState([]);
+
+  console.log("pend",pendingRequest,pendingRequestById)
+
+  const { data: PendingRequest, isSuccess,isLoading} = useGetPendingRequestQuery();
 
   const id = useSelector((state) => state.employees.userId);
+  const role = useSelector((state) => state.employees.userRole);
 
-  const PendingRequestList = pendingRequest
-  ? pendingRequest.filter((request) => request.emp_id !== id)
-  : [];
+  const { data: PendingRequestById, isSuccess: isSuccessById,isLoading:isLoadingById } = useGetPendingRequestByIdQuery(id);
+
+  useEffect(() => {
+    if (isSuccess) {
+      setPendingRequest(PendingRequest||[]);
+    }
+  }, [isSuccess, PendingRequest]);
+
+  useEffect(() => {
+    if (isSuccessById ) {
+        setPendingRequestById(PendingRequestById.pendingRequests || []);
+    }
+}, [isSuccessById, PendingRequestById]);
+
+  const PendingRequestList =
+  role === "Manager"
+    ? pendingRequestById || []
+    : pendingRequest
+    ? pendingRequest.filter((request) => request.emp_id !== id)
+    : [];
+
 
   const [updateStatus] = useUpdateLeaveStatusMutation();
 
@@ -39,13 +62,18 @@ export default function PendingReqMobile() {
     return `${day} ${monthNames[parseInt(month, 10) - 1]} ${year}`;
   };
 
+  if(isLoading){
+    return(<></>)
+  }
+  if(isLoadingById){
+    return(<></>)
+  }
   return (
-    <>
-      {/* <Typography textAlign={"left"} mx={0.5} fontWeight={"bold"}>Pending Requests</Typography> */}
       <Grid
         item
         sx={{
           width: "100%",
+          pt:1.5
         }}
       >
         {PendingRequestList.map((request, index) => (
@@ -66,26 +94,27 @@ export default function PendingReqMobile() {
                       fontWeight: "530",
                     }}
                   >
-                    {request.employeeName}
+                    {request.employee.name}
                   </Typography>
                   <Typography
                     variant="subtitle2"
                     sx={{ textTransform: "none", color: "black" }}
                   >
                     {formatDate(request.start_date)} 
-                    {request.toDate !== ""
+                    {request.end_date !== null
                       ? " to "+formatDate(request.end_date)
                       : ""}
                   </Typography>
                   <Box style={{ minHeight: "24px" }}>
                     <Typography variant="caption">{request.reason}</Typography>
                   </Box>
-                  <Stack direction={"row"}>
+                  {(request.employee.manager_id==id || request.employee.manager_id===null) && <Stack direction={"row"} >
                     <Button
                       variant="contained"
                       color="success"
                       size="small"
-                      sx={{ marginRight: 1, textTransform: "none" }}
+                      sx={{ marginRight: 1, textTransform: "none", height: "25px",
+                      width: "52px", }}
                       onClick={() => handleAccept(request.id)}
                     >
                       Accept
@@ -94,12 +123,13 @@ export default function PendingReqMobile() {
                       variant="outlined"
                       color="error"
                       size="small"
-                      sx={{ textTransform: "none" }}
+                      sx={{ textTransform: "none" , height: "25px",
+                      width: "52px",}}
                       onClick={() => handleReject(request.id)}
                     >
                       Reject
                     </Button>
-                  </Stack>
+                  </Stack>}
                 </Grid>
               </Grid>
             </ListItem>
@@ -107,6 +137,5 @@ export default function PendingReqMobile() {
           </Card>
         ))}
       </Grid>
-    </>
   );
 }

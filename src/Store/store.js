@@ -4,7 +4,6 @@ import holidays from './slice/HolidaysSlice'
 import EmployeeLeaveHistory from './slice/HistorySlice'
 import ProjectsSlice from './slice/ProjectsSlice'
 import InventorySlice from './slice/InventorySlice'
-import PendingRequestsSlice from './slice/PendingRequestsSlice'
 import CategorySlice from "./slice/CategorySlice"
 import employeeApi from "./slice/apiEmployeeSlice"
 import projectApi from './slice/apiProjectSlice'
@@ -24,7 +23,6 @@ export const store = configureStore({
     leaveHistory : EmployeeLeaveHistory,
     Project : ProjectsSlice,
     Inventory : InventorySlice,
-    PendingRequests: PendingRequestsSlice,
     [employeeApi.reducerPath]: employeeApi.reducer,
     [projectApi.reducerPath]: projectApi.reducer,
     [holidaysApi.reducerPath]: holidaysApi.reducer,

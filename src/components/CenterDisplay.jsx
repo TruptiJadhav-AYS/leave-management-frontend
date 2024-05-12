@@ -36,6 +36,7 @@ export default function CenterDisplay({ logedInUser }) {
   function onAddOrEdit(form) {
     setAddOrEditForm(form);
   }
+
   function handleSelectedEmp(id) {
     setSelectedEmpId(id);
   }
@@ -59,14 +60,14 @@ export default function CenterDisplay({ logedInUser }) {
         path="/History"
         element={
           responsive.isDesktop || responsive.isLaptop || responsive.isTablet ? (
-            <History />
+            <History/>
           ) : (
             <HistoryMobile />
           )
         }
       />
-      <Route path="/Holidays" element={<Holidays />} />
-      <Route path="/Holidays/AddHoliday" element={<AddHolidayForm />} />
+      <Route path="/Holidays" element={<Holidays/>} />
+      <Route path="/Holidays/AddHoliday" element={<AddHolidayForm/>} />
       <Route
         path="/Employees"
         element={
@@ -116,7 +117,7 @@ export default function CenterDisplay({ logedInUser }) {
       <Route
         path="/Employees/EmployeeDetailsForm"
         element={
-          <EmloyeeDetailForm/>
+          <EmloyeeDetailForm addOrEditForm={addOrEditForm}/>
         }
       />
       <Route

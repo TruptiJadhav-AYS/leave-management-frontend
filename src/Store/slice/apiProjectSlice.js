@@ -41,15 +41,6 @@ const projectApi = createApi({
       invalidatesTags: [{ data: 'Project' }]
     }),
 
-    assignProject:builder.mutation({
-      query:(projectId)=>({
-        url:"/project/assign_project",
-        method:"POST",
-        body:projectId
-      }),
-      invalidatesTags: [{ data: 'Project' }]
-    }),
-
     updateProject: builder.mutation({
       query: ({ id, updatedProjectDetails }) => ({
         url: `/project/${id}`,
@@ -66,7 +57,6 @@ export const {
   useAddProjectMutation,
   useDeleteProjectMutation,
   useGetProjectByIdQuery,
-  useAssignProjectMutation,
   useUpdateProjectMutation,
 } = projectApi;
 export default projectApi;

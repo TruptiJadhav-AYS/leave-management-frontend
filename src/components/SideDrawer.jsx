@@ -19,7 +19,8 @@ import UseReponsive from "../hooks/UseResponsive";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import CategoryIcon from '@mui/icons-material/Category';
 import { useSelector } from "react-redux";
-import { useGetPendingRequestQuery } from "../Store/slice/apiLeaveReqSlice";
+import { useGetPendingRequestByIdQuery, useGetPendingRequestQuery } from "../Store/slice/apiLeaveReqSlice";
+import { useState,useEffect } from "react";
 
 export default function SideDrawer({ handleDrawerClose }) {
   let Navigate = useNavigate();
@@ -27,16 +28,35 @@ export default function SideDrawer({ handleDrawerClose }) {
   let selected = path.substring(path.lastIndexOf("/") + 1);
   let selectedItem;
   let sideDrawerList;
-  const role=useSelector((state)=>state.employees.userRole)
-  const {
-    data: pendingRequest,
-  } = useGetPendingRequestQuery();
+
+  let [pendingRequest, setPendingRequest] = useState([]);
+  let [pendingRequestById, setPendingRequestById] = useState([]);
+
+  const { data: PendingRequest, isSuccess,isLoading} = useGetPendingRequestQuery();
 
   const id = useSelector((state) => state.employees.userId);
+  const role = useSelector((state) => state.employees.userRole);
 
-  const PendingRequestList = pendingRequest
-    ? pendingRequest.filter((request) => request.emp_id !== id)
-    : [];
+  const { data: PendingRequestById, isSuccess: isSuccessById,isLoading:isLoadingById } = useGetPendingRequestByIdQuery(id);
+
+  useEffect(() => {
+    if (isSuccess) {
+      setPendingRequest(PendingRequest||[]);
+    }
+  }, [isSuccess, PendingRequest]);
+
+  useEffect(() => {
+    if (isSuccessById ) {
+        setPendingRequestById(PendingRequestById.pendingRequests || []);
+    }
+}, [isSuccessById, PendingRequestById]);
+
+const PendingRequestList =
+role === "Manager"
+  ? pendingRequestById || []
+  : pendingRequest
+  ? pendingRequest.filter((request) => request.emp_id !== id)
+  : [];
 
   let responsive = UseReponsive();
   function onMobile() {

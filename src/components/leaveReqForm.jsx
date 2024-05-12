@@ -15,8 +15,6 @@ import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import UseReponsive from "../hooks/UseResponsive";
 import CheckIcon from "@mui/icons-material/Check"
-import { useDispatch } from "react-redux";
-import addSendingRequest from "../Store/action/AddRequestHistory";
 import { useApplyLeaveMutation } from "../Store/slice/apiLeaveReqSlice";
 
 function LeaveReqForm() {
@@ -38,6 +36,7 @@ function LeaveReqForm() {
       .required("Please select a date"),
     end_date: yup
       .date()
+      .nullable()
       .min(yup.ref("start_date"), "Please Select a valid date"),
     leave_type: yup.string().required("Please Select a leave type"),
     reason: yup.string(),
@@ -46,12 +45,13 @@ function LeaveReqForm() {
   const formik = useFormik({
     initialValues: {
       start_date: "",
-      end_date: "",
+      end_date: null,
       leave_type: "",
       reason: "",
     },
     validationSchema: leaveReqObj,
     onSubmit: (values) => {
+      console.log(values)
       applyLeave(values)
       setSubmitSuccess(true);
       setTimeout(()=>{

@@ -246,7 +246,7 @@ export default function Display() {
       </Box>
       <Grid container direction={"row"}>
         <Toolbar />
-        <Box bgcolor={"#f5f5f5"} sx={{ width: "100%", height: "90vh" }}>
+        <Box bgcolor={"#f5f5f5"} sx={{ width: "100%", height: "89.5vh" }}>
           <CenterDisplay logedInUser={logedInEmp} />
         </Box>
       </Grid>
