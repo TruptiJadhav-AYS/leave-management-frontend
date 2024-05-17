@@ -39,8 +39,6 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
 
   let { selectedEmp } = useSelector((state) => state.employees);
 
-  console.log("adddor",employees)
-
   let selectedEmpIndex = Employees.findIndex((emp) => emp.id === selectedEmp);
   const initialValues = {
     name:
@@ -163,7 +161,7 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
     }),
 
     onSubmit: async (values) => {
-      console.log(values)
+      console.log(values);
       {
         addOrEditForm === "add"
           ? addEmp(values)
@@ -178,17 +176,15 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
   });
 
   const errors = formik.errors;
-  function handleClick(id)
- {
-    setClickedBtnID(id)
-;
+  function handleClick(id) {
+    setClickedBtnID(id);
   }
   const MenuProps = {
     PaperProps: {
       style: {
         maxHeight: 130,
         width: 250,
-        scrollbarWidth:"thin"
+        scrollbarWidth: "thin",
       },
     },
   };
@@ -217,7 +213,9 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
               <Typography color={"primary"} variant="h5" mb={2}>
                 {addOrEditForm === "add"
                   ? "Onboard Employee"
-                  : "Edit Employee Details"}
+                  : addOrEditForm === "edit"
+                  ? "Edit Employee Details"
+                  : " "}
               </Typography>
 
               <Grid container spacing={1}>

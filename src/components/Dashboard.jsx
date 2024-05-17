@@ -5,9 +5,7 @@ import LeavePolicy from "./LeavePolicy";
 import { LeaveBalanceMobile } from "./LeaveBalanceMobile";
 import { LeaveBalanceDeskTop } from "./LeaveBalanceDeskTop";
 import UpcomingHolidaysDesktop from "./UpcomingHolidaysDesktop";
-import PendingReq from "./PendingReq";
 import ApproverCard from "./ApproverCard";
-import PendingReqMobile from "./PendingReqMobile";
 import UpcomingHolidaysMobile from "./UpcomingHolidaysMobile";
 import { useSelector } from "react-redux";
 import EmployeeOnLeave from "./EmployeeOnLeave";
@@ -35,7 +33,6 @@ export default function Dashboard() {
           (role === "Admin" || role === "Manager") && 
           (responsive.isDesktop||responsive.isLaptop||responsive.isTablet) ? (
             <Grid item sm={7} md={7} lg={7}>
-              {/* <PendingReq /> */}
               <EmployeeOnLeave/>
               
             </Grid>
@@ -43,7 +40,6 @@ export default function Dashboard() {
           (role === "Admin" || role === "Manager") &&
           (responsive.isMobile)&& (
             <Grid item xs={12}>
-              {/* <PendingReqMobile /> */}
               <EmployeeOnLeave/>
             </Grid>
           )}

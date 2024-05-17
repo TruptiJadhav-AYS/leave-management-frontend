@@ -16,9 +16,7 @@ import UseReponsive from "../hooks/UseResponsive";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import CheckIcon from "@mui/icons-material/Check";
-import addProjectAction from "../Store/action/AddProjectAction";
 import { useDispatch, useSelector } from "react-redux";
-import editProjectAction from "../Store/action/EditProjectAction";
 import {
   useAddProjectMutation,
   useGetProjectsQuery,
@@ -41,8 +39,6 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
   if(isSuccess){
   index = Projects.findIndex((project) => project.id === selectedProject);
   }
-
-  console.log("pppppp",Projects, Projects[1].manager.name)
 
   console.log(index)
   const Employees = employees || [];
@@ -145,7 +141,7 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
               <Typography color={"primary"} variant="h5" mb={2}>
                 {projectAddOrEdit === "add"
                   ? "Add Project"
-                  : "Edit Project Details"}
+                  : projectAddOrEdit==="edit" && "Edit Project Details" }
               </Typography>
 
               <Grid container spacing={1}>

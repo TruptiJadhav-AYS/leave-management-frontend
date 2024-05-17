@@ -138,7 +138,7 @@ export default function ProjectList({ onProjectAddOrEdit }) {
           sx={{ borderRadius: "50px", textTransform: "none" }}
           onClick={() => {
             onProjectAddOrEdit("add");
-            Navigate("/Employee/Projects/OnboardProject");
+            Navigate("/Employee/Projects/ProjectForm");
           }}
         >
           Project

@@ -111,7 +111,7 @@ export default function ContactsList() {
               color: "black",
             }}
             onClick={() => {
-              Navigate("/Employee/Projects/OnboardProject");
+              Navigate("/Employee/Projects/ProjectForm");
             }}
           >
             <AddIcon />

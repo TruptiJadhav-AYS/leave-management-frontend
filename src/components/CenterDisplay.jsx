@@ -39,9 +39,11 @@ export default function CenterDisplay({ logedInUser }) {
   function handleSelectedEmp(id) {
     setSelectedEmpId(id);
   }
+
   function onOpenDeleteDialogue() {
     setOpenDeleteDialouge(true);
   }
+  
   function onCloseDeleteDialogue() {
     setOpenDeleteDialouge(false);
   }
@@ -137,7 +139,7 @@ export default function CenterDisplay({ logedInUser }) {
         }
       />
       <Route
-        path="/Projects/OnboardProject"
+        path="/Projects/ProjectForm"
         element={<ProjectOnboardForm projectAddOrEdit={projectAddOrEdit} />}
       />
       <Route path="/Inventory/AddInventory" element={<InventoryForm />} />
