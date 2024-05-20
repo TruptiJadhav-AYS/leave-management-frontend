@@ -3,7 +3,7 @@ import {
   useGetAnnunalLeaveBalanceQuery,
   useGetRemainingBalanceQuery,
   useGetWorkFromHomeBalanceQuery,
-} from "../Store/slice/apiLeaveBalanceSlice";
+} from "../Store/slice/apiLeaveReqSlice";
 import { useSelector } from "react-redux";
 
 export function LeaveBalanceMobile() {

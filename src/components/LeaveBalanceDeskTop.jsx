@@ -1,6 +1,6 @@
 import { Grid, Card, CardContent, Typography } from "@mui/material";
 import { Gauge, gaugeClasses } from "@mui/x-charts";
-import { useGetAnnunalLeaveBalanceQuery, useGetRemainingBalanceQuery, useGetWorkFromHomeBalanceQuery } from "../Store/slice/apiLeaveBalanceSlice";
+import { useGetAnnunalLeaveBalanceQuery, useGetRemainingBalanceQuery, useGetWorkFromHomeBalanceQuery } from "../Store/slice/apiLeaveReqSlice";
 import { useSelector } from "react-redux";
 
 export function LeaveBalanceDeskTop() {

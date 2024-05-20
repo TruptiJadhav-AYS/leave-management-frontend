@@ -13,7 +13,6 @@ import categoryApi from './slice/apiCategorySlice'
 import inventoryApi from './slice/apiInventorySlice'
 import departmentApi from './slice/apiDepartmentSlice'
 import leaveReqApi from './slice/apiLeaveReqSlice'
-import leaveBalanceApi from './slice/apiLeaveBalanceSlice'
 
 export const store = configureStore({
   reducer: {
@@ -31,7 +30,6 @@ export const store = configureStore({
     [inventoryApi.reducerPath]:inventoryApi.reducer,
     [departmentApi.reducerPath]:departmentApi.reducer,
     [leaveReqApi.reducerPath]:leaveReqApi.reducer,
-    [leaveBalanceApi.reducerPath]:leaveBalanceApi.reducer,
   },
   
   middleware: (getDefaultMiddleware) =>
@@ -44,6 +42,5 @@ export const store = configureStore({
     .concat(inventoryApi.middleware)
     .concat(departmentApi.middleware)
     .concat(leaveReqApi.middleware)
-    .concat(leaveBalanceApi.middleware)
 })
 

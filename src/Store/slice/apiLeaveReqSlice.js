@@ -53,7 +53,22 @@ const leaveReqApi = createApi({
         body: { status },
       }),
       invalidatesTags:[{data:"leave"}]
-    })
+    }),
+
+    getRemainingBalance: builder.query({
+      query: (employeeId) => `/leave/remaining-balance/${employeeId}`,
+      providesTags:[{data:'LeaveBalance'}]
+    }),
+
+    getWorkFromHomeBalance: builder.query({
+      query: (employeeId) => `/leave/remaining-balance/work-from-home/${employeeId}`,
+      providesTags:[{data:'LeaveBalance'}]
+    }),
+
+    getAnnunalLeaveBalance: builder.query({
+      query: () => "/holidays/remaining-holidays",
+      providesTags:[{data:'LeaveBalance'}]
+    }),
     }),
 });
 
@@ -64,5 +79,8 @@ export const {
     useGetPendingRequestQuery,
     useUpdateLeaveStatusMutation,
     useGetPendingRequestByIdQuery,
+    useGetAnnunalLeaveBalanceQuery,
+    useGetRemainingBalanceQuery,
+    useGetWorkFromHomeBalanceQuery
 } = leaveReqApi;
 export default leaveReqApi;
