@@ -55,6 +55,7 @@ export default function UpcomingHolidaysMobile() {
     return holidayDate > currentDate;
   });
   const currentHoliday = upcomingHolidays[currentIndex];
+  console.log("currentHoliday...",currentHoliday)
   const showPreviousButton = currentIndex !== 0 && upcomingHolidays.length > 1;
   const showNextButton = currentIndex !== upcomingHolidays.length - 1;
   if(isLoading){
@@ -78,7 +79,7 @@ export default function UpcomingHolidaysMobile() {
               sx={{ width: "80%" }}
             >
               <Avatar
-                alt={currentHoliday.holiday_occasion}
+                alt={currentHoliday?.holiday_occasion}
                 src={URL.createObjectURL(
                   new Blob([new Uint8Array(currentHoliday.holiday_image.data)])
                 )}

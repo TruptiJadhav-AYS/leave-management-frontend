@@ -30,6 +30,7 @@ export default function PendingReq() {
   const role = useSelector((state) => state.employees.userRole);
 
   const { data: PendingRequestById, isSuccess: isSuccessById,isLoading:isLoadingById } = useGetPendingRequestByIdQuery(id);
+  // console.log("data",data)
 
   useEffect(() => {
     if (isSuccess) {
@@ -49,8 +50,6 @@ export default function PendingReq() {
     : pendingRequest
     ? pendingRequest.filter((request) => request.emp_id !== id)
     : [];
-
-  console.log(PendingRequestList)
 
   const [updateStatus] = useUpdateLeaveStatusMutation();
 
@@ -117,15 +116,17 @@ export default function PendingReq() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {PendingRequestList.map((row) => (
+            {PendingRequestList.map((row,index) => (
               <TableRow
-                key={row.id}
+                key={index}
                 sx={{
                   "&:last-child td, &:last-child th": { border: 0 },
                 }}
               >
                 <TableCell component="th" scope="row">
-                  {row.employee.name}
+                  {console.log("row",row)}
+                  {console.log("rowEmployeeName",row.employee.employeeName)}
+                  {row.employee?.employeeName}
                 </TableCell>
                 <TableCell align="center">
                   {formatDate(row.start_date)}
@@ -136,7 +137,8 @@ export default function PendingReq() {
                 <TableCell align="right">{row.leave_type}</TableCell>
                 <TableCell align="left">{row.reason}</TableCell>
                 <TableCell align="right">
-                  {(row.employee.manager_id==id || row.employee.manager_id===null) && <Stack direction={"row"}>
+                  {console.log("yyyyyyyyy",row.employeeName)}
+                  {(row?.manager_id==id || row?.manager_id===null) && <Stack direction={"row"}>
                     <Button
                       disableRipple
                       variant="contained"

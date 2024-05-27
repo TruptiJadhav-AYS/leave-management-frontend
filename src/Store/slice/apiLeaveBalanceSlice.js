@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const leaveBalanceApi = createApi({
   reducerPath: "leaveBalanceApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3001",
+    baseUrl: "http://localhost:4001",
     prepareHeaders: (headers, { getState }) => {
       const token = localStorage.getItem("authToken");
       if (token) {

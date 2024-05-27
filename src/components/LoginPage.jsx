@@ -1,64 +1,134 @@
-import { Paper, Grid, TextField, Button, Typography, Container, Card, CardContent } from "@mui/material";
-import backgroundImage from "../assets/bg_loginpage.jpg";
-import React, { useState } from "react";
+// import React, { useEffect } from "react";
+// import { Paper, Grid, Button, Typography, Container, Card, CardContent } from "@mui/material";
+// import { useNavigate } from "react-router-dom";
+// import {jwtDecode} from "jwt-decode";
+// import backgroundImage from "../assets/bg_loginpage.jpg";
+// import logoImage from "../assets/ays_logo.jpg";
+
+// function LoginPage(props) {
+//   const navigate = useNavigate();
+
+//   useEffect(() => {
+//     const urlParams = new URLSearchParams(window.location.search);
+//     const accessToken = urlParams.get('accessToken');
+//     const refreshToken = urlParams.get('refreshToken');
+//     const jwtToken = urlParams.get('jwtToken');
+
+//     if (jwtToken) {
+//       const decodedToken = jwtDecode(jwtToken);
+//       console.log('User Details:', decodedToken);
+//       document.getElementById('user-details').innerText = JSON.stringify(decodedToken, null, 2);
+//       // Clear URL parameters
+//       navigate(window.location.pathname, { replace: true });
+//     }
+//   }, [navigate]);
+
+//   const handleLogin = () => {
+//     // Redirect to backend's Google login endpoint
+//     window.location.href = "http://localhost:4001/auth/google/login";
+//   };
+
+//   return (
+//     <Paper
+//       style={{
+//         backgroundImage: `url(${backgroundImage})`,
+//         backgroundSize: "cover",
+//         minHeight: "100vh",
+//       }}
+//     >
+//       <Grid container pl={2}>
+//         <Grid item xs={3.1} sm={1.5} md={1.1} lg={0.9} mt={2}>
+//           <img
+//             src={logoImage}
+//             alt="Logo"
+//             style={{
+//               maxWidth: "80px",
+//               borderRadius: "50%",
+//               width: "100%",
+//               height: "auto",
+//             }}
+//           />
+//         </Grid>
+//         <Grid item xs={7} sm={3.5} md={2} lg={2} mt={2} textAlign={"left"}>
+//           <Typography fontSize={30} fontWeight={"bold"} color={"darkblue"}>
+//             AYS
+//           </Typography>
+//           <Typography fontSize={20} fontWeight={"bold"}>
+//             Software Solution
+//           </Typography>
+//         </Grid>
+//       </Grid>
+//       <Container maxWidth="xs" sx={{ pt: "4vh" }}>
+//         <Card elevation={8}>
+//           <CardContent>
+//             <Typography
+//               variant="h6"
+//               align="center"
+//               mb={2}
+//               fontWeight={"bold"}
+//               color={"primary"}
+//             >
+//               Login
+//             </Typography>
+//             <Grid container gap={2} mt={2}>
+//               <Grid item xs={12} textAlign={"left"}>
+//                 <Button
+//                   onClick={handleLogin}
+//                   fullWidth
+//                   variant="contained"
+//                   color="primary"
+//                   sx={{ textTransform: "none", borderRadius: "100px" }}
+//                 >
+//                   Login with Google
+//                 </Button>
+//               </Grid>
+//             </Grid>
+//           </CardContent>
+//         </Card>
+//       </Container>
+//       <Container maxWidth="sm" sx={{ pt: "4vh" }}>
+//         <Typography variant="h6" align="center" color="textSecondary">
+//           User Details:
+//         </Typography>
+//         <pre id="user-details" style={{ whiteSpace: "pre-wrap", wordWrap: "break-word" }}></pre>
+//       </Container>
+//     </Paper>
+//   );
+// }
+
+// export default LoginPage;
+
+
+import React, { useEffect } from "react";
+import { Paper, Grid, Button, Typography, Container, Card, CardContent } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import {jwtDecode} from "jwt-decode";
+import backgroundImage from "../assets/bg_loginpage.jpg";
 import logoImage from "../assets/ays_logo.jpg";
-import { login,isAuthenticated } from "../api/auth";
 
 function LoginPage(props) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate();
-  // const dispatch = useDispatch();
 
-  // const users = useSelector((state) => state.users.Users);
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const accessToken = urlParams.get('accessToken');
+    const refreshToken = urlParams.get('refreshToken');
+    const jwtToken = urlParams.get('jwtToken');
 
-  
-
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-    setEmailError("");
-  };
-
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-    setPasswordError("");
-  };
-
-  const handleForgetClick = () => {
-    navigate("/ForgetPassword");
-    props.onSubmitClick(true);
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setEmailError("");
-    setPasswordError("");
-    // const userByEmail = users.find((user) => user.email === email);
-
-    if (!email) {
-      setEmailError("Please enter email");
-      return;
+    if (jwtToken) {
+      localStorage.setItem('authToken', jwtToken);
+      localStorage.setItem('accessToken',accessToken);
+      localStorage.setItem('refreshToken',refreshToken);
+      const decodedToken = jwtDecode(jwtToken);
+      console.log('User Details:', decodedToken);
+      // navigate('/Employee')
+      // Redirect to Employee page after storing the token
+      navigate('/Employee', { replace: true });
     }
-    if (!password) {
-      setPasswordError("Please enter a password");
-      return;
-    }
-    let authuser=isAuthenticated();
+  }, [navigate]);
 
-    try {
-      const auth = await login({ email, password });
-      if (auth) {
-        // console.log("helloooooooooo");
-        navigate("/Employee");
-        props.onSignIn(email);
-      }
-    } catch (error) {
-      setPasswordError("Invalid email or password")
-      // Handle login error if needed
-    }
+  const handleLogin = () => {
+    window.location.href = "http://localhost:4001/auth/google/login";
   };
 
   return (
@@ -94,69 +164,28 @@ function LoginPage(props) {
       <Container maxWidth="xs" sx={{ pt: "4vh" }}>
         <Card elevation={8}>
           <CardContent>
-            <form onSubmit={handleSubmit}>
-              <Typography
-                variant="h6"
-                align="center"
-                mb={2}
-                fontWeight={"bold"}
-                color={"primary"}
-              >
-                Login
-              </Typography>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    id="email"
-                    name="email"
-                    label="Email"
-                    type="email"
-                    onChange={handleEmailChange}
-                    error={Boolean(emailError)}
-                    helperText={emailError}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    id="password"
-                    name="password"
-                    label="Password"
-                    type="password"
-                    onChange={handlePasswordChange}
-                    error={Boolean(passwordError)}
-                    helperText={passwordError}
-                  />
-                </Grid>
+            <Typography
+              variant="h6"
+              align="center"
+              mb={2}
+              fontWeight={"bold"}
+              color={"primary"}
+            >
+              Login
+            </Typography>
+            <Grid container gap={2} mt={2}>
+              <Grid item xs={12} textAlign={"left"}>
+                <Button
+                  onClick={handleLogin}
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  sx={{ textTransform: "none", borderRadius: "100px" }}
+                >
+                  Login with Google
+                </Button>
               </Grid>
-              <Grid container gap={2} mt={2}>
-                <Grid item xs={12} textAlign={"left"}>
-                  <Button
-                    disableRipple
-                    sx={{
-                      "&:hover": { backgroundColor: "transparent" },
-                      cursor: "pointer",
-                      textTransform: "none",
-                    }}
-                    onClick={handleForgetClick}
-                  >
-                    Forget password?
-                  </Button>
-                </Grid>
-                <Grid item xs={12}>
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    sx={{ textTransform: "none", borderRadius: "100px" }}
-                  >
-                    Sign In
-                  </Button>
-                </Grid>
-              </Grid>
-            </form>
+            </Grid>
           </CardContent>
         </Card>
       </Container>
@@ -165,3 +194,5 @@ function LoginPage(props) {
 }
 
 export default LoginPage;
+
+

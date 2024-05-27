@@ -1,19 +1,157 @@
+// import "./App.css";
+// import { colors, createTheme, ThemeProvider } from "@mui/material";
+// import Display from "./components/Display";
+// import { Route, Routes } from "react-router-dom";
+// import LoginPage from "./components/LoginPage";
+// import { useState } from "react";
+// import ForgetPasswordPage from "./components/forgetPasswordPage";
+// import {jwtDecode} from 'jwt-decode';
+// import ResetPasswordPage from "./components/ResetPasswordPage";
+// import { setRole } from "./Store/slice/EmployeeSlice";
+// import { useDispatch } from "react-redux";
+// import { setUserId } from "./Store/slice/EmployeeSlice";
+// import "swagger-ui-react/swagger-ui.css";
+
+// const myTheme = createTheme({
+//   satus: {
+//     danger: colors.red[700],
+//   },
+//   palette: {
+//     primary: {
+//       main: colors.blue[800],
+//     },
+//     secondary: {
+//       main: colors.green[600],
+//     },
+//   },
+// });
+
+// let role;
+// let id;
+
+// const isTokenValid = () => {
+//   const token = localStorage.getItem("authToken");
+//   try {
+//     const decodedToken = jwtDecode(token);
+//     console.log(token)
+//     role=decodedToken.role
+//     id=decodedToken.id
+//     console.log("defg",id,decodedToken)
+//     const currentTime = Date.now() / 1000; // Convert to seconds
+//     if (decodedToken.exp && decodedToken.exp < currentTime) {
+//       return false;
+//     }
+//     return true; 
+//   } catch (error) {
+//     return false; 
+//   }
+// };
+
+// function App() {
+//   // const [routeStatus, setRouteStatus] = useState(false);
+//   const [forgetRouteStatus, setForgetRouteStatus] = useState(false);
+//   const [resetRouteStatus, setResetRouteStatus] = useState(false);
+//   const [logedInUser, setLogedInUser] = useState("");
+//   const dispatch=useDispatch()
+//   dispatch(setRole(role))
+//   dispatch(setUserId(id))
+//   // console.log(role)
+//   // function isAuthenticated() {
+//     // localStorage.removeItem("authToken")
+//     // const token = localStorage.getItem("authToken");
+//     // console.log(token)
+//   //   return token;
+//   // }
+
+//   // const findRoleOfUser = () => {
+//     // let emp = employee.find((employee) => employee.email === logedInUser);
+//     // if (emp) {
+//     //   return emp.role;
+//     // }
+//   // };
+
+//   // let role = findRoleOfUser();
+
+//   function onSignIn(email) {
+//     setLogedInUser(email);
+//     console.log(logedInUser)
+//   }
+
+//   // function onSignInClick(flag) {
+//   //   // setRouteStatus(flag);
+//   // }
+
+//   function onSubmitClick(flag) {
+//     setForgetRouteStatus(flag);
+//   }
+
+//   function onResetClick(flag) {
+//     setResetRouteStatus(flag);
+//   }
+
+//   return (
+//     <ThemeProvider theme={myTheme}>
+//       <div className="App">
+//         <Routes>
+//           <Route
+//             path="/"
+//             element={
+//               <LoginPage
+//                 onSignIn={onSignIn}
+//                 // onSignInClick={onSignInClick}
+//                 onSubmitClick={onSubmitClick}
+//               />
+//             }
+//           />
+//           {forgetRouteStatus && (
+//             <Route
+//               path="/ForgetPassword"
+//               element={
+//                 <ForgetPasswordPage
+//                   onSignIn={onSignIn}
+//                   // onSignInClick={onSignInClick}
+//                   onResetClick={onResetClick}
+//                 />
+//               }
+//             />
+//           )}
+//           {resetRouteStatus && (
+//             <Route path="/ResetPassword" element={<ResetPasswordPage logedInUser={logedInUser}/>} />
+//           )}
+//           {/* {routeStatus && ( */}
+//           {/* {token!=== ? ( */}
+//             <Route
+//               path="/Employee/*"
+//               element={isTokenValid() ? <Display /> : <></>}
+//             />
+//           {/* ) : (
+//             <></>
+//           )} */}
+//           {/* )} */}
+//         </Routes>
+//       </div>
+//     </ThemeProvider>
+//   );
+// }
+
+// export default App;
+
 import "./App.css";
 import { colors, createTheme, ThemeProvider } from "@mui/material";
 import Display from "./components/Display";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import LoginPage from "./components/LoginPage";
-import { useState } from "react";
-import ForgetPasswordPage from "./components/forgetPasswordPage";
+import { useState, useEffect } from "react";
+// import jwtDecode from 'jwt-decode';
 import {jwtDecode} from 'jwt-decode';
-import ResetPasswordPage from "./components/ResetPasswordPage";
-import { setRole } from "./Store/slice/EmployeeSlice";
+// import jwtDecode from 'jwt-decode';
+
+import { setRole, setUserId } from "./Store/slice/EmployeeSlice";
 import { useDispatch } from "react-redux";
-import { setUserId } from "./Store/slice/EmployeeSlice";
 import "swagger-ui-react/swagger-ui.css";
 
 const myTheme = createTheme({
-  satus: {
+  status: {
     danger: colors.red[700],
   },
   palette: {
@@ -25,7 +163,6 @@ const myTheme = createTheme({
     },
   },
 });
-
 let role;
 let id;
 
@@ -34,8 +171,8 @@ const isTokenValid = () => {
   try {
     const decodedToken = jwtDecode(token);
     console.log(token)
-    role=decodedToken.role
-    id=decodedToken.id
+    role=decodedToken.user.role
+    id=decodedToken.user.id
     console.log("defg",id,decodedToken)
     const currentTime = Date.now() / 1000; // Convert to seconds
     if (decodedToken.exp && decodedToken.exp < currentTime) {
@@ -48,46 +185,17 @@ const isTokenValid = () => {
 };
 
 function App() {
-  // const [routeStatus, setRouteStatus] = useState(false);
-  const [forgetRouteStatus, setForgetRouteStatus] = useState(false);
-  const [resetRouteStatus, setResetRouteStatus] = useState(false);
-  const [logedInUser, setLogedInUser] = useState("");
+  // const [forgetRouteStatus, setForgetRouteStatus] = useState(false);
+  // const [resetRouteStatus, setResetRouteStatus] = useState(false);
+  // const [logedInUser, setLogedInUser] = useState("");
   const dispatch=useDispatch()
   dispatch(setRole(role))
   dispatch(setUserId(id))
-  // console.log(role)
-  // function isAuthenticated() {
-    // localStorage.removeItem("authToken")
-    // const token = localStorage.getItem("authToken");
-    // console.log(token)
-  //   return token;
-  // }
-
-  // const findRoleOfUser = () => {
-    // let emp = employee.find((employee) => employee.email === logedInUser);
-    // if (emp) {
-    //   return emp.role;
-    // }
-  // };
-
-  // let role = findRoleOfUser();
-
-  function onSignIn(email) {
-    setLogedInUser(email);
-    console.log(logedInUser)
-  }
-
-  // function onSignInClick(flag) {
-  //   // setRouteStatus(flag);
-  // }
-
-  function onSubmitClick(flag) {
-    setForgetRouteStatus(flag);
-  }
-
-  function onResetClick(flag) {
-    setResetRouteStatus(flag);
-  }
+  // useEffect(() => {
+  //   if (isTokenValid(dispatch)) {
+  //     // navigate('/Employee');
+  //   }
+  // }, [dispatch, navigate]);
 
   return (
     <ThemeProvider theme={myTheme}>
@@ -95,39 +203,12 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={
-              <LoginPage
-                onSignIn={onSignIn}
-                // onSignInClick={onSignInClick}
-                onSubmitClick={onSubmitClick}
-              />
-            }
+            element={<LoginPage />}
           />
-          {forgetRouteStatus && (
-            <Route
-              path="/ForgetPassword"
-              element={
-                <ForgetPasswordPage
-                  onSignIn={onSignIn}
-                  // onSignInClick={onSignInClick}
-                  onResetClick={onResetClick}
-                />
-              }
-            />
-          )}
-          {resetRouteStatus && (
-            <Route path="/ResetPassword" element={<ResetPasswordPage logedInUser={logedInUser}/>} />
-          )}
-          {/* {routeStatus && ( */}
-          {/* {token!=== ? ( */}
-            <Route
-              path="/Employee/*"
-              element={isTokenValid() ? <Display /> : <></>}
-            />
-          {/* ) : (
-            <></>
-          )} */}
-          {/* )} */}
+          <Route
+            path="/Employee/*"
+            element={isTokenValid() ? <Display /> : <LoginPage />}
+          />
         </Routes>
       </div>
     </ThemeProvider>
@@ -135,3 +216,4 @@ function App() {
 }
 
 export default App;
+
