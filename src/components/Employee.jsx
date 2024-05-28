@@ -377,7 +377,7 @@ export default function EmployeeList({ onAddOrEdit }) {
                     hover
                     role="checkbox"
                     tabIndex={-1}
-                    key={row.name}
+                    key={row}
                     ml={2}
                     sx={{ cursor: "pointer" }}
                     onClick={() => {

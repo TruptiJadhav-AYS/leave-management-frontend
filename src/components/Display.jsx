@@ -187,7 +187,7 @@ console.log(jwtToken)
             </Typography>
             <Box display={"flex"} gap={0.5} mt={1} flexDirection={"row"}>
               <MailIcon />
-              <Typography color="textSecondary">{logedInEmp.email}</Typography>
+              <Typography color="textSecondary" sx={{overflowWrap:"anywhere"}}>{logedInEmp.email}</Typography>
             </Box>
             <Box display="flex">
               <CallIcon />

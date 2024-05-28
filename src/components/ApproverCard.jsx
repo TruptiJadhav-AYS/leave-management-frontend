@@ -43,13 +43,13 @@ export default function ApproverCard() {
           my={responsive.isMobile ? 2 :0.8}
         >
           <Avatar
-           src={Employee.manager.image && URL.createObjectURL(
-            new Blob([new Uint8Array(Employee.manager.image.data)])
-          )}
+          //  src={Employee.manager.image && URL.createObjectURL(
+          //   new Blob([new Uint8Array(Employee.manager.image.data)])
+          // )}
             style={{ width:responsive.isMobile ? "50px" :"70px", height:responsive.isMobile ? "50px" : "70px", border: "2px solid blue" }}
           />
           <Box px={6} display={"flex"} flexDirection={"column"}>
-            <Typography fontSize={responsive.isDesktop ? "19px" : "16px"}>{ Employee.manager.name}</Typography>
+            {/* <Typography fontSize={responsive.isDesktop ? "19px" : "16px"}>{ Employee.manager.name}</Typography> */}
             <Typography variant={responsive.isDesktop ? "subtitle1" : "subtitle2"}> Reporting Manager</Typography>
           </Box>
         </Box>
@@ -65,11 +65,11 @@ export default function ApproverCard() {
         >
           <Grid item display="flex" px={0.5}>
             <MailIcon />
-            <Typography variant={responsive.isMobile ? "subtitle2" : "15px"}>{ Employee.manager.email}</Typography>
+            {/* <Typography variant={responsive.isMobile ? "subtitle2" : "15px"}>{ Employee.manager.email}</Typography> */}
           </Grid>
           <Grid item display="flex">
             <CallIcon />
-            <Typography variant={responsive.isMobile ? "subtitle2" : "15px"}>{ Employee.manager.mobile_number}</Typography>
+            {/* <Typography variant={responsive.isMobile ? "subtitle2" : "15px"}>{ Employee.manager.mobile_number}</Typography> */}
           </Grid>
         </Grid>
       </CardContent>
