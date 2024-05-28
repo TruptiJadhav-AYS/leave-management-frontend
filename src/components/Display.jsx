@@ -4,9 +4,10 @@ import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Drawer from "@mui/material/Drawer";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Avatar, Stack, Toolbar, Grid,CircularProgress } from "@mui/material";
+import { Avatar, Stack, Toolbar, Grid, CircularProgress } from "@mui/material";
 import SideDrawer from "./SideDrawer";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { jwtDecode } from "jwt-decode";
 import CenterDisplay from "./CenterDisplay";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -17,21 +18,74 @@ import { useNavigate } from "react-router-dom";
 import MailIcon from "@mui/icons-material/Mail";
 import CallIcon from "@mui/icons-material/Call";
 import Profile from "../assets/profile.jpg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useGetEmployeesByIdQuery } from "../Store/slice/apiEmployeeSlice";
+import { setRole, setUserId } from "../Store/slice/EmployeeSlice";
 
 function AccountMenu() {
-  const id = useSelector((state) => state.employees.userId);
-  console.log(id);
-  const { data: Emp,isLoading,isError } = useGetEmployeesByIdQuery(id);
+  let Navigate = useNavigate();
+  let dispatch = useDispatch();
+
+  // const urlParams = new URLSearchParams(window.location.search);
+  // const accessToken = urlParams.get('accessToken');
+  // const refreshToken = urlParams.get('refreshToken');
+  // const jwtToken = urlParams.get('jwtToken');
+  // console.log(jwtToken)
+
+  // localStorage.setItem('authToken', jwtToken);
+  // const decodedToken = jwtDecode(jwtToken);
+  // console.log('User Details:', decodedToken);
+  // let id = decodedToken.user.id;
+  // let role = decodedToken.user.role;
+  // dispatch(setRole(role))
+  // dispatch(setUserId(id))
+
+  // Retrieve tokens from URL parameters
+  const urlParams = new URLSearchParams(window.location.search);
+  const accessToken = urlParams.get("accessToken");
+  const refreshToken = urlParams.get("refreshToken");
+  const jwtToken = urlParams.get("jwtToken");
+console.log(jwtToken)
+  // Check if tokens are already stored in localStorage
+  const storedAuthToken = localStorage.getItem("authToken");
+  if (!storedAuthToken && jwtToken) {
+    // Store jwtToken in localStorage only if it is not already stored
+    localStorage.setItem("authToken", jwtToken);
+    const decodedToken = jwtDecode(jwtToken);
+    console.log("User Details:", decodedToken);
+
+    // Extract user details from the decoded token
+    let id = decodedToken.user.id;
+    let role = decodedToken.user.role;
+
+    // Dispatch actions to set role and user id
+    dispatch(setRole(role));
+    dispatch(setUserId(id));
+  } else if (storedAuthToken) {
+    // Token is already stored, use the stored token
+    const decodedToken = jwtDecode(storedAuthToken);
+    console.log("User Details:", decodedToken);
+
+    // Extract user details from the decoded token
+    let id = decodedToken.user.id;
+    let role = decodedToken.user.role;
+
+    // Dispatch actions to set role and user id
+    dispatch(setRole(role));
+    dispatch(setUserId(id));
+  } else {
+    console.log("No jwtToken provided in URL and no stored token found");
+  }
+
+  const cid = useSelector((state) => state.employees.userId);
+  console.log("&&&&&&&&&&&&", cid);
+  const { data: Emp, isLoading, isError } = useGetEmployeesByIdQuery(cid);
   const logedInEmp = Emp || [];
   // console.log(logedInEmp);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [logoutClick, setLogoutClick] = useState(false);
   const open = Boolean(anchorEl);
-
-  let Navigate = useNavigate();
 
   const onLogoutClick = () => {
     // setLogoutClick(true);
@@ -59,14 +113,17 @@ function AccountMenu() {
   }
 
   return (
-    
     <Box>
       <Tooltip title="Account settings">
         <IconButton onClick={handleClick} size="small" sx={{ ml: 0.2 }}>
           <Avatar
-            src={logedInEmp.image===null?"":URL.createObjectURL(
-              new Blob([new Uint8Array(logedInEmp.image.data)])
-            )}
+            src={
+              logedInEmp.image === null
+                ? ""
+                : URL.createObjectURL(
+                    new Blob([new Uint8Array(logedInEmp.image.data)])
+                  )
+            }
             sx={{ width: 32, height: 32 }}
           />
         </IconButton>
@@ -116,9 +173,13 @@ function AccountMenu() {
           >
             <Avatar
               style={{ width: "60px", height: "60px" }}
-              src={logedInEmp.image===null?"":URL.createObjectURL(
-                new Blob([new Uint8Array(logedInEmp.image.data)])
-              )}
+              src={
+                logedInEmp.image === null
+                  ? ""
+                  : URL.createObjectURL(
+                      new Blob([new Uint8Array(logedInEmp.image.data)])
+                    )
+              }
             />
             <Typography fontWeight={"bold"} mt={1}>
               {logedInEmp.name}
@@ -153,7 +214,7 @@ export default function Display() {
   // console.log(id)
   const { data: Emp } = useGetEmployeesByIdQuery(id);
   const logedInEmp = Emp || [];
-  // console.log(logedInEmp)
+  console.log(logedInEmp);
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -247,7 +308,7 @@ export default function Display() {
       <Grid container direction={"row"}>
         <Toolbar />
         <Box bgcolor={"#f5f5f5"} sx={{ width: "100%", height: "89.5vh" }}>
-          <CenterDisplay logedInUser={logedInEmp} />
+          <CenterDisplay />
         </Box>
       </Grid>
     </Box>

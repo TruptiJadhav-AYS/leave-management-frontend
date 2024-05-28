@@ -27,7 +27,7 @@ export default function Holidays() {
 
   // const suttya = annualLeaves.holidays || [];
   const suttya = annualLeaves ? annualLeaves || [] : [];
-  // console.log(suttya)
+  console.log(suttya.holidays)
 
   let responsive = UseReponsive();
 
@@ -57,7 +57,7 @@ export default function Holidays() {
 
   return (
     <Grid container spacing={2} pt={2} px={2}>
-      {suttya.map((holiday, index) => (
+      {suttya.holidays && suttya.holidays.map((holiday, index) => (
         <Grid
           item
           key={index}

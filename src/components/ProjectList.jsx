@@ -41,7 +41,7 @@ const columns = [
     minWidth: 90,
   },
   {
-    id: "startDate",
+    id: "start_date",
     label: "Start Date",
     minWidth: 90,
   },
@@ -194,7 +194,7 @@ export default function ProjectList({ onProjectAddOrEdit }) {
                     const value = row[column.id];
                     return (
                       <TableCell key={index} align={column.align}>
-                        {column.id==="status" ? value.charAt(0).toUpperCase() + value.slice(1) :column.id==="manager" && value ? value.name :column.id==="startDate"? formatDate(value) : value}
+                        {column.id==="status" ? value.charAt(0).toUpperCase() + value.slice(1) :column.id==="manager" && value ? value.name :column.id==="start_date"? formatDate(value) : value}
                       </TableCell>
                     );
                   })}

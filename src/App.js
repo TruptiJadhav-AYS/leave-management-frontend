@@ -26,26 +26,26 @@ const myTheme = createTheme({
   },
 });
 
-let role;
-let id;
+// let role;
+// let id;
 
-const isTokenValid = () => {
-  const token = localStorage.getItem("authToken");
-  try {
-    const decodedToken = jwtDecode(token);
-    console.log(token)
-    role=decodedToken.role
-    id=decodedToken.id
-    console.log("defg",id,decodedToken)
-    const currentTime = Date.now() / 1000; // Convert to seconds
-    if (decodedToken.exp && decodedToken.exp < currentTime) {
-      return false;
-    }
-    return true; 
-  } catch (error) {
-    return false; 
-  }
-};
+// const isTokenValid = () => {
+//   const token = localStorage.getItem("authToken");
+//   try {
+//     const decodedToken = jwtDecode(token);
+//     console.log(token)
+//     role=decodedToken.role
+//     id=decodedToken.id
+//     console.log("defg",id,decodedToken)
+//     const currentTime = Date.now() / 1000; // Convert to seconds
+//     if (decodedToken.exp && decodedToken.exp < currentTime) {
+//       return false;
+//     }
+//     return true; 
+//   } catch (error) {
+//     return false; 
+//   }
+// };
 
 function App() {
   // const [routeStatus, setRouteStatus] = useState(false);
@@ -53,8 +53,8 @@ function App() {
   const [resetRouteStatus, setResetRouteStatus] = useState(false);
   const [logedInUser, setLogedInUser] = useState("");
   const dispatch=useDispatch()
-  dispatch(setRole(role))
-  dispatch(setUserId(id))
+  // dispatch(setRole(role))
+  // dispatch(setUserId(id))
   // console.log(role)
   // function isAuthenticated() {
     // localStorage.removeItem("authToken")
@@ -118,16 +118,12 @@ function App() {
           {resetRouteStatus && (
             <Route path="/ResetPassword" element={<ResetPasswordPage logedInUser={logedInUser}/>} />
           )}
-          {/* {routeStatus && ( */}
-          {/* {token!=== ? ( */}
+         
             <Route
               path="/Employee/*"
-              element={isTokenValid() ? <Display /> : <></>}
+              element={<Display />}
             />
-          {/* ) : (
-            <></>
-          )} */}
-          {/* )} */}
+          
         </Routes>
       </div>
     </ThemeProvider>

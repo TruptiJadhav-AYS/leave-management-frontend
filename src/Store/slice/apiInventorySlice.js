@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const inventoryApi = createApi({
   reducerPath: "inventoryApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3001",
+    baseUrl: "http://localhost:4001",
     tagTypes: ['Inventory'],
     prepareHeaders: (headers, { getState }) => {
       const token = localStorage.getItem("authToken");

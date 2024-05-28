@@ -226,6 +226,8 @@ export default function EmployeeList({ onAddOrEdit }) {
   const [filteredEmployees, setFilteredEmployees] = useState([]); 
   const employees = Employees || [];
 
+  console.log(employees)
+
   useEffect(() => {
     if (isSuccess) {
       setFilteredEmployees(employees);
@@ -305,7 +307,7 @@ export default function EmployeeList({ onAddOrEdit }) {
           <SearchIcon sx={{ my: "1.5%", mr: 1.5 }} />
         </Box>
 
-        <Tooltip title="Add Employee">
+        {/* <Tooltip title="Add Employee">
         <Button
           variant="contained"
           sx={{ borderRadius: "50px", textTransform: "none" }}
@@ -317,7 +319,8 @@ export default function EmployeeList({ onAddOrEdit }) {
           Employee
           <AddIcon />
         </Button>
-        </Tooltip>
+        </Tooltip> */}
+        
       </Box>
       <Divider />
       <TableContainer

@@ -28,8 +28,10 @@ import UseReponsive from "../hooks/UseResponsive";
 export default function ViewProfile() {
   const [selectedFile, setSelectedFile] = useState(null);
   const id = useSelector((state) => state.employees.userId);
+  console.log(id)
   const { data: Emp, isLoading, isError } = useGetEmployeesByIdQuery(id);
   const logedInEmp = Emp || [];
+  console.log(logedInEmp.email)
   const [uploadImage] = useUploadImageMutation();
   const fileInputRef = useRef(null);
   const responsive = UseReponsive();
@@ -144,7 +146,7 @@ export default function ViewProfile() {
               </Box>
             </Grid>
 
-            <Grid item ml={2} xs={12} sm={4} md={4} lg={2.5} textAlign={"left"}>
+            <Grid item ml={2} xs={12} sm={4} md={4} lg={5.4} textAlign={"left"}>
               <Typography
                 fontWeight="700"
                 variant="h6"
@@ -155,7 +157,7 @@ export default function ViewProfile() {
               </Typography>
               <Box display={"flex"} gap={0.5} flexDirection={"row"}>
                 <MailIcon sx={{ height: "20px", mt: 0.2 }} />
-                <Typography color="body2">{logedInEmp.email}</Typography>
+                <Typography color="body2" sx={{overflowWrap:"anywhere"}}>{logedInEmp.email}</Typography>
               </Box>
               <Box display={"flex"} gap={0.5} flexDirection={"row"}>
                 <CallIcon sx={{ height: "20px" }} />

@@ -90,6 +90,8 @@ export default function PendingReq() {
     return(<></>)
   }
 
+  console.log("hjgjhghj",pendingRequest)
+
   return (
     <Card sx={{ height: "100%", overflow: "auto" }}>
       <Divider />
@@ -117,7 +119,7 @@ export default function PendingReq() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {PendingRequestList.map((row) => (
+            {PendingRequestList.length!==0 && PendingRequestList.map((row) => (
               <TableRow
                 key={row.id}
                 sx={{
@@ -125,18 +127,18 @@ export default function PendingReq() {
                 }}
               >
                 <TableCell component="th" scope="row">
-                  {row.employee.name}
+                  { row.employeeName}
                 </TableCell>
                 <TableCell align="center">
                   {formatDate(row.start_date)}
                 </TableCell>
                 <TableCell align="center">
-                  {row.end_date !== null ? formatDate(row.end_date) : "-"}
+                  { row.end_date !== null ? formatDate(row.end_date) : "-"}
                 </TableCell>
                 <TableCell align="right">{row.leave_type}</TableCell>
                 <TableCell align="left">{row.reason}</TableCell>
                 <TableCell align="right">
-                  {(row.employee.manager_id==id || row.employee.manager_id===null) && <Stack direction={"row"}>
+                  {(row.manager_id==id || row.manager_id===null) && <Stack direction={"row"}>
                     <Button
                       disableRipple
                       variant="contained"

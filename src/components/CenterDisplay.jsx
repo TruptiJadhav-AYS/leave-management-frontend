@@ -22,7 +22,7 @@ import ViewProfile from "./ViewProfile";
 import PendingReq from "./PendingReq";
 import PendingReqMobile from "./PendingReqMobile";
 
-export default function CenterDisplay({ logedInUser }) {
+export default function CenterDisplay() {
   let [addOrEditForm, setAddOrEditForm] = useState();
   let [projectAddOrEdit, setProjectAddOrEdit] = useState();
   let [selectedEmpId, setSelectedEmpId] = useState(null);
@@ -134,9 +134,7 @@ export default function CenterDisplay({ logedInUser }) {
 
       <Route
         path="/Profile"
-        element={
-          logedInUser ? <ViewProfile logedInUser={logedInUser} /> : <></>
-        }
+        element={<ViewProfile/>}
       />
       <Route
         path="/Projects/ProjectForm"

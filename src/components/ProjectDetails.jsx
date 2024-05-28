@@ -17,7 +17,7 @@ import UseReponsive from "../hooks/UseResponsive";
 
 export default function ProjectDetails({ onProjectAddOrEdit }) {
   let { Id } = useParams();
-  const { data: project, isLoading } = useGetProjectByIdQuery(Id);
+  const { data: project, isLoading,isSuccess } = useGetProjectByIdQuery(Id);
   const navigate = useNavigate();
   const responsive = UseReponsive();
 
@@ -48,6 +48,8 @@ export default function ProjectDetails({ onProjectAddOrEdit }) {
   if (isLoading) {
     return <></>;
   }
+  console.log(project)
+    console.log("ydyegdyteg",project.employee)
 
   return (
     <Grid container sx={{ height: "89vh", padding: 1 }}>
@@ -62,7 +64,7 @@ export default function ProjectDetails({ onProjectAddOrEdit }) {
         }}
       >
         <Card elevation={2} sx={{ height: "100%", padding: 2 }}>
-          <Grid
+          <Grid item
             xs={12}
             display={"flex"}
             justifyContent={"space-between"}
@@ -112,7 +114,7 @@ export default function ProjectDetails({ onProjectAddOrEdit }) {
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>
               <Typography>
-                Start Date: {formatDate(project.startDate)}
+                Start Date: {formatDate(project.start_date)}
               </Typography>
             </Grid>
             <Grid item lg={12} md={12} xs={12} sm={12}>

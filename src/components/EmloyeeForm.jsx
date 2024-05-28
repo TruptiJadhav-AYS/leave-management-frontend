@@ -37,6 +37,8 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
   const Employees = employees || [];
   const InventoryList = inventory || [];
 
+  console.log(Employees)
+
   let { selectedEmp } = useSelector((state) => state.employees);
 
   let selectedEmpIndex = Employees.findIndex((emp) => emp.id === selectedEmp);

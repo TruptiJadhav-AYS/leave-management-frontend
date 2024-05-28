@@ -67,11 +67,11 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
               : ""
             : ""
           :"",
-      startDate:
+      start_date:
         projectAddOrEdit === "edit"
           ? selectedProject
-            ? Projects[index].startDate
-              ? Projects[index].startDate
+            ? Projects[index].start_date
+              ? Projects[index].start_date
               : ""
             : ""
           : "",
@@ -95,7 +95,7 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
     validationSchema: Yup.object({
       name: Yup.string().required("Project Name is required."),
       manager_id: Yup.number().required("Manager Name is required."),
-      startDate: Yup.date().required("Please select a date"),
+      start_date: Yup.date().required("Please select a date"),
       status: Yup.string().required("Project status is required."),
       description: Yup.string(),
     }),
@@ -114,6 +114,8 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
   });
 
   const errors = formik.errors;
+  const values = formik.values;
+  console.log("****************",values)
 
   const MenuProps = {
     PaperProps: {
@@ -237,13 +239,13 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
                   <InputBase
                     onChange={formik.handleChange}
                     type="date"
-                    name="startDate"
+                    name="start_date"
                     lable="From Date"
                     onClick={() => {
-                      handleClick("Start_date");
+                      handleClick("start_date");
                     }}
                     onBlur={formik.handleBlur}
-                    value={formik.values.startDate}
+                    value={formik.values.start_date}
                     sx={{
                       border:
                         clickedBtnID === "fromDate"
@@ -254,9 +256,9 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
                       width: "100%",
                     }}
                   />
-                  {formik.touched.startDate && errors.startDate && (
+                  {formik.touched.start_date && errors.start_date && (
                     <Typography variant="caption" color="error">
-                      {errors.startDate}
+                      {errors.start_date}
                     </Typography>
                   )}
                 </Grid>
@@ -292,8 +294,8 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
                       onClick={() => handleClick("status")}
                       onBlur={formik.handleBlur}
                     >
-                      <MenuItem value="active">active</MenuItem>
-                      <MenuItem value="inactive">inactive</MenuItem>
+                      <MenuItem value="active">Active</MenuItem>
+                      <MenuItem value="inactive">Inactive</MenuItem>
                     </Select>
                     {formik.touched.status && errors.status && (
                       <Typography variant="caption" color="error">

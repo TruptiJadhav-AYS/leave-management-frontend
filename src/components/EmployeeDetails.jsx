@@ -36,6 +36,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import CallIcon from "@mui/icons-material/Call";
 import PeopleIcon from "@mui/icons-material/People";
 import UseReponsive from "../hooks/UseResponsive";
+import OtherHousesIcon from '@mui/icons-material/OtherHouses';
 
 export default function EmployeeDetails({
   onAddOrEdit,
@@ -169,11 +170,10 @@ export default function EmployeeDetails({
               </Box>
             </Grid>
 
-            <Grid item textAlign={"left"} xs={12} sm={4} md={4} lg={2.5}>
+            <Grid item textAlign={"left"} xs={12} sm={4} md={4} lg={5.4}>
               <Typography
                 fontWeight="700"
                 variant="h6"
-                width="150px"
                 textAlign={"left"}
                 mb={1}
               >
@@ -182,7 +182,7 @@ export default function EmployeeDetails({
 
               <Box display={"flex"} gap={0.5} flexDirection={"row"}>
                 <MailIcon sx={{ height: "20px", mt: 0.2 }} />
-                <Typography color="body2">{Employee.email}</Typography>
+                <Typography color="body2" style={{ overflowWrap:"anywhere"}}>{Employee.email} </Typography>
               </Box>
               <Box display={"flex"} gap={0.5} flexDirection={"row"}>
                 <CallIcon sx={{ height: "20px" }} />
@@ -191,7 +191,7 @@ export default function EmployeeDetails({
                 </Typography>
               </Box>
               <Box display={"flex"} gap={0.5} flexDirection={"row"}>
-                <PeopleIcon />
+                <OtherHousesIcon />
                 <Typography variant="body1">
                   {Employee.department
                     ? Employee.department.department_name
@@ -220,7 +220,7 @@ export default function EmployeeDetails({
               </Typography>
             </Grid>
 
-            <Grid item xs={12} sm={12} md={1} lg={4.8} width={"100%"}>
+            <Grid item xs={12} sm={12} md={1} lg={1.7} width={"100%"}>
               <Tooltip title="Delete Employee">
                 <DeleteIcon
                   sx={{ml:"96%"}}
@@ -263,7 +263,7 @@ export default function EmployeeDetails({
                               border: "2px solid rgba(204, 204, 204, 0.5)",
                             },
                           },
-                          width: "270px",
+                          width: "270px", 
                           height: "40px",
                           borderRadius: 1,
                         }}
