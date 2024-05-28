@@ -3,14 +3,17 @@ import { colors, createTheme, ThemeProvider } from "@mui/material";
 import Display from "./components/Display";
 import { Route, Routes } from "react-router-dom";
 import LoginPage from "./components/LoginPage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ForgetPasswordPage from "./components/forgetPasswordPage";
 import {jwtDecode} from 'jwt-decode';
 import ResetPasswordPage from "./components/ResetPasswordPage";
-import { setRole } from "./Store/slice/EmployeeSlice";
-import { useDispatch } from "react-redux";
+import { setId, useGetEmployeesQuery } from "./Store/slice/apiEmployeeSlice";
 import { setUserId } from "./Store/slice/EmployeeSlice";
 import "swagger-ui-react/swagger-ui.css";
+import { useDispatch, useSelector } from "react-redux";
+// import getLogedInUser from "./Store/action/getLogedInUser";
+import getLogedInUserId from "./Store/action/getLogedInUserEmail";
+import { getRole} from "./Store/slice/EmployeeSlice";
 
 const myTheme = createTheme({
   satus: {
@@ -48,7 +51,6 @@ const myTheme = createTheme({
 // };
 
 function App() {
-  // const [routeStatus, setRouteStatus] = useState(false);
   const [forgetRouteStatus, setForgetRouteStatus] = useState(false);
   const [resetRouteStatus, setResetRouteStatus] = useState(false);
   const [logedInUser, setLogedInUser] = useState("");
@@ -73,13 +75,8 @@ function App() {
   // let role = findRoleOfUser();
 
   function onSignIn(email) {
-    setLogedInUser(email);
-    console.log(logedInUser)
+    // setLogedInUser(email);
   }
-
-  // function onSignInClick(flag) {
-  //   // setRouteStatus(flag);
-  // }
 
   function onSubmitClick(flag) {
     setForgetRouteStatus(flag);
@@ -97,9 +94,9 @@ function App() {
             path="/"
             element={
               <LoginPage
-                onSignIn={onSignIn}
+               onSignIn={onSignIn}
                 // onSignInClick={onSignInClick}
-                onSubmitClick={onSubmitClick}
+                onSubmitClick={onSubmitClick} 
               />
             }
           />
@@ -116,7 +113,7 @@ function App() {
             />
           )}
           {resetRouteStatus && (
-            <Route path="/ResetPassword" element={<ResetPasswordPage logedInUser={logedInUser}/>} />
+            <Route path="/ResetPassword" element={<ResetPasswordPage />} />
           )}
          
             <Route

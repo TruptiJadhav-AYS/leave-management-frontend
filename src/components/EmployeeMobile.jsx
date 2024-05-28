@@ -76,9 +76,9 @@ export default function EmployeeList({ onAddOrEdit }) {
     return <CircularProgress />;
   }
 
-  if (isError) {
-    return <div>Error fetching data</div>;
-  }
+  // if (isError) {
+  //   return <div>Error fetching data</div>;
+  // }
 
   return (
     <Paper sx={{ height: "100%", pt: "5%" }}>

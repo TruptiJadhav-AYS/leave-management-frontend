@@ -20,7 +20,8 @@ import CallIcon from "@mui/icons-material/Call";
 import Profile from "../assets/profile.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetEmployeesByIdQuery } from "../Store/slice/apiEmployeeSlice";
-import { setRole, setUserId } from "../Store/slice/EmployeeSlice";
+import { getRole, setUserId } from "../Store/slice/EmployeeSlice";
+// import { setRole, setUserId } from "../Store/slice/EmployeeSlice";
 
 function AccountMenu() {
   let Navigate = useNavigate();
@@ -59,7 +60,7 @@ console.log(jwtToken)
     let role = decodedToken.user.role;
 
     // Dispatch actions to set role and user id
-    dispatch(setRole(role));
+    dispatch(getRole(role));
     dispatch(setUserId(id));
   } else if (storedAuthToken) {
     // Token is already stored, use the stored token
@@ -71,7 +72,7 @@ console.log(jwtToken)
     let role = decodedToken.user.role;
 
     // Dispatch actions to set role and user id
-    dispatch(setRole(role));
+    dispatch(getRole(role));
     dispatch(setUserId(id));
   } else {
     console.log("No jwtToken provided in URL and no stored token found");

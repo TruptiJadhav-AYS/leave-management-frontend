@@ -13,10 +13,9 @@ const employeeApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    
     getEmployees: builder.query({
       query: () => '/employees',
-      providesTags: [{ data: 'Employees' }],
+      providesTags: [{data: 'Employees'}],
     }),
 
     getEmployeesById: builder.query({
@@ -29,27 +28,26 @@ const employeeApi = createApi({
         url: '/employees',
         method: 'POST',
         body: newEmployee,
+        invalidatesTags:[{ data: 'Employees' }]
       }),
-      invalidatesTags:[{ data: 'Employees' }]
+      invalidatesTags: [{data: 'Employees'}],
     }),
-    
     updateEmployee: builder.mutation({
-      query: ({ id, updatedEmployeeDetails }) => ({
-        url: `/employees/${id}`,
-        method: 'PUT',
-        body: updatedEmployeeDetails,
+      query: ({ employeeId, ...updateData }) => ({
+        url: `/employees/${employeeId}`,
+        method: 'PUT',  
+        body: updateData,
+        invalidatesTags: [{ data: 'Employees' }]
       }),
-      invalidatesTags: [{ data: 'Employees' }]
     }),
-
     deleteEmployee: builder.mutation({
       query: (employeeId) => ({
         url: `/employees/${employeeId}`,
         method: 'DELETE',
+        invalidatesTags:[{ data: 'Employees' }]
       }),
       invalidatesTags:[{ data: 'Employees' }]
     }),
-
     uploadImage:builder.mutation({
       query:({employeeId,imageData})=>({
         url:`employees/upload-image/${employeeId}`,

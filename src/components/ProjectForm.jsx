@@ -100,6 +100,7 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
       description: Yup.string(),
     }),
     onSubmit: (values) => {
+      console.log(values)
       {
         console.log("VALUE",values)
         projectAddOrEdit === "add"
@@ -216,6 +217,7 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
                      {Employees.map((emp, index) => (
                         <MenuItem key={index} value={emp.id}>
                           {emp.name}
+                          {/* {emp.id} */}
                         </MenuItem>
                       ))}
                     </Select>
