@@ -15,8 +15,7 @@ import { useGetEmpOnLeaveTodayQuery } from "../Store/slice/apiLeaveReqSlice";
 
 export default function EmployeeOnLeave() {
   const { data: employees,isLoading,isError} = useGetEmpOnLeaveTodayQuery();
-  const Employees= employees || [];
-  console.log("Employee on Leave",Employees[0].leaveRequest)
+  const Employees= employees || []; 
 
   if (isLoading) {
     return 
@@ -59,16 +58,16 @@ export default function EmployeeOnLeave() {
               minHeight:"100%"
             }}
           >
-            {Employees.map((emp,index) => (
+            {Employees.length > 0 && Employees.map((emp,index) => (
                 <Box sx={{p:"1%"}}> 
                 <ListItem alignItems="flex-start" mx={1}>           
                     <Grid container spacing={2} alignItems={"center"}>
                       <Grid item>
                         <Avatar
                         sx={{width:"50px",height:"50px"}}
-                          alt={emp.employee.name}
-                          src={emp.employee.image===null?"":URL.createObjectURL(
-                            new Blob([new Uint8Array(emp.employee.image.data)])
+                          alt={emp.leaveRequest.employee.name}
+                          src={emp.leaveRequest.employee.image===null?"":URL.createObjectURL(
+                            new Blob([new Uint8Array(emp.leaveRequest.employee.image.data)])
                           )}
                         />
                       </Grid>
@@ -81,10 +80,10 @@ export default function EmployeeOnLeave() {
                             fontWeight: "30",
                           }}
                         >
-                          {emp.employee.name}
+                          { emp.leaveRequest.employee.name}
                         </Typography>
                         <Typography sx={{fontSize:"12px"}}>
-                            {emp.start_date} - {emp.end_date}
+                            {emp.leaveRequest.start_date} - {emp.leaveRequest.end_date}
                         </Typography>
                       </Grid>
                     </Grid>                 
