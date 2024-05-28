@@ -56,6 +56,7 @@ export default function PendingReq() {
 
   const handleAccept = (id) => {
     updateStatus({ id: id, status: "approved" });
+    console.log("hot nahiye approve",id)
   };
 
   const handleReject = (id) => {

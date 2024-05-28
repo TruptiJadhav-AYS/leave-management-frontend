@@ -35,6 +35,7 @@ export default function History() {
   const id=useSelector((state)=>state.employees.userId)
   
   const { data: LeaveHistory = []} = useGetLeavesByIdQuery(id);
+  console.log(LeaveHistory)
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);

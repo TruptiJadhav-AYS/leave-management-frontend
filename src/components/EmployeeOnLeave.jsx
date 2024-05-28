@@ -16,6 +16,7 @@ import { useGetEmpOnLeaveTodayQuery } from "../Store/slice/apiLeaveReqSlice";
 export default function EmployeeOnLeave() {
   const { data: employees,isLoading,isError} = useGetEmpOnLeaveTodayQuery();
   const Employees= employees || [];
+  console.log("Employee on Leave",Employees[0].leaveRequest)
 
   if (isLoading) {
     return 
