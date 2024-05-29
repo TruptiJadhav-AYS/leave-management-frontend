@@ -19,7 +19,6 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import {
   useAddEmployeeMutation,
-  useGetEmployeesByIdQuery,
   useGetEmployeesQuery,
   useUpdateEmployeeMutation,
 } from "../Store/slice/apiEmployeeSlice";
@@ -28,64 +27,62 @@ import { useGetInventoryQuery } from "../Store/slice/apiInventorySlice";
 import { useParams } from "react-router-dom";
 
 export default function EmloyeeDetailForm() {
-  const {id}=useParams()
-  let selectedEmp  = parseInt(id)
-  console.log(id,"iddd")
-  const { data: employee ,isLoading} = useGetEmployeesByIdQuery(id);
-  const {data : employees}=useGetEmployeesQuery()
+  const { data: employees, isLoading } = useGetEmployeesQuery();
   const { data: inventory } = useGetInventoryQuery();
 
-  const Employee = employee || {};
-  const Employees = employees|| [];
+  const Employees = employees || [];
   const InventoryList = inventory || [];
+  const { id } = useParams();
+  let selectedEmp = parseInt(id);
 
-  console.log(employee)
-  
+  function formatDate(timestamp) {
+    const date = new Date(timestamp);
 
-  // let selectedEmpIndex = Employees.findIndex((emp) => emp.id === selectedEmp);
+    const year = date.getUTCFullYear();
+    const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+    const day = String(date.getUTCDate()).padStart(2, "0");
+    const formattedDate = `${year}-${month}-${day}`;
+
+    return formattedDate;
+  }
+
+  let selectedEmpIndex = Employees.findIndex((emp) => emp.id === selectedEmp);
   const initialValues = {
-    name:
-       selectedEmp
-          ? Employee
-            ? Employee.name
-            : ""
-          : "",     
-    email:
-      selectedEmp
-          ? Employee
-            ? Employee.email
-            : ""
-          : "",
-    mobile_number:
-      selectedEmp
-          ? Employee
-            ? Employee.mobile_number
-            : ""
-        : "",
-    dob:
-      selectedEmp
-          ? Employee
-            ? Employee.dob
-            : ""
-        : "",
-    department_id:
-      selectedEmp
-          ? Employee
-            ? Employee.department_id
-            : ""
-        : "",
-    gender:
-      selectedEmp
-          ? Employee
-            ? Employee.gender
-            : ""
-        : "",
-    manager_id:
-      selectedEmp
-          ? Employee
-            ? Employee.manager_id
-            : null
-        : null,
+    name: selectedEmp
+      ? Employees[selectedEmpIndex]
+        ? Employees[selectedEmpIndex].name
+        : ""
+      : "",
+    email: selectedEmp
+      ? Employees[selectedEmpIndex]
+        ? Employees[selectedEmpIndex].email
+        : ""
+      : "",
+    mobile_number: selectedEmp
+      ? Employees[selectedEmpIndex]
+        ? Employees[selectedEmpIndex].mobile_number
+        : ""
+      : "",
+    dob: selectedEmp
+      ? Employees[selectedEmpIndex]
+        ? formatDate(Employees[selectedEmpIndex].dob)
+        : ""
+      : "",
+    department_id: selectedEmp
+      ? Employees[selectedEmpIndex]
+        ? Employees[selectedEmpIndex].department_id
+        : ""
+      : "",
+    gender: selectedEmp
+      ? Employees[selectedEmpIndex]
+        ? Employees[selectedEmpIndex].gender
+        : ""
+      : "",
+    manager_id: selectedEmp
+      ? Employees[selectedEmpIndex]
+        ? Employees[selectedEmpIndex].manager_id
+        : null
+      : null,
     // inventory_id:""
   };
 
@@ -93,6 +90,7 @@ export default function EmloyeeDetailForm() {
   const [clickedBtnID, setClickedBtnID] = useState("");
   let [onBoardSuccess, setOnBoardSuccess] = useState(false);
   const [Department, setDepartment] = useState([]);
+  const [addEmp] = useAddEmployeeMutation();
   const [updateEmployee] = useUpdateEmployeeMutation();
   const { data: department, isSuccess } = useGetDepartmentsQuery();
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -162,10 +160,8 @@ export default function EmloyeeDetailForm() {
   });
 
   const errors = formik.errors;
-  function handleClick(id)
- {
-    setClickedBtnID(id)
-;
+  function handleClick(id) {
+    setClickedBtnID(id);
   }
   const MenuProps = {
     PaperProps: {
@@ -179,10 +175,9 @@ export default function EmloyeeDetailForm() {
 
   const navigate = useNavigate();
 
-  if(isLoading){
-    return(
-      <></>
-    )
+  console.log(Employees);
+  if (isLoading) {
+    return <></>;
   }
 
   return (

@@ -32,15 +32,26 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
   const { data: employees } = useGetEmployeesQuery();
   const [onSuccess, setSuccess] = useState(false);
   const dispatch = useDispatch();
-  const {data:Projects,isSuccess} = useGetProjectsQuery();
+  const { data: Projects, isSuccess } = useGetProjectsQuery();
   const selectedProject = useSelector((state) => state.Project.selectedProject);
 
-  let index ;
-  if(isSuccess){
-  index = Projects.findIndex((project) => project.id === selectedProject);
+  function formatDate(timestamp) {
+    const date = new Date(timestamp);
+
+    const year = date.getUTCFullYear();
+    const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+    const day = String(date.getUTCDate()).padStart(2, "0");
+    const formattedDate = `${year}-${month}-${day}`;
+
+    return formattedDate;
   }
 
-  console.log(index)
+  let index;
+  if (isSuccess) {
+    index = Projects.findIndex((project) => project.id === selectedProject);
+  }
+
+  console.log(index);
   const Employees = employees || [];
 
   function handleClick(id) {
@@ -66,12 +77,12 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
               ? Projects[index].manager.id
               : ""
             : ""
-          :"",
+          : "",
       start_date:
         projectAddOrEdit === "edit"
           ? selectedProject
             ? Projects[index].start_date
-              ? Projects[index].start_date
+              ? formatDate(Projects[index].start_date)
               : ""
             : ""
           : "",
@@ -100,12 +111,15 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
       description: Yup.string(),
     }),
     onSubmit: (values) => {
-      console.log(values)
+      console.log(values);
       {
-        console.log("VALUE",values)
+        console.log("VALUE", values);
         projectAddOrEdit === "add"
           ? addProject(values)
-          : updateProject({id:selectedProject,updatedProjectDetails:values});
+          : updateProject({
+              id: selectedProject,
+              updatedProjectDetails: values,
+            });
       }
       setSuccess(true);
       setTimeout(() => {
@@ -116,7 +130,6 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
 
   const errors = formik.errors;
   const values = formik.values;
-  console.log("****************",values)
 
   const MenuProps = {
     PaperProps: {
@@ -144,7 +157,7 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
               <Typography color={"primary"} variant="h5" mb={2}>
                 {projectAddOrEdit === "add"
                   ? "Add Project"
-                  : projectAddOrEdit==="edit" && "Edit Project Details" }
+                  : projectAddOrEdit === "edit" && "Edit Project Details"}
               </Typography>
 
               <Grid container spacing={1}>
@@ -192,7 +205,7 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
                 >
                   <Stack width={"100%"}>
                     <Typography variant="body2"> Manager Name </Typography>
-                    
+
                     <Select
                       name="manager_id"
                       onChange={formik.handleChange}
@@ -214,7 +227,7 @@ export default function ProjectOnboardForm({ projectAddOrEdit }) {
                       }}
                       MenuProps={MenuProps}
                     >
-                     {Employees.map((emp, index) => (
+                      {Employees.map((emp, index) => (
                         <MenuItem key={index} value={emp.id}>
                           {emp.name}
                           {/* {emp.id} */}

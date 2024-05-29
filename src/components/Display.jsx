@@ -46,7 +46,7 @@ function AccountMenu() {
   const accessToken = urlParams.get("accessToken");
   const refreshToken = urlParams.get("refreshToken");
   const jwtToken = urlParams.get("jwtToken");
-console.log(jwtToken)
+  console.log(jwtToken)
   // Check if tokens are already stored in localStorage
   const storedAuthToken = localStorage.getItem("authToken");
   if (!storedAuthToken && jwtToken) {

@@ -20,6 +20,7 @@ export default function ProjectDetails({ onProjectAddOrEdit }) {
   const { data: project, isLoading,isSuccess } = useGetProjectByIdQuery(Id);
   const navigate = useNavigate();
   const responsive = UseReponsive();
+  console.log(project)
 
   const formatDate = (timestampString) => {
     const date = new Date(timestampString);
