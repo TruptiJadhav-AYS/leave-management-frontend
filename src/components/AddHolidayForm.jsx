@@ -37,27 +37,17 @@ export default function AddHolidayForm() {
 
   const formik = useFormik({
     initialValues: {
-      //   holidayName: "",
       occasion: "",
       date: "",
       day: "",
-      // img: null,
     },
     validationSchema: Yup.object({
-      //   holidayName: Yup.string().required("Holiday Name is required."),
-      occasion: Yup.string().required("Occassion is required."),
+      occasion: Yup.string().required("Occasion is required."),
       date: Yup.date().required("Please select a date"),
-      // toDate: Yup.date().required("Please select a date"),
       day: Yup.string().required("Day is required."),
-      // image: Yup.string().required("Image is required."),
     }),
     onSubmit: (values) => {
-      // const formData = new FormData();
-      // if (image) {
-      //   formData.append("image", image);
-      // }
-      // dispatch(addholiday(values));
-      addholiday({data1:values, file:image});
+      addholiday({ data1: values, file: image });
       setOnBoardSuccess(true);
       setTimeout(() => {
         navigate("/Employee/Holidays");
@@ -65,32 +55,17 @@ export default function AddHolidayForm() {
     },
   });
 
-  // function handleFileChange(event) {
-  //   const file = event.target.files[0];
-  //   if (!file) {
-  //     console.log("No file chosen");
-  //     return;
-  //   }
-  
-  //   const reader = new FileReader();
-  //   reader.onload = function(evt) {
-  //     if (evt.target.readyState === FileReader.DONE) {
-  //       const arrayBuffer = evt.target.result;
-  //       const array = new Uint8Array(arrayBuffer);
-  //       console.log("Array:", array);
-  //       // Now you can handle this array as needed, e.g., sending to server or processing
-  //     }
-  //   };
-  
-  //   reader.readAsArrayBuffer(file);
-  //   setImage(reader.readAsArrayBuffer(file));
-  // }
-
   const errors = formik.errors;
 
   const handleFileChange = (event) => {
-    // formik.setFieldValue("img", event.currentTarget.files[0]);
     setImage(event.currentTarget.files[0]);
+  };
+
+  // Utility function to get the day of the week from a date
+  const getDayOfWeek = (dateString) => {
+    const date = new Date(dateString);
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    return days[date.getDay()];
   };
 
   return (
@@ -112,40 +87,6 @@ export default function AddHolidayForm() {
               </Typography>
 
               <Grid container spacing={1}>
-                {/* <Grid
-                  item
-                  xs={12}
-                  sm={6}
-                  md={6}
-                  lg={6}
-                  height={responsive.isMobile ? "14vh" : "11vh"}
-                >
-                  <Stack width={"100%"}>
-                    <Typography variant="body2"> HOLIDAY NAME</Typography>
-                    <InputBase
-                      placeholder="Holiday Name"
-                      type="text"
-                      name="holidayName"
-                      sx={{
-                        border:
-                          clickedBtnID === "holidayName"
-                            ? "2px solid blue"
-                            : "2px solid rgba(204, 204, 204, 0.5)",
-                        height: "40px",
-                        borderRadius: 1,
-                      }}
-                      onClick={() => handleClick("holidayName")}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.holidayName}
-                    />
-                    {formik.touched.holidayName && errors.holidayName && (
-                      <Typography variant="caption" color="error">
-                        {errors.holidayName}
-                      </Typography>
-                    )}
-                  </Stack>
-                </Grid> */}
                 <Grid
                   item
                   xs={12}
@@ -188,11 +129,14 @@ export default function AddHolidayForm() {
                 >
                   <Typography variant="body2">DATE</Typography>
                   <InputBase
-                    onChange={formik.handleChange}
+                    onChange={(e) => {
+                      formik.handleChange(e);
+                      formik.setFieldValue("day", getDayOfWeek(e.target.value));
+                    }}
                     value={formik.values.date}
                     type="date"
                     name="date"
-                    lable="Date"
+                    label="Date"
                     onClick={() => {
                       handleClick("date");
                     }}
@@ -274,13 +218,10 @@ export default function AddHolidayForm() {
                   <input
                     type="file"
                     onChange={(event) => {
-                      // formik.setFieldValue("img", event.currentTarget.files[0]);
                       handleFileChange(event);
                     }}
                     accept="image/*"
                   />
-                  {/* <Button variant="outlined" sx={{textTransform:"none"}}><FileUploadIcon/>Upload Image</Button> */}
-
                   {formik.touched.img && errors.img && (
                     <Typography variant="caption" color="error">
                       {errors.img}

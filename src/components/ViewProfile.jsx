@@ -175,7 +175,7 @@ export default function ViewProfile() {
               </Box>
               {logedInEmp.manager && (
                 <Typography variant="body1">
-                  Manager Name: {logedInEmp.manager.name}
+                  <span style={{ fontWeight: 'bold' }}>Manager Name:</span> {logedInEmp.manager.name}
                 </Typography>
               )}
             </Grid>
@@ -190,12 +190,12 @@ export default function ViewProfile() {
               textAlign={"left"}
             >
               <Typography variant="body1">
-                Gender: {logedInEmp.gender}
+              <span style={{ fontWeight: 'bold' }}>Gender:</span> {logedInEmp.gender}
               </Typography>
               <Typography variant="body1">
-                Date Of Birth: {formatDate(logedInEmp.dob)}
+              <span style={{ fontWeight: 'bold' }}>Date Of Birth:</span> {formatDate(logedInEmp.dob)}
               </Typography>
-              <Typography variant="body1">Role: {logedInEmp.role}</Typography>
+              <Typography variant="body1"><span style={{ fontWeight: 'bold' }}>Role:</span> {logedInEmp.role}</Typography>
             </Grid>
           </Grid>
         </CardContent>

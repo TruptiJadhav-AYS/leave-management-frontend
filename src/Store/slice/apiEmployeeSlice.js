@@ -13,9 +13,10 @@ const employeeApi = createApi({
     },
   }),
   endpoints: (builder) => ({
+    
     getEmployees: builder.query({
       query: () => '/employees',
-      providesTags: [{data: 'Employees'}],
+      providesTags: [{ data: 'Employees' }],
     }),
 
     getEmployeesById: builder.query({
@@ -28,26 +29,27 @@ const employeeApi = createApi({
         url: '/employees',
         method: 'POST',
         body: newEmployee,
-        invalidatesTags:[{ data: 'Employees' }]
       }),
-      invalidatesTags: [{data: 'Employees'}],
+      invalidatesTags:[{ data: 'Employees' }]
     }),
+    
     updateEmployee: builder.mutation({
-      query: ({ employeeId, ...updateData }) => ({
-        url: `/employees/${employeeId}`,
-        method: 'PUT',  
-        body: updateData,
-        invalidatesTags: [{ data: 'Employees' }]
+      query: ({ id, updatedEmployeeDetails }) => ({
+        url: `/employees/${id}`,
+        method: 'PUT',
+        body: updatedEmployeeDetails,
       }),
+      invalidatesTags: [{ data: 'Employees' }]
     }),
+
     deleteEmployee: builder.mutation({
       query: (employeeId) => ({
         url: `/employees/${employeeId}`,
         method: 'DELETE',
-        invalidatesTags:[{ data: 'Employees' }]
       }),
       invalidatesTags:[{ data: 'Employees' }]
     }),
+
     uploadImage:builder.mutation({
       query:({employeeId,imageData})=>({
         url:`employees/upload-image/${employeeId}`,
@@ -70,11 +72,22 @@ const employeeApi = createApi({
       invalidatesTags: [{ data: 'Project' }]
     }),
 
+    addDeaprtment: builder.mutation({
+      query: (newDepartment) => ({
+        url: '/department',
+        method: 'POST',
+        body: newDepartment,
+      }),
+      invalidatesTags:[{ data: 'Employees' }]
+    }),
+
+
+
    
   }),
   });
 
-export const { useGetEmployeesQuery,useGetEmployeesByIdQuery,useAddEmployeeMutation,useUpdateEmployeeMutation, useDeleteEmployeeMutation ,useUploadImageMutation,useAssignProjectMutation} = employeeApi;
+export const { useGetEmployeesQuery,useGetEmployeesByIdQuery,useAddEmployeeMutation,useUpdateEmployeeMutation, useDeleteEmployeeMutation ,useUploadImageMutation,useAssignProjectMutation,useAddDeaprtmentMutation} = employeeApi;
 export default employeeApi;
 
 function formData(employeeId, imageData) {
