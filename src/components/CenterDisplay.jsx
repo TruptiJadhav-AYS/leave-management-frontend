@@ -23,18 +23,12 @@ import PendingReq from "./PendingReq";
 import PendingReqMobile from "./PendingReqMobile";
 
 export default function CenterDisplay() {
-  let [addOrEditForm, setAddOrEditForm] = useState();
   let [projectAddOrEdit, setProjectAddOrEdit] = useState();
   let [selectedEmpId, setSelectedEmpId] = useState(null);
   let [openDeleteDialouge, setOpenDeleteDialouge] = useState(false);
-  // console.log(logedInUser)
 
   function onProjectAddOrEdit(form) {
     setProjectAddOrEdit(form);
-  }
-
-  function onAddOrEdit(form) {
-    setAddOrEditForm(form);
   }
 
   function handleSelectedEmp(id) {
@@ -74,10 +68,9 @@ export default function CenterDisplay() {
         path="/Employees"
         element={
           responsive.isMobile ? (
-            <EmployeeMobile onAddOrEdit={onAddOrEdit} />
+            <EmployeeMobile/>
           ) : (
             <EmployeeList
-              onAddOrEdit={onAddOrEdit}
               handleSelectedEmp={handleSelectedEmp}
             />
           )
@@ -88,9 +81,7 @@ export default function CenterDisplay() {
         path="/:id"
         element={
           <EmployeeDetails
-            onAddOrEdit={onAddOrEdit}
             selectedEmpId={selectedEmpId}
-            addOrEditForm={addOrEditForm}
             openDeleteDialouge={openDeleteDialouge}
             onOpenDeleteDialogue={onOpenDeleteDialogue}
             onCloseDeleteDialogue={onCloseDeleteDialogue}
@@ -117,9 +108,9 @@ export default function CenterDisplay() {
         }
       />
       <Route
-        path="/Employees/EmployeeDetailsForm"
+        path="/Employees/EmployeeDetailsForm/:id"
         element={
-          <EmloyeeDetailForm addOrEditForm={addOrEditForm}/>
+          <EmloyeeDetailForm/>
         }
       />
       <Route

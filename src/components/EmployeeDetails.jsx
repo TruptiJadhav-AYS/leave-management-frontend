@@ -161,8 +161,7 @@ export default function EmployeeDetails({
                       color: "white",
                     }}
                     onClick={() => {
-                      onAddOrEdit("edit");
-                      Navigate("/Employee/Employees/EmployeeDetailsForm");
+                      Navigate(`/Employee/Employees/EmployeeDetailsForm/${id}`);
                     }}
                   />
                 </IconButton>

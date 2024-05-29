@@ -15,89 +15,76 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import UseReponsive from "../hooks/UseResponsive";
 import CheckIcon from "@mui/icons-material/Check";
-// import { addEmployee, editEmployee } from "../Store/action/EmployeeAction";
-import editEmployee from "../Store/action/EditEmployeeAction";
-import addEmployee from "../Store/action/AddEmployeeAction";
-import { useSelector } from "react-redux";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { useDispatch } from "react-redux";
 import {
   useAddEmployeeMutation,
+  useGetEmployeesByIdQuery,
   useGetEmployeesQuery,
   useUpdateEmployeeMutation,
 } from "../Store/slice/apiEmployeeSlice";
 import { useGetDepartmentsQuery } from "../Store/slice/apiDepartmentSlice";
 import { useGetInventoryQuery } from "../Store/slice/apiInventorySlice";
+import { useParams } from "react-router-dom";
 
-export default function EmloyeeDetailForm({ addOrEditForm }) {
-  const { data: employees } = useGetEmployeesQuery();
+export default function EmloyeeDetailForm() {
+  const {id}=useParams()
+  let selectedEmp  = parseInt(id)
+  console.log(id,"iddd")
+  const { data: employee ,isLoading} = useGetEmployeesByIdQuery(id);
+  const {data : employees}=useGetEmployeesQuery()
   const { data: inventory } = useGetInventoryQuery();
 
-  const Employees = employees || [];
+  const Employee = employee || {};
+  const Employees = employees|| [];
   const InventoryList = inventory || [];
 
-  console.log(Employees)
+  console.log(employee)
+  
 
-  let { selectedEmp } = useSelector((state) => state.employees);
-
-  let selectedEmpIndex = Employees.findIndex((emp) => emp.id === selectedEmp);
+  // let selectedEmpIndex = Employees.findIndex((emp) => emp.id === selectedEmp);
   const initialValues = {
     name:
-      addOrEditForm === "edit"
-        ? selectedEmp
-          ? Employees[selectedEmpIndex].name
-            ? Employees[selectedEmpIndex].name
+       selectedEmp
+          ? Employee
+            ? Employee.name
             : ""
-          : ""
-        : "",
+          : "",     
     email:
-      addOrEditForm === "edit"
-        ? selectedEmp
-          ? Employees[selectedEmpIndex].email
-            ? Employees[selectedEmpIndex].email
+      selectedEmp
+          ? Employee
+            ? Employee.email
             : ""
-          : ""
-        : "",
+          : "",
     mobile_number:
-      addOrEditForm === "edit"
-        ? selectedEmp
-          ? Employees[selectedEmpIndex].mobile_number
-            ? Employees[selectedEmpIndex].mobile_number
+      selectedEmp
+          ? Employee
+            ? Employee.mobile_number
             : ""
-          : ""
         : "",
     dob:
-      addOrEditForm === "edit"
-        ? selectedEmp
-          ? Employees[selectedEmpIndex].dob
-            ? Employees[selectedEmpIndex].dob
+      selectedEmp
+          ? Employee
+            ? Employee.dob
             : ""
-          : ""
         : "",
     department_id:
-      addOrEditForm === "edit"
-        ? selectedEmp
-          ? Employees[selectedEmpIndex].department_id
-            ? Employees[selectedEmpIndex].department_id
+      selectedEmp
+          ? Employee
+            ? Employee.department_id
             : ""
-          : ""
         : "",
     gender:
-      addOrEditForm === "edit"
-        ? selectedEmp
-          ? Employees[selectedEmpIndex].gender
-            ? Employees[selectedEmpIndex].gender
+      selectedEmp
+          ? Employee
+            ? Employee.gender
             : ""
-          : ""
         : "",
     manager_id:
-      addOrEditForm === "edit"
-        ? selectedEmp
-          ? Employees[selectedEmpIndex].manager_id
-            ? Employees[selectedEmpIndex].manager_id
+      selectedEmp
+          ? Employee
+            ? Employee.manager_id
             : null
-          : null
         : null,
     // inventory_id:""
   };
@@ -106,7 +93,6 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
   const [clickedBtnID, setClickedBtnID] = useState("");
   let [onBoardSuccess, setOnBoardSuccess] = useState(false);
   const [Department, setDepartment] = useState([]);
-  const [addEmp] = useAddEmployeeMutation();
   const [updateEmployee] = useUpdateEmployeeMutation();
   const { data: department, isSuccess } = useGetDepartmentsQuery();
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -165,9 +151,7 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
     onSubmit: async (values) => {
       console.log(values);
       {
-        addOrEditForm === "add"
-          ? addEmp(values)
-          : updateEmployee({ id: selectedEmp, updatedEmployeeDetails: values });
+        updateEmployee({ id: selectedEmp, updatedEmployeeDetails: values });
       }
       setOnBoardSuccess(true);
       setTimeout(() => {
@@ -178,8 +162,10 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
   });
 
   const errors = formik.errors;
-  function handleClick(id) {
-    setClickedBtnID(id);
+  function handleClick(id)
+ {
+    setClickedBtnID(id)
+;
   }
   const MenuProps = {
     PaperProps: {
@@ -192,6 +178,12 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
   };
 
   const navigate = useNavigate();
+
+  if(isLoading){
+    return(
+      <></>
+    )
+  }
 
   return (
     <Grid
@@ -213,11 +205,7 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
           <CardContent>
             <form onSubmit={formik.handleSubmit}>
               <Typography color={"primary"} variant="h5" mb={2}>
-                {addOrEditForm === "add"
-                  ? "Onboard Employee"
-                  : addOrEditForm === "edit"
-                  ? "Edit Employee Details"
-                  : " "}
+                Edit Employee Details
               </Typography>
 
               <Grid container spacing={1}>
@@ -567,9 +555,7 @@ export default function EmloyeeDetailForm({ addOrEditForm }) {
             sx={{ height: "50px", mt: "10px" }}
             severity="success"
           >
-            {addOrEditForm === "add"
-              ? "Employee Onboarded successfully"
-              : "Employee Edited successfully."}
+            Employee Edited successfully.
           </Alert>
         )}
       </Stack>
