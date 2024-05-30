@@ -21,6 +21,7 @@ import Profile from "../assets/profile.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetEmployeesByIdQuery } from "../Store/slice/apiEmployeeSlice";
 import { getRole, setUserId } from "../Store/slice/EmployeeSlice";
+import UseReponsive from "../hooks/UseResponsive";
 // import { setRole, setUserId } from "../Store/slice/EmployeeSlice";
 
 function AccountMenu() {
@@ -49,6 +50,7 @@ function AccountMenu() {
   console.log(jwtToken)
   // Check if tokens are already stored in localStorage
   const storedAuthToken = localStorage.getItem("authToken");
+  console.log(storedAuthToken)
   if (!storedAuthToken && jwtToken) {
     // Store jwtToken in localStorage only if it is not already stored
     localStorage.setItem("authToken", jwtToken);
@@ -212,6 +214,7 @@ const drawerWidth = 240;
 
 export default function Display() {
   const id = useSelector((state) => state.employees.userId);
+  let responsive=UseReponsive();
   // console.log(id)
   const { data: Emp } = useGetEmployeesByIdQuery(id);
   const logedInEmp = Emp || [];
@@ -274,6 +277,7 @@ export default function Display() {
         </Stack>
       </AppBar>
       <Box sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}>
+        {responsive.isMobile ?
         <Drawer
           variant="temporary"
           open={mobileOpen}
@@ -283,7 +287,6 @@ export default function Display() {
             keepMounted: true,
           }}
           sx={{
-            display: { xs: "block", sm: "none" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
@@ -291,7 +294,7 @@ export default function Display() {
           }}
         >
           <SideDrawer handleDrawerClose={handleDrawerClose} />
-        </Drawer>
+        </Drawer>:
         <Drawer
           variant="permanent"
           sx={{
@@ -304,7 +307,7 @@ export default function Display() {
           open
         >
           <SideDrawer />
-        </Drawer>
+        </Drawer>}
       </Box>
       <Grid container direction={"row"}>
         <Toolbar />

@@ -98,7 +98,6 @@ const annualLeaveSlice = createSlice({
       state.annualLeaves = action.payload;
     },
     deleteHoliday: (state, action) => {
-      //   console.log(action.payload);
       if (action.payload !== -1) {
         state.annualLeaves.splice(action.payload, 1);
       }

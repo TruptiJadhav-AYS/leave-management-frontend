@@ -30,26 +30,20 @@ import {
 import { useGetDepartmentsQuery } from "../Store/slice/apiDepartmentSlice";
 import { useGetInventoryQuery } from "../Store/slice/apiInventorySlice";
 import { useParams } from "react-router-dom";
-import { useParams } from "react-router-dom";
 
 export default function EmloyeeDetailForm() {
   const [newDepartment, setNewDepartment] = useState("");
   const [showAddDepartmentField, setShowAddDepartmentField] = useState(false);
   const { id } = useParams();
   let selectedEmp = parseInt(id);
-  console.log(id, "iddd");
-  // const { data: employee, isLoading } = useGetEmployeesByIdQuery(id);
+
   const { data: employees } = useGetEmployeesQuery();
   const { data: inventory } = useGetInventoryQuery();
 
-  // const Employee = employee || {};
   const Employees = employees || [];
   const InventoryList = inventory || [];
-  const { id } = useParams();
-  let selectedEmp = parseInt(id);
 
-  function formatDate(timestamp) {
-    const date = new Date(timestamp);
+  let selectedEmpIndex = Employees.findIndex((emp) => emp.id === selectedEmp);
 
   function formatDate(timestamp) {
     const date = new Date(timestamp);
@@ -62,17 +56,18 @@ export default function EmloyeeDetailForm() {
     return formattedDate;
   }
 
-  const initialValues = {
-    name: selectedEmp ? (Employees ? Employees[selectedEmp].name : "") : "",
-    email: selectedEmp ? (Employees ? Employees[selectedEmp].email : "") : "",
-    mobile_number: selectedEmp ? (Employees ? Employees[selectedEmp].mobile_number : "") : "",
-    dob: selectedEmp ? (Employees ? formatDate(Employees[selectedEmp].dob ): "") : "",
-    department_id: selectedEmp ? (Employees ? Employees[selectedEmp].department_id : "") : "",
-    gender: selectedEmp ? (Employees ? Employees[selectedEmp].gender : "") : "",
-    manager_id: selectedEmp ? (Employees ? Employees[selectedEmp].manager_id : null) : null,
+  console.log(Employees[selectedEmpIndex].role,"role")
 
-    admin: selectedEmp ? (Employees ? Employees[selectedEmp].admin : null) : null,
-    // inventory_id:""
+  const initialValues = {
+    name: selectedEmp ? (Employees ? Employees[selectedEmpIndex].name : "") : "",
+    email: selectedEmp ? (Employees ? Employees[selectedEmpIndex].email : "") : "",
+    mobile_number: selectedEmp ? (Employees ? Employees[selectedEmpIndex].mobile_number : "") : "",
+    dob: selectedEmp ? (Employees ? formatDate(Employees[selectedEmpIndex].dob ): "") : "",
+    department_id: selectedEmp ? (Employees ? Employees[selectedEmpIndex].department_id : "") : "",
+    gender: selectedEmp ? (Employees ? Employees[selectedEmpIndex].gender : "") : "",
+    manager_id: selectedEmp ? (Employees ? Employees[selectedEmpIndex].manager_id : null) : null,
+    admin: selectedEmp ? (Employees ? Employees[selectedEmpIndex].role ? (Employees[selectedEmpIndex].role=="Admin"?1 :0) : null:null):null,
+    inventory_id:""
   };
 
   const responsive = UseReponsive();
@@ -128,14 +123,13 @@ export default function EmloyeeDetailForm() {
         ),
 
       department_id: Yup.number(),
-      manager_id: Yup.string(),
+      manager_id: Yup.string().nullable(),
       gender: Yup.string(),
     }),
 
     onSubmit: async (values) => {
       console.log(values);
       {
-        updateEmployee({ id: selectedEmp, updatedEmployeeDetails: values });
         updateEmployee({ id: selectedEmp, updatedEmployeeDetails: values });
       }
       setOnBoardSuccess(true);
@@ -155,7 +149,6 @@ export default function EmloyeeDetailForm() {
       try {
         const departmentData = { department_name: newDepartment };
         await addDepartment(departmentData);
-        // setOnCategorySuccess(true);
         setShowAddDepartmentField(false);
         await refetchDepartmentList();
       } catch (refetchDepartmentListerror) {
@@ -179,11 +172,6 @@ export default function EmloyeeDetailForm() {
   };
 
   const navigate = useNavigate();
-
-  console.log(Employees);
-  if (isLoading) {
-    return <></>;
-  }
 
   return (
     <Grid
@@ -215,7 +203,7 @@ export default function EmloyeeDetailForm() {
                   sm={6}
                   md={6}
                   lg={6}
-                  height={responsive.isMobile ? "13vh" : "11vh"}
+                  height={responsive.isMobile ? "13vh" : "9vh"}
                 >
                   <Stack width={"100%"}>
                     <Typography variant="body2">NAME</Typography>
@@ -248,7 +236,7 @@ export default function EmloyeeDetailForm() {
                   sm={6}
                   md={6}
                   lg={6}
-                  height={responsive.isMobile ? "10vh" : "11vh"}
+                  height={responsive.isMobile ? "10vh" : "9vh"}
                 >
                   <Stack width={"100%"}>
                     <Typography variant="body2"> GENDER </Typography>
@@ -291,7 +279,7 @@ export default function EmloyeeDetailForm() {
                   sm={6}
                   md={6}
                   lg={6}
-                  height={responsive.isMobile ? "13vh" : "8vh"}
+                  height={responsive.isMobile ? "13vh" : "6vh"}
                 >
                   <Stack width={"100%"}>
                     <Typography variant="body2"> EMAIL </Typography>
@@ -325,7 +313,7 @@ export default function EmloyeeDetailForm() {
                   sm={6}
                   md={6}
                   lg={6}
-                  height={responsive.isMobile ? "6vh" : "8vh"}
+                  height={responsive.isMobile ? "6vh" : "6vh"}
                 >
                   <Stack width={"100%"}>
                     <Typography variant="body2">CONTACT NO</Typography>
@@ -360,61 +348,13 @@ export default function EmloyeeDetailForm() {
               <br />
 
               <Grid container spacing={1}>
-                {/* <Grid
-                  item
-                  xs={12}
-                  sm={6}
-                  md={6}
-                  lg={6}
-                  height={responsive.isMobile ? "13vh" : "11vh"}
-                >
-                  <Stack width={"100%"}>
-                    <Typography variant="body2"> DEPARTMENT</Typography>
-                    <Select
-                      size="small"
-                      name="department_id"
-                      sx={{
-                        "& fieldset": {
-                          borderColor: "rgba(204, 204, 204, 0.5)",
-                          borderWidth: "2px",
-                        },
-                        "&:hover": {
-                          "&& fieldset": {
-                            border:
-                              clickedBtnID === "department_id"
-                                ? "2px solid blue"
-                                : "2px solid  rgba(204, 204, 204, 0.5)",
-                          },
-                        },
-                        height: "40px",
-                        borderRadius: 1,
-                      }}
-                      onClick={() => handleClick("department_id")}
-                      onChange={formik.handleChange}
-                      value={formik.values.department_id}
-                      onBlur={formik.handleBlur}
-                    >
-                      {Department.map((department, index) => (
-                        <MenuItem key={index} value={department.id}>
-                          {department.department_name}
-                        </MenuItem>
-                      ))}
-                    </Select>
-
-                    {formik.touched.department_id && errors.department_id && (
-                      <Typography variant="caption" color="error">
-                        {errors.department_id}
-                      </Typography>
-                    )}
-                  </Stack>
-                </Grid> */}
                 <Grid
                   item
                   xs={12}
                   sm={6}
                   md={6}
                   lg={6}
-                  height={responsive.isMobile ? "13vh" : "11vh"}
+                  height={responsive.isMobile ? "13vh" : "9vh"}
                 >
                   <Stack width={"100%"}>
                     <Typography variant="body2"> ADMIN</Typography>
@@ -460,7 +400,7 @@ export default function EmloyeeDetailForm() {
                   sm={6}
                   md={6}
                   lg={6}
-                  height={responsive.isMobile ? "1vh" : "11vh"}
+                  height={responsive.isMobile ? "1vh" : "9vh"}
                 >
                   <Stack width={"100%"}>
                     <Typography variant="body2">REPORTING MANAGER</Typography>
@@ -511,7 +451,7 @@ export default function EmloyeeDetailForm() {
                   md={6}
                   lg={6}
                   sx={{ display: "flex", justifyContent: "space-between" }}
-                  height={responsive.isMobile ? "9vh" : "11vh"}
+                  height={responsive.isMobile ? "9vh" : "9vh"}
                 >
                   <Stack width={"100%"}>
                     <Typography variant="body2"> DATE OF BIRTH </Typography>
@@ -545,7 +485,8 @@ export default function EmloyeeDetailForm() {
                   sm={6}
                   md={6}
                   lg={6}
-                  height={responsive.isMobile ? "10vh" : "11vh"}
+                  height={responsive.isMobile ? "5vh" : "9vh"}
+                  mt={responsive.isMobile && 3}
                 >
                   <Stack width={"100%"}>
                     <Typography variant="body2">ASSIGN INVENTORY</Typography>
@@ -587,7 +528,7 @@ export default function EmloyeeDetailForm() {
                   xs={10}
                   sm={5}
                   
-                  height={responsive.isMobile ? "13vh" : "11vh"}
+                  height={responsive.isMobile ? "13vh" : "9vh"}
                 >
                   <Stack width={"100%"}>
                     <Typography variant="body2"> DEPARTMENT</Typography>
@@ -648,7 +589,7 @@ export default function EmloyeeDetailForm() {
                       xs={10}
                       sm={5}
                       mt={0.2}
-                      height={responsive.isMobile ? "14vh" : "11vh"}
+                      height={responsive.isMobile ? "14vh" : "9vh"}
                     >
                       <Stack width="100%">
                         <Typography variant="body2">ADD DEPARTMENT</Typography>
