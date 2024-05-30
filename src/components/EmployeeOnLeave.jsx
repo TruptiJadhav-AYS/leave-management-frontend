@@ -52,7 +52,7 @@ export default function EmployeeOnLeave() {
           <Grid
             sx={{
               height: "100%",
-              overflowY: "scroll",
+              overflowY: "auto",
               scrollbarWidth: "thin",
               bgcolor: "white",
               minHeight:"100%"

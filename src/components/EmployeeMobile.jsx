@@ -27,19 +27,15 @@ export default function EmployeeList({ onAddOrEdit }) {
   const [searchText, setsearchText] = useState("");
   const [sortOrder, setSortOrder] = useState(null);
   const dispatch = useDispatch();
-  const {
-    data: employees,
-    isLoading,
-    isError,
-    isSuccess,
-  } = useGetEmployeesQuery();
-  let [FilterArray, setFilterArray] = useState([]);
+  const { data: employees, isLoading } = useGetEmployeesQuery();
 
-  useEffect(() => {
-    if (isSuccess) {
-      setFilterArray(employees);
-    }
-  }, [isSuccess, employees]);
+  let FilterArray = employees;
+
+  // useEffect(() => {
+  //   if (isSuccess) {
+  //     setFilterArray(employees);
+  //   }
+  // }, [isSuccess, employees]);
 
   function handleSearchText(event) {
     setsearchText(event.target.value);
@@ -48,24 +44,28 @@ export default function EmployeeList({ onAddOrEdit }) {
   const Employees = employees || [];
 
   const sortedRows = useMemo(() => {
-    return Employees.slice().sort((a, b) => {
-      const valueA = a["name"];
-      const valueB = b["name"];
+    return [...Employees].sort((a, b) => {
+      const valueA = a.name;
+      const valueB = b.name;
 
       if (typeof valueA === "string") {
         return sortOrder === "asc"
           ? valueA.localeCompare(valueB)
           : valueB.localeCompare(valueA);
       } else {
-        return sortOrder === "asc" ? valueA - valueB : valueA - valueB;
+        return sortOrder === "asc" ? valueA - valueB : valueB - valueA;
       }
     });
-  }, [sortOrder]);
-
-  if(searchText)
-  {FilterArray = sortedRows.filter((contact) =>
-    contact.name.toLowerCase().includes(searchText.toLowerCase())
-  );}
+  }, [Employees, sortOrder]);
+  
+  if (sortOrder) {
+    FilterArray = sortedRows;
+  }
+  if (searchText) {
+    FilterArray = FilterArray.filter((employee) =>
+      employee.name.toLowerCase().includes(searchText.toLowerCase())
+    );
+  }
 
   const handleSortClick = () => {
     const isAscending = sortOrder === "asc";
@@ -75,10 +75,6 @@ export default function EmployeeList({ onAddOrEdit }) {
   if (isLoading) {
     return <CircularProgress />;
   }
-
-  // if (isError) {
-  //   return <div>Error fetching data</div>;
-  // }
 
   return (
     <Paper sx={{ height: "100%", pt: "5%" }}>
