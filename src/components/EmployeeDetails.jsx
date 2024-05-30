@@ -210,12 +210,12 @@ export default function EmployeeDetails({
             >
               {Employee.manager && (
                 <Typography variant="body1">
-                  Manager : {Employee.manager.name}
+                  <span style={{ fontWeight: 'bold' }}>Manager :</span> {Employee.manager.name}
                 </Typography>
               )}
-              <Typography variant="body1">Gender: {Employee.gender}</Typography>
+              <Typography variant="body1"><span style={{ fontWeight: 'bold' }}>Gender:</span> {Employee.gender}</Typography>
               <Typography variant="body1">
-                Date of Birth: {formatDate(Employee.dob)}
+              <span style={{ fontWeight: 'bold' }}>Date of Birth:</span> {formatDate(Employee.dob)}
               </Typography>
             </Grid>
 

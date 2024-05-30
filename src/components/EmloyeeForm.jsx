@@ -9,7 +9,10 @@ import {
   Select,
   Alert,
   Box,
+  IconButton
 } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+
 import Card from "@mui/material/Card";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -18,22 +21,35 @@ import CheckIcon from "@mui/icons-material/Check";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import {
+  useAddDeaprtmentMutation,
   useAddEmployeeMutation,
+  useGetEmployeesByIdQuery,
   useGetEmployeesQuery,
   useUpdateEmployeeMutation,
 } from "../Store/slice/apiEmployeeSlice";
 import { useGetDepartmentsQuery } from "../Store/slice/apiDepartmentSlice";
 import { useGetInventoryQuery } from "../Store/slice/apiInventorySlice";
 import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 export default function EmloyeeDetailForm() {
-  const { data: employees, isLoading } = useGetEmployeesQuery();
+  const [newDepartment, setNewDepartment] = useState("");
+  const [showAddDepartmentField, setShowAddDepartmentField] = useState(false);
+  const { id } = useParams();
+  let selectedEmp = parseInt(id);
+  console.log(id, "iddd");
+  // const { data: employee, isLoading } = useGetEmployeesByIdQuery(id);
+  const { data: employees } = useGetEmployeesQuery();
   const { data: inventory } = useGetInventoryQuery();
 
+  // const Employee = employee || {};
   const Employees = employees || [];
   const InventoryList = inventory || [];
   const { id } = useParams();
   let selectedEmp = parseInt(id);
+
+  function formatDate(timestamp) {
+    const date = new Date(timestamp);
 
   function formatDate(timestamp) {
     const date = new Date(timestamp);
@@ -46,43 +62,16 @@ export default function EmloyeeDetailForm() {
     return formattedDate;
   }
 
-  let selectedEmpIndex = Employees.findIndex((emp) => emp.id === selectedEmp);
   const initialValues = {
-    name: selectedEmp
-      ? Employees[selectedEmpIndex]
-        ? Employees[selectedEmpIndex].name
-        : ""
-      : "",
-    email: selectedEmp
-      ? Employees[selectedEmpIndex]
-        ? Employees[selectedEmpIndex].email
-        : ""
-      : "",
-    mobile_number: selectedEmp
-      ? Employees[selectedEmpIndex]
-        ? Employees[selectedEmpIndex].mobile_number
-        : ""
-      : "",
-    dob: selectedEmp
-      ? Employees[selectedEmpIndex]
-        ? formatDate(Employees[selectedEmpIndex].dob)
-        : ""
-      : "",
-    department_id: selectedEmp
-      ? Employees[selectedEmpIndex]
-        ? Employees[selectedEmpIndex].department_id
-        : ""
-      : "",
-    gender: selectedEmp
-      ? Employees[selectedEmpIndex]
-        ? Employees[selectedEmpIndex].gender
-        : ""
-      : "",
-    manager_id: selectedEmp
-      ? Employees[selectedEmpIndex]
-        ? Employees[selectedEmpIndex].manager_id
-        : null
-      : null,
+    name: selectedEmp ? (Employees ? Employees[selectedEmp].name : "") : "",
+    email: selectedEmp ? (Employees ? Employees[selectedEmp].email : "") : "",
+    mobile_number: selectedEmp ? (Employees ? Employees[selectedEmp].mobile_number : "") : "",
+    dob: selectedEmp ? (Employees ? formatDate(Employees[selectedEmp].dob ): "") : "",
+    department_id: selectedEmp ? (Employees ? Employees[selectedEmp].department_id : "") : "",
+    gender: selectedEmp ? (Employees ? Employees[selectedEmp].gender : "") : "",
+    manager_id: selectedEmp ? (Employees ? Employees[selectedEmp].manager_id : null) : null,
+
+    admin: selectedEmp ? (Employees ? Employees[selectedEmp].admin : null) : null,
     // inventory_id:""
   };
 
@@ -90,11 +79,11 @@ export default function EmloyeeDetailForm() {
   const [clickedBtnID, setClickedBtnID] = useState("");
   let [onBoardSuccess, setOnBoardSuccess] = useState(false);
   const [Department, setDepartment] = useState([]);
-  const [addEmp] = useAddEmployeeMutation();
   const [updateEmployee] = useUpdateEmployeeMutation();
-  const { data: department, isSuccess } = useGetDepartmentsQuery();
+  const { data: department, isSuccess,refetch: refetchDepartmentList  } = useGetDepartmentsQuery();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const dept = department || [];
+  const [addDepartment]=useAddDeaprtmentMutation()
 
   useEffect(() => {
     if (isSuccess) {
@@ -113,12 +102,11 @@ export default function EmloyeeDetailForm() {
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: Yup.object({
-      name: Yup.string().required("Name is required."),
+      name: Yup.string(),
 
       email: Yup.string()
         .trim()
-        .matches(emailRegex, "Invalid email format")
-        .required("Email is required."),
+        .matches(emailRegex, "Invalid email format"),
 
       mobile_number: Yup.number()
         .test(
@@ -130,25 +118,24 @@ export default function EmloyeeDetailForm() {
             }
             return String(value).length === 10;
           }
-        )
-        .required("Contact no is required."),
+        ),
 
       dob: Yup.date()
         .min("1950-01-01", "Birthdate should be after 1950-01-01")
         .max(
           eighteenYearsAgo,
           `Birthdate should be before ${eighteenYearsAgo.getDate()}-${eighteenYearsAgo.getMonth()}-${eighteenYearsAgo.getFullYear()}`
-        )
-        .required("Date of birth is required."),
+        ),
 
-      department_id: Yup.number().required("Department is required."),
-      manager_id: Yup.string().nullable(),
-      gender: Yup.string().required("Gender is required."),
+      department_id: Yup.number(),
+      manager_id: Yup.string(),
+      gender: Yup.string(),
     }),
 
     onSubmit: async (values) => {
       console.log(values);
       {
+        updateEmployee({ id: selectedEmp, updatedEmployeeDetails: values });
         updateEmployee({ id: selectedEmp, updatedEmployeeDetails: values });
       }
       setOnBoardSuccess(true);
@@ -158,6 +145,24 @@ export default function EmloyeeDetailForm() {
       console.log(values);
     },
   });
+
+  const handleChangeDepartment = (e) => {
+    setNewDepartment(e.target.value);
+  };
+
+  const addNewDepartment = async () => {
+    if (newDepartment) {
+      try {
+        const departmentData = { department_name: newDepartment };
+        await addDepartment(departmentData);
+        // setOnCategorySuccess(true);
+        setShowAddDepartmentField(false);
+        await refetchDepartmentList();
+      } catch (refetchDepartmentListerror) {
+
+      }
+    }
+  };
 
   const errors = formik.errors;
   function handleClick(id) {
@@ -355,7 +360,7 @@ export default function EmloyeeDetailForm() {
               <br />
 
               <Grid container spacing={1}>
-                <Grid
+                {/* <Grid
                   item
                   xs={12}
                   sm={6}
@@ -399,6 +404,51 @@ export default function EmloyeeDetailForm() {
                     {formik.touched.department_id && errors.department_id && (
                       <Typography variant="caption" color="error">
                         {errors.department_id}
+                      </Typography>
+                    )}
+                  </Stack>
+                </Grid> */}
+                <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  md={6}
+                  lg={6}
+                  height={responsive.isMobile ? "13vh" : "11vh"}
+                >
+                  <Stack width={"100%"}>
+                    <Typography variant="body2"> ADMIN</Typography>
+                    <Select
+                      size="small"
+                      name="admin"
+                      sx={{
+                        "& fieldset": {
+                          borderColor: "rgba(204, 204, 204, 0.5)",
+                          borderWidth: "2px",
+                        },
+                        "&:hover": {
+                          "&& fieldset": {
+                            border:
+                              clickedBtnID === "admin"
+                                ? "2px solid blue"
+                                : "2px solid  rgba(204, 204, 204, 0.5)",
+                          },
+                        },
+                        height: "40px",
+                        borderRadius: 1,
+                      }}
+                      onClick={() => handleClick("admin")}
+                      onChange={formik.handleChange}
+                      value={formik.values.admin}
+                      onBlur={formik.handleBlur}
+                    >
+                      <MenuItem value={1}>Yes</MenuItem>
+                      <MenuItem value={0}>No</MenuItem>
+                    </Select>
+
+                    {formik.touched.admin && errors.admin && (
+                      <Typography variant="caption" color="error">
+                        {errors.admin}
                       </Typography>
                     )}
                   </Stack>
@@ -530,6 +580,106 @@ export default function EmloyeeDetailForm() {
                     </Select>
                   </Stack>
                 </Grid>
+              </Grid>
+              <Grid container mt={responsive.isMobile ? 5 : 2} spacing={1}>
+                <Grid
+                  item
+                  xs={10}
+                  sm={5}
+                  
+                  height={responsive.isMobile ? "13vh" : "11vh"}
+                >
+                  <Stack width={"100%"}>
+                    <Typography variant="body2"> DEPARTMENT</Typography>
+                    <Select
+                      size="small"
+                      name="department_id"
+                      sx={{
+                        "& fieldset": {
+                          borderColor: "rgba(204, 204, 204, 0.5)",
+                          borderWidth: "2px",
+                        },
+                        "&:hover": {
+                          "&& fieldset": {
+                            border:
+                              clickedBtnID === "department_id"
+                                ? "2px solid blue"
+                                : "2px solid  rgba(204, 204, 204, 0.5)",
+                          },
+                        },
+                        height: "40px",
+                        borderRadius: 1,
+                      }}
+                      onClick={() => setShowAddDepartmentField(false)}
+                      onChange={formik.handleChange}
+                      value={formik.values.department_id}
+                      onBlur={formik.handleBlur}
+                    >
+                      {Department.map((department, index) => (
+                        <MenuItem key={index} value={department.id}>
+                          {department.department_name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+
+                    {formik.touched.department_id && errors.department_id && (
+                      <Typography variant="caption" color="error">
+                        {errors.department_id}
+                      </Typography>
+                    )}
+                  </Stack>
+                </Grid>
+                
+                <Grid item xs={2} sm={1} sx={{ mt: 2.5 }}>
+                  {!showAddDepartmentField && (
+                    <IconButton
+                      disableRipple
+                      size="small"
+                      onClick={() => setShowAddDepartmentField(true)}
+                    >
+                      <AddIcon />
+                    </IconButton>
+                  )}
+                </Grid>
+                {showAddDepartmentField && (
+                  <>
+                    <Grid
+                      item
+                      xs={10}
+                      sm={5}
+                      mt={0.2}
+                      height={responsive.isMobile ? "14vh" : "11vh"}
+                    >
+                      <Stack width="100%">
+                        <Typography variant="body2">ADD DEPARTMENT</Typography>
+                        <InputBase
+                          name="newDepartment"
+                          onChange={handleChangeDepartment}
+                          placeholder="Add New Department"
+                          type="text"
+                          sx={{
+                            border: "2px solid rgba(204, 204, 204, 0.5)",
+                            height: "40px",
+                            borderRadius: 1,
+                            px: 1,
+                          }}
+                        ></InputBase>
+                      </Stack>
+                    </Grid>
+                    <Grid item xs={2} sm={1} mt={2.3}>
+                      <IconButton onClick={addNewDepartment}>
+                        <CheckIcon
+                          sx={{
+                            color: "black",
+                            border: "2px solid rgba(204, 204, 204, 0.5)",
+                            borderRadius: 5,
+                            bgcolor: "lightblue",
+                          }}
+                        />
+                      </IconButton>
+                    </Grid>
+                  </>
+                )}
               </Grid>
 
               <Box pt={responsive.isMobile ? 3 : 0}>

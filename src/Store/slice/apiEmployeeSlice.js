@@ -72,11 +72,22 @@ const employeeApi = createApi({
       invalidatesTags: [{ data: 'Project' }]
     }),
 
+    addDeaprtment: builder.mutation({
+      query: (newDepartment) => ({
+        url: '/department',
+        method: 'POST',
+        body: newDepartment,
+      }),
+      invalidatesTags:[{ data: 'Employees' }]
+    }),
+
+
+
    
   }),
   });
 
-export const { useGetEmployeesQuery,useGetEmployeesByIdQuery,useAddEmployeeMutation,useUpdateEmployeeMutation, useDeleteEmployeeMutation ,useUploadImageMutation,useAssignProjectMutation} = employeeApi;
+export const { useGetEmployeesQuery,useGetEmployeesByIdQuery,useAddEmployeeMutation,useUpdateEmployeeMutation, useDeleteEmployeeMutation ,useUploadImageMutation,useAssignProjectMutation,useAddDeaprtmentMutation} = employeeApi;
 export default employeeApi;
 
 function formData(employeeId, imageData) {
