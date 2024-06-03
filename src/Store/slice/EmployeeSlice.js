@@ -1,22 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  Employees: [],
-  logedInEmp: "",
-  selectedEmp: "",
   userRole: "",
   userId:"",
 };
-
 const EmployeeSlice = createSlice({
   name: "EmployeeSlice",
   initialState,
   reducers: {
-    addEmp: (state, action) => {
-      state.Employees = action.payload;
-    },
-
-    // get logedInEmployee Id
     getLogedInEmp: (state, action) => {
       state.logedInEmp = action.payload;
     },
@@ -40,7 +31,6 @@ const EmployeeSlice = createSlice({
 });
 
 export const {
-  addEmp,
   editEmp,
   getRole,
   getLogedInEmp,
